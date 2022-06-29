@@ -6,8 +6,9 @@ Tourism app made for community.
   - MongoDB
   - Python3 + Flask, uWSGI
   - HTML, CSS, Bootstrap (AdminLTE template) 
-  - JavaScript (maybe JQuery) (AJAX calls, fetch API)
+  - JavaScript + jQuery (AJAX calls, fetch API, manipulate DOM)
 - Frontend:
   - Flutter 
   - Google Maps API
   - Sqflite
+  - Provider
