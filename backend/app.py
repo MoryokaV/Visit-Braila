@@ -4,11 +4,15 @@ from flask import Flask, render_template, request, redirect
 from pymongo import MongoClient
 from werkzeug.utils import secure_filename
 import os
+import json
 
 app = Flask(__name__)
 
-MEDIA_FOLDER = os.path.join(app.root_path, "media")
+MEDIA_FOLDER = os.path.join(app.root_path, "static/media")
 ALLOWED_EXTENSIONS = ["png", "jpg", "jpeg", "webp", "svg"]
+
+client = MongoClient("");
+db = client.visitbraila
 
 @app.route("/")
 def index():
@@ -16,22 +20,27 @@ def index():
 
 @app.route("/secondPage", methods=["GET", "POST"])
 def secondPage():
-    if request.method == "POST":
-        if request.files:
-            image = request.files['image']
-            filename = secure_filename(image.filename)
-
-            image.save(os.path.join(MEDIA_FOLDER, filename))
-
-            return redirect("/")
+    if request.method == "POST" and request.files:
+        name = request.form["name"] 
+        image = request.files['image']
+    
+        filename = secure_filename(image.filename)
+        path = os.path.join(MEDIA_FOLDER, filename)
+        image.save(path)
+        
+        db.sights.insert_one({"name": name, "imageUrl": "static/media/" + filename})
+        
+        return redirect("/")
 
     return render_template("secondPage.html")
 
-if __name__ == '__main__':
-    #client = MongoClient("mongodb://admin:visitbraila@193.22.95.33:27017/?authMechanism=DEFAULT");
-    #print(client.list_database_names())
-    #db = client.visitbraila
-    #sights = db.sights
-    #sights.insert_one({"name": "Teatru"})
+@app.route("/fetchSights")
+def fetchSights():
+    return json.dumps(list(db.sights.find()), default=str)
 
-    app.run(debug=True, port=8000);
+@app.route("/listSights")
+def listSights():
+    return render_template("listSights.html")
+
+if __name__ == '__main__':
+    app.run(debug=True, port=8080);
