@@ -20,11 +20,12 @@ const fet = async () => {
 
 
 const fet = async () => {
-  const data = await $.getJSON("fetchSights")
+  const data = await $.getJSON(window.origin + "/api/fetchSights")
 
   for(let i = 0; i < data.length; i++){
     $("body").append($("<h3></h3>").text(data[i].name))
-    $("body").append($("<img></img>").attr("src", data[i].imageUrl))
+    for(let j = 0; j < data[i].images.length; j++)
+      $("body").append($("<img></img>").attr("src", window.origin + "/static/media/" + data[i].images[j]))
   }
 }
 
