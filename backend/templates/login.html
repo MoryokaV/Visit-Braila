@@ -3,13 +3,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>Visit Brăila &ndash; CMS</title>
+    
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous"
     />
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
   </head>
   <body>
     <div
@@ -20,16 +29,37 @@
         <form>
           <div class="mb-3">
             <label for="user" class="form-label">Username</label>
-            <input type="text" class="form-control" id="user" required />
+            <input type="text" class="form-control" id="user" name="user" required />
           </div>
           <div class="mb-3">
             <label for="pass" class="form-label">Password</label>
-            <input type="password" class="form-control" id="pass" required />
+            <input type="password" class="form-control" id="pass" name="pass" required />
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
       </div>
     </div>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("form button").click(function() {
+          event.preventDefault()
+          $.ajax({
+            url: window.origin + "/login",
+            type: "POST",
+            data: JSON.stringify({"user": $("#user").val(), "pass": $("#pass").val()}),
+            processData: false,
+            contentType: "application/json; charset=UTF-8",
+            success: function(data) {
+              window.location.replace("/admin")
+            },
+            error: function (data) {
+              alert("Wrong user or password!")
+            }
+          });
+        });  
+      });
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
