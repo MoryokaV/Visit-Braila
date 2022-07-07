@@ -1,11 +1,97 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Visit Braila - Admin Panel</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Visit Brăila &ndash; CMS</title>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    
+    <link rel="stylesheet" href="static/css/reset.css" />
+    <link rel="stylesheet" href="static/css/panel.css" />
+    <link rel="stylesheet" href="static/css/style.css" />
   </head>
   <body>
-    <h1>Admin Panel</h1>
-    <a href="admin/insertSight">Insert sight<a>
-    <a href="admin/listSights">List sights<a>
+    <!-- HEADER -->
+    <header>
+      <h1 class="title">Visit Brăila</h1>
+      <div class="group">
+        <a href=""><ion-icon class="icon" name="logo-google"></ion-icon></a>
+        <a href=""><ion-icon class="icon" name="logo-facebook"></ion-icon></a>
+      </div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <nav>
+        <a
+          href="#"
+          class="nav-item active group"
+          style="border-top: 1px solid #4f5962"
+        >
+          <ion-icon name="speedometer-outline"></ion-icon>
+          <p>Dashboard</p>
+        </a>
+        <a href="#" class="nav-item group">
+          <ion-icon name="business-outline"></ion-icon>
+          <p>Sights</p>
+        </a>
+        <a href="#" class="nav-item group">
+          <ion-icon name="walk-outline"></ion-icon>
+          <p>Tours</p>
+        </a>
+        <a href="#" class="nav-item group">
+          <ion-icon name="trending-up-outline"></ion-icon>
+          <p>Trending</p>
+        </a>
+        <a
+          href="#"
+          class="nav-item group"
+          style="border-bottom: 1px solid #4f5962"
+        >
+          <ion-icon name="book-outline"></ion-icon>
+          <p>About</p>
+        </a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="card">
+        <div class="card-header">
+          <h3>Sights</h3>
+          <p></p>
+        </div>
+        <div class="card-body">
+          <table id="sights-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Position</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <script type="text/javascript" src="../static/js/scripts.js"></script>
   </body>
 </html>

@@ -39,11 +39,7 @@ def insertSight():
 
         return redirect("/admin")
 
-    return render_template("insertSight.html")
-
-@app.route("/admin/listSights")
-def listSights():
-    return render_template("listSights.html")
+    return render_template("old/insertSight.html")
 
 @app.route("/api/fetchSights")
 def fetchSights():
