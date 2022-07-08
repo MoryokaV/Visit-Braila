@@ -23,7 +23,7 @@
     <div
       class="container h-100 flex-column d-flex align-items-center justify-content-center"
     >
-      <h2 class="mb-4">LogIn</h2>
+      <h2 class="mb-4">Login</h2>
       <div class="border p-3 w-25 rounded">
         <form>
           <div class="mb-3">
@@ -53,7 +53,6 @@
               window.location.replace("/admin")
             },
             error: function (data) {
-              // alert("Wrong user or password!")
               vt.error(data.responseText);
             }
           });

@@ -29,7 +29,7 @@ def logged_in(f):
             return redirect("/login")
     return checkLoginStatus 
 
-@app.route("/login/", methods=["POST", "GET"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
         if db.login.find_one()["username"] == request.json["user"] and db.login.find_one()["password"] == hashlib.md5(request.json["pass"].encode('utf-8')).hexdigest():

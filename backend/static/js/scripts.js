@@ -1,22 +1,22 @@
 const getRecords = (data) => {
-  if(data.length === 0)
-    return "No records"
-  else if (data.length === 1)
-    return "1 record"
-  else
-    return `${data.length} records`
-}
+  if (data.length === 0) return "No records";
+  else if (data.length === 1) return "1 record";
+  else return `${data.length} records`;
+};
 
+let quill = new Quill("#description", {
+  theme: "snow",
+});
 
 const fetchSights = async () => {
   const data = await $.getJSON(window.origin + "/api/fetchSights");
 
-  $(".card-header p").text(getRecords(data))
-  $("#sights-table tbody").empty()
+  $(".card-header p").text(getRecords(data));
+  $("#sights-table tbody").empty();
 
   for (let i = 0; i < data.length; i++) {
     $("#sights-table").append(
-        `<tr id=${data[i]._id}>
+      `<tr id=${data[i]._id}>
             <td>${data[i]._id}</td>
             <td>${data[i].name}</td>
             <td>${data[i].category}</td>
@@ -29,20 +29,27 @@ const fetchSights = async () => {
     );
   }
 
-  $(".action-delete-sight")
-    .click(function() {
-      deleteSight($(this).parent().attr('id'));
-    });  
+  $(".action-delete-sight").click(function () {
+    deleteSight($(this).parent().attr("id"));
+  });
+
+  $(".action-edit-sight").click(function () {
+    $(".modal").addClass("show");
+  });
+
+  $(".close-btn").click(function () {
+    $(".modal").removeClass("show");
+  });
 };
 
 const deleteSight = async (_id) => {
   $.ajax({
     url: window.origin + "/api/deleteSight/" + _id,
-    type: "DELETE"
+    type: "DELETE",
   });
   await fetchSights();
-}
+};
 
-$(document).ready(function() {
+$(document).ready(function () {
   fetchSights();
 });

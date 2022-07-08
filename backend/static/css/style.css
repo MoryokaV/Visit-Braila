@@ -27,6 +27,7 @@ a {
     --accent-color-light: #495057;
     --accent-color-darker: #343a40;
     --primary-color: #007bff;
+    --primary-color-shade: #1071d8; 
 }
 
 .title {
@@ -34,6 +35,12 @@ a {
     letter-spacing: -0.5;
     font-size: 2.8rem;
     color: var(--text-color-dimmed);
+}
+
+.subtitle {
+    font-weight: 500;
+    letter-spacing: 0.25;
+    font-size: 2rem;
 }
 
 .group {
@@ -50,6 +57,12 @@ a {
 
 .icon {
     font-size: 2.4rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
 }
 
 .nav-item {
@@ -130,4 +143,162 @@ tbody tr {
 
 tbody tr:hover {
     background-color: #f3f3f3;
+}
+
+.modal {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: scale(1.2);
+    pointer-events: none;
+    transition: opacity 0.15s 0s ease-in-out, transform 0.15s 0s ease-in-out;
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 2rem;
+    border: 1px solid #888;
+    width: 50%;
+    font-size: 1.8rem;
+    border-radius: 3px;
+}
+
+.modal-content header {
+    margin-bottom: 2.4rem;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 2.8rem;
+    font-weight: bold;
+}
+
+.close-btn:hover, .close-btn:focus {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+    gap: 1rem;
+}
+
+.input-field label {
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+
+.input-field input {
+    font-size: 1.6rem;
+    padding: 0.6rem 0.9rem;
+    line-height: 1.5;
+    border-radius: 3px;
+    border: 1px solid rgb(206, 212, 218);
+    transition: border-color 0.12s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input-field input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102,175,233,.6);
+}
+
+.input-field select {
+    outline: none;
+    border: 1px solid rgb(206, 212, 218);
+    border-radius: 0.4rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 1.6rem;
+    background-color: #fff;
+    line-height: 1.1;
+    min-width: 15rem;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%)
+}
+
+.add-tag-btn {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin-right: 1rem;
+}
+
+.tag-item {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+
+.img-container {
+    background-color: #f8f9fa;
+    width: 100%;
+    padding: 1rem;
+    border: 1px dashed #ced4da;
+    border-radius: 3px;   
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.img-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.6rem;
+}
+
+.img-preview a{
+    color: #868e96; 
+}
+
+.img-preview:hover a {
+    color: var(--text-color);
+}
+
+.img-preview button {
+    display: none;
+    color: #aaa;
+    font-size: 1.6rem;
+}
+
+.img-preview:hover button {
+    display: block;
+}
+
+.img-preview button:hover, .img-preview button:focus {
+    display: block;
+    color: var(--text-color);
+}
+
+.submit-btn {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    border-radius: 3px;
+    transition: background-color 0.1s ease-in;
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-color-shade);
 }

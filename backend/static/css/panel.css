@@ -4,7 +4,7 @@ body {
     grid-template-rows: auto 1fr;
 }
 
-header {
+body > header {
     grid-column: 2;
     color: var(--text-color);
     background-color: var(--accent-color-light);
@@ -15,7 +15,7 @@ header {
     box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.2);
 }
 
-aside {
+body > aside {
     background-color: var(--accent-color-darker);
     display: flex;
     flex-direction: column;
@@ -23,7 +23,8 @@ aside {
     grid-column: 1;
     grid-row: 1/-1;
     justify-content: center;
-    box-shadow: 2px 0 8px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 0 8px 3px rgba(0, 0, 0, 0.3); 
+    z-index: 1;
 }
 
 aside > nav { 
@@ -34,7 +35,7 @@ aside > nav {
     padding: 0 1.2rem;
 }
 
-main {
+body > main {
     background-color: rgb(244, 246, 249);
     /* overflow-y: scroll; */
 }
