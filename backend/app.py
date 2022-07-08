@@ -32,13 +32,12 @@ def logged_in(f):
 @app.route("/login/", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
-        print(request.json)
         if db.login.find_one()["username"] == request.json["user"] and db.login.find_one()["password"] == hashlib.md5(request.json["pass"].encode('utf-8')).hexdigest():
             session["logged_in"] = True 
             
             return make_response("Logged in", 200)
         else:
-            return make_response("Incorrect details", 401)
+            return make_response("Wrong user or password!", 401)
     return render_template("login.html")
 
 @app.route("/admin")
