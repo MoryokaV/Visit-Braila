@@ -13,20 +13,20 @@ const fetchSights = async () => {
   $(".card-header p").text(getRecords(data));
   $("#sights-table tbody").empty();
 
-  for (let i = 0; i < data.length; i++) {
+  data.map((sight) => {
     $("#sights-table").append(
-      `<tr id=${data[i]._id}>
-            <td>${data[i]._id}</td>
-            <td>${data[i].name}</td>
-            <td>${data[i].category}</td>
-            <td>${data[i].position}</td>
-            <td id=${data[i]._id} class="group">
-              <button class="btn action-edit-sight"><ion-icon class="icon" name="create-outline"></ion-icon></button>
-              <button class="btn action-delete-sight"><ion-icon class="icon" name="trash-outline"></ion-icon></button>
-            </td>
+        `<tr id=${sight._id}>
+          <td>${sight._id}</td>
+          <td>${sight.name}</td>
+          <td>${sight.tags}</td>
+          <td>${sight.position}</td>
+          <td id=${sight._id} class="group">
+            <button class="btn action-edit-sight"><ion-icon class="icon" name="create-outline"></ion-icon></button>
+            <button class="btn action-delete-sight"><ion-icon class="icon" name="trash-outline"></ion-icon></button>
+          </td>
         </tr>`
-    );
-  }
+      );
+  });
 
   $(".action-delete-sight").click(function () {
     deleteSight($(this).parent().attr("id"));
