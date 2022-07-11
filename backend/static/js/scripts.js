@@ -7,7 +7,7 @@ const getRecords = (data) => {
 };
 
 
-const fetchSights = async () => {
+export const fetchSights = async () => {
   const data = await $.getJSON(window.origin + "/api/fetchSights");
 
   $(".card-header p").text(getRecords(data));
@@ -36,10 +36,6 @@ const fetchSights = async () => {
     await openUpdateModal($(this).parent().attr("id"));
 
     $(".modal").addClass("show");
-  });
-
-  $(".close-btn").click(function () {
-    $(".modal").removeClass("show");
   });
 }; 
 

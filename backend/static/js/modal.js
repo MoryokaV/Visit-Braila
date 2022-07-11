@@ -1,5 +1,11 @@
+import { fetchSights } from './scripts.js'
+
 export const openUpdateModal = async (id) => {
-  let sight = await $.getJSON(window.origin + "/api/findSight/" + id)
+  $(".close-btn").click(function () {
+    $(".modal").removeClass("show");
+  });
+
+  let sight = await $.getJSON(window.origin + "/api/findSight/" + id);
 
   $("#name").val(sight.name);
   
@@ -35,4 +41,25 @@ export const openUpdateModal = async (id) => {
   });
   
   $("#position").val(sight.position) 
+
+  $(".modal-body form").submit(function (e) {
+    e.preventDefault();
+
+    sight.name = $("#name").val();
+    sight.description = quill.root.innerHTML;
+    sight.position = $("#position").val();
+
+    $.ajax({
+      url: window.origin + "/api/updateSight/" + id,
+      type: "PUT",
+      data: JSON.stringify(sight),
+      processData: false,
+      contentType: "application/json; charset=UTF-8",
+      success: function(data) {
+        vt.success(data);
+      }
+    });
+    
+    fetchSights();
+  });
 }

@@ -37,7 +37,7 @@ def login():
             
             return make_response("Logged in", 200)
         else:
-            return make_response("Wrong user or password!", 401)
+            return make_response("Wrong user or password", 401)
     return render_template("login.html")
 
 @app.route("/admin")
@@ -85,8 +85,10 @@ def findSight(_id):
 
 @app.route("/api/updateSight/<_id>", methods=["PUT"])
 def updateSight(_id):
-    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": name, "tags": tags, "description": description, "images": paths, "position": position}})
-    return "Successfully updated document"
+    sight = request.get_json()
+
+    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "position": sight['position']}})
+    return make_response("Entry has been updated", 200)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080);
