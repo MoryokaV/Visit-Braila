@@ -50,7 +50,7 @@ def index():
 def insertSight():
     if request.method == "POST":
         name = request.form["name"] 
-        category = request.form["category"]
+        tags = [] 
         description = request.form["description"]
 
         paths = []
@@ -64,7 +64,7 @@ def insertSight():
         
         position = request.form["position"]
 
-        db.sights.insert_one({"name": name, "category": category, "description": description, "images": paths, "position": position})
+        db.sights.insert_one({"name": name, "tags": tags, "description": description, "images": paths, "position": position})
 
         return redirect("/admin")
 
@@ -85,7 +85,7 @@ def findSight(_id):
 
 @app.route("/api/updateSight/<_id>", methods=["PUT"])
 def updateSight(_id):
-    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": name, "category": category, "description": description, "images": paths, "position": position}})
+    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": name, "tags": tags, "description": description, "images": paths, "position": position}})
     return "Successfully updated document"
 
 if __name__ == '__main__':
