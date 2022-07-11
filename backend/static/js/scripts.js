@@ -1,12 +1,11 @@
+import { openUpdateModal } from './modal.js';
+
 const getRecords = (data) => {
   if (data.length === 0) return "No records";
   else if (data.length === 1) return "1 record";
   else return `${data.length} records`;
 };
 
-let quill = new Quill("#description", {
-  theme: "snow",
-});
 
 const fetchSights = async () => {
   const data = await $.getJSON(window.origin + "/api/fetchSights");
@@ -33,14 +32,16 @@ const fetchSights = async () => {
     deleteSight($(this).parent().attr("id"));
   });
 
-  $(".action-edit-sight").click(function () {
+  $(".action-edit-sight").click(async function () {
+    await openUpdateModal($(this).parent().attr("id"));
+
     $(".modal").addClass("show");
   });
 
   $(".close-btn").click(function () {
     $(".modal").removeClass("show");
   });
-};
+}; 
 
 const deleteSight = async (_id) => {
   $.ajax({

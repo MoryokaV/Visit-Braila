@@ -238,7 +238,7 @@ tbody tr:hover {
 }
 
 .add-tag-btn {
-    color: var(--primary-color);
+    color: var(--primary-color);    
     font-size: 1.4rem;
     margin-right: 1rem;
 }
