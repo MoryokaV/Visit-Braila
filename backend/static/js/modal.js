@@ -1,14 +1,22 @@
 import { fetchSights } from './scripts.js'
 
+const closeModal = () => {
+  $(".ql-toolbar").remove();
+  $("#description").removeClass("ql-container ql-snow");
+
+  $(".modal").removeClass("show");  
+}
+
 export const openUpdateModal = async (id) => {
   $(".close-btn").click(function () {
-    $(".modal").removeClass("show");
+    closeModal();   
   });
 
   let sight = await $.getJSON(window.origin + "/api/findSight/" + id);
 
   $("#name").val(sight.name);
   
+  $("#active-tags").empty()
   sight.tags.map((tag) => $("#active-tags").append(`<p class="tag-item">${tag}</p>`));
   //TODO: get tags for <option>
 
@@ -17,6 +25,7 @@ export const openUpdateModal = async (id) => {
     theme: "snow",
   });
 
+  $(".img-container").empty()
   sight.images.map((image, index) => {
     const filename = image.substring(image.lastIndexOf('/') + 1);
 
@@ -61,5 +70,6 @@ export const openUpdateModal = async (id) => {
     });
     
     fetchSights();
+    closeModal();
   });
 }
