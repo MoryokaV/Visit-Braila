@@ -1,4 +1,5 @@
 import { fetchSights } from './scripts.js'
+import displayToast from './toast.js'
 
 const closeModal = () => {
   $(".ql-toolbar").remove();
@@ -65,7 +66,7 @@ export const openUpdateModal = async (id) => {
       processData: false,
       contentType: "application/json; charset=UTF-8",
       success: function(data) {
-        vt.success(data);
+        displayToast(data, "success");
       }
     });
     
