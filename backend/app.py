@@ -20,6 +20,10 @@ Session(app)
 client = MongoClient(os.getenv("MONGO_URL"));
 db = client.visitbraila
 
+@app.route("/")
+def root():
+    return redirect("/admin")
+
 def logged_in(f):
     @wraps(f)
     def checkLoginStatus(*args, **kwargs):
