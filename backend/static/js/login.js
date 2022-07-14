@@ -1,5 +1,3 @@
-import displayToast from './toast.js';
-
 $(document).ready(function () {
   $("form button").click(function() {
     event.preventDefault()
@@ -13,7 +11,7 @@ $(document).ready(function () {
         window.location.replace("/admin")
       },
       error: function(data) {
-        displayToast(data.responseText, "error")
+        alert(data.responseText)
       }
     });
   });  
