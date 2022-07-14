@@ -8,7 +8,6 @@ body {
     width: 100vw;
     height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    line-height: 1;
     color: var(--text-color);
 }
 
@@ -28,6 +27,7 @@ a {
     --accent-color-darker: #343a40;
     --primary-color: #007bff;
     --primary-color-shade: #1071d8; 
+    --border-color: rgb(206, 212, 218);
 }
 
 .title {
@@ -65,6 +65,12 @@ a {
     align-items: center;
 }
 
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .card {
     background-color: #fff;
     box-shadow: rgba(0, 0, 0,0.125) 0px 0px 1px 0px, rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
@@ -75,7 +81,7 @@ a {
 }
 
 .card-header {
-    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid var(--border-color);
     padding: 1.2rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -84,7 +90,6 @@ a {
 
 .card-header h3 {
     font-size: 2rem;
-    font-weight: 400;
 }
 
 .card-header p {
@@ -94,7 +99,7 @@ a {
 
 .card-body {
     height: 40%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 table {
@@ -108,7 +113,7 @@ thead tr{
     background-color: #fff;
     position: sticky;
     top: 0px;
-    border-bottom: 2px solid rgb(222, 226, 230);
+    border-bottom: 2px solid var(--border-color);
 }
 
 th, td {
@@ -118,7 +123,7 @@ th, td {
 }
 
 tbody tr {
-    border-top: 0.01px solid rgb(222, 226, 230);
+    border-top: 0.01px solid var(--border-color);
 }
 
 tbody tr:hover {
@@ -153,12 +158,12 @@ tbody tr:hover {
     left: 50%;
     max-height: 90%;
     transform: translate(-50%, -50%);
-    overflow-y: scroll; 
+    overflow-y: auto; 
     padding: 2rem;
-    border: 1px solid #888;
     min-width: 40%;
     font-size: 1.8rem;
     border-radius: 3px;
+    border: 1px solid var(--border-color);
 }
 
 .modal-content header {
@@ -169,7 +174,6 @@ tbody tr:hover {
     color: #aaa;
     float: right;
     font-size: 2.8rem;
-    font-weight: bold;
 }
 
 .close-btn:hover, .close-btn:focus {
@@ -187,7 +191,6 @@ tbody tr:hover {
 
 .input-field label {
     font-size: 1.8rem;
-    font-weight: 400;
 }
 
 .input-field input {
@@ -195,7 +198,7 @@ tbody tr:hover {
     padding: 0.6rem 0.9rem;
     line-height: 1.5;
     border-radius: 3px;
-    border: 1px solid rgb(206, 212, 218);
+    border: 1px solid var(--border-color);
     transition: border-color 0.12s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -207,14 +210,14 @@ tbody tr:hover {
 
 .input-field select {
     outline: none;
-    border: 1px solid rgb(206, 212, 218);
-    border-radius: 0.4rem;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
     padding: 0.4rem 0.6rem;
     font-size: 1.6rem;
     background-color: #fff;
     line-height: 1.1;
     min-width: 15rem;
-    background-image: linear-gradient(to top, #f9f9f9, #fff 33%)
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 
 .add-tag-btn {
@@ -236,7 +239,7 @@ tbody tr:hover {
     background-color: #f8f9fa;
     width: 100%;
     padding: 1rem;
-    border: 1px dashed #ced4da;
+    border: 1px dashed var(--border-color);
     border-radius: 3px;   
     display: flex;
     flex-direction: column;
@@ -277,8 +280,7 @@ tbody tr:hover {
     background-color: var(--primary-color);
     padding: 1rem 2rem;
     color: #fff;
-    font-size: 1.8rem;
-    font-weight: 500;
+    font-size: 1.6rem;
     margin-top: 1rem;
     border-radius: 3px;
     transition: background-color 0.1s ease-in;

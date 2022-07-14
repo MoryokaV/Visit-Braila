@@ -10,7 +10,7 @@ const getRecords = (data) => {
 export const fetchSights = async () => {
   const data = await $.getJSON(window.origin + "/api/fetchSights");
 
-  $(".card-header p").text(getRecords(data));
+  $("#sights-records").text(getRecords(data));
   $("#sights-table tbody").empty();
 
   data.map((sight) => {

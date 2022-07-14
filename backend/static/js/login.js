@@ -15,4 +15,16 @@ $(document).ready(function () {
       }
     });
   });  
+
+  $(".eye-icon").on("click", function() {
+    const passwordField = $("#pass");
+
+    if(passwordField.attr('type') === "password"){
+      $(this).attr("name", "eye-outline")
+      passwordField.attr('type', 'text');
+    } else {
+      $(this).attr("name", "eye-off-outline")
+      passwordField.attr('type', 'password');
+    }
+  });
 });
