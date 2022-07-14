@@ -156,7 +156,7 @@ tbody tr:hover {
     overflow-y: scroll; 
     padding: 2rem;
     border: 1px solid #888;
-    width: 50%;
+    min-width: 40%;
     font-size: 1.8rem;
     border-radius: 3px;
 }

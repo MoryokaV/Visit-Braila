@@ -1,6 +1,6 @@
 body {
     display: grid;
-    grid-template-columns: 25rem 1fr;
+    grid-template-columns: 25rem minmax(0, 1fr);
     grid-template-rows: auto 1fr;
 }
 
@@ -56,5 +56,4 @@ aside > nav {
 
 body > main {
     background-color: rgb(244, 246, 249);
-    /* overflow-y: scroll; */
 }
