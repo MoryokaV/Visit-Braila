@@ -12,7 +12,6 @@ body > header {
     align-items: center;
     justify-content: space-between;
     padding: 1.2rem 1.6rem;
-    box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.2);
 }
 
 body > aside {
@@ -33,6 +32,26 @@ aside > nav {
     font-size: 1.8rem;
     width: 100%;
     padding: 0 1.2rem;
+}
+
+.nav-item {
+    color: var(--text-color);
+    margin-bottom: 1.2rem;
+    padding: 1rem 1.6rem;
+    border-radius: 3px;
+    font-weight: 500;
+    color: var(--text-color-dimmed)
+}
+
+.nav-item:hover {
+    background-color: var(--accent-color-light);
+    color: #fff;
+}
+
+.nav-item.active {
+    background-color: var(--primary-color);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    color: #fff; 
 }
 
 body > main {
