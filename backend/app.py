@@ -80,6 +80,11 @@ def fetchSights():
 
 @app.route("/api/deleteSight/<_id>", methods=["DELETE"])
 def deleteSight(_id):
+    #delete local sight images
+    images = json.loads(findSight(_id))['images']
+    for image in images:
+        os.remove(os.path.join(app.config["MEDIA_FOLDER"], image))
+
     db.sights.delete_one({"_id": ObjectId(_id)})
     return "Successfully deleted document"
 
@@ -94,5 +99,12 @@ def updateSight(_id):
     db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "position": sight['position']}})
     return make_response("Entry has been updated", 200)
 
+def init_dir():
+    if not os.path.exists(app.config["MEDIA_FOLDER"] + "/sights"):
+        os.makedirs(app.config["MEDIA_FOLDER"] + "/sights")
+    if not os.path.exists(app.config["MEDIA_FOLDER"] + "/tours"):
+        os.makedirs(app.config["MEDIA_FOLDER"] + "/tours")
+
 if __name__ == '__main__':
+    init_dir()
     app.run(debug=True, port=8080);
