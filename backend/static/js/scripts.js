@@ -27,16 +27,6 @@ export const fetchSights = async () => {
         </tr>`
       );
   });
-
-  $(".action-delete-sight").click(function () {
-    deleteSight($(this).parent().attr("id"));
-  });
-
-  $(".action-edit-sight").click(async function () {
-    await openUpdateModal($(this).parent().attr("id"));
-
-    $(".modal").addClass("show");
-  });
 }; 
 
 const deleteSight = async (_id) => {
@@ -47,6 +37,16 @@ const deleteSight = async (_id) => {
   await fetchSights();
 };
 
-$(document).ready(function () {
-  fetchSights();
+$(document).ready(async function () {
+  await fetchSights();
+
+  $("#sights-table").on('click', ".action-delete-sight", function () {
+    deleteSight($(this).parent().attr("id"));
+  });
+
+  $("#sights-table").on('click', ".action-edit-sight", async function () {
+    await openUpdateModal($(this).parent().attr("id"));
+
+    $(".modal").addClass("show");
+  });
 });

@@ -99,6 +99,27 @@ def updateSight(_id):
     db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "position": sight['position']}})
     return make_response("Entry has been updated", 200)
 
+@app.route("/api/uploadImages/<folder>", methods=["POST"])
+def uploadImage(folder):
+    for image in request.files.getlist('files[]'):
+        filename = image.filename
+
+        path = folder + "/" + filename
+        
+        image.save(os.path.join(app.config["MEDIA_FOLDER"], path))
+
+    return make_response("Images have been uploaded!", 200)
+
+@app.route("/api/deleteImages/<folder>", methods=["DELETE"])
+def deleteImage(folder):
+    images = request.get_json()['images']
+
+    for image in images:
+        path = folder + "/" + image
+        os.remove(os.path.join(app.config['MEDIA_FOLDER'], path))
+
+    return make_response("Images have been deleted!", 200)
+
 def init_dir():
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/sights"):
         os.makedirs(app.config["MEDIA_FOLDER"] + "/sights")
