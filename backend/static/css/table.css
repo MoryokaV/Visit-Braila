@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    font-size: 1.6rem;
+}
+
+thead tr{
+    color: rgb(33, 37, 41);
+    font-weight: 700;
+    background-color: #fff;
+    position: sticky;
+    top: 0px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+th, td {
+    padding: 1.6rem 2.4rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+tbody tr {
+    border-top: 0.01px solid var(--border-color);
+}
+
+tbody tr:hover {
+    background-color: #f3f3f3;
+}

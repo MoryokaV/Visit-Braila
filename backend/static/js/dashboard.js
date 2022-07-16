@@ -1,11 +1,10 @@
-import { openUpdateModal } from './modal.js';
+import { openEditSightModal } from './modal.js';
 
 const getRecords = (data) => {
   if (data.length === 0) return "No records";
   else if (data.length === 1) return "1 record";
   else return `${data.length} records`;
 };
-
 
 export const fetchSights = async () => {
   const data = await $.getJSON(window.origin + "/api/fetchSights");
@@ -45,8 +44,7 @@ $(document).ready(async function () {
   });
 
   $("#sights-table").on('click', ".action-edit-sight", async function () {
-    await openUpdateModal($(this).parent().attr("id"));
-
+    await openEditSightModal($(this).parent().attr("id"));
     $(".modal").addClass("show");
   });
 });

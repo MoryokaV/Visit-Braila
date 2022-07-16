@@ -92,8 +92,8 @@ def deleteSight(_id):
 def findSight(_id):
     return json.dumps(db.sights.find_one({"_id": ObjectId(_id)}), default=str)
 
-@app.route("/api/updateSight/<_id>", methods=["PUT"])
-def updateSight(_id):
+@app.route("/api/editSight/<_id>", methods=["PUT"])
+def editSight(_id):
     sight = request.get_json()
 
     db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "position": sight['position']}})

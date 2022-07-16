@@ -1,22 +1,20 @@
-import { fetchSights } from './scripts.js'
+import { fetchSights } from './dashboard.js'
 
 let sight = {};
-let quill = undefined;
 let current_images = [];
 let formData = undefined;
 let images_to_delete = [];
+let quill = undefined;
 
 const closeModal = () => {
   $(".ql-toolbar").remove();
-  $("#description").removeClass("ql-container ql-snow");
-
   $(".modal").removeClass("show");  
 }
 
 const getFilename = image => image.substring(image.lastIndexOf('/') + 1);
 
 const appendSightImage = (image) => {
-  $(".img-container").append(
+  $("#sight-modal .img-container").append(
       `<li class="img-preview">
         <a href="../static/media/${image}" class="group">
           <ion-icon name="image-outline"></ion-icon>
@@ -29,34 +27,32 @@ const appendSightImage = (image) => {
     ); 
 }
 
-export const openUpdateModal = async (id) => {
-  sight = await $.getJSON(window.origin + "/api/findSight/" + id);
+export const openEditSightModal = async (id) => {
+  sight = await $.getJSON("/api/findSight/" + id);
   current_images = [...sight.images];
   formData = new FormData();
   images_to_delete = [];
 
   // NAME
-  $("#name").val(sight.name);
+  $("#sight-modal #name").val(sight.name);
   
   // TAGS
-  $("#active-tags").empty()
-  sight.tags.map((tag) => $("#active-tags").append(`<p class="tag-item">${tag}</p>`));
+  $("#sight-modal #active-tags").empty()
+  sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<p class="tag-item">${tag}</p>`));
   //TODO: get tags for <option>
 
   // DESCRIPTION
-  $("#description").html(sight.description)
-  quill = new Quill("#description", {
+  $("#sight-modal #description").html(sight.description)
+  quill = new Quill("#sight-modal #description", {
     theme: "snow",
   });
 
   // IMAGES
-  $(".img-container").empty()
+  $("#sight-modal .img-container").empty()
   sight.images.map((image) => appendSightImage(image));
 
-  $('#images').change(function() {
-    const new_images = $("#images").prop('files');
-
-    Array.from(new_images).map((image) => {
+  $('#sight-modal #images').change(function() {
+    Array.from($(this).prop('files')).map((image) => {
       if(current_images.includes("sights/" + image.name)){
         alert("Image is already present in list!");
         return;
@@ -72,14 +68,14 @@ export const openUpdateModal = async (id) => {
   });
   
   // POSITION
-  $("#position").val(sight.position) 
+  $("#sight-modal #position").val(sight.position) 
 }
 
 $(document).ready(async function () {
   $(".close-btn").click(closeModal);
 
-  // IMAGES 
-  $(".img-container").on("click", ".remove-img-btn", function (e) {
+  // SIGHT IMAGES 
+  $("#sight-modal .img-container").on("click", ".remove-img-btn", function (e) {
     if(current_images.length === 1){
       alert("Entry must have at least one image.");
       return;
@@ -102,15 +98,15 @@ $(document).ready(async function () {
   });
 
   // SUBMIT
-  $(".modal-body form").submit(async function (e) {
+  $("#sight-modal form").submit(async function (e) {
     e.preventDefault();
 
-    sight.name = $("#name").val();
+    sight.name = $("#sight-modal #name").val();
     sight.description = quill.root.innerHTML;
-    sight.position = $("#position").val();
+    sight.position = $("#sight-modal #position").val();
 
     if(images_to_delete.length > 0)
-      $.ajax({
+      await $.ajax({
         url: "/api/deleteImages/sights",
         type: "DELETE",
         data: JSON.stringify({"images": images_to_delete}),
@@ -122,7 +118,7 @@ $(document).ready(async function () {
       });
 
     if(formData.getAll("files[]").length > 0)
-      $.ajax({
+      await $.ajax({
         type: "POST",
         url: "/api/uploadImages/sights",
         contentType: false,
@@ -137,7 +133,7 @@ $(document).ready(async function () {
     sight.images = [...current_images];
 
     await $.ajax({
-      url: "/api/updateSight/" + sight._id,
+      url: "/api/editSight/" + sight._id,
       type: "PUT",
       data: JSON.stringify(sight),
       processData: false,

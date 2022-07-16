@@ -18,6 +18,7 @@
     />
     <link rel="stylesheet" href="static/css/reset.css" />
     <link rel="stylesheet" href="static/css/panel.css" />
+    <link rel="stylesheet" href="static/css/table.css" />
     <link rel="stylesheet" href="static/css/style.css" />
     <link rel="stylesheet" href="static/css/queries.css" />
   </head>
@@ -93,14 +94,14 @@
       </div>
     </main>
 
-    <!-- SIGHT UPDATE MODAL -->
-    <div class="modal">
+    <!-- SIGHT EDIT MODAL -->
+    <div class="modal" id="sight-modal">
       <div class="modal-content">
         <header>
           <button class="btn close-btn">
             <ion-icon class="icon" name="close-circle-outline"></ion-icon>
           </button>
-          <h2 class="subtitle">Update entry</h2>
+          <h2 class="subtitle">Edit entry</h2>
         </header>
         <div class="modal-body">
           <form>
@@ -138,13 +139,13 @@
               <label for="position">Position</label>
               <input type="text" id="position" name="position" required />
             </div>
-            <button type="submit" class="btn submit-btn" id="update-btn">Save</button>
+            <button type="submit" class="btn primary-btn">Save</button>
           </form>
         </div>
       </div>
     </div>
 
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script type="module" src="static/js/scripts.js"></script>
+    <script type="module" src="static/js/dashboard.js"></script>
   </body>
 </html>
