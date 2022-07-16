@@ -68,7 +68,7 @@ def insertSight():
         
         position = request.form["position"]
 
-        db.sights.insert_one({"name": name, "tags": tags, "description": description, "images": paths, "position": position})
+        db.sights.insert_one({"name": name, "tags": tags, "description": description, "images": paths, "primary_image": "1", "position": position})
 
         return redirect("/admin")
 
@@ -80,7 +80,7 @@ def fetchSights():
 
 @app.route("/api/deleteSight/<_id>", methods=["DELETE"])
 def deleteSight(_id):
-    #delete local sight images
+    #delete local sight images first
     images = json.loads(findSight(_id))['images']
     for image in images:
         os.remove(os.path.join(app.config["MEDIA_FOLDER"], image))
@@ -96,7 +96,7 @@ def findSight(_id):
 def editSight(_id):
     sight = request.get_json()
 
-    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "position": sight['position']}})
+    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight["primary_image"], "position": sight['position']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])

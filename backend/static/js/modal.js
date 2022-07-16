@@ -13,18 +13,20 @@ const closeModal = () => {
 
 const getFilename = image => image.substring(image.lastIndexOf('/') + 1);
 
-const appendSightImage = (image) => {
+const appendSightImage = (image, uploaded = false, index) => {
   $("#sight-modal .img-container").append(
       `<li class="img-preview">
-        <a href="../static/media/${image}" class="group">
-          <ion-icon name="image-outline"></ion-icon>
+        <a ${uploaded ? `href="../static/media/${image}" target="_blank"` : ``} class="group">
+          ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
           ${getFilename(image)}
         </a>
         <button type="button" class="btn remove-img-btn">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`
-    ); 
+    );
+
+  $("#sight-modal #primary-image").attr("max", current_images.length);
 }
 
 export const openEditSightModal = async (id) => {
@@ -49,7 +51,9 @@ export const openEditSightModal = async (id) => {
 
   // IMAGES
   $("#sight-modal .img-container").empty()
-  sight.images.map((image) => appendSightImage(image));
+  sight.images.map((image) => appendSightImage(image, true));
+
+  $("#sight-modal #primary-image").val(sight.primary_image);
 
   $('#sight-modal #images').change(function() {
     Array.from($(this).prop('files')).map((image) => {
@@ -103,6 +107,7 @@ $(document).ready(async function () {
 
     sight.name = $("#sight-modal #name").val();
     sight.description = quill.root.innerHTML;
+    sight.primary_image = $("#sight-modal #primary-image").val();
     sight.position = $("#sight-modal #position").val();
 
     if(images_to_delete.length > 0)
