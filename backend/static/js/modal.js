@@ -45,8 +45,8 @@ export const openEditSightModal = async (id) => {
   
   // TAGS
   appendActiveTags();
-  
-  $("#sight-modal #tags").empty();
+
+  $('#sight-modal #tags option:gt(1)').remove()
   tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag}">${tag}</option>`));
   $("#sight-modal #tags").change(function() {
     if(!sight.tags.includes($(this).val())){
@@ -138,6 +138,8 @@ $(document).ready(async function () {
     }
 
     current_images.splice($(this).parent().index(), 1)
+    
+    $("#sight-modal #primary-image").attr("max", current_images.length);
     
     $(this).parent().remove();
   });
