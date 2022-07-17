@@ -1,4 +1,4 @@
-import { fetchSights } from './dashboard.js'
+import { fetchSights, tags } from './dashboard.js'
 
 let sight = {};
 let current_images = [];
@@ -29,6 +29,11 @@ const appendSightImage = (image, uploaded = false, index) => {
   $("#sight-modal #primary-image").attr("max", current_images.length);
 }
 
+const appendActiveTags = () => {
+  $("#sight-modal #active-tags").empty()
+  sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<p class="tag-item">${tag}</p>`));
+}
+
 export const openEditSightModal = async (id) => {
   sight = await $.getJSON("/api/findSight/" + id);
   current_images = [...sight.images];
@@ -39,10 +44,46 @@ export const openEditSightModal = async (id) => {
   $("#sight-modal #name").val(sight.name);
   
   // TAGS
-  $("#sight-modal #active-tags").empty()
-  sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<p class="tag-item">${tag}</p>`));
-  //TODO: get tags for <option>
+  appendActiveTags();
+  
+  $("#sight-modal #tags").empty();
+  tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag}">${tag}</option>`));
+  $("#sight-modal #tags").change(function() {
+    if(!sight.tags.includes($(this).val())){
+      $("#sight-modal #tag-btn")
+        .removeClass("danger")
+        .text("Add")
+        .off("click")
+        .click(function() {
+          if(sight.tags.length === 3){
+            alert("You cannot use more than 3 tags!");
+            return;
+          }
 
+          sight.tags.push($("#sight-modal #tags").val());
+
+          appendActiveTags(); 
+
+          $(this).off("click");
+          $("#sight-modal #tags").val("-");
+        }); 
+    }else{
+      $("#sight-modal #tag-btn")
+        .addClass("danger")
+        .text("Remove")
+        .off("click")
+        .click(function() {
+          const index = sight.tags.indexOf($("#sight-modal #tags").val());
+          sight.tags.splice(index, 1);
+
+          appendActiveTags(); 
+
+          $(this).removeClass("danger").text("Add").off("click");
+          $("#sight-modal #tags").val("-");
+        });
+    }
+  });
+  
   // DESCRIPTION
   $("#sight-modal #description").html(sight.description)
   quill = new Quill("#sight-modal #description", {

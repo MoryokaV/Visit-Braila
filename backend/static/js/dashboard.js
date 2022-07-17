@@ -6,6 +6,8 @@ const getRecords = (data) => {
   else return `${data.length} records`;
 };
 
+export const tags = ["Relax", "History", "Food", "Shopping", "Religion"]
+
 export const fetchSights = async () => {
   const data = await $.getJSON(window.origin + "/api/fetchSights");
 

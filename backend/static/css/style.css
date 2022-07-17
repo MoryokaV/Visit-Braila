@@ -192,12 +192,6 @@ a {
     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 
-.add-tag-btn {
-    color: var(--primary-color);    
-    font-size: 1.4rem;
-    margin-right: 1rem;
-}
-
 .tag-item {
     background-color: var(--primary-color);
     color: #fff;
@@ -260,4 +254,14 @@ a {
 
 .primary-btn:hover {
     background-color: var(--primary-color-shade);
+}
+
+.text-btn {
+    color: var(--primary-color);    
+    font-size: 1.4rem;
+    margin-right: 1rem;
+}
+
+.text-btn.danger {
+  color: #f03e3e;
 }
