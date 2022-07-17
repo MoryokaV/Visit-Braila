@@ -31,11 +31,13 @@ export const fetchSights = async () => {
 }; 
 
 const deleteSight = async (_id) => {
-  $.ajax({
-    url: window.origin + "/api/deleteSight/" + _id,
-    type: "DELETE",
-  });
-  await fetchSights();
+  if(confirm("Are you sure you want to delete the entry?")){
+    $.ajax({
+      url: window.origin + "/api/deleteSight/" + _id,
+      type: "DELETE",
+    });
+    await fetchSights();
+  }
 };
 
 $(document).ready(async function () {

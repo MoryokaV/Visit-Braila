@@ -41,7 +41,7 @@ def login():
             
             return make_response("Logged in", 200)
         else:
-            return make_response("Wrong user or password", 401)
+            return make_response("Wrong user or password!", 401)
     return render_template("login.html")
 
 @app.route("/admin")
