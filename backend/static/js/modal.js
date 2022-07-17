@@ -7,8 +7,8 @@ let images_to_delete = [];
 let quill = undefined;
 
 const closeModal = () => {
-  $(".ql-toolbar").remove();
   $(".modal").removeClass("show");  
+  $(".ql-toolbar").remove();
 }
 
 const getFilename = image => image.substring(image.lastIndexOf('/') + 1);

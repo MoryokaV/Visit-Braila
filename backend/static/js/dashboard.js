@@ -16,7 +16,7 @@ export const fetchSights = async () => {
 
   data.map((sight) => {
     $("#sights-table").append(
-        `<tr id=${sight._id}>
+        `<tr>
           <td>${sight._id}</td>
           <td>${sight.name}</td>
           <td>${sight.tags}</td>
