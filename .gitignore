@@ -10,6 +10,11 @@
 .svn/
 migrate_working_dir/
 
+#Python/Flask
+backend/flask_session/
+backend/static/media/sights/
+backend/static/media/tours/
+
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id

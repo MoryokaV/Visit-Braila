@@ -1,0 +1,6 @@
+/* BELOW 1344px */
+@media (max-width:  84em) {
+	.modal-content {
+		min-width: 50%;
+	}
+}
