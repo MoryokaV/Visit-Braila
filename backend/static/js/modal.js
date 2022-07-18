@@ -48,6 +48,27 @@ export const openEditSightModal = async (id) => {
 
   $('#sight-modal #tags option:gt(1)').remove()
   tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag}">${tag}</option>`));
+  
+  // DESCRIPTION
+  $("#sight-modal #description").html(sight.description)
+  quill = new Quill("#sight-modal #description", {
+    theme: "snow",
+  });
+
+  // IMAGES
+  $("#sight-modal .img-container").empty()
+  sight.images.map((image) => appendSightImage(image, true));
+
+  $("#sight-modal #primary-image").val(sight.primary_image);
+
+  // POSITION
+  $("#sight-modal #position").val(sight.position) 
+}
+
+$(document).ready(async function () {
+  $(".close-btn").click(closeModal);
+
+  // SIGHT TAGS
   $("#sight-modal #tags").change(function() {
     if(!sight.tags.includes($(this).val())){
       $("#sight-modal #tag-btn")
@@ -62,11 +83,11 @@ export const openEditSightModal = async (id) => {
 
           sight.tags.push($("#sight-modal #tags").val());
 
-          appendActiveTags(); 
+          appendActiveTags();
 
           $(this).off("click");
           $("#sight-modal #tags").val("-");
-        }); 
+        });
     }else{
       $("#sight-modal #tag-btn")
         .addClass("danger")
@@ -76,26 +97,15 @@ export const openEditSightModal = async (id) => {
           const index = sight.tags.indexOf($("#sight-modal #tags").val());
           sight.tags.splice(index, 1);
 
-          appendActiveTags(); 
+          appendActiveTags();
 
           $(this).removeClass("danger").text("Add").off("click");
           $("#sight-modal #tags").val("-");
         });
     }
   });
-  
-  // DESCRIPTION
-  $("#sight-modal #description").html(sight.description)
-  quill = new Quill("#sight-modal #description", {
-    theme: "snow",
-  });
 
-  // IMAGES
-  $("#sight-modal .img-container").empty()
-  sight.images.map((image) => appendSightImage(image, true));
-
-  $("#sight-modal #primary-image").val(sight.primary_image);
-
+  // SIGHT IMAGES 
   $('#sight-modal #images').change(function() {
     Array.from($(this).prop('files')).map((image) => {
       if(current_images.includes("sights/" + image.name)){
@@ -111,15 +121,7 @@ export const openEditSightModal = async (id) => {
 
     $(this).val(null)
   });
-  
-  // POSITION
-  $("#sight-modal #position").val(sight.position) 
-}
 
-$(document).ready(async function () {
-  $(".close-btn").click(closeModal);
-
-  // SIGHT IMAGES 
   $("#sight-modal .img-container").on("click", ".remove-img-btn", function (e) {
     if(current_images.length === 1){
       alert("Entry must have at least one image.");
@@ -144,7 +146,7 @@ $(document).ready(async function () {
     $(this).parent().remove();
   });
 
-  // SUBMIT
+  // EDIT SIGHT SUBMIT
   $("#sight-modal form").submit(async function (e) {
     e.preventDefault();
 

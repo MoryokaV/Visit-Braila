@@ -265,3 +265,8 @@ a {
 .text-btn.danger {
   color: #f03e3e;
 }
+
+.hint-text {
+    font-size: 1rem;
+    color: var(--text-color-dimmed);
+}
