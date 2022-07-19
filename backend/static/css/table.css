@@ -10,6 +10,7 @@ thead tr{
     position: sticky;
     top: 0px;
     border-bottom: 2px solid var(--border-color);
+    z-index: 1;
 }
 
 th, td {

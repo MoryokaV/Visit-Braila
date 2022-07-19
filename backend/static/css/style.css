@@ -65,16 +65,62 @@ a {
     align-items: center;
 }
 
+.primary-btn {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    color: #fff;
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    border-radius: 3px;
+    transition: background-color 0.1s ease-in;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-color-shade);
+}
+
+.text-btn {
+    color: var(--primary-color);    
+    font-size: 1.4rem;
+    margin-right: 1rem;
+}
+
+.text-btn.danger {
+  color: #f03e3e;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 2.8rem;
+}
+
+.close-btn:hover, .close-btn:focus {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hint-text {
+    font-size: 1rem;
+    color: var(--text-color-dimmed);
+}
+
 .container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+/* #### CARD #### */
+
 .card {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0,0.125) 0px 0px 1px 0px, rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
     width: 90%;
+    height: calc(50% - 4.8rem);
     margin: 3.2rem auto;
     border-radius: 5px;
     overflow-y: hidden;
@@ -98,9 +144,11 @@ a {
 }
 
 .card-body {
-    height: 40%;
-    overflow-y: auto;
+    flex-grow: 1;
+    overflow: auto;
 }
+
+/* #### MODAL #### */
 
 .modal {
     position: fixed;
@@ -142,17 +190,7 @@ a {
     margin-bottom: 2.4rem;
 }
 
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 2.8rem;
-}
-
-.close-btn:hover, .close-btn:focus {
-    color: var(--text-color);
-    text-decoration: none;
-    cursor: pointer;
-}
+/* #### FORM #### */
 
 .input-field {
     display: flex;
@@ -240,33 +278,4 @@ a {
 .img-preview button:hover, .img-preview button:focus {
     display: block;
     color: var(--text-color);
-}
-
-.primary-btn {
-    background-color: var(--primary-color);
-    padding: 1rem 2rem;
-    color: #fff;
-    font-size: 1.6rem;
-    margin-top: 1rem;
-    border-radius: 3px;
-    transition: background-color 0.1s ease-in;
-}
-
-.primary-btn:hover {
-    background-color: var(--primary-color-shade);
-}
-
-.text-btn {
-    color: var(--primary-color);    
-    font-size: 1.4rem;
-    margin-right: 1rem;
-}
-
-.text-btn.danger {
-  color: #f03e3e;
-}
-
-.hint-text {
-    font-size: 1rem;
-    color: var(--text-color-dimmed);
 }
