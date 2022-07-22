@@ -172,5 +172,55 @@
         </div>
       </div>
     </div>
+
+    <!-- TOUR EDIT MODAL -->
+    <div class="modal" id="tour-modal">
+      <div class="modal-content">
+        <header>
+          <button class="btn close-btn">
+            <ion-icon class="icon" name="close-circle-outline"></ion-icon>
+          </button>
+          <h2 class="subtitle">Edit entry</h2>
+        </header>
+        <div class="modal-body">
+          <form>
+            <div class="input-field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="input-field row">
+              <label for="stages">Stages</label>
+            </div>
+            <div class="input-field" style="gap: 0">
+              <label for="description" style="margin-bottom: 1.2rem">Description</label>
+              <div id="description"></div>
+            </div>
+            <div class="input-field row">
+              <label for="images" style="cursor: pointer">
+                Images
+                <input
+                  type="file"
+                  id="images"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                  style="display: none"
+                />
+              </label>
+              <ul class="img-container"></ul>
+            </div>
+            <div class="input-field row">
+              <label for="primary-image">Primary image index</label>
+              <input id="primary-image" name="primary-image" type="number" min="1" value="1" required>
+            </div>
+            <div class="input-field">
+              <label for="route">Route <span class="hint-text">Note: it must be a Google Maps URL</span></label>
+              <input type="text" id="route" name="route" required />
+            </div>
+            <button type="submit" class="btn primary-btn">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

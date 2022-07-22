@@ -86,7 +86,7 @@ a {
 }
 
 .text-btn.danger {
-  color: #f03e3e;
+    color: #f03e3e;
 }
 
 .close-btn {
@@ -110,6 +110,10 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.link {
+    color: var(--primary-color);
 }
 
 /* #### CARD #### */

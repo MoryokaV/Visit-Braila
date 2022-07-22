@@ -1,6 +1,7 @@
 import { fetchSights, tags } from './dashboard.js'
 
 let sight = {};
+let tour = {};
 let current_images = [];
 let formData = undefined;
 let images_to_delete = [];
@@ -13,8 +14,8 @@ const closeModal = () => {
 
 const getFilename = image => image.substring(image.lastIndexOf('/') + 1);
 
-const appendSightImage = (image, uploaded = false, index) => {
-  $("#sight-modal .img-container").append(
+const appendImage = (image, modal_name, uploaded = false) => {
+  $(`#${modal_name}-modal .img-container`).append(
       `<li class="img-preview">
         <a ${uploaded ? `href="../static/media/${image}" target="_blank"` : ``} class="group">
           ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
@@ -26,7 +27,7 @@ const appendSightImage = (image, uploaded = false, index) => {
       </li>`
     );
 
-  $("#sight-modal #primary-image").attr("max", current_images.length);
+  $(`#${modal_name}-modal #primary-image`).attr("max", current_images.length);
 }
 
 const appendActiveTags = () => {
@@ -57,12 +58,39 @@ export const openEditSightModal = async (id) => {
 
   // IMAGES
   $("#sight-modal .img-container").empty()
-  sight.images.map((image) => appendSightImage(image, true));
+  sight.images.map((image) => appendImage(image, "sight", true));
 
   $("#sight-modal #primary-image").val(sight.primary_image);
 
   // POSITION
   $("#sight-modal #position").val(sight.position) 
+}
+
+export const openEditTourModal = async (id) => {
+  tour = await $.getJSON("/api/findTour/" + id);
+  current_images = [...tour.images];
+  formData = new FormData();
+  images_to_delete = [];
+
+  // NAME
+  $("#tour-modal #name").val(tour.name);
+
+  // STAGES
+  
+  // DESCRIPTION
+  $("#tour-modal #description").html(tour.description);
+  quill = new Quill("#tour-modal #description", {
+    theme: "snow",
+  });
+
+  // IMAGES
+  $("#tour-modal .img-container").empty()
+  tour.images.map((image) => appendImage(image, "tour", true));
+
+  $("#tour-modal #primary-image").val(tour.primary_image);
+
+  // ROUTE 
+  $("#tour-modal #route").val(tour.route);
 }
 
 $(document).ready(async function () {
@@ -116,7 +144,9 @@ $(document).ready(async function () {
       formData.append("files[]", image);
       current_images.push("sights/" + image.name);
 
-      appendSightImage("sights/" + image.name);
+      console.log("original")
+
+      appendImage("sights/" + image.name, "sight");
     });
 
     $(this).val(null)
@@ -146,7 +176,7 @@ $(document).ready(async function () {
     $(this).parent().remove();
   });
 
-  // EDIT SIGHT SUBMIT
+  // SIGHT SUBMIT
   $("#sight-modal form").submit(async function (e) {
     e.preventDefault();
 
