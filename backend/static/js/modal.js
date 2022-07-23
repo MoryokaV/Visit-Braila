@@ -1,4 +1,4 @@
-import { fetchSights, tags } from './dashboard.js'
+import { fetchSights, tags, fetchTours } from './dashboard.js'
 
 let sight = {};
 let tour = {};
@@ -14,7 +14,7 @@ const closeModal = () => {
 
 const getFilename = image => image.substring(image.lastIndexOf('/') + 1);
 
-const appendImage = (image, modal_name, uploaded = false) => {
+const appendImageElement = (image, modal_name, uploaded = false) => {
   $(`#${modal_name}-modal .img-container`).append(
       `<li class="img-preview">
         <a ${uploaded ? `href="../static/media/${image}" target="_blank"` : ``} class="group">
@@ -58,7 +58,7 @@ export const openEditSightModal = async (id) => {
 
   // IMAGES
   $("#sight-modal .img-container").empty()
-  sight.images.map((image) => appendImage(image, "sight", true));
+  sight.images.map((image) => appendImageElement(image, "sight", true));
 
   $("#sight-primary-image").val(sight.primary_image);
 
@@ -85,7 +85,7 @@ export const openEditTourModal = async (id) => {
 
   // IMAGES
   $("#tour-modal .img-container").empty()
-  tour.images.map((image) => appendImage(image, "tour", true));
+  tour.images.map((image) => appendImageElement(image, "tour", true));
 
   $("#tour-primary-image").val(tour.primary_image);
 
@@ -144,7 +144,7 @@ $(document).ready(async function () {
       formData.append("files[]", image);
       current_images.push("sights/" + image.name);
 
-      appendImage("sights/" + image.name, "sight");
+      appendImageElement("sights/" + image.name, "sight");
     });
 
     $(this).val(null)
@@ -222,6 +222,97 @@ $(document).ready(async function () {
     });
 
     await fetchSights();
+    closeModal();
+  });
+  
+  // TOUR IMAGES 
+  $('#tour-images').change(function() {
+    Array.from($(this).prop('files')).map((image) => {
+      if(current_images.includes("tours/" + image.name)){
+        alert("Image is already present in list!");
+        return;
+      }
+      
+      formData.append("files[]", image);
+      current_images.push("tours/" + image.name);
+
+      appendImageElement("tours/" + image.name, "tour");
+    });
+
+    $(this).val(null)
+  });
+
+  $("#tour-modal .img-container").on("click", ".remove-img-btn", function (e) {
+    if(current_images.length === 1){
+      alert("Entry must have at least one image.");
+      return;
+    }
+
+    //clean up FormData
+    let files = [...formData.getAll("files[]")];
+    formData.delete("files[]");
+    files = files.filter((file) => file.name !== getFilename(current_images[$(this).parent().index()]));
+    files.map((file) => formData.append("files[]", file)); 
+
+    //mark for deletion
+    if(tour.images.includes(current_images[$(this).parent().index()])){
+      images_to_delete.push(getFilename(current_images[$(this).parent().index()]));
+    }
+
+    current_images.splice($(this).parent().index(), 1)
+    
+    $("#tour-primary-image").attr("max", current_images.length);
+    
+    $(this).parent().remove();
+  });
+
+  $("#tour-modal form").submit(async function(e) {
+    e.preventDefault();
+
+    tour.name = $("#tour-name").val();
+    tour.description = quill.root.innerHTML;
+    tour.primary_image = $("#tour-primary-image").val();
+    tour.route = $("#tour-route").val();
+
+    if(images_to_delete.length > 0)
+      await $.ajax({
+        url: "/api/deleteImages/tours",
+        type: "DELETE",
+        data: JSON.stringify({"images": images_to_delete}),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+        success: function(data) {
+          console.log(data);
+        }
+      });
+    
+    if(formData.getAll("files[]").length > 0)
+      await $.ajax({
+        type: "POST",
+        url: "/api/uploadImages/tours",
+        contentType: false,
+        data: formData,
+        cache: false,
+        processData: false,
+        success: function(data) {
+          console.log(data);
+        }
+      });
+
+    tour.images = [...current_images];
+
+    await $.ajax({
+      url: "/api/editTour/" + tour._id,
+      type: "PUT",
+      data: JSON.stringify(tour),
+      processData: false,
+      contentType: "application/json; charset=UTF-8",
+      success: function(data) {
+        console.log(data);
+      }
+    });
+
+    await fetchTours();
     closeModal();
   });
 });

@@ -86,7 +86,7 @@ def deleteSight(_id):
         os.remove(os.path.join(app.config["MEDIA_FOLDER"], image))
 
     db.sights.delete_one({"_id": ObjectId(_id)})
-    return "Successfully deleted document"
+    return make_response("Successfully deleted document", 200)
 
 @app.route("/api/findSight/<_id>")
 def findSight(_id):
@@ -96,12 +96,33 @@ def findSight(_id):
 def editSight(_id):
     sight = request.get_json()
 
-    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight["primary_image"], "position": sight['position']}})
+    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/fetchTours")
 def fetchTours():
     return json.dumps(list(db.tours.find()), default=str)
+
+@app.route("/api/deleteTour/<_id>", methods=["DELETE"])
+def deleteTour(_id):
+    #delete local tour images first
+    images = json.loads(findTour(_id))['images']
+    for image in images:
+        os.remove(os.path.join(app.config["MEDIA_FOLDER"], image))
+
+    db.tours.delete_one({"_id": ObjectId(_id)})
+    return make_response("Successfully deleted document", 200)
+
+@app.route("/api/findTour/<_id>")
+def findTour(_id):
+    return json.dumps(db.tours.find_one({"_id": ObjectId(_id)}), default=str)
+
+@app.route("/api/editTour/<_id>", methods=["PUT"])
+def editTour(_id):
+    tour = request.get_json()
+
+    db.tours.update_one({"_id": ObjectId(_id)}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']}})
+    return make_response("Entry has been updated", 200)
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImage(folder):
@@ -123,10 +144,6 @@ def deleteImage(folder):
         os.remove(os.path.join(app.config['MEDIA_FOLDER'], path))
 
     return make_response("Images have been deleted!", 200)
-
-@app.route("/api/findTour/<_id>")
-def findTour(_id):
-    return json.dumps(db.tours.find_one({"_id": ObjectId(_id)}), default=str)
 
 def init_dir():
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/sights"):
