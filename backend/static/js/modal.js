@@ -87,7 +87,7 @@ export const openEditSightModal = async (id) => {
   // TAGS
   appendActiveTags();
 
-  $('#sight-modal #tags option:gt(1)').remove()
+  $('#sight-modal #tags option:gt(0)').remove()
   tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag}">${tag}</option>`));
   
   // DESCRIPTION
