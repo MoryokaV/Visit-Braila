@@ -116,6 +116,19 @@ export const openEditTourModal = async (id) => {
   $("#tour-name").val(tour.name);
 
   // STAGES
+  $("#tour-modal #stages").empty();
+  tour.stages.map((stage, index) => {
+    $("#tour-modal #stages").append(
+      `<input type="text" value="${stage}" size="${stage.length}" oninput="this.size = this.value.length" required /> 
+      ${index === tour.stages.length - 1 ? 
+        `<button type="button" class="btn text-btn" id="add-stage"> 
+          <ion-icon name="add-outline" class="icon"></ion-icon> 
+        </button>`
+        :
+        `-`
+      }`
+    );
+  });
   
   // DESCRIPTION
   $("#tour-description").html(tour.description);
