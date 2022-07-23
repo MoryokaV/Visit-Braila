@@ -130,8 +130,8 @@
         <div class="modal-body">
           <form>
             <div class="input-field">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" required />
+              <label for="sight-name">Name</label>
+              <input type="text" id="sight-name" name="name" required />
             </div>
             <div class="input-field row">
               <label for="tags">Tags</label>
@@ -142,15 +142,15 @@
               <div class="group" id="active-tags"></div>
             </div>
             <div class="input-field" style="gap: 0">
-              <label for="description" style="margin-bottom: 1.2rem">Description</label>
-              <div id="description"></div>
+              <label for="sight-description" style="margin-bottom: 1.2rem">Description</label>
+              <div id="sight-description"></div>
             </div>
             <div class="input-field row">
-              <label for="images" style="cursor: pointer">
+              <label for="sight-images" style="cursor: pointer">
                 Images
                 <input
                   type="file"
-                  id="images"
+                  id="sight-images"
                   name="images"
                   accept="image/*"
                   multiple
@@ -160,12 +160,12 @@
               <ul class="img-container"></ul>
             </div>
             <div class="input-field row">
-              <label for="primary-image">Primary image index</label>
-              <input id="primary-image" name="primary-image" type="number" min="1" value="1" required>
+              <label for="sight-primary-image">Primary image index</label>
+              <input id="sight-primary-image" name="primary-image" type="number" min="1" value="1" required>
             </div>
             <div class="input-field">
-              <label for="position">Position <span class="hint-text">Note: it must be a Google Maps URL</span></label>
-              <input type="text" id="position" name="position" required />
+              <label for="sight-position">Position <span class="hint-text">Note: it must be a Google Maps URL</span></label>
+              <input type="text" id="sight-position" name="position" required />
             </div>
             <button type="submit" class="btn primary-btn">Save</button>
           </form>
@@ -185,22 +185,22 @@
         <div class="modal-body">
           <form>
             <div class="input-field">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" required />
+              <label for="tour-name">Name</label>
+              <input type="text" id="tour-name" name="name" required />
             </div>
             <div class="input-field row">
               <label for="stages">Stages</label>
             </div>
             <div class="input-field" style="gap: 0">
-              <label for="description" style="margin-bottom: 1.2rem">Description</label>
-              <div id="description"></div>
+              <label for="tour-description" style="margin-bottom: 1.2rem">Description</label>
+              <div id="tour-description"></div>
             </div>
             <div class="input-field row">
-              <label for="images" style="cursor: pointer">
+              <label for="tour-images" style="cursor: pointer">
                 Images
                 <input
                   type="file"
-                  id="images"
+                  id="tour-images"
                   name="images"
                   accept="image/*"
                   multiple
@@ -210,12 +210,12 @@
               <ul class="img-container"></ul>
             </div>
             <div class="input-field row">
-              <label for="primary-image">Primary image index</label>
-              <input id="primary-image" name="primary-image" type="number" min="1" value="1" required>
+              <label for="tour-primary-image">Primary image index</label>
+              <input id="tour-primary-image" name="primary-image" type="number" min="1" value="1" required>
             </div>
             <div class="input-field">
-              <label for="route">Route <span class="hint-text">Note: it must be a Google Maps URL</span></label>
-              <input type="text" id="route" name="route" required />
+              <label for="tour-route">Route <span class="hint-text">Note: it must be a Google Maps URL</span></label>
+              <input type="text" id="tour-route" name="route" required />
             </div>
             <button type="submit" class="btn primary-btn">Save</button>
           </form>

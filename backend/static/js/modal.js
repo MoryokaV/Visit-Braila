@@ -27,7 +27,7 @@ const appendImage = (image, modal_name, uploaded = false) => {
       </li>`
     );
 
-  $(`#${modal_name}-modal #primary-image`).attr("max", current_images.length);
+  $(`#${modal_name}-modal #${modal_name}-primary-image`).attr("max", current_images.length);
 }
 
 const appendActiveTags = () => {
@@ -42,7 +42,7 @@ export const openEditSightModal = async (id) => {
   images_to_delete = [];
 
   // NAME
-  $("#sight-modal #name").val(sight.name);
+  $("#sight-name").val(sight.name);
   
   // TAGS
   appendActiveTags();
@@ -51,8 +51,8 @@ export const openEditSightModal = async (id) => {
   tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag}">${tag}</option>`));
   
   // DESCRIPTION
-  $("#sight-modal #description").html(sight.description)
-  quill = new Quill("#sight-modal #description", {
+  $("#sight-description").html(sight.description)
+  quill = new Quill("#sight-description", {
     theme: "snow",
   });
 
@@ -60,10 +60,10 @@ export const openEditSightModal = async (id) => {
   $("#sight-modal .img-container").empty()
   sight.images.map((image) => appendImage(image, "sight", true));
 
-  $("#sight-modal #primary-image").val(sight.primary_image);
+  $("#sight-primary-image").val(sight.primary_image);
 
   // POSITION
-  $("#sight-modal #position").val(sight.position) 
+  $("#sight-position").val(sight.position) 
 }
 
 export const openEditTourModal = async (id) => {
@@ -73,13 +73,13 @@ export const openEditTourModal = async (id) => {
   images_to_delete = [];
 
   // NAME
-  $("#tour-modal #name").val(tour.name);
+  $("#tour-name").val(tour.name);
 
   // STAGES
   
   // DESCRIPTION
-  $("#tour-modal #description").html(tour.description);
-  quill = new Quill("#tour-modal #description", {
+  $("#tour-description").html(tour.description);
+  quill = new Quill("#tour-description", {
     theme: "snow",
   });
 
@@ -87,10 +87,10 @@ export const openEditTourModal = async (id) => {
   $("#tour-modal .img-container").empty()
   tour.images.map((image) => appendImage(image, "tour", true));
 
-  $("#tour-modal #primary-image").val(tour.primary_image);
+  $("#tour-primary-image").val(tour.primary_image);
 
   // ROUTE 
-  $("#tour-modal #route").val(tour.route);
+  $("#tour-route").val(tour.route);
 }
 
 $(document).ready(async function () {
@@ -134,7 +134,7 @@ $(document).ready(async function () {
   });
 
   // SIGHT IMAGES 
-  $('#sight-modal #images').change(function() {
+  $('#sight-images').change(function() {
     Array.from($(this).prop('files')).map((image) => {
       if(current_images.includes("sights/" + image.name)){
         alert("Image is already present in list!");
@@ -143,8 +143,6 @@ $(document).ready(async function () {
 
       formData.append("files[]", image);
       current_images.push("sights/" + image.name);
-
-      console.log("original")
 
       appendImage("sights/" + image.name, "sight");
     });
@@ -171,7 +169,7 @@ $(document).ready(async function () {
 
     current_images.splice($(this).parent().index(), 1)
     
-    $("#sight-modal #primary-image").attr("max", current_images.length);
+    $("#sight-primary-image").attr("max", current_images.length);
     
     $(this).parent().remove();
   });
@@ -180,10 +178,10 @@ $(document).ready(async function () {
   $("#sight-modal form").submit(async function (e) {
     e.preventDefault();
 
-    sight.name = $("#sight-modal #name").val();
+    sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
-    sight.primary_image = $("#sight-modal #primary-image").val();
-    sight.position = $("#sight-modal #position").val();
+    sight.primary_image = $("#sight-primary-image").val();
+    sight.position = $("#sight-position").val();
 
     if(images_to_delete.length > 0)
       await $.ajax({
