@@ -14,6 +14,46 @@ const closeModal = () => {
 
 const getFilename = image => image.substring(image.lastIndexOf('/') + 1);
 
+const addImage = (folder, elem, modal) => {
+  Array.from(elem.prop('files')).map((image) => {
+    if(current_images.includes(folder + "/" + image.name)){
+      alert("Image is already present in list!");
+      return;
+    }
+
+    formData.append("files[]", image);
+    current_images.push(folder + "/" + image.name);
+
+    appendImageElement(folder + "/" + image.name, modal);
+  });
+
+  elem.val(null)
+}
+
+const removeImage = (elem, modal) => {
+  if(current_images.length === 1){
+    alert("Entry must have at least one image.");
+    return;
+  }
+
+  //clean up FormData
+  let files = [...formData.getAll("files[]")];
+  formData.delete("files[]");
+  files = files.filter((file) => file.name !== getFilename(current_images[elem.parent().index()]));
+  files.map((file) => formData.append("files[]", file)); 
+
+  //mark for deletion
+  if(sight.images.includes(current_images[elem.parent().index()])){
+    images_to_delete.push(getFilename(current_images[elem.parent().index()]));
+  }
+
+  current_images.splice(elem.parent().index(), 1)
+  
+  $(`#${modal}-primary-image`).attr("max", current_images.length);
+  
+  elem.parent().remove();
+}
+
 const appendImageElement = (image, modal_name, uploaded = false) => {
   $(`#${modal_name}-modal .img-container`).append(
       `<li class="img-preview">
@@ -135,43 +175,11 @@ $(document).ready(async function () {
 
   // SIGHT IMAGES 
   $('#sight-images').change(function() {
-    Array.from($(this).prop('files')).map((image) => {
-      if(current_images.includes("sights/" + image.name)){
-        alert("Image is already present in list!");
-        return;
-      }
-
-      formData.append("files[]", image);
-      current_images.push("sights/" + image.name);
-
-      appendImageElement("sights/" + image.name, "sight");
-    });
-
-    $(this).val(null)
+    addImage("sights", $(this), "sight");
   });
 
-  $("#sight-modal .img-container").on("click", ".remove-img-btn", function (e) {
-    if(current_images.length === 1){
-      alert("Entry must have at least one image.");
-      return;
-    }
-
-    //clean up FormData
-    let files = [...formData.getAll("files[]")];
-    formData.delete("files[]");
-    files = files.filter((file) => file.name !== getFilename(current_images[$(this).parent().index()]));
-    files.map((file) => formData.append("files[]", file)); 
-
-    //mark for deletion
-    if(sight.images.includes(current_images[$(this).parent().index()])){
-      images_to_delete.push(getFilename(current_images[$(this).parent().index()]));
-    }
-
-    current_images.splice($(this).parent().index(), 1)
-    
-    $("#sight-primary-image").attr("max", current_images.length);
-    
-    $(this).parent().remove();
+  $("#sight-modal .img-container").on("click", ".remove-img-btn", function() {
+    removeImage($(this), "sight"); 
   });
 
   // SIGHT SUBMIT
@@ -227,45 +235,14 @@ $(document).ready(async function () {
   
   // TOUR IMAGES 
   $('#tour-images').change(function() {
-    Array.from($(this).prop('files')).map((image) => {
-      if(current_images.includes("tours/" + image.name)){
-        alert("Image is already present in list!");
-        return;
-      }
-      
-      formData.append("files[]", image);
-      current_images.push("tours/" + image.name);
-
-      appendImageElement("tours/" + image.name, "tour");
-    });
-
-    $(this).val(null)
+    addImage("tours", $(this), "tour"); 
   });
 
-  $("#tour-modal .img-container").on("click", ".remove-img-btn", function (e) {
-    if(current_images.length === 1){
-      alert("Entry must have at least one image.");
-      return;
-    }
-
-    //clean up FormData
-    let files = [...formData.getAll("files[]")];
-    formData.delete("files[]");
-    files = files.filter((file) => file.name !== getFilename(current_images[$(this).parent().index()]));
-    files.map((file) => formData.append("files[]", file)); 
-
-    //mark for deletion
-    if(tour.images.includes(current_images[$(this).parent().index()])){
-      images_to_delete.push(getFilename(current_images[$(this).parent().index()]));
-    }
-
-    current_images.splice($(this).parent().index(), 1)
-    
-    $("#tour-primary-image").attr("max", current_images.length);
-    
-    $(this).parent().remove();
+  $("#tour-modal .img-container").on("click", ".remove-img-btn", function() {
+    removeImage($(this), "tour");
   });
 
+  // TOUR SUBMIT 
   $("#tour-modal form").submit(async function(e) {
     e.preventDefault();
 
