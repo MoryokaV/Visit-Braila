@@ -256,6 +256,10 @@ $(document).ready(async function () {
     appendStages();
   });
 
+  $("#tour-modal #stages").on('input', "input", function() {
+    $(this).attr("size", $(this).val().length); 
+  });
+
   $("#tour-modal #stages").on('change', "input", function() {
     if(!$(this).val()){
       tour.stages.splice($(this).index(), 1);
@@ -265,7 +269,7 @@ $(document).ready(async function () {
     }
 
     tour.stages[$(this).index()] = $(this).val();
-  })  
+  }); 
 
   // TOUR IMAGES 
   $('#tour-images').change(function() {
