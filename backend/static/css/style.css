@@ -229,7 +229,7 @@ a {
     padding: 0.4rem 0.6rem;
     font-size: 1.6rem;
     background-color: #fff;
-    line-height: 1.1;
+    line-height: 1.2;
     min-width: 15rem;
     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
@@ -255,6 +255,15 @@ a {
     min-width: 10rem;
     width: auto;
     max-width: 100%;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+
+.stages-container input:focus {
+    box-shadow: 0 1px 1px 0 rgba(102,175,233,.6);
 }
 
 .img-container {

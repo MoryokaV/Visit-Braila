@@ -75,6 +75,22 @@ const appendActiveTags = () => {
   sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<p class="tag-item">${tag}</p>`));
 }
 
+const appendStages = () => {
+  $("#tour-modal #stages").empty();
+  tour.stages.map((stage, index) => {
+    $("#tour-modal #stages").append(
+      `<input type="text" value="${stage}" size="${stage.length}" required /> 
+      ${index === tour.stages.length - 1 ? 
+        `<button type="button" class="btn text-btn" id="add-stage"> 
+          <ion-icon name="add-outline"></ion-icon> 
+        </button>`
+        :
+        `-`
+      }`
+    );
+  });
+}
+
 export const openEditSightModal = async (id) => {
   sight = await $.getJSON("/api/findSight/" + id);
   current_images = [...sight.images];
@@ -116,19 +132,7 @@ export const openEditTourModal = async (id) => {
   $("#tour-name").val(tour.name);
 
   // STAGES
-  $("#tour-modal #stages").empty();
-  tour.stages.map((stage, index) => {
-    $("#tour-modal #stages").append(
-      `<input type="text" value="${stage}" size="${stage.length}" oninput="this.size = this.value.length" required /> 
-      ${index === tour.stages.length - 1 ? 
-        `<button type="button" class="btn text-btn" id="add-stage"> 
-          <ion-icon name="add-outline" class="icon"></ion-icon> 
-        </button>`
-        :
-        `-`
-      }`
-    );
-  });
+  appendStages(); 
   
   // DESCRIPTION
   $("#tour-description").html(tour.description);
@@ -246,6 +250,23 @@ $(document).ready(async function () {
     closeModal();
   });
   
+  // TOUR STAGES
+  $("#tour-modal #stages").on('click', "#add-stage", function() {
+    tour.stages.push(""); 
+    appendStages();
+  });
+
+  $("#tour-modal #stages").on('change', "input", function() {
+    if(!$(this).val()){
+      tour.stages.splice($(this).index(), 1);
+      appendStages();
+
+      return;
+    }
+
+    tour.stages[$(this).index()] = $(this).val();
+  })  
+
   // TOUR IMAGES 
   $('#tour-images').change(function() {
     addImage("tours", $(this), "tour"); 
