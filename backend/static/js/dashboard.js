@@ -21,9 +21,11 @@ export const fetchSights = async () => {
           <td>${sight.name}</td>
           <td>${sight.tags}</td>
           <td><a href=${sight.position} target="_blank" class="link">${sight.position}</a></td>
-          <td id=${sight._id} class="group">
-            <button class="btn action-edit-sight"><ion-icon class="icon" name="create-outline"></ion-icon></button>
-            <button class="btn action-delete-sight"><ion-icon class="icon" name="trash-outline"></ion-icon></button>
+          <td id=${sight._id}>
+            <div class="group">
+              <button class="btn action-edit-sight"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>
+              <button class="btn action-delete-sight"><ion-icon class="small-icon" name="remove-circle-outline"></ion-icon></button>
+            </div>
           </td>
         </tr>`
       );
@@ -45,9 +47,11 @@ export const fetchTours = async () => {
           <td>${tour.name}</td>
           <td>${tour.stages}</td>
           <td><a href=${tour.route} target="_blank" class="link">${tour.route}</a></td>
-          <td id=${tour._id} class="group">
-            <button class="btn action-edit-tour"><ion-icon class="icon" name="create-outline"></ion-icon></button>
-            <button class="btn action-delete-tour"><ion-icon class="icon" name="trash-outline"></ion-icon></button>
+          <td id=${tour._id}>
+            <div class="group">
+              <button class="btn action-edit-tour"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>
+              <button class="btn action-delete-tour"><ion-icon class="small-icon" name="remove-circle-outline"></ion-icon></button>
+            </div>
           </td>
         </tr>`
       );
@@ -60,7 +64,7 @@ $(document).ready(async function () {
   $("#sights-table").on('click', ".action-delete-sight", async function() {
     if(confirm("Are you sure you want to delete the entry?")){
       await $.ajax({
-        url: "/api/deleteSight/" + $(this).parent().attr("id"),
+        url: "/api/deleteSight/" + $(this).parent().parent().attr("id"),
         type: "DELETE",
       });
       
@@ -69,7 +73,7 @@ $(document).ready(async function () {
   });
 
   $("#sights-table").on('click', ".action-edit-sight", async function() {
-    await openEditSightModal($(this).parent().attr("id"));
+    await openEditSightModal($(this).parent().parent().attr("id"));
     $("#sight-modal").addClass("show");
   });
 
@@ -78,7 +82,7 @@ $(document).ready(async function () {
   $("#tours-table").on('click', ".action-delete-tour", async function() {
     if(confirm("Are you sure you want to delete the entry?")){
       await $.ajax({
-        url: "/api/deleteTour/" + $(this).parent().attr("id"),
+        url: "/api/deleteTour/" + $(this).parent().parent().attr("id"),
         type: "DELETE",
       });
       
@@ -87,7 +91,7 @@ $(document).ready(async function () {
   });
 
   $("#tours-table").on('click', ".action-edit-tour", async function() {
-    await openEditTourModal($(this).parent().attr("id"));
+    await openEditTourModal($(this).parent().parent().attr("id"));
     $("#tour-modal").addClass("show");
   });
 });
