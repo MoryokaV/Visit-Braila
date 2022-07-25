@@ -131,7 +131,7 @@
           <form>
             <div class="input-field">
               <label for="sight-name">Name</label>
-              <input type="text" id="sight-name" name="name" required />
+              <input type="text" id="sight-name" name="name" maxlength="60" required />
             </div>
             <div class="input-field row">
               <label for="tags">Tags</label>
@@ -165,7 +165,7 @@
             </div>
             <div class="input-field">
               <label for="sight-position">Position <span class="hint-text">Note: it must be a Google Maps URL</span></label>
-              <input type="text" id="sight-position" name="position" required />
+              <input type="url" id="sight-position" name="position" required />
             </div>
             <button type="submit" class="btn primary-btn">Save</button>
           </form>
@@ -186,7 +186,7 @@
           <form>
             <div class="input-field">
               <label for="tour-name">Name</label>
-              <input type="text" id="tour-name" name="name" required />
+              <input type="text" id="tour-name" name="name" maxlength="60" required />
             </div>
             <div class="input-field">
               <label for="stages">Stages</label>
@@ -216,7 +216,7 @@
             </div>
             <div class="input-field">
               <label for="tour-route">Route <span class="hint-text">Note: it must be a Google Maps URL</span></label>
-              <input type="text" id="tour-route" name="route" required />
+              <input type="url" id="tour-route" name="route" required />
             </div>
             <button type="submit" class="btn primary-btn">Save</button>
           </form>

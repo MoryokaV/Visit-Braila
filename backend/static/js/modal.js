@@ -1,4 +1,5 @@
-import { fetchSights, tags, fetchTours } from './dashboard.js'
+import { fetchSights, fetchTours } from './dashboard.js';
+import { tags, getFilename, nameRegExp, addressRegExp, nameRegExpTitle, addressRegExpTitle } from './utils.js';
 
 let sight = {};
 let tour = {};
@@ -11,8 +12,6 @@ const closeModal = () => {
   $(".modal").removeClass("show");  
   $(".ql-toolbar").remove();
 }
-
-const getFilename = image => image.substring(image.lastIndexOf('/') + 1);
 
 const addImage = (folder, elem, modal) => {
   Array.from(elem.prop('files')).map((image) => {
@@ -77,9 +76,15 @@ const appendActiveTags = () => {
 
 const appendStages = () => {
   $("#tour-modal #stages").empty();
+
   tour.stages.map((stage, index) => {
     $("#tour-modal #stages").append(
-      `<input type="text" value="${stage}" size="${stage.length}" required /> 
+      `<input 
+        type="text" 
+        value="${stage}" 
+        size="${stage.length}"
+        maxlength="40"
+        required /> 
       ${index === tour.stages.length - 1 ? 
         `<button type="button" class="btn text-btn" id="add-stage"> 
           <ion-icon name="add-outline"></ion-icon> 
@@ -89,6 +94,8 @@ const appendStages = () => {
       }`
     );
   });
+
+  $("#tour-modal #stages input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
 }
 
 export const openEditSightModal = async (id) => {
@@ -152,6 +159,9 @@ export const openEditTourModal = async (id) => {
 
 $(document).ready(async function () {
   $(".close-btn").click(closeModal);
+
+  // SIGHT NAME
+  $("#sight-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
 
   // SIGHT TAGS
   $("#sight-modal #tags").change(function() {
@@ -249,6 +259,9 @@ $(document).ready(async function () {
     await fetchSights();
     closeModal();
   });
+
+  // TOUR NAME
+  $("#tour-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
   
   // TOUR STAGES
   $("#tour-modal #stages").on('click', "#add-stage", function() {

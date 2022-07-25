@@ -1,7 +1,5 @@
 import { openEditSightModal, openEditTourModal } from './modal.js';
 
-export const tags = ["Relax", "History", "Food", "Shopping", "Religion"]
-
 const getRecords = (data) => {
   if (data.length === 0) return "No records";
   else if (data.length === 1) return "1 record";
@@ -54,10 +52,6 @@ export const fetchTours = async () => {
         </tr>`
       );
   });
-}
-
-const deleteTour = (id) => {
-  
 }
 
 $(document).ready(async function () {
