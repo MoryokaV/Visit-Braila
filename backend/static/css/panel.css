@@ -27,7 +27,6 @@ body > aside {
 }
 
 aside > nav { 
-    padding: 0;
     list-style: none;
     font-size: 1.8rem;
     width: 100%;
@@ -41,6 +40,14 @@ aside > nav {
     border-radius: 3px;
     font-weight: 500;
     color: var(--text-color-dimmed)
+}
+
+.nav-tiem:first-child {
+    border-top: 1px solid #4f5962;
+}
+
+.nav-item:last-child {
+    border-bottom: 1px solid #4f5962;
 }
 
 .nav-item:hover {
