@@ -1,5 +1,12 @@
 import { fetchSights, fetchTours } from './dashboard.js';
-import { tags, getFilename, nameRegExp, addressRegExp, nameRegExpTitle, addressRegExpTitle } from './utils.js';
+import { 
+  tags, 
+  getFilename, 
+  nameRegExp, 
+  nameRegExpTitle,
+  addressRegExp, 
+  addressRegExpTitle,  
+} from './utils.js';
 
 let sight = {};
 let tour = {};
