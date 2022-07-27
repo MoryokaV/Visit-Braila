@@ -6,6 +6,7 @@ from functools import wraps
 from pymongo import MongoClient
 from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
+from shutil import disk_usage
 import os
 import json
 import hashlib
@@ -144,6 +145,12 @@ def deleteImage(folder):
         os.remove(os.path.join(app.config['MEDIA_FOLDER'], path))
 
     return make_response("Images have been deleted!", 200)
+
+@app.route("/api/serverStorage")
+def serverStorage():
+    ssd = disk_usage("/")
+
+    return json.dumps({"total": round(ssd.total / (2**30), 1), "used": round(ssd.used / (2**30), 1)})
 
 def init_dir():
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/sights"):
