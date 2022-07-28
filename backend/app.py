@@ -130,6 +130,32 @@ def editTour(_id):
     db.tours.update_one({"_id": ObjectId(_id)}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']}})
     return make_response("Entry has been updated", 200)
 
+@app.route("/api/fetchTags")
+def fetchTags():
+    return json.dumps(list(db.tags.find()), default=str)
+
+@app.route("/api/insertTag", methods=["POST"])
+def insertTag():
+    tag = request.get_json();
+
+    db.tags.insert_one({"name": tag['name']}) 
+
+    return make_response("New entry inserted", 200)
+
+@app.route("/api/deleteTag/<name>", methods=["DELETE"])
+def deleteTag(name):
+    # Remove this tag from all sights
+    sights = json.loads(fetchSights())
+     
+    for sight in sights:
+        if name in sight['tags']:
+            sight['tags'].remove(name)
+            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
+         
+    db.tags.delete_one({"name": name})
+
+    return make_response("Successfully deleted document", 200)
+
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImage(folder):
     for image in request.files.getlist('files[]'):
@@ -139,7 +165,7 @@ def uploadImage(folder):
         
         image.save(os.path.join(app.config["MEDIA_FOLDER"], path))
 
-    return make_response("Images have been uploaded!", 200)
+    return make_response("Images have been uploaded", 200)
 
 @app.route("/api/deleteImages/<folder>", methods=["DELETE"])
 def deleteImage(folder):
@@ -149,7 +175,7 @@ def deleteImage(folder):
         path = folder + "/" + image
         os.remove(os.path.join(app.config['MEDIA_FOLDER'], path))
 
-    return make_response("Images have been deleted!", 200)
+    return make_response("Images have been deleted", 200)
 
 @app.route("/api/serverStorage")
 def serverStorage():

@@ -1,5 +1,3 @@
-export const tags = ["Relax", "History", "Food", "Shopping", "Religion"];
-
 export const getFilename = path => path.substring(path.lastIndexOf('/') + 1);
 
 // Form Validation

@@ -1,6 +1,5 @@
 import { fetchSights, fetchTours } from './dashboard.js';
 import { 
-  tags, 
   getFilename, 
   nameRegExp, 
   nameRegExpTitle,
@@ -118,7 +117,8 @@ export const openEditSightModal = async (id) => {
   appendActiveTags();
 
   $('#sight-modal #tags option:gt(0)').remove()
-  tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag}">${tag}</option>`));
+  const tags = await $.getJSON("/api/fetchTags");
+  tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag.name}">${tag.name}</option>`));
   
   // DESCRIPTION
   $("#sight-description").html(sight.description)

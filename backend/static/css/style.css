@@ -178,7 +178,7 @@ a {
 }
 
 .tag-card{
-    margin: 0 3.6rem;
+    margin: 0 3.2rem;
     width: calc(40rem - 4.8rem);
     max-height: 75%;
 }
@@ -189,7 +189,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(241,243,245,1) 100%);
+    background: linear-gradient(180deg, #fff 0%, #f1f3f5 100%);
 }
 
 .card-header h3 {
