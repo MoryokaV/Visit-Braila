@@ -62,7 +62,7 @@ const removeImage = (elem, modal) => {
 
 const appendImageElement = (image, modal_name, uploaded = false) => {
   $(`#${modal_name}-modal .img-container`).append(
-      `<li class="img-preview">
+      `<li class="highlight-onhover">
         <a ${uploaded ? `href="../static/media/${image}" target="_blank"` : ``} class="group">
           ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
           ${getFilename(image)}

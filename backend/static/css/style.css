@@ -70,6 +70,12 @@ a {
     align-items: center;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .primary-btn {
     background-color: var(--primary-color);
     padding: 1rem 2rem;
@@ -121,6 +127,36 @@ a {
     color: var(--primary-color);
 }
 
+.highlight-onhover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.6rem;
+}
+
+.highlight-onhover a{
+    color: #868e96; 
+}
+
+.highlight-onhover:hover a {
+    color: var(--text-color);
+}
+
+.highlight-onhover button {
+    display: none;
+    color: #aaa;
+    font-size: 1.6rem;
+}
+
+.highlight-onhover:hover button {
+    display: block;
+}
+
+.highlight-onhover button:hover, .highlight-onhover button:focus {
+    display: block;
+    color: var(--text-color);
+}
+
 /* #### CARD #### */
 
 .card {
@@ -128,11 +164,23 @@ a {
     flex-direction: column;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0,0.125) 0px 0px 1px 0px, rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
+    width: auto;
+    height: auto; 
+    margin: 0;
+    border-radius: 5px;
+    overflow-y: hidden;
+}
+
+.table-card {
     width: 90%;
     height: calc(50% - 4.8rem);
     margin: 3.2rem auto;
-    border-radius: 5px;
-    overflow-y: hidden;
+}
+
+.tag-card{
+    margin: 0 3.6rem;
+    width: calc(40rem - 4.8rem);
+    max-height: 75%;
 }
 
 .card-header {
@@ -141,6 +189,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(241,243,245,1) 100%);
 }
 
 .card-header h3 {
@@ -155,6 +204,11 @@ a {
 .card-body {
     flex-grow: 1;
     overflow: auto;
+    padding: 1.2rem 2rem;
+}
+
+.table-card-body {
+    padding: 0;
 }
 
 /* #### MODAL #### */
@@ -282,32 +336,4 @@ a {
     gap: 1.2rem;
 }
 
-.img-preview {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.6rem;
-}
 
-.img-preview a{
-    color: #868e96; 
-}
-
-.img-preview:hover a {
-    color: var(--text-color);
-}
-
-.img-preview button {
-    display: none;
-    color: #aaa;
-    font-size: 1.6rem;
-}
-
-.img-preview:hover button {
-    display: block;
-}
-
-.img-preview button:hover, .img-preview button:focus {
-    display: block;
-    color: var(--text-color);
-}

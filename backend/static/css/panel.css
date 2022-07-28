@@ -1,6 +1,6 @@
 body {
     display: grid;
-    grid-template-columns: 25rem minmax(0, 1fr);
+    grid-template-columns: 25rem minmax(60em, 1fr);
     grid-template-rows: auto minmax(50em, 1fr);
 }
 
@@ -42,7 +42,7 @@ aside > nav {
     color: var(--text-color-dimmed)
 }
 
-.nav-tiem:first-child {
+.nav-item:first-child {
     border-top: 1px solid #4f5962;
 }
 
@@ -66,7 +66,7 @@ aside > nav {
     left: 0;
     bottom: 0;
     width: 100%;
-    padding: 3rem 1.2rem;
+    padding: 2.4rem 1.2rem;
     display: flex;
     flex-direction: column;
     align-items: center;

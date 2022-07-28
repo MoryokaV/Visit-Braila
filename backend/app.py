@@ -50,6 +50,11 @@ def login():
 def index():
     return render_template("index.html") 
 
+@app.route("/admin/tags")
+@logged_in
+def tags():
+    return render_template("tags.html")
+
 @app.route("/admin/insertSight", methods=["GET", "POST"])
 @logged_in
 def insertSight():
