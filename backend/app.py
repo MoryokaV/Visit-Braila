@@ -98,11 +98,11 @@ def deleteSight(_id):
 def findSight(_id):
     return json.dumps(db.sights.find_one({"_id": ObjectId(_id)}), default=str)
 
-@app.route("/api/editSight/<_id>", methods=["PUT"])
-def editSight(_id):
+@app.route("/api/editSight", methods=["PUT"])
+def editSight():
     sight = request.get_json()
 
-    db.sights.update_one({"_id": ObjectId(_id)}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
+    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/fetchTours")
@@ -123,11 +123,11 @@ def deleteTour(_id):
 def findTour(_id):
     return json.dumps(db.tours.find_one({"_id": ObjectId(_id)}), default=str)
 
-@app.route("/api/editTour/<_id>", methods=["PUT"])
-def editTour(_id):
+@app.route("/api/editTour", methods=["PUT"])
+def editTour():
     tour = request.get_json()
 
-    db.tours.update_one({"_id": ObjectId(_id)}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']}})
+    db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/fetchTags")

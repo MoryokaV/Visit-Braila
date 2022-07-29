@@ -253,7 +253,7 @@ $(document).ready(async function () {
     sight.images = [...current_images];
 
     await $.ajax({
-      url: "/api/editSight/" + sight._id,
+      url: "/api/editSight",
       type: "PUT",
       data: JSON.stringify(sight),
       processData: false,
@@ -337,7 +337,7 @@ $(document).ready(async function () {
     tour.images = [...current_images];
 
     await $.ajax({
-      url: "/api/editTour/" + tour._id,
+      url: "/api/editTour",
       type: "PUT",
       data: JSON.stringify(tour),
       processData: false,
