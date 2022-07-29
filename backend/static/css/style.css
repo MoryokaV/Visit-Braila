@@ -245,7 +245,7 @@ tbody tr:hover {
 .input-field {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.4rem;
     gap: 1rem;
 }
 
