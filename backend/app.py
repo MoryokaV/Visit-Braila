@@ -55,30 +55,19 @@ def index():
 def tags():
     return render_template("tags.html")
 
-@app.route("/admin/insertSight", methods=["GET", "POST"])
+@app.route("/admin/sights")
+@logged_in
+def sights():
+    return render_template("sights.html")
+
+@app.route("/api/insertSight", methods=["POST"])
 @logged_in
 def insertSight():
-    if request.method == "POST":
-        name = request.form["name"] 
-        tags = [] 
-        description = request.form["description"]
+    sight = request.get_json()
 
-        paths = []
-        for image in request.files.getlist('image'):
-            filename = secure_filename(image.filename)
-            
-            path = "sights/" + filename
-            paths.append(path)
-            
-            image.save(os.path.join(app.config["MEDIA_FOLDER"], path))
-        
-        position = request.form["position"]
-
-        db.sights.insert_one({"name": name, "tags": tags, "description": description, "images": paths, "primary_image": "1", "position": position})
-
-        return redirect("/admin")
-
-    return render_template("old/insertSight.html")
+    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']})
+    
+    return make_response("New entry has been inserted", 200)
 
 @app.route("/api/fetchSights")
 def fetchSights():
