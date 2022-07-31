@@ -169,9 +169,13 @@ thead tr{
 }
 
 th, td {
-    padding: 1.2rem 2.4rem;
+    padding: 1.2rem 1.6rem;
     text-align: left;
     vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 35rem;
 }
 
 tbody tr {
