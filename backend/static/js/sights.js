@@ -36,31 +36,38 @@ const appendImageElement = (image) => {
   $("#sight-primary-image").attr("max", sight.images.length);
 }
 
-const addPreviewImage = async (image) => { 
-  let reader = new FileReader();
-  reader.readAsDataURL(image);
+const addPreviewImages = async (images) => { 
+  function getBase64(image) {
+    const reader = new FileReader();
 
-  const result = await new Promise((resolve, reject) => {
-    reader.onload = function(e) {
-      resolve(e.target.result);
-    }
-  });
+    return new Promise(resolve => {
+      reader.onload = e => {
+        resolve(e.target.result)
+      };
 
-  $("#preview-images").append(`<img src="${result}" class="img-sm">`);
+      reader.readAsDataURL(image);
+    });
+  }
+  
+  const blobs = await Promise.all(images.map(image => getBase64(image)));
+
+  blobs.map((blob) => $("#preview-images").append(`<img src="${blob}" class="img-sm">`));
 
   if($("#preview-primary-image").attr("src") === undefined){
     $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
   }
 }
 
-const addImage = (elem) => {
-  Array.from(elem.prop('files')).map((image) => {
+const addImages = (elem) => {
+  const images = Array.from(elem.prop('files'));
+
+  addPreviewImages(images); 
+
+  images.map((image) => {
     if(sight.images.includes("sights/" + image.name)){
       alert("Image is already present in list!");
       return;
     }
-
-    addPreviewImage(image);
 
     formData.append("files[]", image);
     sight.images.push("sights/" + image.name);
@@ -123,7 +130,7 @@ $(document).ready(async function() {
   
   // IMAGES 
   $("#sight-images").change(function() {
-    addImage($(this));
+    addImages($(this));
   });
 
   $(".img-container").on("click", ".remove-img-btn", function() {

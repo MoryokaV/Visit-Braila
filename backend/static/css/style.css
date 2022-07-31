@@ -357,7 +357,7 @@ tbody tr:hover {
 }
 
 .preview-body h2 {
-    font-weight: 500;
+    font-weight: bold;
     font-size: 2.4rem;
     margin-bottom: 2.4rem;
 }
