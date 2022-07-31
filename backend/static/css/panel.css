@@ -2,6 +2,7 @@ body {
     display: grid;
     grid-template-columns: 25rem minmax(60em, 1fr);
     grid-template-rows: auto minmax(50em, 1fr);
+    overflow: hidden;
 }
 
 body > header {
@@ -92,4 +93,5 @@ aside > nav {
 
 body > main {
     background-color: rgb(244, 246, 249);
+    overflow: auto;
 }

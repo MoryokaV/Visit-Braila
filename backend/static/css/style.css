@@ -202,7 +202,7 @@ tbody tr:hover {
 
 .table-card {
     width: 90%;
-    height: calc(50% - 4.8rem);
+    height: calc(70% - 4.8rem);
     margin: 3.2rem auto;
 }
 
@@ -213,7 +213,7 @@ tbody tr:hover {
 
 .big-card {
     width: calc(70rem - 6.4rem);
-    max-height: 80%;
+    max-height: 90%;
 }
 
 .card-header {
@@ -378,5 +378,6 @@ tbody tr:hover {
     font-size: 1.6rem; 
     margin-bottom: 1.4rem;
     word-wrap: break-word;
+    white-space: pre-wrap;
     line-height: 1.2;
 }
