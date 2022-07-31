@@ -130,6 +130,7 @@ $(document).ready(async function() {
   
   // IMAGES 
   $("#sight-images").change(function() {
+    $(this).prop("required", false);
     addImages($(this));
   });
 

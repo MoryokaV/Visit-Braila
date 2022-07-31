@@ -316,6 +316,14 @@ tbody tr:hover {
     box-shadow: 0 1px 1px 0 rgba(102,175,233,.6);
 }
 
+.hidden-input {
+    pointer-events: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
 .img-container {
     background-color: #f8f9fa;
     width: 100%;
