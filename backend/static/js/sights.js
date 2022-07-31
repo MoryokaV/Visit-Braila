@@ -71,11 +71,23 @@ const addImage = (elem) => {
   elem.val(null);
 }
 
+const removePreviewImage = (elem) => {
+  $("#preview-images img").eq(elem.index()).remove();
+  
+  $("#sight-primary-image").change();     
+}
+
 const removeImage = (elem) => {
   if(sight.images.length === 1){
     alert("Entry must have at least one image.");
     return;
   }
+  
+  if(parseInt($("#sight-primary-image").val()) === sight.images.length && elem.index() === sight.images.length - 1){
+    $("#sight-primary-image").val(sight.images.length - 1);    
+  }
+
+  removePreviewImage(elem);
 
   let files = [...formData.getAll("files[]")];
   formData.delete("files[]");

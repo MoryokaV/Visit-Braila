@@ -41,6 +41,10 @@ const removeImage = (elem, modal) => {
     return;
   }
 
+  if(parseInt($(`#${modal}-primary-image`).val()) === current_images.length && elem.index() === current_images.length - 1){
+    $(`#${modal}-primary-image`).val(current_images.length - 1);    
+  }
+
   //clean up FormData
   let files = [...formData.getAll("files[]")];
   formData.delete("files[]");
