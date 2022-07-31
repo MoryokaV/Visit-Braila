@@ -326,3 +326,45 @@ tbody tr:hover {
     flex-direction: column;
     gap: 1.2rem;
 }
+
+/* #### LIVE PREVIEW #### */
+
+.preview {
+    max-height: 85%;
+    width: calc(45rem - 6.4rem);
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.preview-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #868e96;
+}
+
+.preview-body {
+    padding: 1.4rem;
+    background-color: #fff;
+}
+
+.preview .img-md {
+    width: 100%;
+}
+
+.preview .img-sm {
+    width: 15rem;
+}
+
+.preview-body h2 {
+    font-weight: 500;
+    font-size: 2.4rem;
+    margin-bottom: 2.4rem;
+}
+
+.preview-body div {
+    font-size: 1.6rem; 
+    margin-bottom: 1.4rem;
+    word-wrap: break-word;
+    line-height: 1.2;
+}

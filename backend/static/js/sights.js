@@ -36,12 +36,31 @@ const appendImageElement = (image) => {
   $("#sight-primary-image").attr("max", sight.images.length);
 }
 
+const addPreviewImage = async (image) => { 
+  let reader = new FileReader();
+  reader.readAsDataURL(image);
+
+  const result = await new Promise((resolve, reject) => {
+    reader.onload = function(e) {
+      resolve(e.target.result);
+    }
+  });
+
+  $("#preview-images").append(`<img src="${result}" class="img-sm">`);
+
+  if($("#preview-primary-image").attr("src") === undefined){
+    $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
+  }
+}
+
 const addImage = (elem) => {
   Array.from(elem.prop('files')).map((image) => {
     if(sight.images.includes("sights/" + image.name)){
       alert("Image is already present in list!");
       return;
     }
+
+    addPreviewImage(image);
 
     formData.append("files[]", image);
     sight.images.push("sights/" + image.name);
@@ -73,6 +92,9 @@ const removeImage = (elem) => {
 $(document).ready(async function() {
   // NAME
   $("#sight-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
+  $("#sight-name").on('input', function() {
+    $("#preview-name").text($(this).val());
+  });
 
   // TAGS
   const tags = await $.getJSON("/api/fetchTags");
@@ -82,14 +104,22 @@ $(document).ready(async function() {
   quill = new Quill("#sight-description", {
     theme: "snow",
   });
+
+  quill.on('text-change', function() {
+    $("#preview-description").html(quill.root.innerHTML);
+  });
   
   // IMAGES 
-  $('#sight-images').change(function() {
+  $("#sight-images").change(function() {
     addImage($(this));
   });
 
   $(".img-container").on("click", ".remove-img-btn", function() {
     removeImage($(this));
+  });
+
+  $("#sight-primary-image").on('change', function() {
+    $("#preview-primary-image").prop("src", $("#preview-images img").eq($(this).val() - 1).prop("src"));
   });
 
   // TAGS
