@@ -9,8 +9,8 @@ const appendTags = async () => {
     $("#tags-table tbody").append(
       `<tr>
         <td style="width: 5rem">${index + 1}</td> 
-        <td class="highlight-onhover" id="${tag._id}">
-          <p>${tag.name}</p>
+        <td class="highlight-onhover" id="${tag}">
+          <p>${tag}</p>
           <button type="button" class="btn remove-tag-btn">
             <ion-icon name="close-outline"></ion-icon>
           </button>
@@ -22,7 +22,7 @@ const appendTags = async () => {
 
 $(document).ready(async function() {
   $("#tag").attr("pattern", tagRegExp).attr("title", tagRegExpTitle); 
-  await appendTags();
+  appendTags();
 
   $("#tags-table").on('click', ".remove-tag-btn", async function() {
     await $.ajax({

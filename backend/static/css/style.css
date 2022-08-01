@@ -71,9 +71,10 @@ a {
 }
 
 .center {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .primary-btn {
@@ -195,7 +196,7 @@ tbody tr:hover {
     box-shadow: rgba(0, 0, 0,0.125) 0px 0px 1px 0px, rgba(0, 0, 0, 0.2) 0px 1px 3px 0px;
     width: auto;
     height: auto; 
-    margin: 0 3.2rem;
+    margin: 2.4rem;
     border-radius: 5px;
     overflow-y: hidden;
 }
@@ -208,11 +209,11 @@ tbody tr:hover {
 
 .tag-card{
     width: calc(40rem - 4.8rem);
-    max-height: 80%;
+    max-height: 75%;
 }
 
 .big-card {
-    width: calc(70rem - 6.4rem);
+    width: calc(70rem - 4.8rem);
     max-height: 90%;
 }
 
@@ -342,9 +343,9 @@ tbody tr:hover {
 /* #### LIVE PREVIEW #### */
 
 .preview {
+    width: calc(45rem - 4.8rem);
     max-height: 85%;
-    width: calc(45rem - 6.4rem);
-    height: auto;
+    margin: 2.4rem;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -365,7 +366,7 @@ tbody tr:hover {
 }
 
 .preview .img-sm {
-    width: 15rem;
+    width: 40%;
 }
 
 .preview-body h2 {
