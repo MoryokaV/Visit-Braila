@@ -4,3 +4,18 @@
         width: 50%;
 	}
 }
+
+/* BELOW 960px */
+@media (max-width: 60em) {
+	body > aside {
+		display: none;	
+	}
+
+	body {
+		grid-template-columns: minmax(60em, 1fr);
+	}
+
+	body > header {
+		grid-column: 1;
+	}
+}
