@@ -5,14 +5,15 @@
 	}
 }
 
-/* BELOW 960px */
+/* BELOW 960px - HIDE SIDEBAR - PHONES */
 @media (max-width: 60em) {
 	body > aside {
 		display: none;	
 	}
 
 	body {
-		grid-template-columns: minmax(60em, 1fr);
+		grid-template-columns: minmax(29em, 1fr);
+		grid-template-rows: auto 1fr;
 	}
 
 	body > header {

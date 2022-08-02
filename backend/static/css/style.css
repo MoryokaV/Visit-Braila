@@ -277,6 +277,10 @@ tbody tr:hover {
     box-shadow: 0 0 0 3px rgba(102,175,233,.6);
 }
 
+.input-field input[type="number"] {
+    min-width: 5rem;
+}
+
 .input-field select {
     outline: none;
     border: 1px solid var(--border-color);
