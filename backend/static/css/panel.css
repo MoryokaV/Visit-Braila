@@ -1,7 +1,7 @@
 body {
     display: grid;
-    grid-template-columns: 25rem minmax(60em, 1fr);
-    grid-template-rows: auto minmax(50em, 1fr);
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: auto 1fr;
     overflow: hidden;
 }
 
@@ -15,6 +15,11 @@ body > header {
     padding: 1.2rem 1.6rem;
 }
 
+.menu-btn {
+    display: none;
+    color: var(--text-color-dimmed);
+}
+
 body > aside {
     background-color: var(--accent-color-darker);
     display: flex;
@@ -24,8 +29,12 @@ body > aside {
     grid-row: 1/-1;
     justify-content: center;
     box-shadow: 2px 0 8px 3px rgba(0, 0, 0, 0.3); 
-    z-index: 1;
+    z-index: 3;
     position: relative;
+}
+
+body > aside.show {
+    transform: translateX(0);
 }
 
 aside > nav { 

@@ -21,4 +21,12 @@ const getStorageInfo = async () => {
 
 $(document).ready(function() {
   getStorageInfo();
+
+  $(".menu-btn").click(() => $("aside").toggleClass("show"));
+  
+  $('body').click(function(e) {
+    if(e.target.tagName !== "ASIDE" && !$(e.target).parent().hasClass("menu-btn")){
+       $('aside').removeClass("show");
+     }
+  });
 });

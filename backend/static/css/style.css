@@ -29,6 +29,7 @@ a {
     --primary-color: #007bff;
     --primary-color-shade: #1071d8; 
     --border-color: rgb(206, 212, 218);
+    --sidebar-width: 25rem;
 }
 
 .title {
@@ -73,6 +74,10 @@ ion-icon {
     display: flex;
     flex-direction: row !important;
     align-items: center;
+}
+
+.wrap {
+    flex-wrap: wrap;
 }
 
 .center {
@@ -136,6 +141,7 @@ ion-icon {
 
 .highlight-onhover a{
     color: #868e96; 
+    word-break: break-word;
 }
 
 .highlight-onhover:hover a {
@@ -284,6 +290,7 @@ tbody tr:hover {
 
 .input-field input[type="number"] {
     min-width: 5rem;
+    max-width: 10rem;
 }
 
 .input-field select {
@@ -340,7 +347,7 @@ tbody tr:hover {
 
 .img-container {
     background-color: #f8f9fa;
-    width: 100%;
+    flex-grow: 1;
     padding: 1rem;
     border: 1px dashed var(--border-color);
     border-radius: 3px;   
