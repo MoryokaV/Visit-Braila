@@ -37,7 +37,13 @@ $(document).ready(async function() {
 
   $("#insert-tag").submit(async function(e) {
     e.preventDefault();
-    
+
+    const tags = await $.getJSON("/api/fetchTags"); 
+    if(tags.filter((tag) => tag.name === $("#tag").val()).length > 0){
+      alert("Tag already exists");
+      return;
+    }
+
     await $.ajax({
       type: "POST",
       url: "/api/insertTag",
@@ -50,6 +56,7 @@ $(document).ready(async function() {
     });
 
     $("#tag").val("");
+
     appendTags();
   });
 });

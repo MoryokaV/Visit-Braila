@@ -224,7 +224,7 @@ tbody tr:hover {
 }
 
 .big-card {
-    width: calc(70rem - 4.8rem);
+    width: calc(65rem - 4.8rem);
     max-height: 90%;
 }
 
@@ -296,6 +296,7 @@ tbody tr:hover {
 .input-field select {
     outline: none;
     border: 1px solid var(--border-color);
+    color: var(--text-color);
     border-radius: 3px;
     padding: 0.4rem 0.6rem;
     font-size: 1.6rem;
@@ -342,7 +343,7 @@ tbody tr:hover {
     opacity: 0;
     width: 0;
     height: 0;
-    position: absolute;
+    position: fixed;
 }
 
 .img-container {
@@ -360,10 +361,7 @@ tbody tr:hover {
 
 .preview {
     width: calc(45rem - 4.8rem);
-    max-height: 85%;
     margin: 2.4rem;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 .preview-title {
@@ -373,6 +371,12 @@ tbody tr:hover {
 }
 
 .preview-body {
+    max-height: 85%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.preview-content {
     padding: 1.4rem;
     background-color: #fff;
 }
@@ -385,13 +389,13 @@ tbody tr:hover {
     width: 40%;
 }
 
-.preview-body h2 {
+.preview-content h2 {
     font-weight: bold;
     font-size: 2.4rem;
     margin-bottom: 2.4rem;
 }
 
-.preview-body div {
+.preview-content div {
     font-size: 1.6rem; 
     margin-bottom: 1.4rem;
     word-wrap: break-word;

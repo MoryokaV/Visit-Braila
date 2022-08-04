@@ -11,8 +11,9 @@
 		position: absolute;
 		height: 100%;
 		width: var(--sidebar-width);
+        box-shadow: none;
 		transform: translateX(-100%);
-    	transition: 0.5s ease-in-out;
+    	transition: 0.3s ease-in-out;
 	}
 
 	body {
@@ -31,6 +32,10 @@
     .modal-content {
         width: 90%;  
     }   
+
+	.preview-body {
+		max-height: none;
+	}
 }
 
 /* Landscape phone */

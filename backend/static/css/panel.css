@@ -34,6 +34,7 @@ body > aside {
 }
 
 body > aside.show {
+    box-shadow: 2px 0 8px 3px rgba(0, 0, 0, 0.3); 
     transform: translateX(0);
 }
 
@@ -103,4 +104,5 @@ aside > nav {
 body > main {
     background-color: rgb(244, 246, 249);
     overflow: auto;
+    height: 100%;
 }

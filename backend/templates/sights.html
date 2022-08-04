@@ -6,12 +6,12 @@
 
     <title>Visit Brăila &ndash; CMS</title>
 
-    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery/jquery-3.6.0.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js" defer></script>
+    <script src="/static/js/quill/quill.min.js" defer></script>
     <script type="module" src="/static/js/sights.js" defer></script>
 
-    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css" />
+    <link rel="stylesheet" href="/static/js/quill/quill.snow.css" />
     <link rel="stylesheet" href="/static/css/reset.css" />
     <link rel="stylesheet" href="/static/css/panel.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
@@ -130,13 +130,15 @@
 
       <div class="preview">
         <p class="preview-title">Live preview</p>
-        <img class="img-md" id="preview-primary-image">
-        <section class="preview-body">
-          <h2 id="preview-name"></h2>
-          <div id="preview-description"></div>
-          <footer class="row" style="gap: 2rem" id="preview-images"></footer>
-        </section>
-      </div>
+        <div class="preview-body">
+          <img class="img-md" id="preview-primary-image">
+          <section class="preview-content">
+            <h2 id="preview-name"></h2>
+            <div id="preview-description"></div>
+            <footer class="row" style="gap: 2rem" id="preview-images"></footer>
+          </section>
+        </div>
+     </div>
     </main>
   </body>
 </html>
