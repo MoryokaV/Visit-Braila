@@ -27,6 +27,10 @@
 	.menu-btn { 
 		display: block;
 	}
+
+    .modal-content {
+        width: 90%;  
+    }   
 }
 
 /* Landscape phone */

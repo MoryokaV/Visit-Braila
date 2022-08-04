@@ -21,7 +21,12 @@
   <body>
     <!-- HEADER -->
     <header>
-      <h1 class="title">Visit Brăila</h1>
+      <div class="group">
+        <button class="btn menu-btn">
+          <ion-icon class="icon" name="menu-outline"></ion-icon>
+        </button>
+        <h1 class="title">Visit Brăila</h1>
+      </div>
       <div class="group">
         <a href=""><ion-icon class="icon" name="logo-google"></ion-icon></a>
         <a href=""><ion-icon class="icon" name="logo-facebook"></ion-icon></a>
@@ -125,7 +130,7 @@
               <label for="sight-name">Name</label>
               <input type="text" id="sight-name" name="name" maxlength="60" required />
             </div>
-            <div class="input-field row">
+            <div class="input-field row wrap">
               <label for="tags">Tags</label>
               <select id="tags" name="tags">
                 <option value="-" selected disabled hidden>-</option>
