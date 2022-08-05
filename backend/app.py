@@ -60,8 +60,12 @@ def tags():
 def sights():
     return render_template("sights.html")
 
-@app.route("/api/insertSight", methods=["POST"])
+@app.route("/admin/tours")
 @logged_in
+def tours():
+    return render_template("tours.html")
+
+@app.route("/api/insertSight", methods=["POST"])
 def insertSight():
     sight = request.get_json()
 
@@ -93,6 +97,14 @@ def editSight():
 
     db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
     return make_response("Entry has been updated", 200)
+
+@app.route("/api/insertTour", methods=["POST"])
+def insertTour():
+    tour = request.get_json()
+    
+    db.tours.insert_one({"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']})
+
+    return make_response("New entry has been inserted", 200) 
 
 @app.route("/api/fetchTours")
 def fetchTours():

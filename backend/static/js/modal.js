@@ -282,18 +282,20 @@ $(document).ready(async function () {
 
   $("#tour-modal #stages").on('input', "input", function() {
     $(this).attr("size", $(this).val().length); 
+
+    tour.stages[$(this).index()] = $(this).val();
   });
 
-  $("#tour-modal #stages").on('change', "input", function() {
-    if(!$(this).val()){
-      tour.stages.splice($(this).index(), 1);
+  $("#tour-modal #stages").on('keydown', "input", function(e) {
+    const index = $(this).index();
+
+    if($(this).val() === "" && index !== 0 && index !== 1 && e.keyCode === 8){
+      tour.stages.splice(index, 1);
       appendStages();
 
       return;
     }
-
-    tour.stages[$(this).index()] = $(this).val();
-  }); 
+  });
 
   // TOUR IMAGES 
   $('#tour-images').change(function() {

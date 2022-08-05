@@ -118,31 +118,7 @@ $(document).ready(async function() {
   // TAGS
   const tags = await $.getJSON("/api/fetchTags");
   tags.map((tag) => $("#tags").append(`<option value="${tag.name}">${tag.name}</option>`));
-
-  // DESCRIPTION
-  quill = new Quill("#sight-description", {
-    theme: "snow",
-  });
-
-  quill.on('text-change', function() {
-    $("#preview-description").html(quill.root.innerHTML);
-  });
   
-  // IMAGES 
-  $("#sight-images").change(function() {
-    $(this).prop("required", false);
-    addImages($(this));
-  });
-
-  $(".img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this));
-  });
-
-  $("#sight-primary-image").on('change', function() {
-    $("#preview-primary-image").prop("src", $("#preview-images img").eq($(this).val() - 1).prop("src"));
-  });
-
-  // TAGS
   $("#tags").change(function() {
     if(!sight.tags.includes($(this).val())){
       $("#tag-btn")
@@ -179,6 +155,30 @@ $(document).ready(async function() {
     }
   });
 
+  // DESCRIPTION
+  quill = new Quill("#sight-description", {
+    theme: "snow",
+  });
+
+  quill.on('text-change', function() {
+    $("#preview-description").html(quill.root.innerHTML);
+  });
+  
+  // IMAGES 
+  $("#sight-images").change(function() {
+    $(this).prop("required", false);
+    addImages($(this));
+  });
+
+  $(".img-container").on("click", ".remove-img-btn", function() {
+    removeImage($(this));
+  });
+
+  $("#sight-primary-image").on('change', function() {
+    $("#preview-primary-image").prop("src", $("#preview-images img").eq($(this).val() - 1).prop("src"));
+  });
+
+  // SUBMIT
   $("#insert-sight-form").submit(async function(e) {
     e.preventDefault();
 
