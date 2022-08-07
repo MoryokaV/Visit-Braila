@@ -76,6 +76,10 @@ ion-icon {
     align-items: center;
 }
 
+.gap-sm {
+    gap: 8px;
+}
+
 .wrap {
     flex-wrap: wrap;
 }
@@ -402,4 +406,63 @@ tbody tr:hover {
     word-break: break-all;
     white-space: pre-wrap;
     line-height: 1.2;
+}
+
+/* #### TRENDING #### */
+
+.trending-list {
+    width: 75rem;
+    max-width: 90%;
+    min-height: 5rem;
+    max-height: 80%;
+    margin: 2.4rem auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 13%) 0px 0px 1px 0px, rgb(0 0 0 / 20%) 0px 1px 3px 0px;
+}
+
+.trending-list li {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.8rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.trending-list li > p:first-child {
+    min-width: 3rem;
+}
+
+.trending-list li > p:nth-child(2) {
+    color: #868e96;
+    font-size: 1.4rem;
+    min-width: 23rem;
+}
+
+.trending-list div {
+    flex-grow: 1;
+    font-size: 1.8rem;
+    min-width: 0;
+}
+
+.trending-list div > p {
+    max-width: 90%;
+    line-height: 1.5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.trending-form {
+    display: none;
+    height: 3.8rem;
+}
+
+.trending-form > div {
+    margin: 0;
+}
+
+.trending-form input {
+    width: 25rem;
 }

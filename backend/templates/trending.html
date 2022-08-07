@@ -1,0 +1,88 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Visit Brăila &ndash; CMS</title>
+
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script type="module" src="/static/js/trending.js" defer></script>
+
+    <link rel="stylesheet" href="/static/css/reset.css" />
+    <link rel="stylesheet" href="/static/css/panel.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/queries.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="group">
+        <button class="btn menu-btn">
+          <ion-icon class="icon" name="menu-outline"></ion-icon>
+        </button>
+        <h1 class="title">Visit Brăila</h1>
+      </div>
+      <div class="group">
+        <a href=""><ion-icon class="icon" name="logo-google"></ion-icon></a>
+        <a href=""><ion-icon class="icon" name="logo-facebook"></ion-icon></a>
+      </div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <nav>
+        <a href="/" class="nav-item group">
+          <ion-icon name="speedometer-outline"></ion-icon>
+          <p>Dashboard</p>
+        </a>
+        <a href="/admin/tags" class="nav-item group">
+          <ion-icon name="bookmarks-outline"></ion-icon>
+          <p>Tags</p>
+        </a>
+        <a href="/admin/sights" class="nav-item group">
+          <ion-icon name="business-outline"></ion-icon>
+          <p>Sights</p>
+        </a>
+        <a href="/admin/tours" class="nav-item group">
+          <ion-icon name="walk-outline"></ion-icon>
+          <p>Tours</p>
+        </a>
+        <a href="/admin/trending" class="nav-item active group">
+          <ion-icon name="trending-up-outline"></ion-icon>
+          <p>Trending</p>
+        </a>
+        <a href="/admin/about" class="nav-item group">
+          <ion-icon name="book-outline"></ion-icon>
+          <p>About</p>
+        </a>
+      </nav>
+      
+      <section class="storage-info">
+        <p>Server storage: <span id="space-used">0.0 GB</span> of <span id="space-total">0.0 GB</span> Used</p>
+        <div class="bar-outline">
+          <div class="bar-filled" id="storage-bar"></div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="center" style="flex-direction: column">
+      <h2 class="title">Sights trending</h2>
+      
+      <ol class="trending-list"></ol>    
+
+      <button class="btn text-btn row gap-sm" id="add-item">
+        <ion-icon name="add-circle-outline"></ion-icon> Add
+      </button>
+
+      <form class="trending-form">
+        <div class="input-field row">
+          <input type="text" id="sight-id" name="id" placeholder="id" required />
+          <button type="submit" id="test" class="btn primary-btn" style="margin: 0">Add</button>
+        </div>
+      <form>
+    </main>
+  </body>
+</html>

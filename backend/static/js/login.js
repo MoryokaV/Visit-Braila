@@ -1,8 +1,9 @@
 $(document).ready(function () {
-  $("form button").click(function() {
-    event.preventDefault()
+  $("form").submit(function(e) {
+    e.preventDefault()
+
     $.ajax({
-      url: window.origin + "/login",
+      url: "/login",
       type: "POST",
       data: JSON.stringify({"user": $("#user").val(), "pass": $("#pass").val()}),
       processData: false,

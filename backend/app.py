@@ -65,6 +65,11 @@ def sights():
 def tours():
     return render_template("tours.html")
 
+@app.route("/admin/trending")
+@logged_in
+def trending():
+    return render_template("trending.html")
+
 @app.route("/api/insertSight", methods=["POST"])
 def insertSight():
     sight = request.get_json()
@@ -89,7 +94,12 @@ def deleteSight(_id):
 
 @app.route("/api/findSight/<_id>")
 def findSight(_id):
-    return json.dumps(db.sights.find_one({"_id": ObjectId(_id)}), default=str)
+    sight = db.sights.find_one({"_id": ObjectId(_id)})
+
+    if sight is None:
+        return make_response("Invalid sight id", 400)
+
+    return json.dumps(sight, default=str)
 
 @app.route("/api/editSight", methods=["PUT"])
 def editSight():
@@ -156,6 +166,24 @@ def deleteTag(name):
     db.tags.delete_one({"name": name})
 
     return make_response("Successfully deleted document", 200)
+
+@app.route("/api/insertTrendingItem", methods=["POST"])
+def insertTrendingItem():
+    item = request.get_json()
+
+    db.trending.insert_one({"sight_id": item['sight_id'], "index": item['index']}) 
+
+    return make_response("New entry has been inserted", 200)
+
+@app.route("/api/fetchTrendingItems")
+def fetchTrendingItems():
+    return json.dumps(list(db.trending.find()), default=str)
+
+@app.route("/api/deleteTrendingItem/<_id>", methods=["DELETE"])
+def deleteTrendingItem(_id):
+    db.trending.delete_one({"_id": ObjectId(_id)})
+
+    return make_response("Successfully deleted document", 200);
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImage(folder):
