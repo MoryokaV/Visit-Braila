@@ -195,6 +195,14 @@ def deleteTrendingItem():
 
     return make_response("Successfully deleted document", 200);
 
+@app.route("/api/updateTrendingItemIndex", methods=["PUT"])
+def updateTrendingItemIndex():
+    item = request.get_json();
+
+    db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
+
+    return make_response("Entry has been updated", 200)
+
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImage(folder):
     for image in request.files.getlist('files[]'):

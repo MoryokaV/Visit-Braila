@@ -431,12 +431,20 @@ tbody tr:hover {
     max-width: 90%;
     min-height: 5rem;
     max-height: 80%;
-    margin: 2.4rem auto;
+    margin: 3.2rem auto;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: rgb(0 0 0 / 13%) 0px 0px 1px 0px, rgb(0 0 0 / 20%) 0px 1px 3px 0px;
     overflow: auto;
     font-size: 1.4rem;
+}
+
+.sortable-drag {
+    opacity: 0;
+}
+
+.sortable-ghost {
+    opacity: 0.5;
 }
 
 .trending-list li {

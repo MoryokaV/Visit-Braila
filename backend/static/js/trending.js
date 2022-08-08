@@ -20,7 +20,7 @@ const appendElements = async () => {
 
   items.map((item, index) => {
     $(".trending-list").append(
-      `<li>
+      `<li draggable="true">
         <p>${item.index + 1}.</p>
         <p>${item.sight_id}</p>
         <div class="highlight-onhover" id="${item._id}">
@@ -32,8 +32,36 @@ const appendElements = async () => {
       </li>`
     );
   });
-}
+ 
+  const list = document.querySelector(".trending-list");
+  new Sortable(list, {
+    animation: 150,
+    easing: "cubic-bezier(0.65, 0, 0.35, 1)",
 
+    onMove: function(e) {
+      $(e.dragged).find(" > p:first-child").text(`${$(e.related).index() + 1}.`);
+      $(e.related).find(" > p:first-child").text(`${$(e.dragged).index() + 1}.`);
+    },
+
+    onEnd: async function(e) {
+      await $.ajax({
+        type: "PUT",
+        url: "/api/updateTrendingItemIndex",
+        data: JSON.stringify({_id: $(".trending-list li").eq(e.newIndex).find(" > div").attr('id'), newIndex: e.newIndex}),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+
+      await $.ajax({
+        type: "PUT",
+        url: "/api/updateTrendingItemIndex",
+        data: JSON.stringify({_id: $(".trending-list li").eq(e.oldIndex).find(" > div").attr('id'), newIndex: e.oldIndex}),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+    }
+  })
+}
 const getSightName = async item => (await $.getJSON("/api/findSight/" + item.sight_id)).name;
 
 $(document).ready(async function() {
