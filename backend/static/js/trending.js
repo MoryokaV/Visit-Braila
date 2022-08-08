@@ -50,7 +50,7 @@ $(document).ready(async function() {
   $(".trending-list").on('click', ".remove-item", async function() {
     await $.ajax({
       type: "DELETE",
-      url: "/api/deleteTrendingItem/" + $(this).parent().attr('id'),
+      url: "/api/deleteTrendingItem?" + $.param({_id: $(this).parent().attr('id'), index: $(this).parent().parent().index()}), 
     });
     
     appendElements();

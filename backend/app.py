@@ -179,8 +179,18 @@ def insertTrendingItem():
 def fetchTrendingItems():
     return json.dumps(list(db.trending.find()), default=str)
 
-@app.route("/api/deleteTrendingItem/<_id>", methods=["DELETE"])
-def deleteTrendingItem(_id):
+@app.route("/api/deleteTrendingItem", methods=["DELETE"])
+def deleteTrendingItem():
+    _id = request.args.get("_id")
+    index = int(request.args.get("index"))
+
+    items = json.loads(fetchTrendingItems());
+    
+    # Decrease indexes when deleting
+    for item in items:
+        if item['index'] > index:
+            db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"sight_id": item['sight_id'], "index": item['index'] - 1}})
+
     db.trending.delete_one({"_id": ObjectId(_id)})
 
     return make_response("Successfully deleted document", 200);
