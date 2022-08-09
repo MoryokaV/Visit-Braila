@@ -2,53 +2,49 @@ import './utils.js';
 
 let items = [];
 
-/*
 const appendElements = async () => {
   items = await $.getJSON("/api/fetchTrendingItems");
-  
+
   if(items.length === 0){
-    $(".trending-list")
+    $(".trending-container")
       .empty()
-      .addClass("center")
+      .addClass("empty center")
       .append(`<p>No items in list</p>`);
     
     return;
   }
 
-  $(".trending-list").removeClass("center").empty();
+  $(".trending-container").removeClass("empty center").empty();
 
-  const names = await Promise.all(items.map((item) => getSightName(item)));
+  const sights = await Promise.all(items.map((item) => getSight(item)));
 
   items.map((item, index) => {
-    $(".trending-list").append(
-      `<li draggable="true">
-        <p>${item.index + 1}.</p>
-        <p>${item.sight_id}</p>
-        <div class="highlight-onhover" id="${item._id}">
-          <p>${names[index]}</p>
-          <button class="btn remove-item">
+    $(".trending-container").append(
+      `<article class="trending-item" id="${item._id}">
+        <img src="/static/media/${sights[index].images[sights[index].primary_image - 1]}" alt="${sights[index].name}">
+        <footer>
+          <p>${sights[index].name}</p>
+          <ion-icon name="heart-outline"></ion-icon>
+          <button class="btn icon-btn remove-item">
             <ion-icon name="close-outline"></ion-icon>
           </button>
-        </div>
-      </li>`
+        </footer>
+      </article>`
     );
   });
- 
-  const list = document.querySelector(".trending-list");
+
+  const list = document.querySelector(".trending-container");
+
   new Sortable(list, {
-    animation: 150,
+    animation: 200,
     easing: "cubic-bezier(0.65, 0, 0.35, 1)",
-
-    onMove: function(e) {
-      $(e.dragged).find(" > p:first-child").text(`${$(e.related).index() + 1}.`);
-      $(e.related).find(" > p:first-child").text(`${$(e.dragged).index() + 1}.`);
-    },
-
+    delay: 50,
+    delayOnTouchOnly: true,
     onEnd: async function(e) {
       await $.ajax({
         type: "PUT",
         url: "/api/updateTrendingItemIndex",
-        data: JSON.stringify({_id: $(".trending-list li").eq(e.newIndex).find(" > div").attr('id'), newIndex: e.newIndex}),
+        data: JSON.stringify({_id: $(".trending-container article").eq(e.newIndex).attr('id'), newIndex: e.newIndex}),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
@@ -56,20 +52,15 @@ const appendElements = async () => {
       await $.ajax({
         type: "PUT",
         url: "/api/updateTrendingItemIndex",
-        data: JSON.stringify({_id: $(".trending-list li").eq(e.oldIndex).find(" > div").attr('id'), newIndex: e.oldIndex}),
+        data: JSON.stringify({_id: $(".trending-container article").eq(e.oldIndex).attr('id'), newIndex: e.oldIndex}),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
     }
-  })
-}
-*/
-
-const appendElements = () => {
-  
+  }); 
 }
 
-const getSightName = async item => (await $.getJSON("/api/findSight/" + item.sight_id)).name;
+const getSight = async item => await $.getJSON("/api/findSight/" + item.sight_id);
 
 $(document).ready(async function() {
   // Initialize
@@ -82,10 +73,12 @@ $(document).ready(async function() {
   });
 
   // Remove item 
-  $(".trending-list").on('click', ".remove-item", async function() {
+  $(".trending-container").on('click', ".remove-item", async function() {
+    const article = $(this).parent().parent();
+
     await $.ajax({
       type: "DELETE",
-      url: "/api/deleteTrendingItem?" + $.param({_id: $(this).parent().attr('id'), index: $(this).parent().parent().index()}), 
+      url: "/api/deleteTrendingItem?" + $.param({_id: article.attr('id'), index: article.index()}), 
     });
     
     appendElements();
