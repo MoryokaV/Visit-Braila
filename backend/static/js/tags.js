@@ -12,7 +12,7 @@ const appendTags = async () => {
         <td>
           <div class="highlight-onhover" id="${tag._id}">
             <p>${tag.name}</p>
-            <button type="button" class="btn remove-tag-btn">
+            <button type="button" class="btn icon-btn remove-tag-btn">
               <ion-icon name="close-outline"></ion-icon>
             </button>
           </div>

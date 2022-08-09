@@ -124,6 +124,12 @@ ion-icon {
     background-color: var(--primary-color-shade);
 }
 
+.icon-btn {
+    font-size: 1.6rem;
+    height: 1.6rem;
+    color: #aaa;
+}
+
 .text-btn {
     color: var(--primary-color);    
     font-size: 1.4rem;
@@ -173,8 +179,6 @@ ion-icon {
 
 .highlight-onhover button {
     display: none;
-    color: #aaa;
-    font-size: 1.6rem;
 }
 
 .highlight-onhover:hover button {
@@ -182,7 +186,6 @@ ion-icon {
 }
 
 .highlight-onhover button:hover, .highlight-onhover button:focus {
-    display: block;
     color: var(--text-color);
 }
 
@@ -578,6 +581,10 @@ tbody tr:hover {
 
 .trending-item footer > button {
     display: none;
+}
+
+.trending-item footer > button:hover {
+    color: var(--text-color);
 }
 
 .trending-form {

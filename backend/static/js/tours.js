@@ -30,7 +30,7 @@ const appendStages = () => {
         maxlength="40"
         required /> 
       ${index === tour.stages.length - 1 ? 
-        `<button type="button" class="btn text-btn" id="add-stage"> 
+        `<button type="button" class="btn icon-btn" id="add-stage" style="color: var(--primary-color)"> 
           <ion-icon name="add-outline"></ion-icon> 
         </button>`
         :
@@ -51,7 +51,7 @@ const appendImageElement = (image) => {
           <ion-icon name="cloud-upload-outline"></ion-icon>
           ${image}
         </a>
-        <button type="button" class="btn remove-img-btn">
+        <button type="button" class="btn icon-btn remove-img-btn">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`
