@@ -472,6 +472,7 @@ tbody tr:hover {
 
 /* #### TRENDING #### */
 
+/*
 .trending-list {
     width: 80rem;
     max-width: 90%;
@@ -525,6 +526,58 @@ tbody tr:hover {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+*/
+
+.trending-container {
+    max-width: 80%;
+    max-height: 50%;
+    margin: 3.2rem auto;
+}
+
+.trending-item {
+    width: 26rem;
+    padding: 6px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.trending-item:hover footer > ion-icon {
+    display: none;
+}
+
+.trending-item:hover footer > button {
+    display: block;
+}
+
+.trending-item > img {
+    height: 23rem;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.25);
+    margin-bottom: 6px;
+    object-fit: cover; 
+}
+
+.trending-item footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.trending-item footer > p {
+    max-width: 85%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trending-item footer > button {
+    display: none;
 }
 
 .trending-form {

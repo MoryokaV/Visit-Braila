@@ -2,6 +2,7 @@ import './utils.js';
 
 let items = [];
 
+/*
 const appendElements = async () => {
   items = await $.getJSON("/api/fetchTrendingItems");
   
@@ -62,6 +63,12 @@ const appendElements = async () => {
     }
   })
 }
+*/
+
+const appendElements = () => {
+  
+}
+
 const getSightName = async item => (await $.getJSON("/api/findSight/" + item.sight_id)).name;
 
 $(document).ready(async function() {

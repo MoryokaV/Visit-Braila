@@ -177,7 +177,7 @@ def insertTrendingItem():
 
 @app.route("/api/fetchTrendingItems")
 def fetchTrendingItems():
-    return json.dumps(list(db.trending.find()), default=str)
+    return json.dumps(list(db.trending.find().sort("index", 1)), default=str)
 
 @app.route("/api/deleteTrendingItem", methods=["DELETE"])
 def deleteTrendingItem():
