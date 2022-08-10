@@ -54,8 +54,9 @@ const removeImage = (elem, modal) => {
   files.map((file) => formData.append("files[]", file)); 
 
   //mark for deletion
-  if(sight.images.includes(current_images[elem.parent().index()])){
-    images_to_delete.push(getFilename(current_images[elem.parent().index()]));
+  const originalImages = modal === "sight" ? sight.images : tour.images;
+  if(originalImages.includes(current_images[elem.parent().index()])){
+    images_to_delete.push(current_images[elem.parent().index()]);
   }
 
   current_images.splice(elem.parent().index(), 1)
@@ -233,18 +234,6 @@ $(document).ready(async function () {
     sight.primary_image = $("#sight-primary-image").val();
     sight.position = $("#sight-position").val();
 
-    if(images_to_delete.length > 0)
-      await $.ajax({
-        url: "/api/deleteImages/sights",
-        type: "DELETE",
-        data: JSON.stringify({"images": images_to_delete}),
-        processData: false,
-        contentType: "application/json; charset=UTF-8",
-        success: function(data) {
-          console.log(data);
-        }
-      });
-
     if(formData.getAll("files[]").length > 0)
       await $.ajax({
         type: "POST",
@@ -263,7 +252,7 @@ $(document).ready(async function () {
     await $.ajax({
       url: "/api/editSight",
       type: "PUT",
-      data: JSON.stringify(sight),
+      data: JSON.stringify({"images_to_delete": images_to_delete, "sight": sight}),
       processData: false,
       contentType: "application/json; charset=UTF-8",
       success: function(data) {
@@ -326,18 +315,6 @@ $(document).ready(async function () {
     tour.description = quill.root.innerHTML;
     tour.primary_image = $("#tour-primary-image").val();
     tour.route = $("#tour-route").val();
-
-    if(images_to_delete.length > 0)
-      await $.ajax({
-        url: "/api/deleteImages/tours",
-        type: "DELETE",
-        data: JSON.stringify({"images": images_to_delete}),
-        processData: false,
-        contentType: "application/json; charset=UTF-8",
-        success: function(data) {
-          console.log(data);
-        }
-      });
     
     if(formData.getAll("files[]").length > 0)
       await $.ajax({
@@ -357,7 +334,7 @@ $(document).ready(async function () {
     await $.ajax({
       url: "/api/editTour",
       type: "PUT",
-      data: JSON.stringify(tour),
+      data: JSON.stringify({"images_to_delete": images_to_delete, "tour": tour}),
       processData: false,
       contentType: "application/json; charset=UTF-8",
       success: function(data) {

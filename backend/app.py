@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect, session, make_respo
 from flask_session import Session
 from functools import wraps
 from pymongo import MongoClient
-from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
 from shutil import disk_usage
 import os
@@ -91,8 +90,7 @@ def fetchSights():
 def deleteSight(_id):
     #delete local sight images first
     images = json.loads(findSight(_id))['images']
-    for image in images:
-        os.remove(os.path.join(app.config["MEDIA_FOLDER"], image))
+    deleteImages(images)
 
     db.sights.delete_one({"_id": ObjectId(_id)})
     return make_response("Successfully deleted document", 200)
@@ -108,7 +106,10 @@ def findSight(_id):
 
 @app.route("/api/editSight", methods=["PUT"])
 def editSight():
-    sight = request.get_json()
+    data = request.get_json();
+
+    deleteImages(data['images_to_delete'])
+    sight = data['sight']
 
     db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
     return make_response("Entry has been updated", 200)
@@ -129,8 +130,7 @@ def fetchTours():
 def deleteTour(_id):
     #delete local tour images first
     images = json.loads(findTour(_id))['images']
-    for image in images:
-        os.remove(os.path.join(app.config["MEDIA_FOLDER"], image))
+    deleteImages(images)
 
     db.tours.delete_one({"_id": ObjectId(_id)})
     return make_response("Successfully deleted document", 200)
@@ -141,7 +141,10 @@ def findTour(_id):
 
 @app.route("/api/editTour", methods=["PUT"])
 def editTour():
-    tour = request.get_json()
+    data = request.get_json();
+
+    deleteImages(data['images_to_delete'])
+    tour = data['tour'] 
 
     db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']}})
     return make_response("Entry has been updated", 200)
@@ -205,7 +208,6 @@ def updateTrendingItemIndex():
     item = request.get_json();
 
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
-
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/fetchAboutParagraphs")
@@ -224,11 +226,10 @@ def updateAboutParagraph():
             break
 
     db.about.update_one({"_id": ObjectId(_id)}, {"$set": {"content": updatedContent['content']}})
-
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
-def uploadImage(folder):
+def uploadImages(folder):
     for image in request.files.getlist('files[]'):
         filename = image.filename
 
@@ -238,15 +239,12 @@ def uploadImage(folder):
 
     return make_response("Images have been uploaded", 200)
 
-@app.route("/api/deleteImages/<folder>", methods=["DELETE"])
-def deleteImage(folder):
-    images = request.get_json()['images']
-
+def deleteImages(images):
     for image in images:
-        path = folder + "/" + image
-        os.remove(os.path.join(app.config['MEDIA_FOLDER'], path))
-
-    return make_response("Images have been deleted", 200)
+        try:
+            os.remove(os.path.join(app.config['MEDIA_FOLDER'], image))
+        except:
+            pass
 
 @app.route("/api/serverStorage")
 def serverStorage():
