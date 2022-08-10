@@ -1,5 +1,9 @@
 export const getFilename = path => path.substring(path.lastIndexOf('/') + 1);
 
+// Loading animation
+export const startLoadingAnimation = container => container.find(`button[type="submit"]`).addClass("loading-btn");
+export const endLoadingAnimation = container => setTimeout(() => container.find(`button[type="submit"]`).removeClass("loading-btn"), 500);
+
 // Form Validation
 export const nameRegExp = "^[A-Za-z][A-Za-z0-9,.\"'() ]*$"
 export const addressRegExp = "^[A-Za-z0-9][A-Za-z0-9,.\"'() ]*$" 

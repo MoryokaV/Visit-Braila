@@ -70,6 +70,11 @@ def tours():
 def trending():
     return render_template("trending.html")
 
+@app.route("/admin/about")
+@logged_in
+def about():
+    return render_template("about.html")
+
 @app.route("/api/insertSight", methods=["POST"])
 def insertSight():
     sight = request.get_json()
@@ -200,6 +205,25 @@ def updateTrendingItemIndex():
     item = request.get_json();
 
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
+
+    return make_response("Entry has been updated", 200)
+
+@app.route("/api/fetchAboutParagraphs")
+def fetchAboutParagraphs():
+    return json.dumps(list(db.about.find()), default=str)
+
+@app.route("/api/updateAboutParagraph", methods=["PUT"])
+def updateAboutParagraph():
+    updatedContent = request.get_json()
+    paragraphs = json.loads(fetchAboutParagraphs())
+    _id = None
+
+    for paragraph in paragraphs:
+        if paragraph['name'] == updatedContent['name']:
+            _id = paragraph['_id']            
+            break
+
+    db.about.update_one({"_id": ObjectId(_id)}, {"$set": {"content": updatedContent['content']}})
 
     return make_response("Entry has been updated", 200)
 
