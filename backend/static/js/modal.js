@@ -1,6 +1,8 @@
 import { fetchSights, fetchTours } from './dashboard.js';
 import { 
   getFilename, 
+  startLoadingAnimation,
+  endLoadingAnimation,
   nameRegExp, 
   nameRegExpTitle,
   addressRegExp, 
@@ -224,6 +226,8 @@ $(document).ready(async function () {
   $("#sight-modal form").submit(async function (e) {
     e.preventDefault();
 
+    startLoadingAnimation($(this));
+
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
     sight.primary_image = $("#sight-primary-image").val();
@@ -266,7 +270,13 @@ $(document).ready(async function () {
         console.log(data);
       }
     });
-
+    
+    await new Promise(resolve => {
+      setTimeout(() => {
+        endLoadingAnimation($(this));
+        resolve();
+      }, 500);
+    });
     await fetchSights();
     closeModal();
   });
@@ -310,6 +320,8 @@ $(document).ready(async function () {
   $("#tour-modal form").submit(async function(e) {
     e.preventDefault();
 
+    startLoadingAnimation($(this));
+
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = $("#tour-primary-image").val();
@@ -352,7 +364,13 @@ $(document).ready(async function () {
         console.log(data);
       }
     });
-
+    
+    await new Promise(resolve => {
+      setTimeout(() => {
+        endLoadingAnimation($(this));
+        resolve();
+      }, 500);
+    });
     await fetchTours();
     closeModal();
   });
