@@ -51,3 +51,10 @@
 		font-size: 50%;
 	}
 }
+
+/* BELOW  280px */
+@media (max-width: 17.5em) {
+	html {
+		font-size: 43.75%;
+	}
+}

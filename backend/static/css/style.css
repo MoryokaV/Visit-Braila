@@ -598,14 +598,18 @@ tbody tr:hover {
 
 .trending-form {
     display: none;
+    max-width: 90%;
 }
 
 .trending-form > .input-field {
     margin: 0;
+    width: 100%;
+    justify-content: center;
 }
 
 .trending-form > .input-field > * {
     height: 3.8rem;
+    max-width: 60%;
 }
 
 .trending-form > .input-field > input {
