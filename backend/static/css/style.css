@@ -48,6 +48,15 @@ a {
     font-size: 2rem;
 }
 
+.tab-title {
+    max-width: 90%;
+    font-weight: 200;
+    letter-spacing: -0.5px;
+    font-size: 2.8rem;
+    color: #868e96; 
+    text-align: center; 
+}
+
 .group {
     display: flex;
     align-items: center;

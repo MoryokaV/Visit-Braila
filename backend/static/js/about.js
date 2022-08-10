@@ -28,10 +28,11 @@ $(document).ready(async function() {
   const contents = await $.getJSON("/api/fetchAboutParagraphs");
 
   // P1
-  $("#paragraph-1-content").html(contents[0].content);
   paragraph1 = new Quill("#paragraph-1-content", {
     theme: "snow", 
+    placeholder: "Type something here...",
   });
+  $("#paragraph-1-content .ql-editor").html(contents[0].content);
 
   paragraph1.on('text-change', function() {
     if(paragraph1.getLength() > LIMIT){
@@ -44,10 +45,11 @@ $(document).ready(async function() {
   });
 
   // P2
-  $("#paragraph-2-content").html(contents[1].content);
   paragraph2 = new Quill("#paragraph-2-content", {
     theme: "snow", 
+    placeholder: "Type something here...",
   });
+  $("#paragraph-2-content .ql-editor").html(contents[1].content);
 
   paragraph2.on('text-change', function() {
     if(paragraph2.getLength() > LIMIT){

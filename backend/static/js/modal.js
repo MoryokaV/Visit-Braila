@@ -127,10 +127,10 @@ export const openEditSightModal = async (id) => {
   tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag.name}">${tag.name}</option>`));
   
   // DESCRIPTION
-  $("#sight-description").html(sight.description)
   quill = new Quill("#sight-description", {
     theme: "snow",
   });
+  $("#sight-description .ql-editor").html(sight.description)
 
   // IMAGES
   $("#sight-modal .img-container").empty()
@@ -155,10 +155,10 @@ export const openEditTourModal = async (id) => {
   appendStages(); 
   
   // DESCRIPTION
-  $("#tour-description").html(tour.description);
   quill = new Quill("#tour-description", {
     theme: "snow",
   });
+  $("#tour-description .ql-editor").html(tour.description);
 
   // IMAGES
   $("#tour-modal .img-container").empty()
@@ -275,7 +275,7 @@ $(document).ready(async function () {
       setTimeout(() => {
         endLoadingAnimation($(this));
         resolve();
-      }, 500);
+      }, 400);
     });
     await fetchSights();
     closeModal();
@@ -369,7 +369,7 @@ $(document).ready(async function () {
       setTimeout(() => {
         endLoadingAnimation($(this));
         resolve();
-      }, 500);
+      }, 400);
     });
     await fetchTours();
     closeModal();
