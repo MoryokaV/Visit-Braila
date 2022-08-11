@@ -1,5 +1,6 @@
 import { 
   getFilename,
+  startLoadingAnimation,
   nameRegExp,
   nameRegExpTitle
 } from './utils.js';
@@ -183,7 +184,9 @@ $(document).ready(async function() {
   // SUBMIT
   $("#insert-sight-form").submit(async function(e) {
     e.preventDefault();
-
+    
+    startLoadingAnimation($(this));
+    
     sight.name = $("#sight-name").val(); 
     sight.description = quill.root.innerHTML;
     sight.primary_image = $("#sight-primary-image").val();
@@ -196,9 +199,6 @@ $(document).ready(async function() {
       data: formData,
       cache: false,
       processData: false,
-      success: function(data) {
-        console.log(data);
-      } 
     });
 
     await $.ajax({
@@ -207,9 +207,6 @@ $(document).ready(async function() {
       data: JSON.stringify(sight),
       processData: false,
       contentType: "application/json; charse=UTF-8",
-      success: function(data) {
-        console.log(data); 
-      }
     });
 
     location.reload(); 

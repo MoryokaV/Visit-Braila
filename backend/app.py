@@ -6,6 +6,9 @@ from functools import wraps
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from shutil import disk_usage
+from PIL import Image
+import PIL
+import glob
 import os
 import json
 import hashlib
@@ -231,11 +234,11 @@ def updateAboutParagraph():
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImages(folder):
     for image in request.files.getlist('files[]'):
-        filename = image.filename
+        path = folder + "/" + image.filename; 
 
-        path = folder + "/" + filename
+        compressed = Image.open(image)        
         
-        image.save(os.path.join(app.config["MEDIA_FOLDER"], path))
+        compressed.save(os.path.join(app.config["MEDIA_FOLDER"], path), optimize=True, quality=65)
 
     return make_response("Images have been uploaded", 200)
 

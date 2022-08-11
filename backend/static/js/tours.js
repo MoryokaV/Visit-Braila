@@ -1,5 +1,6 @@
 import {
   getFilename,
+  startLoadingAnimation,
   nameRegExp,
   nameRegExpTitle,
   addressRegExp, 
@@ -198,6 +199,8 @@ $(document).ready(async function() {
   $("#insert-tour-form").submit(async function(e) {
     e.preventDefault();
 
+    startLoadingAnimation($(this));
+    
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = $("#tour-primary-image").val();
@@ -210,9 +213,6 @@ $(document).ready(async function() {
       data: formData,
       cache: false,
       processData: false,
-      success: function(data) {
-        console.log(data);
-      }
     });
 
     await $.ajax({
@@ -221,9 +221,6 @@ $(document).ready(async function() {
       data: JSON.stringify(tour),
       processData: false,
       contentType: "application/json; charset=UTF-8",
-      success: function(data) {
-        console.log(data);
-      }
     });
 
     location.reload();

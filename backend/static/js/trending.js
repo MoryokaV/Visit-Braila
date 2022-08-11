@@ -109,9 +109,6 @@ $(document).ready(async function() {
         contentType: "application/json; charset=UTF-8",
         processData: false,
         data: JSON.stringify(item),
-        success: function(data) {
-          console.log(data);
-        }
       });
 
       appendElements();

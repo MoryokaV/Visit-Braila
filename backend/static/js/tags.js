@@ -50,9 +50,6 @@ $(document).ready(async function() {
       contentType: "application/json; charset=UTF-8",
       processData: false,
       data: JSON.stringify({"name": $("#tag").val()}),
-      success: function(data) {
-        console.log(data);
-      }
     });
 
     $("#tag").val("");

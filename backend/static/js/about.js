@@ -16,12 +16,9 @@ const updateParagraph = async (form, e, name, content) => {
     data: JSON.stringify({"name": name, "content": content}),
     processData: false,
     contentType: "application/json; charset=UTF-8",
-    success: function(data) {
-      console.log(data);
-    }
   });
   
-  endLoadingAnimation(form);
+  setTimeout(() => endLoadingAnimation(form), 400);
 }
 
 $(document).ready(async function() {

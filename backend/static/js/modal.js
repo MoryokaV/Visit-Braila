@@ -242,9 +242,6 @@ $(document).ready(async function () {
         data: formData,
         cache: false,
         processData: false,
-        success: function(data) {
-          console.log(data);
-        }
       });
 
     sight.images = [...current_images];
@@ -255,19 +252,11 @@ $(document).ready(async function () {
       data: JSON.stringify({"images_to_delete": images_to_delete, "sight": sight}),
       processData: false,
       contentType: "application/json; charset=UTF-8",
-      success: function(data) {
-        console.log(data);
-      }
     });
     
-    await new Promise(resolve => {
-      setTimeout(() => {
-        endLoadingAnimation($(this));
-        resolve();
-      }, 400);
-    });
     await fetchSights();
     closeModal();
+    endLoadingAnimation($(this));
   });
 
   // TOUR NAME
@@ -324,9 +313,6 @@ $(document).ready(async function () {
         data: formData,
         cache: false,
         processData: false,
-        success: function(data) {
-          console.log(data);
-        }
       });
 
     tour.images = [...current_images];
@@ -337,18 +323,10 @@ $(document).ready(async function () {
       data: JSON.stringify({"images_to_delete": images_to_delete, "tour": tour}),
       processData: false,
       contentType: "application/json; charset=UTF-8",
-      success: function(data) {
-        console.log(data);
-      }
     });
-    
-    await new Promise(resolve => {
-      setTimeout(() => {
-        endLoadingAnimation($(this));
-        resolve();
-      }, 400);
-    });
+  
     await fetchTours();
     closeModal();
+    endLoadingAnimation($(this));
   });
 });
