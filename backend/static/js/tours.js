@@ -88,13 +88,13 @@ const addImages = (elem) => {
   addPreviewImages(images); 
 
   images.map((image) => {
-    if(tour.images.includes("tours/" + image.name)){
+    if(tour.images.includes("/static/media/tours/" + image.name)){
       alert("Image is already present in list!");
       return;
     }
 
     formData.append("files[]", image);
-    tour.images.push("tours/" + image.name);
+    tour.images.push("/static/media/tours/" + image.name);
 
     appendImageElement(image.name);
   });

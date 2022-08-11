@@ -64,13 +64,13 @@ const addImages = (elem) => {
   addPreviewImages(images); 
 
   images.map((image) => {
-    if(sight.images.includes("sights/" + image.name)){
+    if(sight.images.includes("/static/media/sights/" + image.name)){
       alert("Image is already present in list!");
       return;
     }
 
     formData.append("files[]", image);
-    sight.images.push("sights/" + image.name);
+    sight.images.push("/static/media/sights/" + image.name);
 
     appendImageElement(image.name);
   });
@@ -98,7 +98,7 @@ const removeImage = (elem) => {
 
   let files = [...formData.getAll("files[]")];
   formData.delete("files[]");
-  files = files.filter((file) => file.name != getFilename(sight.images[elem.parent().index()]));
+  files = files.filter((file) => file.name != sight.images[elem.parent().index()]);
   files.map((file) => formData.append("files[]", file));
 
   sight.images.splice(elem.parent().index(), 1);
@@ -186,7 +186,7 @@ $(document).ready(async function() {
     sight.description = quill.root.innerHTML;
     sight.primary_image = $("#sight-primary-image").val();
     sight.position = $("#sight-position").val();
-  
+    
     await $.ajax({
       type: "POST",
       url: "/api/uploadImages/sights",

@@ -21,7 +21,7 @@ const appendElements = async () => {
   items.map((item, index) => {
     $(".trending-container").append(
       `<article class="trending-item" id="${item._id}">
-        <img src="/static/media/${sights[index].images[sights[index].primary_image - 1]}" alt="${sights[index].name}">
+        <img src="${sights[index].images[sights[index].primary_image - 1]}" alt="${sights[index].name}">
         <footer>
           <p>${sights[index].name}</p>
           <ion-icon name="heart-outline"></ion-icon>

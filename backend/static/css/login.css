@@ -1,6 +1,6 @@
 .container {
 	background-color:  var(--accent-color-light);
-	background-image: url("../media/assets/braila.jpg");
+	background-image: url("/static/media/assets/braila.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: top;

@@ -242,7 +242,7 @@ def uploadImages(folder):
 def deleteImages(images):
     for image in images:
         try:
-            os.remove(os.path.join(app.config['MEDIA_FOLDER'], image))
+            os.remove(app.root_path + image)
         except:
             pass
 

@@ -23,13 +23,13 @@ const closeModal = () => {
 
 const addImage = (folder, elem, modal) => {
   Array.from(elem.prop('files')).map((image) => {
-    if(current_images.includes(folder + "/" + image.name)){
+    if(current_images.includes("static/media/" + folder + "/" + image.name)){
       alert("Image is already present in list!");
       return;
     }
 
     formData.append("files[]", image);
-    current_images.push(folder + "/" + image.name);
+    current_images.push("/static/media/" + folder + "/" + image.name);
 
     appendImageElement(folder + "/" + image.name, modal);
   });
@@ -69,7 +69,7 @@ const removeImage = (elem, modal) => {
 const appendImageElement = (image, modal_name, uploaded = false) => {
   $(`#${modal_name}-modal .img-container`).append(
       `<li class="highlight-onhover">
-        <a ${uploaded ? `href="../static/media/${image}" target="_blank"` : ``} class="group">
+        <a ${uploaded ? `href="${image}" target="_blank"` : ``} class="group">
           ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
           ${getFilename(image)}
         </a>
