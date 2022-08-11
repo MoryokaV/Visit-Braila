@@ -215,6 +215,7 @@ ion-icon {
 .highlight-onhover a{
     color: #868e96; 
     word-break: break-word;
+    max-width: 90%;
 }
 
 .highlight-onhover:hover a {
@@ -453,10 +454,12 @@ tbody tr:hover {
 
 .preview .img-md {
     width: 100%;
+    object-fit: cover;
 }
 
 .preview .img-sm {
     width: 40%;
+    object-fit: cover;
 }
 
 .preview-content h2 {

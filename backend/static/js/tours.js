@@ -83,16 +83,18 @@ const addPreviewImages = async (images) => {
 }
 
 const addImages = (elem) => {
-  const images = Array.from(elem.prop('files'));
+  const images = Array.from(elem.prop('files')).filter((image) => {
+    if(tour.images.includes("/static/media/tours/" + image.name)){
+      alert(`'${image.name}' is already present in list!`);
+      return false;
+    }
 
+    return true;
+  });
+  
   addPreviewImages(images); 
 
   images.map((image) => {
-    if(tour.images.includes("/static/media/tours/" + image.name)){
-      alert("Image is already present in list!");
-      return;
-    }
-
     formData.append("files[]", image);
     tour.images.push("/static/media/tours/" + image.name);
 
@@ -103,7 +105,7 @@ const addImages = (elem) => {
 }
 
 const removePreviewImage = (elem) => {
-  $("#preview-images img").eq(elem.index()).remove();
+  $("#preview-images img").eq(elem.parent().index()).remove();
 
   $("#tour-primary-image").change();
 }
@@ -114,7 +116,7 @@ const removeImage = (elem) => {
     return;
   }
 
-  if(parseInt($("#tour-primary-image").val()) === tour.images.length && elem.index() === tour.images.length - 1){
+  if(parseInt($("#tour-primary-image").val()) === tour.images.length){
     $("#tour-primary-image").val(tour.images.length - 1);    
   }
 

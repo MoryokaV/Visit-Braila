@@ -59,16 +59,18 @@ const addPreviewImages = async (images) => {
 }
 
 const addImages = (elem) => {
-  const images = Array.from(elem.prop('files'));
+  const images = Array.from(elem.prop('files')).filter((image) => {
+    if(sight.images.includes("/static/media/sights/" + image.name)){
+      alert(`'${image.name}' is already present in list!`);
+      return false;
+    }
+
+    return true;
+  });
 
   addPreviewImages(images); 
 
   images.map((image) => {
-    if(sight.images.includes("/static/media/sights/" + image.name)){
-      alert("Image is already present in list!");
-      return;
-    }
-
     formData.append("files[]", image);
     sight.images.push("/static/media/sights/" + image.name);
 
@@ -79,7 +81,7 @@ const addImages = (elem) => {
 }
 
 const removePreviewImage = (elem) => {
-  $("#preview-images img").eq(elem.index()).remove();
+  $("#preview-images img").eq(elem.parent().index()).remove();
   
   $("#sight-primary-image").change();     
 }
@@ -90,7 +92,7 @@ const removeImage = (elem) => {
     return;
   }
   
-  if(parseInt($("#sight-primary-image").val()) === sight.images.length && elem.index() === sight.images.length - 1){
+  if(parseInt($("#sight-primary-image").val()) === sight.images.length){
     $("#sight-primary-image").val(sight.images.length - 1);    
   }
 
@@ -98,7 +100,7 @@ const removeImage = (elem) => {
 
   let files = [...formData.getAll("files[]")];
   formData.delete("files[]");
-  files = files.filter((file) => file.name != sight.images[elem.parent().index()]);
+  files = files.filter((file) => file.name != getFilename(sight.images[elem.parent().index()]));
   files.map((file) => formData.append("files[]", file));
 
   sight.images.splice(elem.parent().index(), 1);

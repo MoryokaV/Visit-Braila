@@ -23,8 +23,8 @@ const closeModal = () => {
 
 const addImage = (folder, elem, modal) => {
   Array.from(elem.prop('files')).map((image) => {
-    if(current_images.includes("static/media/" + folder + "/" + image.name)){
-      alert("Image is already present in list!");
+    if(current_images.includes(`/static/media/${folder}/${image.name}`)){
+      alert(`'${image.name}' is already present in list!`);
       return;
     }
 
@@ -43,7 +43,7 @@ const removeImage = (elem, modal) => {
     return;
   }
 
-  if(parseInt($(`#${modal}-primary-image`).val()) === current_images.length && elem.index() === current_images.length - 1){
+  if(parseInt($(`#${modal}-primary-image`).val()) === current_images.length){
     $(`#${modal}-primary-image`).val(current_images.length - 1);    
   }
 
@@ -54,8 +54,8 @@ const removeImage = (elem, modal) => {
   files.map((file) => formData.append("files[]", file)); 
 
   //mark for deletion
-  const originalImages = modal === "sight" ? sight.images : tour.images;
-  if(originalImages.includes(current_images[elem.parent().index()])){
+  const savedImages = modal === "sight" ? sight.images : tour.images;
+  if(savedImages.includes(current_images[elem.parent().index()])){
     images_to_delete.push(current_images[elem.parent().index()]);
   }
 
