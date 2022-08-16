@@ -7,8 +7,6 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from shutil import disk_usage
 from PIL import Image
-import PIL
-import glob
 import os
 import json
 import hashlib
@@ -20,7 +18,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-client = MongoClient(os.getenv("MONGO_URL"));
+client = MongoClient(os.getenv("MONGO_URL"))
 db = client.visitbraila
 
 @app.route("/")
@@ -91,7 +89,7 @@ def fetchSights():
 
 @app.route("/api/deleteSight/<_id>", methods=["DELETE"])
 def deleteSight(_id):
-    #delete local sight images first
+    # delete local sight images first
     images = json.loads(findSight(_id))['images']
     deleteImages(images)
 
@@ -109,7 +107,7 @@ def findSight(_id):
 
 @app.route("/api/editSight", methods=["PUT"])
 def editSight():
-    data = request.get_json();
+    data = request.get_json()
 
     deleteImages(data['images_to_delete'])
     sight = data['sight']
@@ -121,7 +119,14 @@ def editSight():
 def insertTour():
     tour = request.get_json()
     
-    db.tours.insert_one({"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']})
+    db.tours.insert_one({
+        "name": tour['name'], 
+        "stages": tour['stages'],
+        "description": tour['description'],
+        "images": tour['images'], 
+        "primary_image": tour['primary_image'], 
+        "route": tour['route']
+    })
 
     return make_response("New entry has been inserted", 200) 
 
@@ -131,7 +136,7 @@ def fetchTours():
 
 @app.route("/api/deleteTour/<_id>", methods=["DELETE"])
 def deleteTour(_id):
-    #delete local tour images first
+    # delete local tour images first
     images = json.loads(findTour(_id))['images']
     deleteImages(images)
 
@@ -144,7 +149,7 @@ def findTour(_id):
 
 @app.route("/api/editTour", methods=["PUT"])
 def editTour():
-    data = request.get_json();
+    data = request.get_json()
 
     deleteImages(data['images_to_delete'])
     tour = data['tour'] 
@@ -158,7 +163,7 @@ def fetchTags():
 
 @app.route("/api/insertTag", methods=["POST"])
 def insertTag():
-    tag = request.get_json();
+    tag = request.get_json()
 
     db.tags.insert_one({"name": tag['name']}) 
 
@@ -195,7 +200,7 @@ def deleteTrendingItem():
     _id = request.args.get("_id")
     index = int(request.args.get("index"))
 
-    items = json.loads(fetchTrendingItems());
+    items = json.loads(fetchTrendingItems())
     
     # Decrease indexes when deleting
     for item in items:
@@ -204,11 +209,11 @@ def deleteTrendingItem():
 
     db.trending.delete_one({"_id": ObjectId(_id)})
 
-    return make_response("Successfully deleted document", 200);
+    return make_response("Successfully deleted document", 200)
 
 @app.route("/api/updateTrendingItemIndex", methods=["PUT"])
 def updateTrendingItemIndex():
-    item = request.get_json();
+    item = request.get_json()
 
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
     return make_response("Entry has been updated", 200)
@@ -234,7 +239,7 @@ def updateAboutParagraph():
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImages(folder):
     for image in request.files.getlist('files[]'):
-        path = folder + "/" + image.filename; 
+        path = folder + "/" + image.filename 
 
         compressed = Image.open(image)        
         
@@ -253,7 +258,10 @@ def deleteImages(images):
 def serverStorage():
     ssd = disk_usage("/")
 
-    return json.dumps({"total": round(ssd.total / (2**30), 1), "used": round(ssd.used / (2**30), 1)})
+    return json.dumps({
+        "total": round(ssd.total / (2**30), 1), 
+        "used": round(ssd.used / (2**30), 1)
+    })
 
 def init_dir():
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/sights"):
@@ -263,4 +271,4 @@ def init_dir():
 
 if __name__ == '__main__':
     init_dir()
-    app.run(debug=True, port=8080);
+    app.run(debug=True, port=8080)

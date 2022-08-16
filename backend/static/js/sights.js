@@ -1,4 +1,4 @@
-import { 
+import {
   getFilename,
   startLoadingAnimation,
   nameRegExp,
@@ -13,7 +13,7 @@ let sight = {
   description: ``,
   images: [],
   primary_image: 1,
-  positoin: "",
+  position: "",
 };
 
 const appendActiveTags = () => {
@@ -23,7 +23,7 @@ const appendActiveTags = () => {
 
 const appendImageElement = (image) => {
   $(".img-container").append(
-      `<li class="highlight-onhover">
+    `<li class="highlight-onhover">
         <a class="group">
           <ion-icon name="cloud-upload-outline"></ion-icon>
           ${image}
@@ -32,12 +32,12 @@ const appendImageElement = (image) => {
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`
-    );
+  );
 
   $("#sight-primary-image").attr("max", sight.images.length);
 }
 
-const addPreviewImages = async (images) => { 
+const addPreviewImages = async (images) => {
   function getBase64(image) {
     const reader = new FileReader();
 
@@ -49,19 +49,19 @@ const addPreviewImages = async (images) => {
       reader.readAsDataURL(image);
     });
   }
-  
+
   const blobs = await Promise.all(images.map(image => getBase64(image)));
 
   blobs.map((blob) => $("#preview-images").append(`<img src="${blob}" class="img-sm">`));
 
-  if($("#preview-primary-image").attr("src") === undefined){
+  if ($("#preview-primary-image").attr("src") === undefined) {
     $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
   }
 }
 
 const addImages = (elem) => {
   const images = Array.from(elem.prop('files')).filter((image) => {
-    if(sight.images.includes("/static/media/sights/" + image.name)){
+    if (sight.images.includes("/static/media/sights/" + image.name)) {
       alert(`'${image.name}' is already present in list!`);
       return false;
     }
@@ -69,7 +69,7 @@ const addImages = (elem) => {
     return true;
   });
 
-  addPreviewImages(images); 
+  addPreviewImages(images);
 
   images.map((image) => {
     formData.append("files[]", image);
@@ -83,18 +83,18 @@ const addImages = (elem) => {
 
 const removePreviewImage = (elem) => {
   $("#preview-images img").eq(elem.parent().index()).remove();
-  
-  $("#sight-primary-image").change();     
+
+  $("#sight-primary-image").change();
 }
 
 const removeImage = (elem) => {
-  if(sight.images.length === 1){
+  if (sight.images.length === 1) {
     alert("Entry must have at least one image.");
     return;
   }
-  
-  if(parseInt($("#sight-primary-image").val()) === sight.images.length){
-    $("#sight-primary-image").val(sight.images.length - 1);    
+
+  if (parseInt($("#sight-primary-image").val()) === sight.images.length) {
+    $("#sight-primary-image").val(sight.images.length - 1);
   }
 
   removePreviewImage(elem);
@@ -121,15 +121,15 @@ $(document).ready(async function() {
   // TAGS
   const tags = await $.getJSON("/api/fetchTags");
   tags.map((tag) => $("#tags").append(`<option value="${tag.name}">${tag.name}</option>`));
-  
+
   $("#tags").change(function() {
-    if(!sight.tags.includes($(this).val())){
+    if (!sight.tags.includes($(this).val())) {
       $("#tag-btn")
         .removeClass("danger")
         .text("Add")
         .off("click")
         .click(function() {
-          if(sight.tags.length === 3){
+          if (sight.tags.length === 3) {
             alert("You cannot use more than 3 tags!");
             return;
           }
@@ -141,7 +141,7 @@ $(document).ready(async function() {
           $(this).off("click");
           $("#tags").val("-");
         });
-    }else{
+    } else {
       $("#tag-btn")
         .addClass("danger")
         .text("Remove")
@@ -166,7 +166,7 @@ $(document).ready(async function() {
   quill.on('text-change', function() {
     $("#preview-description").html(quill.root.innerHTML);
   });
-  
+
   // IMAGES 
   $("#sight-images").change(function() {
     $(this).prop("required", false);
@@ -184,14 +184,14 @@ $(document).ready(async function() {
   // SUBMIT
   $("#insert-sight-form").submit(async function(e) {
     e.preventDefault();
-    
+
     startLoadingAnimation($(this));
-    
-    sight.name = $("#sight-name").val(); 
+
+    sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
     sight.primary_image = $("#sight-primary-image").val();
     sight.position = $("#sight-position").val();
-    
+
     await $.ajax({
       type: "POST",
       url: "/api/uploadImages/sights",
@@ -209,6 +209,6 @@ $(document).ready(async function() {
       contentType: "application/json; charse=UTF-8",
     });
 
-    location.reload(); 
-  }); 
+    location.reload();
+  });
 });
