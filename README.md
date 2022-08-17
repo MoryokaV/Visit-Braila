@@ -2,6 +2,7 @@
 *Your personal guide for discovering the small community of Brăila, România* 📍
 
 ## CMS
+Admin panel used by app owners to manage database entries. This custom tool is a GUI which helps you update content safely with validation, encryption and no technical skills. The CMS allows managers to keep their apps up-to-date in realtime with no need for consultation.
 
 ### Screenshots
 ![all white bg](https://user-images.githubusercontent.com/55505135/185123116-4d9f7fe0-b61b-4f40-9cc0-e70a9fc88557.png)
