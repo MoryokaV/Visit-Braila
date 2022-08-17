@@ -1,14 +1,41 @@
 # Visit-Braila
-Tourism app made for community.
+*Your personal guide for discovering the small community of Brăila, România* 📍
 
-### Tech Stack:
+## CMS
+
+### Screenshots
+![all white bg](https://user-images.githubusercontent.com/55505135/185123116-4d9f7fe0-b61b-4f40-9cc0-e70a9fc88557.png)
+
+### Features
+📝 Form validation using regexp  
+💾 Real-time optimized server storage information  
+🌆 Image file compression on upload  
+✨ Pure CSS styles from scratch  
+🔒 Encrypted login system with built-in “remember me” option  
+⚡️  Blazing fast loading times
+♻️  Cross-browser support  
+🖥 Fully responsive desktop-first UI
+
+### Dependencies
+- Quill.js - editor for rich text in HTML format
+- Sortable.js - animated draggable list items
+
+### Cool stuff
+- Images get deleted automatically when not attached to a db document
+- MD5 login details encryption
+- Tags get removed from sights automatically when deleted
+- Trending - admin’s recommendations
+
+![Trending list](https://user-images.githubusercontent.com/55505135/185100032-4a6ca134-9426-451a-8f24-fb4df75e88a3.gif)
+
+## Tech Stack used:
 - Backend:
   - MongoDB
   - Python3 + Flask, uWSGI
   - HTML & CSS
-  - JavaScript + jQuery (AJAX calls, manipulate DOM)
+  - JavaScript + jQuery 3.6.0 (AJAX calls, manipulate DOM)
 - Frontend:
-  - Flutter 
+  - Flutter
   - Google Maps API
   - Sqflite
   - Provider
