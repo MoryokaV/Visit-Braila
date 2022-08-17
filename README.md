@@ -26,8 +26,6 @@
 - Tags get removed from sights automatically when deleted
 - Trending - admin’s recommendations
 
-![Trending list demo](https://user-images.githubusercontent.com/55505135/185141157-514d56aa-f29f-40fc-b27a-c71cc26cf379.gif)
-
 ## Tech Stack used:
 - Backend:
   - MongoDB
