@@ -12,7 +12,7 @@
 🌆 Image file compression on upload  
 ✨ Pure CSS styles from scratch  
 🔒 Encrypted login system with built-in “remember me” option  
-⚡️  Blazing fast loading times
+⚡️  Blazing fast loading times  
 ♻️  Cross-browser support  
 🖥 Fully responsive desktop-first UI
 
