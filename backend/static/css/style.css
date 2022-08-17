@@ -186,6 +186,16 @@ ion-icon {
     visibility: hidden;
 }
 
+.loading-spinner {
+  display: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 2px solid transparent;
+  border-top-color: var(--text-color);
+  border-radius: 50%;
+  animation: button-loading-spinner 0.7s ease infinite;
+}
+
 @keyframes button-loading-spinner {
   from {
     transform: rotate(0turn);
@@ -563,6 +573,18 @@ tbody tr:hover {
 
 .trending-item:hover footer > button {
     display: block;
+}
+
+.trending-item footer.loading > ion-icon {
+  display: none;
+}
+
+.trending-item footer.loading > button {
+  display: none;
+}
+
+.trending-item footer.loading > .loading-spinner {
+  display: block;
 }
 
 .trending-item > img {

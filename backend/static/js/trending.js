@@ -5,12 +5,12 @@ let items = [];
 const appendElements = async () => {
   items = await $.getJSON("/api/fetchTrendingItems");
 
-  if(items.length === 0){
+  if (items.length === 0) {
     $(".trending-container")
       .empty()
       .addClass("empty center")
       .append(`<p>No items in list</p>`);
-    
+
     return;
   }
 
@@ -24,6 +24,7 @@ const appendElements = async () => {
         <img src="${sights[index].images[sights[index].primary_image - 1]}" alt="${sights[index].name}">
         <footer>
           <p>${sights[index].name}</p>
+          <div class="loading-spinner"></div>
           <ion-icon name="heart-outline"></ion-icon>
           <button class="btn icon-btn remove-item">
             <ion-icon name="close-outline"></ion-icon>
@@ -36,40 +37,57 @@ const appendElements = async () => {
   const list = document.querySelector(".trending-container");
 
   new Sortable(list, {
-    animation: 200,
+    animation: 150,
     easing: "cubic-bezier(0.65, 0, 0.35, 1)",
     delay: 50,
     delayOnTouchOnly: true,
     onEnd: async function(e) {
+      $(".trending-container article").eq(e.newIndex).find("footer").addClass("loading");
+      $(".trending-container article").eq(e.oldIndex).find("footer").addClass("loading");
+
       await $.ajax({
         type: "PUT",
         url: "/api/updateTrendingItemIndex",
-        data: JSON.stringify({_id: $(".trending-container article").eq(e.newIndex).attr('id'), newIndex: e.newIndex}),
+        data: JSON.stringify({ _id: $(".trending-container article").eq(e.newIndex).attr('id'), newIndex: e.newIndex }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
+      });
+
+      await new Promise(resolve => {
+        setTimeout(() => {
+          $(".trending-container article").eq(e.newIndex).find("footer").removeClass("loading")
+          resolve();
+        }, 250);
       });
 
       await $.ajax({
         type: "PUT",
         url: "/api/updateTrendingItemIndex",
-        data: JSON.stringify({_id: $(".trending-container article").eq(e.oldIndex).attr('id'), newIndex: e.oldIndex}),
+        data: JSON.stringify({ _id: $(".trending-container article").eq(e.oldIndex).attr('id'), newIndex: e.oldIndex }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
+
+      await new Promise(resolve => {
+        setTimeout(() => {
+          $(".trending-container article").eq(e.oldIndex).find("footer").removeClass("loading")
+          resolve();
+        }, 250);
+      });
     }
-  }); 
+  });
 }
 
 const getSight = async item => await $.getJSON("/api/findSight/" + item.sight_id);
 
 $(document).ready(async function() {
   // Initialize
-  appendElements(); 
+  appendElements();
 
   // Insert item 
   $("#add-item").click(function() {
     $(this).hide();
-    $(".trending-form").show();   
+    $(".trending-form").show();
   });
 
   // Remove item 
@@ -78,22 +96,22 @@ $(document).ready(async function() {
 
     await $.ajax({
       type: "DELETE",
-      url: "/api/deleteTrendingItem?" + $.param({_id: article.attr('id'), index: article.index()}), 
+      url: "/api/deleteTrendingItem?" + $.param({ _id: article.attr('id'), index: article.index() }),
     });
-    
+
     appendElements();
   });
-  
+
   // SUBMIT
   $(".trending-form").submit(async function(e) {
     e.preventDefault();
-  
+
     const item = {
       sight_id: $("#sight-id").val(),
       index: items.length,
     }
 
-    if(items.filter((i) => i.sight_id === item.sight_id).length > 0){
+    if (items.filter((i) => i.sight_id === item.sight_id).length > 0) {
       alert("Item already present in list");
       $("#sight-id").val("");
 
@@ -102,7 +120,7 @@ $(document).ready(async function() {
 
     const sight = await $.getJSON("/api/findSight/" + item.sight_id).catch((error) => alert(error.responseText));
 
-    if(sight !== undefined) {
+    if (sight !== undefined) {
       await $.ajax({
         type: "POST",
         url: "/api/insertTrendingItem",
@@ -120,7 +138,7 @@ $(document).ready(async function() {
   });
 
   $("body").click(function(e) {
-    if(!document.querySelector(".trending-form").contains(e.target) && !document.querySelector("#add-item").contains(e.target)){
+    if (!document.querySelector(".trending-form").contains(e.target) && !document.querySelector("#add-item").contains(e.target)) {
       $(".trending-form").hide();
       $("#add-item").show();
     }
