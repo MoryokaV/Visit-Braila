@@ -119,15 +119,7 @@ def editSight():
 def insertTour():
     tour = request.get_json()
     
-    db.tours.insert_one({
-        "name": tour['name'], 
-        "stages": tour['stages'],
-        "description": tour['description'],
-        "images": tour['images'], 
-        "primary_image": tour['primary_image'], 
-        "route": tour['route']
-    })
-
+    db.tours.insert_one({"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']})
     return make_response("New entry has been inserted", 200) 
 
 @app.route("/api/fetchTours")
