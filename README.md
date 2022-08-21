@@ -26,6 +26,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 - MD5 login details encryption
 - Tags get removed from sights automatically when deleted
 - Trending - admin’s recommendations
+- UI is inspired from [Admin LTE template](https://adminlte.io/) and Bootstrap 5
 
 ## Tech Stack used:
 - Backend:
