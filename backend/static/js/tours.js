@@ -5,6 +5,8 @@ import {
   nameRegExpTitle,
   addressRegExp,
   addressRegExpTitle,
+  idRegExp,
+  idRegExpTitle,
 } from './utils.js';
 
 let quill = undefined;
@@ -18,7 +20,7 @@ let tour = {
   route: "",
 };
 
-const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" required />`;
+const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
 
 const appendStages = () => {
   $("#stages").empty();
@@ -43,7 +45,7 @@ const appendStages = () => {
     $("#preview-stages").append(`${$("#preview-stages p").length > 0 ? " &ndash; " : ""}<p class="${stage.sight_link !== "" ? "hyperlink" : ""}">${stage.text}</p>`);
   });
 
-  $("#stages input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
+  $("#stages .stage input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
 }
 
 const appendImageElement = (image) => {

@@ -87,7 +87,7 @@ const appendActiveTags = () => {
   sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<p class="tag-item">${tag}</p>`));
 }
 
-const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" required />`;
+const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
 
 const appendStages = () => {
   $("#tour-modal #stages").empty();

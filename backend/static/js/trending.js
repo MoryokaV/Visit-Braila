@@ -1,4 +1,4 @@
-import './utils.js';
+import { idRegExp, idRegExpTitle } from './utils.js';
 
 let items = [];
 
@@ -85,6 +85,8 @@ $(document).ready(async function() {
   appendElements();
 
   // Insert item 
+  $("#sight-id").attr("pattern", idRegExp).attr("title", idRegExpTitle);
+
   $("#add-item").click(function() {
     $(this).hide();
     $(".trending-form").show();
