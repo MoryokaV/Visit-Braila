@@ -3,20 +3,22 @@ import {
   startLoadingAnimation,
   nameRegExp,
   nameRegExpTitle,
-  addressRegExp, 
-  addressRegExpTitle,  
+  addressRegExp,
+  addressRegExpTitle,
 } from './utils.js';
 
 let quill = undefined;
 let formData = new FormData();
 let tour = {
   name: "",
-  stages: ["", ""],
+  stages: [{ text: "", sight_link: "" }, { text: "", sight_link: "" }],
   description: ``,
   images: [],
   primary_image: 1,
   route: "",
 };
+
+const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" required />`;
 
 const appendStages = () => {
   $("#stages").empty();
@@ -24,14 +26,13 @@ const appendStages = () => {
 
   tour.stages.map((stage, index) => {
     $("#stages").append(
-      `<input 
-        type="text" 
-        value="${stage}" 
-        size="${stage.length}"
-        maxlength="40"
-        required /> 
-      ${index === tour.stages.length - 1 ? 
-        `<button type="button" class="btn icon-btn" id="add-stage" style="color: var(--primary-color)"> 
+      `<div class="stage">
+        <input type="text" value="${stage.text}" size="${stage.text.length}" maxlength="40" required /> 
+        <ion-icon name="link-outline" class="stage-input-icon ${stage.sight_link !== "" ? "active" : ""}"></ion-icon>
+      </div>
+      ${stage.sight_link !== "" ? linkInputElement(stage.sight_link) : ``}
+      ${index === tour.stages.length - 1 ?
+        `<button type="button" class="btn icon-btn link" id="add-stage"> 
           <ion-icon name="add-outline"></ion-icon> 
         </button>`
         :
@@ -39,7 +40,7 @@ const appendStages = () => {
       }`
     );
 
-    $("#preview-stages").append(`${$("#preview-stages p").length > 0 ? " &ndash; " : ""}<p>${stage}</p>`);
+    $("#preview-stages").append(`${$("#preview-stages p").length > 0 ? " &ndash; " : ""}<p class="${stage.sight_link !== "" ? "hyperlink" : ""}">${stage.text}</p>`);
   });
 
   $("#stages input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
@@ -47,7 +48,7 @@ const appendStages = () => {
 
 const appendImageElement = (image) => {
   $(".img-container").append(
-      `<li class="highlight-onhover">
+    `<li class="highlight-onhover">
         <a class="group">
           <ion-icon name="cloud-upload-outline"></ion-icon>
           ${image}
@@ -56,7 +57,7 @@ const appendImageElement = (image) => {
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`
-    );
+  );
 
   $("#tour-primary-image").attr("max", tour.images.length);
 }
@@ -73,27 +74,27 @@ const addPreviewImages = async (images) => {
       reader.readAsDataURL(image);
     });
   }
-  
+
   const blobs = await Promise.all(images.map(image => getBase64(image)));
 
   blobs.map((blob) => $("#preview-images").append(`<img src="${blob}" class="img-sm">`));
 
-  if($("#preview-primary-image").attr("src") === undefined){
+  if ($("#preview-primary-image").attr("src") === undefined) {
     $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
   }
 }
 
 const addImages = (elem) => {
   const images = Array.from(elem.prop('files')).filter((image) => {
-    if(tour.images.includes("/static/media/tours/" + image.name)){
+    if (tour.images.includes("/static/media/tours/" + image.name)) {
       alert(`'${image.name}' is already present in list!`);
       return false;
     }
 
     return true;
   });
-  
-  addPreviewImages(images); 
+
+  addPreviewImages(images);
 
   images.map((image) => {
     formData.append("files[]", image);
@@ -112,13 +113,13 @@ const removePreviewImage = (elem) => {
 }
 
 const removeImage = (elem) => {
-  if(tour.images.length === 1){
+  if (tour.images.length === 1) {
     alert("Entry must have at least one image.");
     return;
   }
 
-  if(parseInt($("#tour-primary-image").val()) === tour.images.length){
-    $("#tour-primary-image").val(tour.images.length - 1);    
+  if (parseInt($("#tour-primary-image").val()) === tour.images.length) {
+    $("#tour-primary-image").val(tour.images.length - 1);
   }
 
   removePreviewImage(elem);
@@ -133,7 +134,7 @@ const removeImage = (elem) => {
   $("#tour-primary-image").attr("max", tour.images.length);
 
   elem.parent().remove();
-} 
+}
 
 $(document).ready(async function() {
   // NAME 
@@ -143,35 +144,61 @@ $(document).ready(async function() {
   });
 
   // STAGES
-  appendStages();
+  appendStages(); //two empty required fields
+
+  $("#stages").on('click', ".stage-input-icon", function() {
+    const index = $("#stages > div").index($(this).parent());
+
+    if ($(this).hasClass("active")) {
+      $(this).removeClass("active");
+
+      //remove sight link
+      $(this).parent().next("input").remove();
+      tour.stages[index].sight_link = "";
+      $("#preview-stages p").eq(index).removeClass("hyperlink");
+    } else {
+      $(this).addClass("active");
+
+      //add sight link
+      $(this).parent().after(linkInputElement(""));
+      $("#preview-stages p").eq(index).addClass("hyperlink");
+    }
+  });
 
   $("#stages").on('click', "#add-stage", function() {
-    tour.stages.push("");
+    tour.stages.push({ text: "", sight_link: "" });
     appendStages();
   });
 
-  $("#stages").on('input', "input", function() {
-    const index = $(this).index();
+  $("#stages").on('input', ".stage input", function() {
+    const index = $("#stages > div").index($(this).parent());
     const stage = $(this).val();
 
-    $(this).attr("size", stage.length); 
+    $(this).attr("size", stage.length);
 
-    tour.stages[index] = stage; 
-    
+    tour.stages[index].text = stage;
+
     $("#preview-stages p").eq(index).text(stage);
   });
 
-  $("#stages").on('keydown', "input", function(e) {
-    const index = $(this).index();
+  $("#stages").on('keydown', ".stage input", function(e) {
+    const index = $("#stages > div").index($(this).parent());
 
-    if(!$(this).val() && index !== 0 && index !== 1 && e.keyCode === 8){
+    if (!$(this).val() && index !== 0 && index !== 1 && e.keyCode === 8) {
       tour.stages.splice(index, 1);
       appendStages();
 
       return;
     }
   });
-  
+
+  $("#stages").on('input', ".stage-link", function() {
+    const index = $("#stages > div").index($(this).prev("div"));
+    const link = $(this).val();
+
+    tour.stages[index].sight_link = link;
+  });
+
   // DESCRIPTION
   quill = new Quill("#tour-description", {
     theme: "snow",
@@ -185,7 +212,7 @@ $(document).ready(async function() {
   $("#tour-images").change(function() {
     $(this).prop("required", false);
     addImages($(this));
-  }); 
+  });
 
   $(".img-container").on("click", ".remove-img-btn", function() {
     removeImage($(this));
@@ -200,12 +227,12 @@ $(document).ready(async function() {
     e.preventDefault();
 
     startLoadingAnimation($(this));
-    
+
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = $("#tour-primary-image").val();
     tour.route = $("#tour-route").val();
-    
+
     await $.ajax({
       type: "POST",
       url: "/api/uploadImages/tours",

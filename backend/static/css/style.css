@@ -415,8 +415,41 @@ tbody tr:hover {
     border-right: none;
 }
 
+.stage {
+  position: relative;
+}
+
 .stages-container input:focus {
-    box-shadow: 0 1px 1px 0 rgba(102,175,233,.6);
+    box-shadow: 0 1px 2px 0 rgba(102,175,233,.6);
+}
+
+.stages-container input:focus + .stage-input-icon {
+  display: block;
+}
+
+.stage-input-icon:hover {
+  display: block;
+  color: var(--text-color);
+}
+
+.stage-input-icon {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.6rem; 
+  color: var(--text-color-dimmed);
+  font-size: 1.4rem;
+	cursor: pointer;
+}
+
+.stage-input-icon.active {
+  color: var(--primary-color);
+  display: block;
+}
+
+.stage-link {
+  color: var(--primary-color);
 }
 
 .hidden-input {
@@ -485,6 +518,11 @@ tbody tr:hover {
     word-break: break-all;
     white-space: pre-wrap;
     line-height: 1.2;
+}
+
+.hyperlink {
+  color: var(--primary-color);
+  text-decoration: underline;
 }
 
 /* #### MODAL #### */

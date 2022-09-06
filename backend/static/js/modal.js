@@ -1,12 +1,12 @@
 import { fetchSights, fetchTours } from './dashboard.js';
-import { 
-  getFilename, 
+import {
+  getFilename,
   startLoadingAnimation,
   endLoadingAnimation,
-  nameRegExp, 
+  nameRegExp,
   nameRegExpTitle,
-  addressRegExp, 
-  addressRegExpTitle,  
+  addressRegExp,
+  addressRegExpTitle,
 } from './utils.js';
 
 let sight = {};
@@ -17,13 +17,13 @@ let images_to_delete = [];
 let quill = undefined;
 
 const closeModal = () => {
-  $(".modal").removeClass("show");  
+  $(".modal").removeClass("show");
   $(".ql-toolbar").remove();
 }
 
 const addImage = (folder, elem, modal) => {
   Array.from(elem.prop('files')).map((image) => {
-    if(current_images.includes(`/static/media/${folder}/${image.name}`)){
+    if (current_images.includes(`/static/media/${folder}/${image.name}`)) {
       alert(`'${image.name}' is already present in list!`);
       return;
     }
@@ -38,37 +38,37 @@ const addImage = (folder, elem, modal) => {
 }
 
 const removeImage = (elem, modal) => {
-  if(current_images.length === 1){
+  if (current_images.length === 1) {
     alert("Entry must have at least one image.");
     return;
   }
 
-  if(parseInt($(`#${modal}-primary-image`).val()) === current_images.length){
-    $(`#${modal}-primary-image`).val(current_images.length - 1);    
+  if (parseInt($(`#${modal}-primary-image`).val()) === current_images.length) {
+    $(`#${modal}-primary-image`).val(current_images.length - 1);
   }
 
   //clean up FormData
   let files = [...formData.getAll("files[]")];
   formData.delete("files[]");
   files = files.filter((file) => file.name !== getFilename(current_images[elem.parent().index()]));
-  files.map((file) => formData.append("files[]", file)); 
+  files.map((file) => formData.append("files[]", file));
 
   //mark for deletion
   const savedImages = modal === "sight" ? sight.images : tour.images;
-  if(savedImages.includes(current_images[elem.parent().index()])){
+  if (savedImages.includes(current_images[elem.parent().index()])) {
     images_to_delete.push(current_images[elem.parent().index()]);
   }
 
   current_images.splice(elem.parent().index(), 1)
-  
+
   $(`#${modal}-primary-image`).attr("max", current_images.length);
-  
+
   elem.parent().remove();
 }
 
 const appendImageElement = (image, modal_name, uploaded = false) => {
   $(`#${modal_name}-modal .img-container`).append(
-      `<li class="highlight-onhover">
+    `<li class="highlight-onhover">
         <a ${uploaded ? `href="${image}" target="_blank"` : ``} class="group">
           ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
           ${getFilename(image)}
@@ -77,7 +77,7 @@ const appendImageElement = (image, modal_name, uploaded = false) => {
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`
-    );
+  );
 
   $(`#${modal_name}-modal #${modal_name}-primary-image`).attr("max", current_images.length);
 }
@@ -87,19 +87,20 @@ const appendActiveTags = () => {
   sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<p class="tag-item">${tag}</p>`));
 }
 
+const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" required />`;
+
 const appendStages = () => {
   $("#tour-modal #stages").empty();
 
   tour.stages.map((stage, index) => {
-    $("#tour-modal #stages").append(
-      `<input 
-        type="text" 
-        value="${stage}" 
-        size="${stage.length}"
-        maxlength="40"
-        required /> 
-      ${index === tour.stages.length - 1 ? 
-        `<button type="button" class="btn icon-btn" id="add-stage" style="color: var(--primary-color)"> 
+    $("#stages").append(
+      `<div class="stage">
+        <input type="text" value="${stage.text}" size="${stage.text.length}" maxlength="40" required /> 
+        <ion-icon name="link-outline" class="stage-input-icon ${stage.sight_link !== "" ? "active" : ""}"></ion-icon>
+      </div>
+      ${stage.sight_link !== "" ? linkInputElement(stage.sight_link) : ``}
+      ${index === tour.stages.length - 1 ?
+        `<button type="button" class="btn icon-btn link" id="add-stage"> 
           <ion-icon name="add-outline"></ion-icon> 
         </button>`
         :
@@ -119,14 +120,14 @@ export const openEditSightModal = async (id) => {
 
   // NAME
   $("#sight-name").val(sight.name);
-  
+
   // TAGS
   appendActiveTags();
 
   $('#sight-modal #tags option:gt(0)').remove()
   const tags = await $.getJSON("/api/fetchTags");
   tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag.name}">${tag.name}</option>`));
-  
+
   // DESCRIPTION
   quill = new Quill("#sight-description", {
     theme: "snow",
@@ -140,7 +141,7 @@ export const openEditSightModal = async (id) => {
   $("#sight-primary-image").val(sight.primary_image);
 
   // POSITION
-  $("#sight-position").val(sight.position) 
+  $("#sight-position").val(sight.position)
 }
 
 export const openEditTourModal = async (id) => {
@@ -153,8 +154,8 @@ export const openEditTourModal = async (id) => {
   $("#tour-name").val(tour.name);
 
   // STAGES
-  appendStages(); 
-  
+  appendStages();
+
   // DESCRIPTION
   quill = new Quill("#tour-description", {
     theme: "snow",
@@ -171,7 +172,7 @@ export const openEditTourModal = async (id) => {
   $("#tour-route").val(tour.route);
 }
 
-$(document).ready(async function () {
+$(document).ready(async function() {
   $(".close-btn").click(closeModal);
 
   // SIGHT NAME
@@ -179,13 +180,13 @@ $(document).ready(async function () {
 
   // SIGHT TAGS
   $("#sight-modal #tags").change(function() {
-    if(!sight.tags.includes($(this).val())){
+    if (!sight.tags.includes($(this).val())) {
       $("#sight-modal #tag-btn")
         .removeClass("danger")
         .text("Add")
         .off("click")
         .click(function() {
-          if(sight.tags.length === 3){
+          if (sight.tags.length === 3) {
             alert("You cannot use more than 3 tags!");
             return;
           }
@@ -197,7 +198,7 @@ $(document).ready(async function () {
           $(this).off("click");
           $("#sight-modal #tags").val("-");
         });
-    }else{
+    } else {
       $("#sight-modal #tag-btn")
         .addClass("danger")
         .text("Remove")
@@ -220,11 +221,11 @@ $(document).ready(async function () {
   });
 
   $("#sight-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), "sight"); 
+    removeImage($(this), "sight");
   });
 
   // SIGHT SUBMIT
-  $("#sight-modal form").submit(async function (e) {
+  $("#sight-modal form").submit(async function(e) {
     e.preventDefault();
 
     startLoadingAnimation($(this));
@@ -234,7 +235,7 @@ $(document).ready(async function () {
     sight.primary_image = $("#sight-primary-image").val();
     sight.position = $("#sight-position").val();
 
-    if(formData.getAll("files[]").length > 0)
+    if (formData.getAll("files[]").length > 0)
       await $.ajax({
         type: "POST",
         url: "/api/uploadImages/sights",
@@ -249,11 +250,11 @@ $(document).ready(async function () {
     await $.ajax({
       url: "/api/editSight",
       type: "PUT",
-      data: JSON.stringify({"images_to_delete": images_to_delete, "sight": sight}),
+      data: JSON.stringify({ "images_to_delete": images_to_delete, "sight": sight }),
       processData: false,
       contentType: "application/json; charset=UTF-8",
     });
-    
+
     await fetchSights();
     closeModal();
     endLoadingAnimation($(this));
@@ -261,23 +262,41 @@ $(document).ready(async function () {
 
   // TOUR NAME
   $("#tour-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
-  
+
   // TOUR STAGES
+  $("#stages").on('click', ".stage-input-icon", function() {
+    if ($(this).hasClass("active")) {
+      $(this).removeClass("active");
+
+      //remove sight link
+      $(this).parent().next("input").remove();
+      tour.stages[$("#stages > div").index($(this).parent())].sight_link = "";
+    } else {
+      $(this).addClass("active");
+
+      //add sight link
+      $(this).parent().after(linkInputElement(""));
+    }
+  });
+
   $("#tour-modal #stages").on('click', "#add-stage", function() {
-    tour.stages.push(""); 
+    tour.stages.push({ text: "", sight_link: "" });
     appendStages();
   });
 
-  $("#tour-modal #stages").on('input', "input", function() {
-    $(this).attr("size", $(this).val().length); 
+  $("#tour-modal #stages").on('input', ".stage input", function() {
+    const index = $("#stages > div").index($(this).parent());
+    const stage = $(this).val();
 
-    tour.stages[$(this).index()] = $(this).val();
+    $(this).attr("size", stage.length);
+
+    tour.stages[index].text = stage;
   });
 
-  $("#tour-modal #stages").on('keydown', "input", function(e) {
-    const index = $(this).index();
+  $("#tour-modal #stages").on('keydown', ".stage input", function(e) {
+    const index = $("#stages > div").index($(this).parent());
 
-    if($(this).val() === "" && index !== 0 && index !== 1 && e.keyCode === 8){
+    if ($(this).val() === "" && index !== 0 && index !== 1 && e.keyCode === 8) {
       tour.stages.splice(index, 1);
       appendStages();
 
@@ -285,9 +304,16 @@ $(document).ready(async function () {
     }
   });
 
+  $("#stages").on('input', ".stage-link", function() {
+    const index = $("#stages > div").index($(this).prev("div"));
+    const link = $(this).val();
+
+    tour.stages[index].sight_link = link;
+  });
+
   // TOUR IMAGES 
   $('#tour-images').change(function() {
-    addImage("tours", $(this), "tour"); 
+    addImage("tours", $(this), "tour");
   });
 
   $("#tour-modal .img-container").on("click", ".remove-img-btn", function() {
@@ -304,8 +330,8 @@ $(document).ready(async function () {
     tour.description = quill.root.innerHTML;
     tour.primary_image = $("#tour-primary-image").val();
     tour.route = $("#tour-route").val();
-    
-    if(formData.getAll("files[]").length > 0)
+
+    if (formData.getAll("files[]").length > 0)
       await $.ajax({
         type: "POST",
         url: "/api/uploadImages/tours",
@@ -320,11 +346,11 @@ $(document).ready(async function () {
     await $.ajax({
       url: "/api/editTour",
       type: "PUT",
-      data: JSON.stringify({"images_to_delete": images_to_delete, "tour": tour}),
+      data: JSON.stringify({ "images_to_delete": images_to_delete, "tour": tour }),
       processData: false,
       contentType: "application/json; charset=UTF-8",
     });
-  
+
     await fetchTours();
     closeModal();
     endLoadingAnimation($(this));
