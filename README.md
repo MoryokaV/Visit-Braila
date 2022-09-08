@@ -1,4 +1,7 @@
 # Visit-Braila
+<p align="left">
+    <img width="200" src="https://user-images.githubusercontent.com/55505135/189175722-4701644b-b911-461e-a911-47f24970eef2.png" alt="Ceasul public Braila">
+</p>
 *Your personal guide for discovering the small community of Brăila, România* 📍
 
 ## CMS
@@ -18,8 +21,8 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 🖥 Fully responsive desktop-first UI
 
 ### Dependencies
-- Quill.js - editor for rich text in HTML format
-- Sortable.js - animated draggable list items
+- [Quill.js](https://github.com/quilljs/quill) - editor for rich text in HTML format
+- [Sortable.js](https://github.com/SortableJS/Sortable) - animated draggable list items
 
 ### Cool stuff
 - Images get deleted automatically when not attached to a db document
