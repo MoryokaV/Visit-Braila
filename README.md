@@ -1,6 +1,6 @@
 # Visit-Braila
 
-<img alt="Ceasul public Braila" src="https://user-images.githubusercontent.com/55505135/189184041-548a2512-f20e-4aa4-8391-3db37b8ee913.png" width="280" height="280">
+<img alt="Danube at Braila" src="https://user-images.githubusercontent.com/55505135/190634742-a9624d79-a607-4ee4-b927-9b22949596f4.png" width="280" height="280">
 
 *Your personal guide for discovering the small community of Brăila, România* 📍
 
