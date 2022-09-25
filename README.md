@@ -35,9 +35,12 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 - Backend:
   - MongoDB
   - Python3 + Flask, uWSGI
+  
+- CMS Frontend:
   - HTML & CSS
   - JavaScript + jQuery 3.6.0 (AJAX calls, manipulate DOM)
-- Frontend:
+  
+- Mobile App Frontend:
   - Flutter
   - Google Maps API
   - Sqflite
