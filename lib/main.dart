@@ -29,6 +29,13 @@ class MyApp extends StatelessWidget {
             fontFamily: "Merriweather",
             fontSize: 16,
           ),
+          headline2: TextStyle(
+            color: kForegroundColor,
+            fontFamily: "Merriweather",
+            fontWeight: FontWeight.w700,
+            fontSize: 18,
+            height: 1.4,
+          ),
         ),
       ),
       debugShowCheckedModeBanner: false,
