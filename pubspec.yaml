@@ -57,3 +57,6 @@ flutter:
     - family: Merriweather
       fonts:
         - asset: "assets/fonts/Merriweather-Regular.ttf"
+    - family: Inter
+      fonts:
+        - asset: "assets/fonts/Inter.ttf"

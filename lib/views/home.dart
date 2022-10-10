@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:visit_braila/constants.dart';
+import 'package:visit_braila/style.dart';
 import 'package:visit_braila/responsive.dart';
 
 class Home extends StatefulWidget {
@@ -13,13 +13,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final double appBarBreakpoint = 270;
   final ScrollController _scrollController = ScrollController();
   double _scrollOffset = 0.0;
 
   void _scrollListener() {
-    setState(() {
-      _scrollOffset = _scrollController.offset;
-    });
+    setState(() => _scrollOffset = _scrollController.offset);
   }
 
   @override
@@ -30,262 +29,255 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: SafeArea(
-          top: false,
-          child: Column(
-            children: [
-              Container(
-                height: Responsive.safePaddingTop,
-                color: Colors.black,
-              ),
-              Expanded(
-                child: Stack(
-                  children: [
-                    SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      controller: _scrollController,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
-                            children: [
-                              Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Image.asset("assets/images/braila_night.jpg"),
-                                  Positioned(
-                                    bottom: 0,
-                                    child: FractionalTranslation(
-                                      translation: const Offset(0, 0.5),
-                                      child: searchBar(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 12, top: 24),
-                                child: RichText(
-                                  text: const TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "Brăila",
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                            " - un oraș istoric de pe malul Dunării",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "Merriweather",
-                                      height: 1.4,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 38,
-                              left: 14,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Container(
+              height: Responsive.safePaddingTop,
+              color: Colors.black,
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    controller: _scrollController,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            Stack(
+                              alignment: Alignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 14,
-                                    right: 16,
-                                  ),
-                                  child: Text(
-                                    "Inspirație pentru următoarea ta călătorie",
-                                    style:
-                                        Theme.of(context).textTheme.headline2,
+                                Image.asset("assets/images/braila_night.jpg"),
+                                Positioned(
+                                  bottom: 0,
+                                  child: FractionalTranslation(
+                                    translation: const Offset(0, 0.5),
+                                    child: searchBar(),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 24),
-                                  child: SizedBox(
-                                    height: Responsive.safeBlockHorizontal * 70,
-                                    child: ListView.separated(
-                                      itemCount: 4,
-                                      clipBehavior: Clip.none,
-                                      scrollDirection: Axis.horizontal,
-                                      separatorBuilder: (context, index) {
-                                        return const SizedBox(
-                                          width: 10,
-                                        );
-                                      },
-                                      itemBuilder: (context, index) {
-                                        return trendingSightCard(index);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 14,
-                                    right: 16,
-                                  ),
-                                  child: Text(
-                                    "Descoperă locuri și oameni",
-                                    style:
-                                        Theme.of(context).textTheme.headline2,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 14,
-                                    right: 12,
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(6),
-                                        child: Image.asset(
-                                          "assets/images/republicii.jpg",
-                                          height:
-                                              Responsive.safeBlockVertical * 30,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(24),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text(
-                                              "Fă o plimbare",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {},
-                                              style: ElevatedButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 28,
-                                                  vertical: 14,
-                                                ),
-                                                primary: Colors.white,
-                                                onPrimary: Colors.black,
-                                                textStyle: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              child: const Text("Tururi"),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 14,
-                                    right: 12,
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(6),
-                                        child: Image.asset(
-                                          "assets/images/biserica_greceasca.jpg",
-                                          height:
-                                              Responsive.safeBlockVertical * 30,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(24),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text(
-                                              "Explorează noi culturi",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {},
-                                              style: ElevatedButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 28,
-                                                  vertical: 14,
-                                                ),
-                                                primary: Colors.white,
-                                                onPrimary: Colors.black,
-                                                textStyle: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              child: const Text("Atracții"),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
                               ],
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12, top: 24),
+                              child: RichText(
+                                text: const TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Brăila",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          " - un oraș istoric de pe malul Dunării",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Merriweather",
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 38,
+                            left: 14,
                           ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 14,
+                                  right: 16,
+                                ),
+                                child: Text(
+                                  "Inspirație pentru următoarea ta călătorie",
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 24),
+                                child: SizedBox(
+                                  height: Responsive.safeBlockHorizontal * 70,
+                                  child: ListView.separated(
+                                    itemCount: 4,
+                                    clipBehavior: Clip.none,
+                                    scrollDirection: Axis.horizontal,
+                                    separatorBuilder: (context, index) {
+                                      return const SizedBox(
+                                        width: 10,
+                                      );
+                                    },
+                                    itemBuilder: (context, index) {
+                                      return trendingSightCard(index);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 14,
+                                  right: 16,
+                                ),
+                                child: Text(
+                                  "Descoperă locuri și oameni",
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 14,
+                                  right: 12,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: Image.asset(
+                                        "assets/images/republicii.jpg",
+                                        height:
+                                            Responsive.safeBlockVertical * 30,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(24),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            "Fă o plimbare",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 28,
+                                                vertical: 14,
+                                              ),
+                                              primary: Colors.white,
+                                              onPrimary: Colors.black,
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .button,
+                                            ),
+                                            child: const Text("Tururi"),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 14,
+                                  right: 12,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: Image.asset(
+                                        "assets/images/biserica_greceasca.jpg",
+                                        height:
+                                            Responsive.safeBlockVertical * 30,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(24),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            "Explorează noi culturi",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 28,
+                                                vertical: 14,
+                                              ),
+                                              primary: Colors.white,
+                                              onPrimary: Colors.black,
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .button,
+                                            ),
+                                            child: const Text("Atracții"),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 150),
+                    opacity: _scrollOffset >= appBarBreakpoint ? 1 : 0,
+                    child: Container(
+                      color: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          searchBar(),
                         ],
                       ),
                     ),
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 150),
-                      opacity: _scrollOffset >= 270 ? 1 : 0,
-                      child: Container(
-                        color: Colors.black,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            searchBar(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -309,14 +301,13 @@ class _HomeState extends State<Home> {
             size: 20,
           ),
           const SizedBox(width: 8),
-          const Text(
+          Text(
             "Unde vrei să mergi?",
-            style: TextStyle(
-              color: kDimmedForegroundColor,
-              fontFamily: "Merriweather",
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
+            style: Theme.of(context).textTheme.headline4!.copyWith(
+                  color: kDimmedForegroundColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ],
       ),
@@ -376,7 +367,7 @@ class _HomeState extends State<Home> {
                       constraints: BoxConstraints(),
                       icon: Icon(
                         CupertinoIcons.heart,
-                        size: 18,
+                        size: 20,
                       ),
                     ),
                   ],

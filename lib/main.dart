@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:visit_braila/constants.dart';
+import 'package:visit_braila/style.dart';
 import 'package:visit_braila/responsive.dart';
-import 'package:visit_braila/views/home.dart';
+import 'package:visit_braila/widgets/bottom_navbar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,14 +24,24 @@ class MyApp extends StatelessWidget {
         colorScheme:
             ColorScheme.fromSwatch().copyWith(secondary: kSecondaryColor),
         textTheme: const TextTheme(
+          headline4: TextStyle(
+            color: kForegroundColor,
+            fontFamily: labelFont,
+          ),
+          button: TextStyle(
+            color: kForegroundColor,
+            fontFamily: labelFont,
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
+          ),
           bodyText2: TextStyle(
             color: kForegroundColor,
-            fontFamily: "Merriweather",
+            fontFamily: bodyFont,
             fontSize: 16,
           ),
           headline2: TextStyle(
             color: kForegroundColor,
-            fontFamily: "Merriweather",
+            fontFamily: bodyFont,
             fontWeight: FontWeight.w700,
             fontSize: 18,
             height: 1.4,
@@ -39,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      home: const BottomNavbar(),
     );
   }
 }

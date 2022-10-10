@@ -12,3 +12,6 @@ const BoxShadow shadowSm = BoxShadow(
   offset: Offset(0, 1),
   blurRadius: 3,
 );
+
+const String labelFont = "Inter";
+const String bodyFont = "Merriweather";
