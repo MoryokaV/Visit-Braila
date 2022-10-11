@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:visit_braila/style.dart';
 import 'package:visit_braila/responsive.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -183,8 +184,8 @@ class _HomeState extends State<Home> {
                                                 horizontal: 28,
                                                 vertical: 14,
                                               ),
-                                              primary: Colors.white,
-                                              onPrimary: Colors.black,
+                                              backgroundColor: Colors.white,
+                                              foregroundColor: Colors.black,
                                               textStyle: Theme.of(context)
                                                   .textTheme
                                                   .button,
@@ -239,8 +240,8 @@ class _HomeState extends State<Home> {
                                                 horizontal: 28,
                                                 vertical: 14,
                                               ),
-                                              primary: Colors.white,
-                                              onPrimary: Colors.black,
+                                              backgroundColor: Colors.white,
+                                              foregroundColor: Colors.black,
                                               textStyle: Theme.of(context)
                                                   .textTheme
                                                   .button,
