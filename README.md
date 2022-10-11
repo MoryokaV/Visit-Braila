@@ -18,7 +18,8 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 🔒 Encrypted login system with built-in “remember me” option  
 ⚡️  Blazing fast loading times  
 ♻️  Cross-browser support  
-🖥 Fully responsive desktop-first UI
+🖥 Fully responsive desktop-first UI  
+🐧 Deployed on Ubuntu 22.04 server
 
 ### Dependencies
 - [Quill.js](https://github.com/quilljs/quill) - editor for rich text in HTML format
@@ -34,7 +35,8 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 ## Tech Stack used:
 - Backend:
   - MongoDB
-  - Python3 + Flask, uWSGI
+  - Python3 + Flask
+  - HTTP server: uWSGI & NGINX
   
 - CMS Frontend:
   - HTML & CSS
