@@ -189,7 +189,7 @@ $(document).ready(async function() {
 
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
-    sight.primary_image = $("#sight-primary-image").val();
+    sight.primary_image = parseInt($("#sight-primary-image").val());
     sight.position = $("#sight-position").val();
 
     await $.ajax({

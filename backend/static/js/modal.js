@@ -7,6 +7,8 @@ import {
   nameRegExpTitle,
   addressRegExp,
   addressRegExpTitle,
+  idRegExp,
+  idRegExpTitle,
 } from './utils.js';
 
 let sight = {};
@@ -232,7 +234,7 @@ $(document).ready(async function() {
 
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
-    sight.primary_image = $("#sight-primary-image").val();
+    sight.primary_image = parseInt($("#sight-primary-image").val());
     sight.position = $("#sight-position").val();
 
     if (formData.getAll("files[]").length > 0)
@@ -328,7 +330,7 @@ $(document).ready(async function() {
 
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
-    tour.primary_image = $("#tour-primary-image").val();
+    tour.primary_image = parseInt($("#tour-primary-image").val());
     tour.route = $("#tour-route").val();
 
     if (formData.getAll("files[]").length > 0)

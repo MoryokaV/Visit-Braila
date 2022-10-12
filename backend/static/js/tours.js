@@ -232,7 +232,7 @@ $(document).ready(async function() {
 
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
-    tour.primary_image = $("#tour-primary-image").val();
+    tour.primary_image = parseInt($("#tour-primary-image").val());
     tour.route = $("#tour-route").val();
 
     await $.ajax({
