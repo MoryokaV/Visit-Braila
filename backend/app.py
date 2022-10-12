@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, request, redirect, session, make_response
+from flask import Flask, render_template, request, redirect, session, make_response, send_from_directory
 from flask_session import Session
 from functools import wraps
 from pymongo import MongoClient
@@ -20,6 +20,10 @@ Session(app)
 
 client = MongoClient(os.getenv("MONGO_URL"))
 db = client.visitbraila
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 @app.route("/")
 def root():

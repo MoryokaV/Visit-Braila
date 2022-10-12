@@ -39,41 +39,29 @@ const appendElements = async () => {
   new Sortable(list, {
     animation: 150,
     easing: "cubic-bezier(0.65, 0, 0.35, 1)",
-    delay: 50,
+    delay: 75,
     delayOnTouchOnly: true,
     onEnd: async function(e) {
-      $(".trending-container article").eq(e.newIndex).find("footer").addClass("loading");
-      $(".trending-container article").eq(e.oldIndex).find("footer").addClass("loading");
+      for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
+        $(".trending-container article").eq(i).find("footer").addClass("loading");
+      }
 
-      await $.ajax({
-        type: "PUT",
-        url: "/api/updateTrendingItemIndex",
-        data: JSON.stringify({ _id: $(".trending-container article").eq(e.newIndex).attr('id'), newIndex: e.newIndex }),
-        processData: false,
-        contentType: "application/json; charset=UTF-8",
-      });
+      for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
+        await $.ajax({
+          type: "PUT",
+          url: "/api/updateTrendingItemIndex",
+          data: JSON.stringify({ _id: $(".trending-container article").eq(i).attr('id'), newIndex: i }),
+          processData: false,
+          contentType: "application/json; charset=UTF-8",
+        });
 
-      await new Promise(resolve => {
-        setTimeout(() => {
-          $(".trending-container article").eq(e.newIndex).find("footer").removeClass("loading")
-          resolve();
-        }, 250);
-      });
-
-      await $.ajax({
-        type: "PUT",
-        url: "/api/updateTrendingItemIndex",
-        data: JSON.stringify({ _id: $(".trending-container article").eq(e.oldIndex).attr('id'), newIndex: e.oldIndex }),
-        processData: false,
-        contentType: "application/json; charset=UTF-8",
-      });
-
-      await new Promise(resolve => {
-        setTimeout(() => {
-          $(".trending-container article").eq(e.oldIndex).find("footer").removeClass("loading")
-          resolve();
-        }, 250);
-      });
+        await new Promise(resolve => {
+          setTimeout(() => {
+            $(".trending-container article").eq(i).find("footer").removeClass("loading");
+            resolve();
+          }, 250);
+        });
+      }
     }
   });
 }

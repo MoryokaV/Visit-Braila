@@ -111,7 +111,7 @@ const appendStages = () => {
     );
   });
 
-  $("#tour-modal #stages input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
+  $("#tour-modal #stages .stage input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
 }
 
 export const openEditSightModal = async (id) => {
