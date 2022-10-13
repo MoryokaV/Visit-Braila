@@ -16,22 +16,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final double appBarBreakpoint = 270;
   final ScrollController _scrollController = ScrollController();
-  double _scrollOffset = 0.0;
+  final double appBarBreakpoint = 270;
 
   final SightController sightController = SightController();
-
-  void _scrollListener() {
-    setState(() => _scrollOffset = _scrollController.offset);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _scrollController.addListener(_scrollListener);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +37,8 @@ class _HomeState extends State<Home> {
               child: Stack(
                 children: [
                   SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
                     controller: _scrollController,
+                    physics: const ClampingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -283,20 +271,27 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  AnimatedOpacity(
-                    duration: const Duration(milliseconds: 150),
-                    opacity: _scrollOffset >= appBarBreakpoint ? 1 : 0,
-                    child: Container(
-                      color: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          searchBar(),
-                        ],
-                      ),
-                    ),
+                  AnimatedBuilder(
+                    animation: _scrollController,
+                    builder: ((context, child) {
+                      return AnimatedOpacity(
+                        duration: const Duration(milliseconds: 150),
+                        opacity: _scrollController.offset >= appBarBreakpoint
+                            ? 1
+                            : 0,
+                        child: Container(
+                          color: Colors.black,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              searchBar(),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
                   ),
                 ],
               ),
@@ -329,7 +324,7 @@ class _HomeState extends State<Home> {
             "Unde vrei să mergi?",
             style: Theme.of(context).textTheme.headline4!.copyWith(
                   color: kDimmedForegroundColor,
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                 ),
           ),
