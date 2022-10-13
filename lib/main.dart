@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:visit_braila/style.dart';
-import 'package:visit_braila/responsive.dart';
+import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/widgets/bottom_navbar.dart';
 
 void main() {

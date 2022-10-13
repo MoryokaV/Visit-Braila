@@ -1,3 +1,5 @@
+import 'package:visit_braila/utils/url_constants.dart';
+
 class Sight {
   final String name;
   final List<String> tags;
@@ -18,9 +20,9 @@ class Sight {
   factory Sight.fromJSON(Map<String, dynamic> json) {
     return Sight(
       name: json['name'],
-      tags: json['tags'],
+      tags: List<String>.from(json['tags'].map((tag) => tag)),
       description: json['description'],
-      images: json['images'],
+      images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       position: json['position'],
       primaryImage: json['primary_image'],
     );

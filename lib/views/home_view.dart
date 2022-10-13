@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:visit_braila/style.dart';
-import 'package:visit_braila/responsive.dart';
-import 'package:http/http.dart' as http;
+import 'package:visit_braila/controllers/sight_controller.dart';
+import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/utils/responsive.dart';
+import 'package:visit_braila/widgets/loading_spinner.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,14 +20,17 @@ class _HomeState extends State<Home> {
   final ScrollController _scrollController = ScrollController();
   double _scrollOffset = 0.0;
 
+  final SightController sightController = SightController();
+
   void _scrollListener() {
     setState(() => _scrollOffset = _scrollController.offset);
   }
 
   @override
   void initState() {
-    _scrollController.addListener(_scrollListener);
     super.initState();
+
+    _scrollController.addListener(_scrollListener);
   }
 
   @override
@@ -117,18 +122,28 @@ class _HomeState extends State<Home> {
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: SizedBox(
                                   height: Responsive.safeBlockHorizontal * 70,
-                                  child: ListView.separated(
-                                    itemCount: 4,
-                                    clipBehavior: Clip.none,
-                                    scrollDirection: Axis.horizontal,
-                                    separatorBuilder: (context, index) {
-                                      return const SizedBox(
-                                        width: 10,
-                                      );
-                                    },
-                                    itemBuilder: (context, index) {
-                                      return trendingSightCard(index);
-                                    },
+                                  child: FutureBuilder<List<Sight>>(
+                                    future: sightController.fetchTrending(),
+                                    builder: ((context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        return ListView.separated(
+                                          itemCount: snapshot.data!.length,
+                                          clipBehavior: Clip.none,
+                                          scrollDirection: Axis.horizontal,
+                                          separatorBuilder: (context, index) {
+                                            return const SizedBox(width: 10);
+                                          },
+                                          itemBuilder: (context, index) {
+                                            return trendingSightCard(snapshot.data![index]);
+                                          },
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        //TODO: NOT FOUND SCREEN
+                                        return const Text("Error");
+                                      }
+
+                                      return const LoadingSpinner();
+                                    }),
                                   ),
                                 ),
                               ),
@@ -315,7 +330,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget trendingSightCard(int index) {
+  Widget trendingSightCard(Sight sight) {
     return Container(
       width: Responsive.safeBlockHorizontal * 60,
       padding: const EdgeInsets.all(6),
@@ -334,8 +349,8 @@ class _HomeState extends State<Home> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  "assets/images/braila_night.jpg",
+                child: Image.network(
+                  sight.images[sight.primaryImage - 1],
                   fit: BoxFit.cover,
                 ),
               ),
@@ -351,18 +366,19 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     Flexible(
                       child: Text(
-                        "Teatrul Maria Filotti",
+                        sight.name,
                         maxLines: 2,
-                        style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        style:const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                         ),
                       ),
                     ),
-                    IconButton(
+                    const IconButton(
                       padding: EdgeInsets.zero,
                       onPressed: null,
                       constraints: BoxConstraints(),
@@ -389,6 +405,7 @@ class _HomeState extends State<Home> {
                       width: 4,
                     ),
                     const Text(
+                      //TODO: dynamic distance with GoogleMaps Api
                       "2km depărtare",
                       style: TextStyle(
                         fontSize: 12,

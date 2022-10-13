@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:visit_braila/style.dart';
-import 'package:visit_braila/views/home.dart';
+import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/views/home_view.dart';
 
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({Key? key}) : super(key: key);
