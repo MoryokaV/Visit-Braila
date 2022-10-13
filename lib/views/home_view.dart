@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/utils/skeleton.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
-import 'package:visit_braila/widgets/loading_spinner.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -104,6 +104,7 @@ class _HomeState extends State<Home> {
                           padding: const EdgeInsets.only(
                             top: 38,
                             left: 14,
+                            right: 14,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +112,7 @@ class _HomeState extends State<Home> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                   bottom: 14,
-                                  right: 16,
+                                  right: 4,
                                 ),
                                 child: Text(
                                   "Inspirație pentru următoarea ta călătorie",
@@ -134,7 +135,8 @@ class _HomeState extends State<Home> {
                                             return const SizedBox(width: 10);
                                           },
                                           itemBuilder: (context, index) {
-                                            return trendingSightCard(snapshot.data![index]);
+                                            return trendingSightCard(
+                                                snapshot.data![index]);
                                           },
                                         );
                                       } else if (snapshot.hasError) {
@@ -142,7 +144,19 @@ class _HomeState extends State<Home> {
                                         return const Text("Error");
                                       }
 
-                                      return const LoadingSpinner();
+                                      return ListView.separated(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: 4,
+                                        clipBehavior: Clip.none,
+                                        scrollDirection: Axis.horizontal,
+                                        separatorBuilder: (context, index) {
+                                          return const SizedBox(width: 10);
+                                        },
+                                        itemBuilder: (context, index) {
+                                          return skeletonCard();
+                                        },
+                                      );
                                     }),
                                   ),
                                 ),
@@ -150,7 +164,7 @@ class _HomeState extends State<Home> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                   bottom: 14,
-                                  right: 16,
+                                  right: 4,
                                 ),
                                 child: Text(
                                   "Descoperă locuri și oameni",
@@ -158,10 +172,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 14,
-                                  right: 12,
-                                ),
+                                padding: const EdgeInsets.only(bottom: 14),
                                 child: Stack(
                                   children: [
                                     ClipRRect(
@@ -214,10 +225,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 14,
-                                  right: 12,
-                                ),
+                                padding: const EdgeInsets.only(bottom: 14),
                                 child: Stack(
                                   children: [
                                     ClipRRect(
@@ -330,6 +338,27 @@ class _HomeState extends State<Home> {
     );
   }
 
+  Widget skeletonCard() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Skeleton(
+            width: Responsive.safeBlockHorizontal * 60,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Skeleton(
+          width: Responsive.safeBlockHorizontal * 45,
+        ),
+        const SizedBox(height: 10),
+        Skeleton(
+          width: Responsive.safeBlockHorizontal * 30,
+        ),
+      ],
+    );
+  }
+
   Widget trendingSightCard(Sight sight) {
     return Container(
       width: Responsive.safeBlockHorizontal * 60,
@@ -372,7 +401,7 @@ class _HomeState extends State<Home> {
                         sight.name,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style:const TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                         ),
