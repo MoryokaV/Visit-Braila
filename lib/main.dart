@@ -22,6 +22,10 @@ class MyApp extends StatelessWidget {
       create: ((_) => Wishlist()),
       child: MaterialApp(
         title: 'Visit Brăila',
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const BottomNavbar(),
+        },
         theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
@@ -53,7 +57,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: const BottomNavbar(),
       ),
     );
   }
