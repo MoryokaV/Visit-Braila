@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
-import 'package:visit_braila/utils/skeleton.dart';
+import 'package:visit_braila/providers/wishlist_provider.dart';
+import 'package:visit_braila/widgets/skeleton.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 
@@ -48,11 +50,11 @@ class _HomeState extends State<Home> {
                               alignment: Alignment.center,
                               children: [
                                 Image.asset("assets/images/braila_night.jpg"),
-                                Positioned(
+                                const Positioned(
                                   bottom: 0,
                                   child: FractionalTranslation(
-                                    translation: const Offset(0, 0.5),
-                                    child: searchBar(),
+                                    translation: Offset(0, 0.5),
+                                    child: SearchBar(),
                                   ),
                                 ),
                               ],
@@ -123,8 +125,9 @@ class _HomeState extends State<Home> {
                                             return const SizedBox(width: 10);
                                           },
                                           itemBuilder: (context, index) {
-                                            return trendingSightCard(
-                                                snapshot.data![index]);
+                                            return TrendingSightCard(
+                                              sight: snapshot.data![index],
+                                            );
                                           },
                                         );
                                       } else if (snapshot.hasError) {
@@ -142,7 +145,7 @@ class _HomeState extends State<Home> {
                                           return const SizedBox(width: 10);
                                         },
                                         itemBuilder: (context, index) {
-                                          return skeletonCard();
+                                          return const SkeletonCard();
                                         },
                                       );
                                     }),
@@ -285,8 +288,8 @@ class _HomeState extends State<Home> {
                           width: double.infinity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              searchBar(),
+                            children: const [
+                              SearchBar(),
                             ],
                           ),
                         ),
@@ -301,8 +304,13 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+}
 
-  Widget searchBar() {
+class SearchBar extends StatelessWidget {
+  const SearchBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: Responsive.screenWidth / 1.25,
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -332,8 +340,13 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+}
 
-  Widget skeletonCard() {
+class SkeletonCard extends StatelessWidget {
+  const SkeletonCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -353,8 +366,18 @@ class _HomeState extends State<Home> {
       ],
     );
   }
+}
 
-  Widget trendingSightCard(Sight sight) {
+class TrendingSightCard extends StatelessWidget {
+  final Sight sight;
+
+  const TrendingSightCard({
+    super.key,
+    required this.sight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: Responsive.safeBlockHorizontal * 60,
       padding: const EdgeInsets.all(6),
@@ -402,14 +425,25 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    const IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: null,
-                      constraints: BoxConstraints(),
-                      icon: Icon(
-                        CupertinoIcons.heart,
-                        size: 20,
-                      ),
+                    Consumer<Wishlist>(
+                      builder: (context, favourites, _) {
+                        return IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: (() =>
+                              favourites.toggleSightWishState(sight.id)),
+                          constraints: const BoxConstraints(),
+                          icon: Icon(
+                            favourites.items['sights']!.contains(sight.id)
+                                ? CupertinoIcons.heart_fill
+                                : CupertinoIcons.heart,
+                            size: 20,
+                            color:
+                                favourites.items['sights']!.contains(sight.id)
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : kDisabledIconColor,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

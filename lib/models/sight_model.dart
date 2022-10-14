@@ -1,6 +1,7 @@
 import 'package:visit_braila/utils/url_constants.dart';
 
 class Sight {
+  final String id;
   final String name;
   final List<String> tags;
   final String description;
@@ -9,6 +10,7 @@ class Sight {
   final int primaryImage;
 
   const Sight({
+    required this.id,
     required this.name,
     required this.tags,
     required this.description,
@@ -19,6 +21,7 @@ class Sight {
 
   factory Sight.fromJSON(Map<String, dynamic> json) {
     return Sight(
+      id: json['_id'],
       name: json['name'],
       tags: List<String>.from(json['tags'].map((tag) => tag)),
       description: json['description'],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color kBackgroundColor = Color(0xffe9ecef);
 const Color kForegroundColor = Color(0xff343a40);
 const Color kPrimaryColor = Color(0xff228be6);
-const Color kSecondaryColor = Color(0xfffa5252); 
+const Color kSecondaryColor = Color(0xffff5a5f); 
 const Color kDimmedForegroundColor = Color(0xffadb5bd);
 Color kDisabledIconColor = Colors.grey[500]!;
 
