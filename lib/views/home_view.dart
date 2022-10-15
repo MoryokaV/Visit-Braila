@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
+import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
@@ -371,10 +372,12 @@ class SkeletonCard extends StatelessWidget {
 class TrendingSightCard extends StatelessWidget {
   final Sight sight;
 
-  const TrendingSightCard({
+  TrendingSightCard({
     super.key,
     required this.sight,
   });
+
+  final likeAnimationKey = GlobalKey<LikeAnimationState>();
 
   @override
   Widget build(BuildContext context) {
@@ -425,25 +428,30 @@ class TrendingSightCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Consumer<Wishlist>(
-                      builder: (context, favourites, _) {
-                        return IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: (() =>
-                              favourites.toggleSightWishState(sight.id)),
-                          constraints: const BoxConstraints(),
-                          icon: Icon(
-                            favourites.items['sights']!.contains(sight.id)
-                                ? CupertinoIcons.heart_fill
-                                : CupertinoIcons.heart,
-                            size: 20,
-                            color:
-                                favourites.items['sights']!.contains(sight.id)
-                                    ? Theme.of(context).colorScheme.secondary
-                                    : kDisabledIconColor,
-                          ),
-                        );
-                      },
+                    LikeAnimation(
+                      key: likeAnimationKey,
+                      child: Consumer<Wishlist>(
+                        builder: (context, favourites, _) {
+                          return IconButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: (() {
+                              favourites.toggleSightWishState(sight.id);
+                              likeAnimationKey.currentState!.animate();
+                            }),
+                            constraints: const BoxConstraints(),
+                            icon: Icon(
+                              favourites.items['sights']!.contains(sight.id)
+                                  ? CupertinoIcons.heart_fill
+                                  : CupertinoIcons.heart,
+                              size: 22,
+                              color:
+                                  favourites.items['sights']!.contains(sight.id)
+                                      ? Theme.of(context).colorScheme.secondary
+                                      : kDisabledIconColor,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
