@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
+import 'package:visit_braila/services/localstorage_service.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/widgets/bottom_navbar.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await LocalStorage.init();
 
   Responsive().init();
 
