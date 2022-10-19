@@ -3,14 +3,41 @@ import 'package:flutter/material.dart';
 const Color kBackgroundColor = Color(0xffe9ecef);
 const Color kForegroundColor = Color(0xff343a40);
 const Color kPrimaryColor = Color(0xff228be6);
-const Color kSecondaryColor = Color(0xffff5a5f); 
+const Color kSecondaryColor = Color(0xffff5a5f);
 const Color kDimmedForegroundColor = Color(0xffadb5bd);
 Color kDisabledIconColor = Colors.grey[500]!;
+
+List<Color> fadeEffect = [
+  kBackgroundColor.withAlpha(0),
+  kBackgroundColor.withAlpha(25),
+  kBackgroundColor.withAlpha(50),
+  kBackgroundColor.withAlpha(100),
+  kBackgroundColor.withAlpha(255),
+];
 
 const BoxShadow shadowSm = BoxShadow(
   color: Colors.black26,
   offset: Offset(0, 1),
   blurRadius: 3,
+);
+
+const BoxShadow shadowMd = BoxShadow(
+  color: Colors.black26,
+  offset: Offset(0, 1.5),
+  blurRadius: 2,
+);
+
+const BoxShadow globalShadow = BoxShadow(
+  color: Colors.black12,
+  offset: Offset(0, 0),
+  spreadRadius: 1,
+  blurRadius: 3,
+);
+
+const BoxShadow topShadow = BoxShadow(
+  color: Colors.black12,
+  offset: Offset(0, -1.5),
+  blurRadius: 2,
 );
 
 const String labelFont = "Inter";

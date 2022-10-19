@@ -4,7 +4,7 @@ import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/localstorage_service.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
-import 'package:visit_braila/widgets/bottom_navbar.dart';
+import 'package:visit_braila/utils/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,29 +26,35 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Visit Brăila',
         initialRoute: '/',
-        routes: {
-          '/': (context) => const BottomNavbar(),
-        },
+        onGenerateRoute: PageRouter.generateRoute,
         theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: kSecondaryColor),
           textTheme: const TextTheme(
-            headline4: TextStyle(
-              color: kForegroundColor,
-              fontFamily: labelFont,
-            ),
             button: TextStyle(
               color: kForegroundColor,
               fontFamily: labelFont,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: 16,
+            ),
+            bodyText1: TextStyle(
+              color: kForegroundColor,
+              fontFamily: bodyFont,
+              fontSize: 14,
             ),
             bodyText2: TextStyle(
               color: kForegroundColor,
               fontFamily: bodyFont,
               fontSize: 16,
+            ),
+            headline1: TextStyle(
+              color: kForegroundColor,
+              fontFamily: bodyFont,
+              fontSize: 20,
+              height: 1.4,
+              fontWeight: FontWeight.w700,
             ),
             headline2: TextStyle(
               color: kForegroundColor,
@@ -56,6 +62,10 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w700,
               fontSize: 18,
               height: 1.4,
+            ),
+            headline4: TextStyle(
+              color: kForegroundColor,
+              fontFamily: labelFont,
             ),
           ),
         ),

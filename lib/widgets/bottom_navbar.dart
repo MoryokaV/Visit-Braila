@@ -13,7 +13,7 @@ class BottomNavbar extends StatefulWidget {
 class _BottomNavbarState extends State<BottomNavbar> {
   int pageIndex = 0;
 
-  List<Widget> pages = const [
+  List<Widget> pages = [
     Home(),
   ];
 

@@ -11,14 +11,9 @@ import 'package:visit_braila/widgets/skeleton.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  Home({Key? key}) : super(key: key);
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   final ScrollController _scrollController = ScrollController();
   final double appBarBreakpoint = 270;
 
@@ -381,108 +376,111 @@ class TrendingSightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Responsive.safeBlockHorizontal * 60,
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-        boxShadow: const [shadowSm],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                boxShadow: [shadowSm],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  sight.images[sight.primaryImage - 1],
-                  fit: BoxFit.cover,
+    return InkWell(
+      onTap: () => Navigator.pushNamed(context, "/sight", arguments: sight.id),
+      child: Container(
+        width: Responsive.safeBlockHorizontal * 60,
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          boxShadow: const [shadowSm],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  boxShadow: [shadowSm],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    sight.images[sight.primaryImage - 1],
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 4,
-              vertical: 6,
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        sight.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 4,
+                vertical: 6,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          sight.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
-                    ),
-                    LikeAnimation(
-                      key: likeAnimationKey,
-                      child: Consumer<Wishlist>(
-                        builder: (context, favourites, _) {
-                          return IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: (() {
-                              favourites.toggleSightWishState(sight.id);
-                              likeAnimationKey.currentState!.animate();
-                            }),
-                            constraints: const BoxConstraints(),
-                            icon: Icon(
-                              favourites.items['sights']!.contains(sight.id)
-                                  ? CupertinoIcons.heart_fill
-                                  : CupertinoIcons.heart,
-                              size: 22,
-                              color:
-                                  favourites.items['sights']!.contains(sight.id)
-                                      ? Theme.of(context).colorScheme.secondary
-                                      : kDisabledIconColor,
-                            ),
-                          );
-                        },
+                      LikeAnimation(
+                        key: likeAnimationKey,
+                        child: Consumer<Wishlist>(
+                          builder: (context, favourites, _) {
+                            return IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                favourites.toggleSightWishState(sight.id);
+                                likeAnimationKey.currentState!.animate();
+                              },
+                              constraints: const BoxConstraints(),
+                              icon: Icon(
+                                favourites.items['sights']!.contains(sight.id)
+                                    ? CupertinoIcons.heart_fill
+                                    : CupertinoIcons.heart,
+                                size: 22,
+                                color: favourites.items['sights']!
+                                        .contains(sight.id)
+                                    ? Theme.of(context).colorScheme.secondary
+                                    : kDisabledIconColor,
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      FeatherIcons.mapPin,
-                      size: 18,
-                      color: kDisabledIconColor,
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    const Text(
-                      //TODO: dynamic distance with GoogleMaps Api
-                      "2km depărtare",
-                      style: TextStyle(
-                        fontSize: 12,
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        FeatherIcons.mapPin,
+                        size: 18,
+                        color: kDisabledIconColor,
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      const Text(
+                        //TODO: dynamic distance with GoogleMaps Api
+                        "N/A",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
