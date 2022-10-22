@@ -178,13 +178,14 @@ class Home extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text(
+                                          Text(
                                             "Fă o plimbare",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3!
+                                                .copyWith(
+                                                  color: Colors.white,
+                                                ),
                                           ),
                                           const SizedBox(
                                             height: 20,
@@ -231,13 +232,14 @@ class Home extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text(
+                                          Text(
                                             "Explorează noi culturi",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3!
+                                                .copyWith(
+                                                  color: Colors.white,
+                                                ),
                                           ),
                                           const SizedBox(
                                             height: 20,

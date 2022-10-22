@@ -53,12 +53,17 @@ class SightView extends StatelessWidget {
                             sight.images[sight.primaryImage - 1],
                             fit: BoxFit.cover,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.center,
-                                end: Alignment.bottomCenter,
-                                colors: fadeEffect,
+                          Positioned(
+                            bottom: 0,
+                            child: Container(
+                              height: 30,
+                              width: Responsive.screenWidth,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: fadeEffect,
+                                ),
                               ),
                             ),
                           ),
@@ -135,15 +140,16 @@ class SightView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              sight.tags.join(", "),
-                              style: const TextStyle(
-                                fontSize: 14,
+                            if (sight.tags.isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Text(
+                                  sight.tags.join(", "),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
                               ),
-                            ),
                             const SizedBox(
                               height: 18,
                             ),

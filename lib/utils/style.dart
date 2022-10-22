@@ -10,9 +10,6 @@ Color kDisabledIconColor = Colors.grey[500]!;
 
 List<Color> fadeEffect = [
   kBackgroundColor.withAlpha(0),
-  kBackgroundColor.withAlpha(25),
-  kBackgroundColor.withAlpha(50),
-  kBackgroundColor.withAlpha(100),
   kBackgroundColor.withAlpha(255),
 ];
 

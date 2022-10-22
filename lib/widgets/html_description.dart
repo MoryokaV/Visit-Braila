@@ -25,6 +25,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
     '#': Style(
       color: kForegroundColor,
       fontFamily: bodyFont,
+      letterSpacing: 0.25,
     ),
     'a': Style(
       color: kPrimaryColor,
@@ -99,10 +100,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
-                                colors: [
-                                  kBackgroundColor.withAlpha(100),
-                                  kBackgroundColor.withAlpha(255),
-                                ],
+                                colors: fadeEffect,
                               ),
                             ),
                           ),
