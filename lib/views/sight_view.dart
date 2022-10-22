@@ -7,6 +7,7 @@ import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/html_description.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 
@@ -75,6 +76,7 @@ class SightView extends StatelessWidget {
                             icon: Icon(
                               Icons.adaptive.arrow_back,
                               size: 18,
+                              color: kBlackColor,
                             ),
                             onPressed: () => Navigator.pop(context),
                           ),
@@ -87,6 +89,7 @@ class SightView extends StatelessWidget {
                             icon: Icon(
                               Icons.adaptive.share,
                               size: 18,
+                              color: kBlackColor,
                             ),
                             onPressed: () {},
                           ),
@@ -133,14 +136,25 @@ class SightView extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(
-                              height: 16,
+                              height: 8,
                             ),
                             Text(
-                              sight.description,
-                              style: Theme.of(context).textTheme.bodyText1,
+                              sight.tags.join(", "),
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 18,
+                            ),
+                            HtmlDescription(
+                              data: sight.description,
+                            ),
+                            const SizedBox(
+                              height: 18,
                             ),
                             SizedBox(
-                              height: Responsive.safeBlockHorizontal * 40,
+                              height: Responsive.safeBlockHorizontal * 35,
                               child: ListView.separated(
                                 itemCount: sight.images.length,
                                 scrollDirection: Axis.horizontal,
@@ -200,8 +214,8 @@ class BottomBar extends StatelessWidget {
         color: Colors.white,
         boxShadow: [topShadow],
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+          topLeft: Radius.circular(14),
+          topRight: Radius.circular(14),
         ),
       ),
       child: Padding(
@@ -219,9 +233,7 @@ class BottomBar extends StatelessWidget {
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     backgroundColor: kPrimaryColor,
                     foregroundColor: Colors.white,
                     textStyle: Theme.of(context).textTheme.button,

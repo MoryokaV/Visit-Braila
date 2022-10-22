@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSwatch().copyWith(secondary: kSecondaryColor),
           textTheme: const TextTheme(
             button: TextStyle(
-              color: kForegroundColor,
+              color: kBlackColor,
               fontFamily: labelFont,
               fontWeight: FontWeight.w600,
               fontSize: 16,
@@ -50,21 +50,28 @@ class MyApp extends StatelessWidget {
               fontSize: 16,
             ),
             headline1: TextStyle(
-              color: kForegroundColor,
+              color: kBlackColor,
               fontFamily: bodyFont,
               fontSize: 20,
               height: 1.4,
               fontWeight: FontWeight.w700,
             ),
             headline2: TextStyle(
-              color: kForegroundColor,
+              color: kBlackColor,
+              fontFamily: bodyFont,
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              height: 1.4,
+            ),
+            headline3: TextStyle(
+              color: kBlackColor,
               fontFamily: bodyFont,
               fontWeight: FontWeight.w700,
               fontSize: 18,
               height: 1.4,
             ),
             headline4: TextStyle(
-              color: kForegroundColor,
+              color: kBlackColor,
               fontFamily: labelFont,
             ),
           ),

@@ -40,7 +40,7 @@ class LikeAnimationState extends State<LikeAnimation>
   @override
   Widget build(BuildContext context) {
     return ScaleTransition(
-      scale: Tween(begin: 0.7, end: 1.0).animate(
+      scale: Tween(begin: 0.75, end: 1.0).animate(
         CurvedAnimation(
           parent: likeAnimationController,
           curve: Curves.easeOut,

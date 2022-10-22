@@ -420,6 +420,7 @@ class TrendingSightCard extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
+                            color: kBlackColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
                           ),
