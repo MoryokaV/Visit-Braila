@@ -109,7 +109,7 @@ def findSight(_id):
     sight = db.sights.find_one({"_id": ObjectId(_id)})
 
     if sight is None:
-        return make_response("Invalid sight id", 400)
+        return make_response("Invalid sight id", 404)
 
     return json.dumps(sight, default=str)
 
@@ -145,7 +145,12 @@ def deleteTour(_id):
 
 @app.route("/api/findTour/<_id>")
 def findTour(_id):
-    return json.dumps(db.tours.find_one({"_id": ObjectId(_id)}), default=str)
+    tour = db.tours.find_one({"_id": ObjectId(_id)})
+
+    if tour is None:
+        return make_response("Invalid tour id", 404)
+
+    return json.dumps(tour, default=str)
 
 @app.route("/api/editTour", methods=["PUT"])
 def editTour():
