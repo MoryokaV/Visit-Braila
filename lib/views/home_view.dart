@@ -379,7 +379,7 @@ class TrendingSightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, "/sight", arguments: sight.id),
+      onTap: () => Navigator.pushNamed(context, "/sight", arguments: sight),
       child: Container(
         width: Responsive.safeBlockHorizontal * 60,
         padding: const EdgeInsets.all(6),
@@ -392,15 +392,18 @@ class TrendingSightCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [shadowSm],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    sight.images[sight.primaryImage - 1],
-                    fit: BoxFit.cover,
+              child: Hero(
+                tag: sight.id,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    boxShadow: [shadowSm],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      sight.images[sight.primaryImage - 1],
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

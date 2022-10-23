@@ -9,14 +9,15 @@ import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/html_description.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
-import 'package:visit_braila/widgets/loading_spinner.dart';
 
 class SightView extends StatelessWidget {
-  final String id;
+  final Sight sight;
+  final Animation<double> routeAnimation;
 
   SightView({
     super.key,
-    required this.id,
+    required this.sight,
+    required this.routeAnimation,
   });
 
   final SightController sightController = SightController();
@@ -24,90 +25,94 @@ class SightView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomBar(
-        id: id,
-      ),
+      bottomNavigationBar: BottomBar(id: sight.id),
       body: SafeArea(
         top: false,
-        child: FutureBuilder<Sight>(
-          future: sightController.findSight(id),
-          builder: ((context, snapshot) {
-            if (snapshot.hasData) {
-              final Sight sight = snapshot.data!;
-              return CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverAppBar(
-                    stretch: true,
-                    automaticallyImplyLeading: false,
-                    pinned: true,
-                    floating: false,
-                    elevation: 0,
-                    backgroundColor: Colors.white,
-                    expandedHeight: Responsive.safeBlockVertical * 38,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Image.network(
-                            sight.images[sight.primaryImage - 1],
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            child: Container(
-                              height: 30,
-                              width: Responsive.screenWidth,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: fadeEffect,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              stretch: true,
+              automaticallyImplyLeading: false,
+              pinned: true,
+              floating: false,
+              elevation: 0,
+              backgroundColor: Colors.white,
+              expandedHeight: Responsive.safeBlockVertical * 38,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Hero(
+                  tag: sight.id,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.network(
+                        sight.images[sight.primaryImage - 1],
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircleAvatar(
-                          radius: 18,
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                            color: kForegroundColor,
-                            icon: Icon(
-                              Icons.adaptive.arrow_back,
-                              size: 18,
-                              color: kBlackColor,
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          height: 30,
+                          width: Responsive.screenWidth,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: fadeEffect,
                             ),
-                            onPressed: () => Navigator.pop(context),
                           ),
                         ),
-                        CircleAvatar(
-                          radius: 18,
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                            color: kForegroundColor,
-                            icon: Icon(
-                              Icons.adaptive.share,
-                              size: 18,
-                              color: kBlackColor,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircleAvatar(
+                    radius: 18,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      color: kForegroundColor,
+                      icon: Icon(
+                        Icons.adaptive.arrow_back,
+                        size: 18,
+                        color: kBlackColor,
+                      ),
+                      onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 22,
-                          vertical: 12,
+                  CircleAvatar(
+                    radius: 18,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      color: kForegroundColor,
+                      icon: Icon(
+                        Icons.adaptive.share,
+                        size: 18,
+                        color: kBlackColor,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 22,
+                    vertical: 12,
+                  ),
+                  child: AnimatedBuilder(
+                    animation: routeAnimation,
+                    builder: (context, _) {
+                      return FadeTransition(
+                        opacity: CurvedAnimation(
+                          parent: routeAnimation,
+                          curve: const Interval(0.6, 1),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,18 +190,13 @@ class SightView extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              //TODO: NOT FOUND SCREEN
-              return const Text("Error");
-            }
-
-            return const LoadingSpinner();
-          }),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
