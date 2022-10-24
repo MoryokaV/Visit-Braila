@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         title: 'Visit Brăila',
         initialRoute: '/',
         onGenerateRoute: PageRouter.generateRoute,
+        onUnknownRoute: PageRouter.unknownRoute,
         theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
@@ -41,8 +42,8 @@ class MyApp extends StatelessWidget {
             ),
             bodyText1: TextStyle(
               color: kForegroundColor,
-              fontFamily: bodyFont,
-              fontSize: 14,
+              fontFamily: labelFont,
+              fontSize: 16,
             ),
             bodyText2: TextStyle(
               color: kForegroundColor,
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
             headline1: TextStyle(
               color: kBlackColor,
               fontFamily: bodyFont,
-              fontSize: 20,
+              fontSize: 24,
               height: 1.4,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.2,
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
               color: kBlackColor,
               fontFamily: bodyFont,
               fontWeight: FontWeight.w700,
-              fontSize: 18,
+              fontSize: 20,
               height: 1.3,
               letterSpacing: -0.2,
             ),
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: -0.1,
             ),
             headline4: TextStyle(
-              color: kBlackColor,
+              color: kForegroundColor,
               fontFamily: labelFont,
               letterSpacing: -0.1,
             ),

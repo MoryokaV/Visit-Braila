@@ -78,7 +78,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
               AnimatedSize(
                 alignment: Alignment.topCenter,
                 duration: const Duration(milliseconds: 300),
-                curve: Curves.ease,
+                curve: Curves.easeInOut,
                 child: SizedBox(
                   height: readMore ? null : 200,
                   child: Stack(

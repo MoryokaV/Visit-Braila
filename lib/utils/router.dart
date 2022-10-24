@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
 import 'package:visit_braila/widgets/bottom_navbar.dart';
 
@@ -32,5 +33,9 @@ class PageRouter {
       default:
         return MaterialPageRoute(builder: (context) => const BottomNavbar());
     }
+  }
+
+  static Route<dynamic> unknownRoute(RouteSettings settings) {
+    return MaterialPageRoute(builder: (context) => const NotFoundView());
   }
 }

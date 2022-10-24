@@ -71,7 +71,7 @@ class Home extends StatelessWidget {
                                       text:
                                           " - un oraș istoric de pe malul Dunării",
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -330,7 +330,7 @@ class SearchBar extends StatelessWidget {
             "Unde vrei să mergi?",
             style: Theme.of(context).textTheme.headline4!.copyWith(
                   color: kDimmedForegroundColor,
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
           ),

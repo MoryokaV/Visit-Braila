@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.0.15
   flutter_html: ^2.2.1
   url_launcher: ^6.1.6
+  lottie: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/animations/
 
   fonts:
     - family: Merriweather
