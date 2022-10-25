@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: ((_) => Wishlist()),
+      create: (_) => Wishlist(),
       child: MaterialApp(
         title: 'Visit Brăila',
         initialRoute: '/',
