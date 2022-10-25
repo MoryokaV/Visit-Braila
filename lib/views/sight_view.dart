@@ -9,6 +9,7 @@ import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/html_description.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
+import 'dart:io' show Platform;
 
 class SightView extends StatelessWidget {
   final Sight sight;
@@ -35,7 +36,6 @@ class SightView extends StatelessWidget {
               stretch: true,
               automaticallyImplyLeading: false,
               pinned: true,
-              floating: false,
               elevation: 0,
               backgroundColor: Colors.white,
               expandedHeight: Responsive.safeBlockVertical * 38,
@@ -75,10 +75,16 @@ class SightView extends StatelessWidget {
                     backgroundColor: Colors.white,
                     child: IconButton(
                       color: kForegroundColor,
-                      icon: Icon(
-                        Icons.adaptive.arrow_back,
-                        size: 18,
-                        color: kBlackColor,
+                      padding: EdgeInsets.zero,
+                      icon: FractionalTranslation(
+                        translation: Platform.isIOS
+                            ? const Offset(0.2, 0)
+                            : const Offset(0, 0),
+                        child: Icon(
+                          Icons.adaptive.arrow_back,
+                          size: 18,
+                          color: kBlackColor,
+                        ),
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
@@ -176,12 +182,14 @@ class SightView extends StatelessWidget {
                                   return GestureDetector(
                                     onTap: () {},
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius:
+                                          BorderRadius.circular(10),
                                       child: Image.network(
                                         sight.images[index],
                                         fit: BoxFit.cover,
                                         width:
-                                            Responsive.safeBlockVertical * 25,
+                                            Responsive.safeBlockVertical *
+                                                25,
                                       ),
                                     ),
                                   );

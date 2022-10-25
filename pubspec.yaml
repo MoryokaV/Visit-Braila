@@ -31,7 +31,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  flutter_launcher_icons: ^0.10.0
   flutter_feather_icons: ^2.0.0+1
   http: ^0.13.5
   provider: ^6.0.4
@@ -45,12 +44,6 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/favicon.png"
-  min_sdk_android: 21
 
 flutter:
   uses-material-design: true
