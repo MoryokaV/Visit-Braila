@@ -173,25 +173,59 @@ class SightView extends StatelessWidget {
                             SizedBox(
                               height: Responsive.safeBlockHorizontal * 35,
                               child: ListView.separated(
-                                itemCount: sight.images.length,
+                                itemCount: sight.images.length > 4
+                                    ? 5
+                                    : sight.images.length,
                                 scrollDirection: Axis.horizontal,
                                 separatorBuilder: (context, index) {
                                   return const SizedBox(width: 10);
                                 },
                                 itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(10),
-                                      child: Image.network(
-                                        sight.images[index],
-                                        fit: BoxFit.cover,
-                                        width:
-                                            Responsive.safeBlockVertical *
-                                                25,
-                                      ),
+                                  return InkWell(
+                                    onTap: () => Navigator.pushNamed(
+                                      context,
+                                      "/gallery",
+                                      arguments: {
+                                        "startIndex": index,
+                                        "images": sight.images,
+                                        "title": sight.name,
+                                        "id": sight.id,
+                                      },
                                     ),
+                                    child: index != 4
+                                        ? ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.network(
+                                              sight.images[index],
+                                              fit: BoxFit.cover,
+                                              width:
+                                                  Responsive.safeBlockVertical *
+                                                      25,
+                                            ),
+                                          )
+                                        : Container(
+                                            width:
+                                                Responsive.safeBlockVertical *
+                                                    25,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: lightGrey,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "+${sight.images.length - 4}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4!
+                                                    .copyWith(fontSize: 24),
+                                              ),
+                                            ),
+                                          ),
                                   );
                                 },
                               ),
@@ -277,6 +311,7 @@ class BottomBar extends StatelessWidget {
                       ),
                     ),
                     child: IconButton(
+                      splashRadius: 1,
                       onPressed: () {
                         favourites.toggleSightWishState(id);
                         likeAnimationKey.currentState!.animate();

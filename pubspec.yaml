@@ -38,6 +38,7 @@ dependencies:
   flutter_html: ^2.2.1
   url_launcher: ^6.1.6
   lottie: ^1.4.3
+  photo_view: ^0.14.0
 
 dev_dependencies:
   flutter_test:

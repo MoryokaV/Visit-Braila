@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
-import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
@@ -114,8 +113,7 @@ class Home extends StatelessWidget {
                                 child: SizedBox(
                                   height: Responsive.safeBlockHorizontal * 70,
                                   child: FutureBuilder<List<Sight>>(
-                                    future:
-                                        sightController.fetchTrending(),
+                                    future: sightController.fetchTrending(),
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData) {
                                         return ListView.separated(
@@ -444,6 +442,7 @@ class TrendingSightCard extends StatelessWidget {
                         child: Consumer<Wishlist>(
                           builder: (context, favourites, _) {
                             return IconButton(
+                              splashRadius: 1,
                               padding: EdgeInsets.zero,
                               onPressed: () {
                                 favourites.toggleSightWishState(sight.id);
