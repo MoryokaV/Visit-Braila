@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
@@ -33,6 +34,8 @@ class PageRouter {
             );
           },
         );
+      case '/alltours':
+        return adaptivePageRoute(builder: (context) => AllToursView());
       case '/gallery':
         final args = settings.arguments as Map<String, dynamic>;
 

@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
               color: kForegroundColor,
               fontFamily: labelFont,
               letterSpacing: -0.1,
+              fontSize: 20,
             ),
           ),
         ),

@@ -137,7 +137,6 @@ class Home extends StatelessWidget {
                                       return ListView.separated(
                                         physics: const NeverScrollableScrollPhysics(),
                                         itemCount: 4,
-                                        clipBehavior: Clip.none,
                                         scrollDirection: Axis.horizontal,
                                         separatorBuilder: (context, index) {
                                           return const SizedBox(width: 10);
@@ -188,7 +187,7 @@ class Home extends StatelessWidget {
                                             height: 20,
                                           ),
                                           ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () => Navigator.pushNamed(context, "/alltours"),
                                             style: ElevatedButton.styleFrom(
                                               padding: const EdgeInsets.symmetric(
                                                 horizontal: 28,
