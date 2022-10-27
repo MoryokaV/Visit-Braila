@@ -50,10 +50,7 @@ class _GalleryViewState extends State<GalleryView> {
         elevation: 0,
         title: Text(
           widget.title,
-          style: Theme.of(context)
-              .textTheme
-              .headline3!
-              .copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
@@ -75,9 +72,7 @@ class _GalleryViewState extends State<GalleryView> {
                     likeAnimationKey.currentState!.animate();
                   },
                   icon: Icon(
-                    favourites.items['sights']!.contains(widget.id)
-                        ? CupertinoIcons.heart_fill
-                        : CupertinoIcons.heart,
+                    favourites.items['sights']!.contains(widget.id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
                     color: favourites.items['sights']!.contains(widget.id)
                         ? Theme.of(context).colorScheme.secondary
                         : Colors.white,
@@ -115,10 +110,7 @@ class _GalleryViewState extends State<GalleryView> {
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   "${selectedIndex + 1}  —  ${widget.images.length}",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
                 ),
               ),
             ),

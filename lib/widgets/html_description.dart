@@ -86,8 +86,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                       SelectableHtml(
                         scrollPhysics: const NeverScrollableScrollPhysics(),
                         data: widget.data,
-                        onLinkTap: (url, context, attributes, element) =>
-                            openBrowserURL(url!),
+                        onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
                         style: descriptionStyle,
                       ),
                       if (!readMore)
@@ -129,9 +128,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                       width: 5,
                     ),
                     Icon(
-                      readMore
-                          ? FeatherIcons.chevronUp
-                          : FeatherIcons.chevronDown,
+                      readMore ? FeatherIcons.chevronUp : FeatherIcons.chevronDown,
                       color: kBlackColor,
                       size: 20,
                     )
@@ -143,8 +140,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
         : SelectableHtml(
             scrollPhysics: const NeverScrollableScrollPhysics(),
             data: widget.data,
-            onLinkTap: (url, context, attributes, element) =>
-                openBrowserURL(url!),
+            onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
             style: descriptionStyle,
           );
   }

@@ -31,8 +31,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: kSecondaryColor),
+          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: kSecondaryColor),
           textTheme: const TextTheme(
             button: TextStyle(
               color: kBlackColor,

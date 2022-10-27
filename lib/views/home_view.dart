@@ -71,8 +71,7 @@ class Home extends StatelessWidget {
                                       ),
                                     ),
                                     TextSpan(
-                                      text:
-                                          " - un oraș istoric de pe malul Dunării",
+                                      text: " - un oraș istoric de pe malul Dunării",
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
@@ -129,17 +128,14 @@ class Home extends StatelessWidget {
                                             );
                                           },
                                         );
-                                      } else if (snapshot.error
-                                          is SocketException) {
+                                      } else if (snapshot.error is SocketException) {
                                         showErrorDialog(context, false);
-                                      } else if (snapshot.error
-                                          is HttpException) {
+                                      } else if (snapshot.error is HttpException) {
                                         showErrorDialog(context, true);
                                       }
 
                                       return ListView.separated(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
+                                        physics: const NeverScrollableScrollPhysics(),
                                         itemCount: 4,
                                         clipBehavior: Clip.none,
                                         scrollDirection: Axis.horizontal,
@@ -172,8 +168,7 @@ class Home extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(6),
                                       child: Image.asset(
                                         "assets/images/republicii.jpg",
-                                        height:
-                                            Responsive.safeBlockVertical * 30,
+                                        height: Responsive.safeBlockVertical * 30,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                       ),
@@ -181,15 +176,11 @@ class Home extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.all(24),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Fă o plimbare",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3!
-                                                .copyWith(
+                                            style: Theme.of(context).textTheme.headline3!.copyWith(
                                                   color: Colors.white,
                                                 ),
                                           ),
@@ -199,16 +190,13 @@ class Home extends StatelessWidget {
                                           ElevatedButton(
                                             onPressed: () {},
                                             style: ElevatedButton.styleFrom(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                              padding: const EdgeInsets.symmetric(
                                                 horizontal: 28,
                                                 vertical: 14,
                                               ),
                                               backgroundColor: Colors.white,
                                               foregroundColor: Colors.black,
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .button,
+                                              textStyle: Theme.of(context).textTheme.button,
                                             ),
                                             child: const Text("Tururi"),
                                           ),
@@ -226,8 +214,7 @@ class Home extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(6),
                                       child: Image.asset(
                                         "assets/images/biserica_greceasca.jpg",
-                                        height:
-                                            Responsive.safeBlockVertical * 30,
+                                        height: Responsive.safeBlockVertical * 30,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                       ),
@@ -235,15 +222,11 @@ class Home extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.all(24),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Explorează noi culturi",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3!
-                                                .copyWith(
+                                            style: Theme.of(context).textTheme.headline3!.copyWith(
                                                   color: Colors.white,
                                                 ),
                                           ),
@@ -253,16 +236,13 @@ class Home extends StatelessWidget {
                                           ElevatedButton(
                                             onPressed: () {},
                                             style: ElevatedButton.styleFrom(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                              padding: const EdgeInsets.symmetric(
                                                 horizontal: 28,
                                                 vertical: 14,
                                               ),
                                               backgroundColor: Colors.white,
                                               foregroundColor: Colors.black,
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .button,
+                                              textStyle: Theme.of(context).textTheme.button,
                                             ),
                                             child: const Text("Atracții"),
                                           ),
@@ -283,9 +263,7 @@ class Home extends StatelessWidget {
                     builder: ((context, child) {
                       return AnimatedOpacity(
                         duration: const Duration(milliseconds: 150),
-                        opacity: _scrollController.offset >= appBarBreakpoint
-                            ? 1
-                            : 0,
+                        opacity: _scrollController.offset >= appBarBreakpoint ? 1 : 0,
                         child: Container(
                           color: Colors.black,
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -454,8 +432,7 @@ class TrendingSightCard extends StatelessWidget {
                                     ? CupertinoIcons.heart_fill
                                     : CupertinoIcons.heart,
                                 size: 22,
-                                color: favourites.items['sights']!
-                                        .contains(sight.id)
+                                color: favourites.items['sights']!.contains(sight.id)
                                     ? Theme.of(context).colorScheme.secondary
                                     : kDisabledIconColor,
                               ),
@@ -481,7 +458,6 @@ class TrendingSightCard extends StatelessWidget {
                         width: 6,
                       ),
                       const Text(
-                        //TODO: dynamic distance with GoogleMaps Api
                         "N/A",
                         style: TextStyle(
                           fontSize: 12,

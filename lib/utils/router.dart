@@ -53,10 +53,7 @@ class PageRouter {
     return MaterialPageRoute(builder: (context) => const NotFoundView());
   }
 
-  static Route<dynamic> adaptivePageRoute(
-      {required Widget Function(BuildContext) builder}) {
-    return Platform.isIOS
-        ? CupertinoPageRoute(builder: builder)
-        : MaterialPageRoute(builder: builder);
+  static Route<dynamic> adaptivePageRoute({required Widget Function(BuildContext) builder}) {
+    return Platform.isIOS ? CupertinoPageRoute(builder: builder) : MaterialPageRoute(builder: builder);
   }
 }

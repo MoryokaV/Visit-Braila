@@ -23,9 +23,7 @@ class Wishlist extends ChangeNotifier {
   }
 
   void toggleSightWishState(String id) {
-    items['sights']!.contains(id)
-        ? items['sights']!.remove(id)
-        : items['sights']!.add(id);
+    items['sights']!.contains(id) ? items['sights']!.remove(id) : items['sights']!.add(id);
 
     LocalStorage.saveWishlist(jsonEncode(convertToList()));
 
@@ -33,9 +31,7 @@ class Wishlist extends ChangeNotifier {
   }
 
   void toggleTourWishState(String id) {
-    items['tours']!.contains(id)
-        ? items['tours']!.remove(id)
-        : items['tours']!.add(id);
+    items['tours']!.contains(id) ? items['tours']!.remove(id) : items['tours']!.add(id);
 
     LocalStorage.saveWishlist(jsonEncode(convertToList()));
 

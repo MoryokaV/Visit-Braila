@@ -9,14 +9,11 @@ class LikeAnimation extends StatefulWidget {
   State<LikeAnimation> createState() => LikeAnimationState();
 }
 
-class LikeAnimationState extends State<LikeAnimation>
-    with SingleTickerProviderStateMixin {
+class LikeAnimationState extends State<LikeAnimation> with SingleTickerProviderStateMixin {
   late final AnimationController likeAnimationController;
 
   void animate() {
-    likeAnimationController
-        .reverse()
-        .then((_) => likeAnimationController.forward());
+    likeAnimationController.reverse().then((_) => likeAnimationController.forward());
   }
 
   @override

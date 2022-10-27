@@ -47,7 +47,7 @@ class NotFoundView extends StatelessWidget {
                     ),
                   ],
                 ),
-              ), 
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: TextButton(

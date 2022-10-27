@@ -77,9 +77,7 @@ class SightView extends StatelessWidget {
                       color: kForegroundColor,
                       padding: EdgeInsets.zero,
                       icon: FractionalTranslation(
-                        translation: Platform.isIOS
-                            ? const Offset(0.2, 0)
-                            : const Offset(0, 0),
+                        translation: Platform.isIOS ? const Offset(0.2, 0) : const Offset(0, 0),
                         child: Icon(
                           Icons.adaptive.arrow_back,
                           size: 18,
@@ -143,7 +141,6 @@ class SightView extends StatelessWidget {
                                   width: 6,
                                 ),
                                 Text(
-                                  //TODO: dynamic distance with GoogleMaps Api
                                   "N/A",
                                   style: TextStyle(
                                     fontSize: 12,
@@ -173,9 +170,7 @@ class SightView extends StatelessWidget {
                             SizedBox(
                               height: Responsive.safeBlockHorizontal * 35,
                               child: ListView.separated(
-                                itemCount: sight.images.length > 4
-                                    ? 5
-                                    : sight.images.length,
+                                itemCount: sight.images.length > 4 ? 5 : sight.images.length,
                                 scrollDirection: Axis.horizontal,
                                 separatorBuilder: (context, index) {
                                   return const SizedBox(width: 10);
@@ -194,35 +189,26 @@ class SightView extends StatelessWidget {
                                     ),
                                     child: index != 4
                                         ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(10),
                                             child: Image.network(
                                               sight.images[index],
                                               fit: BoxFit.cover,
-                                              width:
-                                                  Responsive.safeBlockVertical *
-                                                      25,
+                                              width: Responsive.safeBlockVertical * 25,
                                             ),
                                           )
                                         : Container(
-                                            width:
-                                                Responsive.safeBlockVertical *
-                                                    25,
+                                            width: Responsive.safeBlockVertical * 25,
                                             decoration: BoxDecoration(
                                               border: Border.all(
                                                 color: lightGrey,
                                                 width: 1.5,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                              borderRadius: BorderRadius.circular(10),
                                             ),
                                             child: Center(
                                               child: Text(
                                                 "+${sight.images.length - 4}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline4!
-                                                    .copyWith(fontSize: 24),
+                                                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
                                               ),
                                             ),
                                           ),
@@ -317,9 +303,7 @@ class BottomBar extends StatelessWidget {
                         likeAnimationKey.currentState!.animate();
                       },
                       icon: Icon(
-                        favourites.items['sights']!.contains(id)
-                            ? CupertinoIcons.heart_fill
-                            : CupertinoIcons.heart,
+                        favourites.items['sights']!.contains(id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
                         color: favourites.items['sights']!.contains(id)
                             ? Theme.of(context).colorScheme.secondary
                             : kForegroundColor,
