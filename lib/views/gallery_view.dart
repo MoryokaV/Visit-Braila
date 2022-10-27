@@ -12,6 +12,7 @@ class GalleryView extends StatefulWidget {
   final List<String> images;
   final String title;
   final String id;
+  final String collection;
 
   const GalleryView({
     super.key,
@@ -19,6 +20,7 @@ class GalleryView extends StatefulWidget {
     required this.images,
     required this.title,
     required this.id,
+    required this.collection,
   });
 
   @override
@@ -64,16 +66,20 @@ class _GalleryViewState extends State<GalleryView> {
           LikeAnimation(
             key: likeAnimationKey,
             child: Consumer<Wishlist>(
-              builder: (context, favourites, _) {
+              builder: (context, wishlist, _) {
                 return IconButton(
                   splashRadius: 1,
                   onPressed: () {
-                    favourites.toggleSightWishState(widget.id);
+                    widget.collection == "sights"
+                        ? wishlist.toggleSightWishState(widget.id)
+                        : wishlist.toggleTourWishState(widget.id);
                     likeAnimationKey.currentState!.animate();
                   },
                   icon: Icon(
-                    favourites.items['sights']!.contains(widget.id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                    color: favourites.items['sights']!.contains(widget.id)
+                    wishlist.items[widget.collection]!.contains(widget.id)
+                        ? CupertinoIcons.heart_fill
+                        : CupertinoIcons.heart,
+                    color: wishlist.items[widget.collection]!.contains(widget.id)
                         ? Theme.of(context).colorScheme.secondary
                         : Colors.white,
                   ),

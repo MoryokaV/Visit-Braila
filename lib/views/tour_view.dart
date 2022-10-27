@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:visit_braila/controllers/sight_controller.dart';
-import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/actions_bar.dart';
 import 'package:visit_braila/widgets/html_description.dart';
 import 'dart:io' show Platform;
 
-class SightView extends StatelessWidget {
-  final Sight sight;
+class TourView extends StatelessWidget {
+  final Tour tour;
   final Animation<double> routeAnimation;
 
-  SightView({
+  const TourView({
     super.key,
-    required this.sight,
+    required this.tour,
     required this.routeAnimation,
   });
-
-  final SightController sightController = SightController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: ActionsBar(
-        id: sight.id,
-        collection: "sights",
+        id: tour.id,
+        collection: "tours",
       ),
       body: SafeArea(
         top: false,
@@ -41,12 +38,12 @@ class SightView extends StatelessWidget {
               expandedHeight: Responsive.safeBlockVertical * 38,
               flexibleSpace: FlexibleSpaceBar(
                 background: Hero(
-                  tag: sight.id,
+                  tag: tour.id,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       Image.network(
-                        sight.images[sight.primaryImage - 1],
+                        tour.images[tour.primaryImage - 1],
                         fit: BoxFit.cover,
                       ),
                       Positioned(
@@ -122,7 +119,7 @@ class SightView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              sight.name,
+                              tour.name,
                               style: Theme.of(context).textTheme.headline1,
                             ),
                             const SizedBox(
@@ -133,7 +130,7 @@ class SightView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: const [
                                 Icon(
-                                  FeatherIcons.mapPin,
+                                  FeatherIcons.navigation2,
                                   size: 22,
                                   color: kPrimaryColor,
                                 ),
@@ -141,28 +138,18 @@ class SightView extends StatelessWidget {
                                   width: 6,
                                 ),
                                 Text(
-                                  "N/A",
+                                  "N/A lungime",
                                   style: TextStyle(
                                     fontSize: 12,
                                   ),
                                 ),
                               ],
                             ),
-                            if (sight.tags.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8),
-                                child: Text(
-                                  sight.tags.join(", "),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
                             const SizedBox(
                               height: 18,
                             ),
                             HtmlDescription(
-                              data: sight.description,
+                              data: tour.description,
                             ),
                             const SizedBox(
                               height: 18,
@@ -170,7 +157,7 @@ class SightView extends StatelessWidget {
                             SizedBox(
                               height: Responsive.safeBlockHorizontal * 35,
                               child: ListView.separated(
-                                itemCount: sight.images.length > 4 ? 5 : sight.images.length,
+                                itemCount: tour.images.length > 4 ? 5 : tour.images.length,
                                 scrollDirection: Axis.horizontal,
                                 separatorBuilder: (context, index) {
                                   return const SizedBox(width: 10);
@@ -182,17 +169,17 @@ class SightView extends StatelessWidget {
                                       "/gallery",
                                       arguments: {
                                         "startIndex": index,
-                                        "images": sight.images,
-                                        "title": sight.name,
-                                        "id": sight.id,
-                                        "collection": "sights",
+                                        "images": tour.images,
+                                        "title": tour.name,
+                                        "id": tour.id,
+                                        "collection": "tours",
                                       },
                                     ),
                                     child: index != 4
                                         ? ClipRRect(
                                             borderRadius: BorderRadius.circular(10),
                                             child: Image.network(
-                                              sight.images[index],
+                                              tour.images[index],
                                               fit: BoxFit.cover,
                                               width: Responsive.safeBlockVertical * 25,
                                             ),
@@ -208,7 +195,7 @@ class SightView extends StatelessWidget {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                "+${sight.images.length - 4}",
+                                                "+${tour.images.length - 4}",
                                                 style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
                                               ),
                                             ),

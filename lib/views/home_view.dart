@@ -417,21 +417,21 @@ class TrendingSightCard extends StatelessWidget {
                       LikeAnimation(
                         key: likeAnimationKey,
                         child: Consumer<Wishlist>(
-                          builder: (context, favourites, _) {
+                          builder: (context, wishlist, _) {
                             return IconButton(
                               splashRadius: 1,
                               padding: EdgeInsets.zero,
                               onPressed: () {
-                                favourites.toggleSightWishState(sight.id);
+                                wishlist.toggleSightWishState(sight.id);
                                 likeAnimationKey.currentState!.animate();
                               },
                               constraints: const BoxConstraints(),
                               icon: Icon(
-                                favourites.items['sights']!.contains(sight.id)
+                                wishlist.items['sights']!.contains(sight.id)
                                     ? CupertinoIcons.heart_fill
                                     : CupertinoIcons.heart,
                                 size: 22,
-                                color: favourites.items['sights']!.contains(sight.id)
+                                color: wishlist.items['sights']!.contains(sight.id)
                                     ? Theme.of(context).colorScheme.secondary
                                     : kDisabledIconColor,
                               ),

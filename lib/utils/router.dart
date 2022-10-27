@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
+import 'package:visit_braila/views/tour_view.dart';
 import 'package:visit_braila/widgets/bottom_navbar.dart';
 import 'dart:io' show Platform;
 
@@ -34,6 +36,27 @@ class PageRouter {
             );
           },
         );
+      case '/tour':
+        final tour = settings.arguments as Tour;
+
+        return PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 500),
+          reverseTransitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (context, animation, _) {
+            final curvedAnimation = CurvedAnimation(
+              parent: animation,
+              curve: const Interval(0, 0.5),
+            );
+
+            return FadeTransition(
+              opacity: curvedAnimation,
+              child: TourView(
+                tour: tour,
+                routeAnimation: animation,
+              ),
+            );
+          },
+        );
       case '/alltours':
         return adaptivePageRoute(builder: (context) => AllToursView());
       case '/gallery':
@@ -45,6 +68,7 @@ class PageRouter {
             images: args['images'],
             title: args['title'],
             id: args['id'],
+            collection: args['collection'],
           ),
         );
       default:

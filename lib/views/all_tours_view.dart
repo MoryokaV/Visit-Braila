@@ -126,33 +126,42 @@ class TourCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Stack(
-        children: [
-          Image.network(
-            tour.images[tour.primaryImage - 1],
-            fit: BoxFit.cover,
-          ),
-          Positioned.fill(
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              alignment: Alignment.bottomLeft,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.25),
-              ),
-              child: Text(
-                tour.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
+    return Hero(
+      tag: tour.id,
+      child: Material(
+        type: MaterialType.transparency,
+        child: GestureDetector(
+          onTap: () => Navigator.pushNamed(context, "/tour", arguments: tour),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Stack(
+              children: [
+                Image.network(
+                  tour.images[tour.primaryImage - 1],
+                  fit: BoxFit.cover,
                 ),
-              ),
+                Positioned.fill(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    alignment: Alignment.bottomLeft,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.25),
+                    ),
+                    child: Text(
+                      tour.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
