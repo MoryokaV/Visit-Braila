@@ -57,6 +57,10 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
     caseSensitive: true,
   );
 
+  bool isEmptyDescription(){
+    return widget.data == "<p><br></p>";
+  }
+
   @override
   void initState() {
     super.initState();
@@ -64,84 +68,86 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
     final int lines = widget.data.split("<p").length - 1;
     final int chars = widget.data.replaceAll(htmlTagsRegExp, '').length;
 
-    if (lines > 15 || chars > 400) {
+    if (lines > 12 || chars > 400) {
       longDescription = true;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return longDescription
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AnimatedSize(
-                alignment: Alignment.topCenter,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                child: SizedBox(
-                  height: readMore ? null : 200,
-                  child: Stack(
-                    children: [
-                      SelectableHtml(
-                        scrollPhysics: const NeverScrollableScrollPhysics(),
-                        data: widget.data,
-                        onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
-                        style: descriptionStyle,
-                      ),
-                      if (!readMore)
-                        Positioned(
-                          bottom: 0,
-                          child: Container(
-                            height: 30,
-                            width: Responsive.screenWidth,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: fadeEffect,
+    return isEmptyDescription()
+        ? const Text("Nu există descriere")
+        : longDescription
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AnimatedSize(
+                    alignment: Alignment.topCenter,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: SizedBox(
+                      height: readMore ? null : 200,
+                      child: Stack(
+                        children: [
+                          SelectableHtml(
+                            scrollPhysics: const NeverScrollableScrollPhysics(),
+                            data: widget.data,
+                            onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
+                            style: descriptionStyle,
+                          ),
+                          if (!readMore)
+                            Positioned(
+                              bottom: 0,
+                              child: Container(
+                                height: 30,
+                                width: Responsive.screenWidth,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: fadeEffect,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                    ],
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                onPressed: () {
-                  setState(() => readMore = !readMore);
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      readMore ? "Citește mai puțin" : "Citește mai mult",
-                      style: Theme.of(context).textTheme.button!.copyWith(
-                            decoration: TextDecoration.underline,
-                          ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    const SizedBox(
-                      width: 5,
+                    onPressed: () {
+                      setState(() => readMore = !readMore);
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          readMore ? "Citește mai puțin" : "Citește mai mult",
+                          style: Theme.of(context).textTheme.button!.copyWith(
+                                decoration: TextDecoration.underline,
+                              ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          readMore ? FeatherIcons.chevronUp : FeatherIcons.chevronDown,
+                          color: kBlackColor,
+                          size: 20,
+                        )
+                      ],
                     ),
-                    Icon(
-                      readMore ? FeatherIcons.chevronUp : FeatherIcons.chevronDown,
-                      color: kBlackColor,
-                      size: 20,
-                    )
-                  ],
-                ),
-              ),
-            ],
-          )
-        : SelectableHtml(
-            scrollPhysics: const NeverScrollableScrollPhysics(),
-            data: widget.data,
-            onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
-            style: descriptionStyle,
-          );
+                  ),
+                ],
+              )
+            : SelectableHtml(
+                scrollPhysics: const NeverScrollableScrollPhysics(),
+                data: widget.data,
+                onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
+                style: descriptionStyle,
+              );
   }
 }

@@ -89,7 +89,7 @@ class AllToursView extends StatelessWidget {
                     if (tours.hasData) {
                       return StaggeredGridView.countBuilder(
                         shrinkWrap: true,
-                        physics: const ScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: tours.data!.length,
                         crossAxisCount: 2,
                         mainAxisSpacing: 8,
