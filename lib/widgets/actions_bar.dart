@@ -55,7 +55,7 @@ class ActionsBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: const Text("Vizitează acum"),
+                  child: Text(collection == "sights" ? "Vizitează acum" : "Fă turul"),
                 ),
               ),
               const SizedBox(

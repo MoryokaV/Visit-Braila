@@ -34,19 +34,19 @@ class _BottomNavbarState extends State<BottomNavbar> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.search),
-            label: "Explore",
+            label: "Explorează",
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.heart),
-            label: "Wishlist",
+            label: "Favorite",
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.map),
-            label: "Map",
+            icon: Icon(CupertinoIcons.bell),
+            label: "Evenimente",
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.info),
-            label: "Info",
+            icon: Icon(CupertinoIcons.info_circle),
+            label: "Despre",
           ),
         ],
         onTap: (newIndex) => setState(() => pageIndex = newIndex),
