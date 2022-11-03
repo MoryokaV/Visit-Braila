@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
@@ -176,7 +177,7 @@ class SightView extends StatelessWidget {
                                   return const SizedBox(width: 10);
                                 },
                                 itemBuilder: (context, index) {
-                                  return InkWell(
+                                  return GestureDetector(
                                     onTap: () => Navigator.pushNamed(
                                       context,
                                       "/gallery",

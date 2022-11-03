@@ -34,7 +34,7 @@ class _TourViewState extends State<TourView> {
   void openSightLink(String id) async {
     setState(() => isLoading = true);
 
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
 
     try {
       Sight sight = await sightController.findSight(id);
@@ -210,7 +210,7 @@ class _TourViewState extends State<TourView> {
                                         return const SizedBox(width: 10);
                                       },
                                       itemBuilder: (context, index) {
-                                        return InkWell(
+                                        return GestureDetector(
                                           onTap: () => Navigator.pushNamed(
                                             context,
                                             "/gallery",

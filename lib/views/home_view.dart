@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
+import 'package:visit_braila/utils/search_all.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
@@ -292,32 +293,35 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Responsive.screenWidth / 1.25,
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: Colors.white,
-        boxShadow: const [shadowSm],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            CupertinoIcons.search,
-            color: Theme.of(context).primaryColor,
-            size: 20,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            "Unde vrei să mergi?",
-            style: Theme.of(context).textTheme.headline4!.copyWith(
-                  color: kDimmedForegroundColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => showSearch(context: context, delegate: SearchAll()),
+      child: Container(
+        width: Responsive.screenWidth / 1.25,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: Colors.white,
+          boxShadow: const [shadowSm],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              CupertinoIcons.search,
+              color: Theme.of(context).primaryColor,
+              size: 20,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              "Unde vrei să mergi?",
+              style: Theme.of(context).textTheme.headline4!.copyWith(
+                    color: kDimmedForegroundColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -361,7 +365,7 @@ class TrendingSightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => Navigator.pushNamed(context, "/sight", arguments: sight),
       child: Container(
         width: Responsive.safeBlockHorizontal * 60,
