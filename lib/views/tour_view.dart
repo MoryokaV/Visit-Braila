@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
@@ -171,16 +171,16 @@ class _TourViewState extends State<TourView> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: const [
-                                      Icon(
-                                        FeatherIcons.compass,
-                                        size: 22,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/icons/route.svg",
+                                        width: 24,
                                         color: kPrimaryColor,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 6,
                                       ),
-                                      Text(
+                                      const Text(
                                         "N/A lungime",
                                         style: TextStyle(
                                           fontSize: 12,

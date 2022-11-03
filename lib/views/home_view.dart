@@ -1,9 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
@@ -260,7 +259,7 @@ class Home extends StatelessWidget {
                   ),
                   AnimatedBuilder(
                     animation: _scrollController,
-                    builder: ((context, child) {
+                    builder: (context, child) {
                       return AnimatedOpacity(
                         duration: const Duration(milliseconds: 150),
                         opacity: _scrollController.offset >= appBarBreakpoint ? 1 : 0,
@@ -276,7 +275,7 @@ class Home extends StatelessWidget {
                           ),
                         ),
                       );
-                    }),
+                    },
                   ),
                 ],
               ),
@@ -452,9 +451,9 @@ class TrendingSightCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(
-                        FeatherIcons.mapPin,
-                        size: 18,
+                      SvgPicture.asset(
+                        "assets/icons/map-pin.svg",
+                        width: 20,
                         color: kDisabledIconColor,
                       ),
                       const SizedBox(

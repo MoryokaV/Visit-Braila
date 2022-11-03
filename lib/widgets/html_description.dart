@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/url_constants.dart';
@@ -133,11 +133,11 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                         const SizedBox(
                           width: 5,
                         ),
-                        Icon(
-                          readMore ? FeatherIcons.chevronUp : FeatherIcons.chevronDown,
+                        SvgPicture.asset(
+                          readMore ? "assets/icons/chevron-up.svg" : "assets/icons/chevron-down.svg",
                           color: kBlackColor,
-                          size: 20,
-                        )
+                          width: 20,
+                        ),
                       ],
                     ),
                   ),

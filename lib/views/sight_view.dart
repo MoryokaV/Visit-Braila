@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
@@ -132,16 +131,16 @@ class SightView extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Icon(
-                                  FeatherIcons.mapPin,
-                                  size: 22,
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/map-pin.svg",
+                                  width: 24,
                                   color: kPrimaryColor,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 6,
                                 ),
-                                Text(
+                                const Text(
                                   "N/A",
                                   style: TextStyle(
                                     fontSize: 12,

@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
@@ -144,16 +143,19 @@ class SearchAll extends SearchDelegate<String> {
                   ),
                 ),
                 ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: filteredData.length,
                   itemBuilder: (context, index) {
                     var result = filteredData[index];
                     bool isSight = allSights.contains(result);
-          
+
                     return ListTile(
                       onTap: () =>
                           Navigator.pushNamed(context, isSight ? "/sight" : "/tour", arguments: filteredData[index]),
-                      leading: Icon(
-                        isSight ? CupertinoIcons.building_2_fill : FeatherIcons.compass,
+                      leading: SvgPicture.asset(
+                        isSight ? "assets/icons/building.svg" : "assets/icons/route.svg",
+                        height: 24,
                         color: kPrimaryColor,
                       ),
                       title: RichText(
