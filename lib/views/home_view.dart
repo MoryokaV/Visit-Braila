@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
@@ -297,7 +296,7 @@ class SearchBar extends StatelessWidget {
       onTap: () => showSearch(context: context, delegate: SearchAll()),
       child: Container(
         width: Responsive.screenWidth / 1.25,
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: Colors.white,
@@ -312,13 +311,17 @@ class SearchBar extends StatelessWidget {
               size: 20,
             ),
             const SizedBox(width: 8),
-            Text(
-              "Unde vrei să mergi?",
-              style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: kDimmedForegroundColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
+            Flexible(
+              child: Text(
+                "Unde vrei să mergi?",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: kDimmedForegroundColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
             ),
           ],
         ),
@@ -390,6 +393,7 @@ class TrendingSightCard extends StatelessWidget {
                     child: Image.network(
                       sight.images[sight.primaryImage - 1],
                       fit: BoxFit.cover,
+                      width: double.infinity,
                     ),
                   ),
                 ),
