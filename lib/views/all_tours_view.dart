@@ -1,16 +1,55 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/tour_model.dart';
-import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
+import 'package:visit_braila/widgets/search_list_field.dart';
 
-class AllToursView extends StatelessWidget {
-  AllToursView({super.key});
+class AllToursView extends StatefulWidget {
+  const AllToursView({super.key});
 
+  @override
+  State<AllToursView> createState() => _AllToursViewState();
+}
+
+class _AllToursViewState extends State<AllToursView> {
   final TourController tourController = TourController();
+  bool isLoading = true;
+  List<Tour> tours = [];
+  List<Tour> filteredData = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchData();
+  }
+
+  void fetchData() async {
+    tours = await tourController.fetchTours();
+    filteredData = tours;
+    
+    //TODO: what if it has error
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void updateList(String query) {
+    filteredData = [];
+
+    query.trim().toLowerCase().split(" ").forEach((word) {
+      filteredData.addAll(
+        tours.where(
+          (tour) => tour.name.toString().toLowerCase().contains(word) && !filteredData.contains(tour),
+        ),
+      );
+    });
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +72,10 @@ class AllToursView extends StatelessWidget {
                 ),
               )
             ],
-            style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w600, fontSize: 22),
+            style: Theme.of(context).textTheme.headline4!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 22,
+                ),
           ),
         ),
         leading: IconButton(
@@ -45,72 +87,38 @@ class AllToursView extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 6,
-              horizontal: 14,
-            ),
-            child: Column(
-              children: [
-                Container(
-                  width: Responsive.screenWidth,
+        child: isLoading
+            ? const LoadingSpinner()
+            : SingleChildScrollView(
+                child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+                    vertical: 6,
+                    horizontal: 14,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: lightGrey,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  child: Column(
                     children: [
-                      const Icon(
-                        CupertinoIcons.search,
-                        size: 20,
+                      SearchListField(
+                        onChanged: updateList,
                       ),
                       const SizedBox(
-                        width: 10,
+                        height: 20,
                       ),
-                      Text(
-                        "Caută",
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                FutureBuilder<List<Tour>>(
-                  future: tourController.fetchTours(),
-                  builder: (context, tours) {
-                    if (tours.hasData) {
-                      return StaggeredGridView.countBuilder(
+                      StaggeredGridView.countBuilder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: tours.data!.length,
+                        itemCount: filteredData.length,
                         crossAxisCount: 2,
                         mainAxisSpacing: 8,
                         crossAxisSpacing: 8,
                         itemBuilder: (context, index) {
-                          return TourCard(tour: tours.data![index]);
+                          return TourCard(tour: filteredData[index]);
                         },
                         staggeredTileBuilder: (_) => const StaggeredTile.fit(1),
-                      );
-                    }
-
-                    return SizedBox(
-                      height: Responsive.safeBlockVertical * 20,
-                      child: const LoadingSpinner(),
-                    );
-                  },
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
