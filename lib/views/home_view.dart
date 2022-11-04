@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
@@ -43,54 +44,54 @@ class Home extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Stack(
-                          children: [
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Image.asset("assets/images/braila_night.jpg"),
-                                const Positioned(
-                                  bottom: 0,
-                                  child: FractionalTranslation(
-                                    translation: Offset(0, 0.5),
-                                    child: SearchBar(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 12, top: 24),
-                              child: RichText(
-                                text: const TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Brăila",
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w600,
+                        SizedBox(
+                          height: Responsive.safeBlockVertical * 35 + 20,
+                          child: Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              Image.asset(
+                                "assets/images/braila_night.jpg",
+                                fit: BoxFit.cover,
+                                height: Responsive.safeBlockVertical * 35,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12, top: 12),
+                                child: RichText(
+                                  text: const TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: "Brăila",
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text: " - un oraș istoric de pe malul Dunării",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
+                                      TextSpan(
+                                        text: " - un oraș istoric de pe malul Dunării",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
+                                    ],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Merriweather",
+                                      height: 1.4,
                                     ),
-                                  ],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Merriweather",
-                                    height: 1.4,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                              const Positioned(
+                                bottom: 0,
+                                child: SearchBar(),
+                              ),
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                            top: 38,
+                            top: 22,
                             left: 14,
                             right: 14,
                           ),

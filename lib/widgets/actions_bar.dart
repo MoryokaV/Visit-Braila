@@ -21,6 +21,10 @@ class ActionsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 14,
+        horizontal: Responsive.screenWidth / 8,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [topShadow],
@@ -29,70 +33,64 @@ class ActionsBar extends StatelessWidget {
           topRight: Radius.circular(14),
         ),
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 14,
-          horizontal: Responsive.screenWidth / 8,
-        ),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    backgroundColor: kPrimaryColor,
-                    foregroundColor: Colors.white,
-                    textStyle: Theme.of(context).textTheme.button,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                      ),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  backgroundColor: kPrimaryColor,
+                  foregroundColor: Colors.white,
+                  textStyle: Theme.of(context).textTheme.button,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
                     ),
                   ),
-                  child: Text(collection == "sights" ? "Vizitează acum" : "Fă turul"),
                 ),
+                child: Text(collection == "sights" ? "Vizitează acum" : "Fă turul"),
               ),
-              const SizedBox(
-                width: 6,
-              ),
-              LikeAnimation(
-                key: likeAnimationKey,
-                child: Consumer<Wishlist>(
-                  builder: (context, wishlist, _) {
-                    return Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [globalShadow],
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        ),
+            ),
+            const SizedBox(
+              width: 6,
+            ),
+            LikeAnimation(
+              key: likeAnimationKey,
+              child: Consumer<Wishlist>(
+                builder: (context, wishlist, _) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [globalShadow],
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
                       ),
-                      child: IconButton(
-                        splashRadius: 1,
-                        onPressed: () {
-                          collection == "sights" ? wishlist.toggleSightWishState(id) : wishlist.toggleTourWishState(id);
-                          likeAnimationKey.currentState!.animate();
-                        },
-                        icon: Icon(
-                          wishlist.items[collection]!.contains(id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                          color: wishlist.items[collection]!.contains(id)
-                              ? Theme.of(context).colorScheme.secondary
-                              : kForegroundColor,
-                        ),
+                    ),
+                    child: IconButton(
+                      splashRadius: 1,
+                      onPressed: () {
+                        collection == "sights" ? wishlist.toggleSightWishState(id) : wishlist.toggleTourWishState(id);
+                        likeAnimationKey.currentState!.animate();
+                      },
+                      icon: Icon(
+                        wishlist.items[collection]!.contains(id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                        color: wishlist.items[collection]!.contains(id)
+                            ? Theme.of(context).colorScheme.secondary
+                            : kForegroundColor,
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
