@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/utils/style.dart';
 
-class SearchListField extends StatelessWidget {
+class SearchListField extends StatefulWidget {
   final void Function(String) onChanged;
   const SearchListField({
     super.key,
@@ -10,19 +10,35 @@ class SearchListField extends StatelessWidget {
   });
 
   @override
+  State<SearchListField> createState() => _SearchListFieldState();
+}
+
+class _SearchListFieldState extends State<SearchListField> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: onChanged,
+      controller: _controller,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         filled: true,
+        fillColor: lightGrey,
         isDense: true,
         hintMaxLines: 1,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 0,
-          horizontal: 8,
-        ),
+        contentPadding: EdgeInsets.zero,
         prefixIconConstraints: const BoxConstraints(
           minHeight: 38,
+        ),
+        suffixIconConstraints: const BoxConstraints(
+          maxHeight: 38,
         ),
         hintText: "Caută",
         border: OutlineInputBorder(
@@ -38,7 +54,19 @@ class SearchListField extends StatelessWidget {
             color: kForegroundColor,
           ),
         ),
-        fillColor: lightGrey,
+        suffixIcon: _controller.text.isNotEmpty
+            ? IconButton(
+                splashRadius: 1,
+                onPressed: () {
+                  _controller.clear();
+                  widget.onChanged("");
+                },
+                icon: const Icon(
+                  Icons.clear_rounded,
+                  color: kForegroundColor,
+                ),
+              )
+            : null,
       ),
     );
   }
