@@ -30,6 +30,8 @@ class _AllSightsViewState extends State<AllSightsView> {
   bool isLoading = true;
   bool disableHero = false;
 
+  String currentQuery = "";
+
   @override
   void initState() {
     super.initState();
@@ -54,18 +56,31 @@ class _AllSightsViewState extends State<AllSightsView> {
 
     query.trim().toLowerCase().split(" ").forEach((word) {
       filteredData.addAll(
-        sights.where(
-          (sight) => sight.name.toString().toLowerCase().contains(word) && !filteredData.contains(sight),
-        ),
+        sights.where((sight) {
+          if (sight.name.toString().toLowerCase().contains(word) && !filteredData.contains(sight)) {
+            if (selectedIndex == 0) {
+              return true;
+            } else if (selectedIndex != 0 && sight.tags.contains(tags[selectedIndex])) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+
+          return false;
+        }),
       );
     });
 
-    setState(() {});
+    setState(() {
+      currentQuery = query;
+    });
   }
 
   void setTag(int index) {
     setState(() {
       selectedIndex = index;
+      updateList(currentQuery);
     });
   }
 
