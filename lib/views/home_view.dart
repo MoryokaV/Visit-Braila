@@ -120,7 +120,7 @@ class Home extends StatelessWidget {
                                           clipBehavior: Clip.none,
                                           scrollDirection: Axis.horizontal,
                                           separatorBuilder: (context, index) {
-                                            return const SizedBox(width: 10);
+                                            return const SizedBox(width: 15);
                                           },
                                           itemBuilder: (context, index) {
                                             return TrendingSightCard(
@@ -233,7 +233,7 @@ class Home extends StatelessWidget {
                                             height: 20,
                                           ),
                                           ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () => Navigator.pushNamed(context, "/allsights"),
                                             style: ElevatedButton.styleFrom(
                                               padding: const EdgeInsets.symmetric(
                                                 horizontal: 28,
@@ -385,8 +385,9 @@ class TrendingSightCard extends StatelessWidget {
               child: Hero(
                 tag: sight.id,
                 child: Container(
-                  decoration: const BoxDecoration(
-                    boxShadow: [shadowSm],
+                  decoration: BoxDecoration(
+                    boxShadow: const [shadowSm],
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),

@@ -18,12 +18,14 @@ const BoxShadow shadowSm = BoxShadow(
   color: Colors.black26,
   offset: Offset(0, 1),
   blurRadius: 3,
+  spreadRadius: 1.5,
 );
 
-const BoxShadow shadowMd = BoxShadow(
-  color: Colors.black26,
-  offset: Offset(0, 1.5),
-  blurRadius: 2,
+const BoxShadow bottomShadowMd = BoxShadow(
+  color: Colors.black38,
+  offset: Offset(0, 6),
+  blurRadius: 8,
+  spreadRadius: 0,
 );
 
 const BoxShadow globalShadow = BoxShadow(

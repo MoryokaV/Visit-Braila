@@ -58,4 +58,22 @@ class SightController {
       rethrow;
     }
   }
+
+  Future<List<String>> fetchAllTags() async {
+    try {
+      final response = await http.get(Uri.parse("$apiUrl/fetchTags"));
+
+      if (response.statusCode == 200) {
+        List data = jsonDecode(response.body);
+
+        return data.map((tagJSON) => tagJSON['name'] as String).toList();
+      } else {
+        throw HttpException("INTERNAL SERVER ERROR: $response.statusCode");
+      }
+    } on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on HttpException {
+      rethrow;
+    }
+  }
 }
