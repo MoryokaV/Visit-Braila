@@ -14,7 +14,23 @@ class TourController {
 
         return data.map((tourJSON) => Tour.fromJSON(tourJSON)).toList();
       } else {
-        throw HttpException("INTERNAL SERVER ERROR: $response.statusCode");
+        throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
+      }
+    } on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on HttpException {
+      rethrow;
+    }
+  }
+
+  Future<Tour> findTour(String id) async {
+    try {
+      final response = await http.get(Uri.parse("$apiUrl/findTour/$id"));
+
+      if (response.statusCode == 200) {
+        return Tour.fromJSON(jsonDecode(response.body));
+      } else {
+        throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
     } on SocketException catch (e) {
       throw SocketException(e.toString());

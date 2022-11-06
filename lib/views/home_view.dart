@@ -14,8 +14,8 @@ import 'package:visit_braila/widgets/skeleton.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 
-class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  HomeView({Key? key}) : super(key: key);
 
   final ScrollController _scrollController = ScrollController();
   final double appBarBreakpoint = 270;

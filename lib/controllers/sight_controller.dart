@@ -14,7 +14,7 @@ class SightController {
 
         return data.map((sightJSON) => Sight.fromJSON(sightJSON)).toList();
       } else {
-        throw HttpException("INTERNAL SERVER ERROR: $response.statusCode");
+        throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
     } on SocketException catch (e) {
       throw SocketException(e.toString());
@@ -30,7 +30,7 @@ class SightController {
       if (response.statusCode == 200) {
         return Sight.fromJSON(jsonDecode(response.body));
       } else {
-        throw HttpException("INTERNAL SERVER ERROR: $response.statusCode");
+        throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
     } on SocketException catch (e) {
       throw SocketException(e.toString());
@@ -50,7 +50,7 @@ class SightController {
           trending.map((item) => findSight(item['sight_id'])),
         );
       } else {
-        throw HttpException("INTERNAL SERVER ERROR: $response.statusCode");
+        throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
     } on SocketException catch (e) {
       throw SocketException(e.toString());
@@ -68,7 +68,7 @@ class SightController {
 
         return data.map((tagJSON) => tagJSON['name'] as String).toList();
       } else {
-        throw HttpException("INTERNAL SERVER ERROR: $response.statusCode");
+        throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
     } on SocketException catch (e) {
       throw SocketException(e.toString());
