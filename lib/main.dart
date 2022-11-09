@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
+import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/services/localstorage_service.dart';
+import 'package:visit_braila/services/navigation_service.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/router.dart';
@@ -13,6 +15,8 @@ void main() async {
 
   Responsive().init();
 
+  await ConnectionService.init();
+
   runApp(const MyApp());
 }
 
@@ -21,11 +25,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => Wishlist(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Wishlist()),
+        ChangeNotifierProvider(create: (_) => ConnectionService()),
+      ],
       child: MaterialApp(
         title: 'Visit Brăila',
         initialRoute: '/',
+        navigatorKey: NavigationService.navigatorKey,
         onGenerateRoute: PageRouter.generateRoute,
         onUnknownRoute: PageRouter.unknownRoute,
         theme: ThemeData(

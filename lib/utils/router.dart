@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
+import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/views/all_sights_view.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
+import 'package:visit_braila/views/nointernet_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
 import 'package:visit_braila/views/tour_view.dart';
@@ -15,7 +18,16 @@ class PageRouter {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return adaptivePageRoute(builder: (context) => const BottomNavbar());
+        return PageRouteBuilder(
+          pageBuilder: (context, _, __) {
+            final connection = Provider.of<ConnectionService>(context);
+            if (!connection.isOnline) {
+              return const NoInternetView(start: true);
+            }
+
+            return const BottomNavbar();
+          },
+        );
       case '/sight':
         final sight = settings.arguments as Sight;
 
@@ -73,6 +85,12 @@ class PageRouter {
             id: args['id'],
             collection: args['collection'],
           ),
+        );
+      case '/nointernet':
+        return PageRouteBuilder(
+          pageBuilder: (context, _, __) {
+            return const NoInternetView(start: false);
+          },
         );
       default:
         return null;

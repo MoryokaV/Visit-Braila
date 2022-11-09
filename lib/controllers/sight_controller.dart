@@ -16,8 +16,6 @@ class SightController {
       } else {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
-    } on SocketException catch (e) {
-      throw SocketException(e.toString());
     } on HttpException {
       rethrow;
     }
@@ -32,8 +30,6 @@ class SightController {
       } else {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
-    } on SocketException catch (e) {
-      throw SocketException(e.toString());
     } on HttpException {
       rethrow;
     }
@@ -52,8 +48,6 @@ class SightController {
       } else {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
-    } on SocketException catch (e) {
-      throw SocketException(e.toString());
     } on HttpException {
       rethrow;
     }
@@ -70,8 +64,6 @@ class SightController {
       } else {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
-    } on SocketException catch (e) {
-      throw SocketException(e.toString());
     } on HttpException {
       rethrow;
     }

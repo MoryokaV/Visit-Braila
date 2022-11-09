@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +7,6 @@ import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/utils/search_all.dart';
-import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
 import 'package:visit_braila/utils/style.dart';
@@ -113,10 +111,10 @@ class HomeView extends StatelessWidget {
                                   height: Responsive.safeBlockHorizontal * 70,
                                   child: FutureBuilder<List<Sight>>(
                                     future: sightController.fetchTrending(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
+                                    builder: (context, trending) {
+                                      if (trending.hasData) {
                                         return ListView.separated(
-                                          itemCount: snapshot.data!.length,
+                                          itemCount: trending.data!.length,
                                           clipBehavior: Clip.none,
                                           scrollDirection: Axis.horizontal,
                                           separatorBuilder: (context, index) {
@@ -124,14 +122,10 @@ class HomeView extends StatelessWidget {
                                           },
                                           itemBuilder: (context, index) {
                                             return TrendingSightCard(
-                                              sight: snapshot.data![index],
+                                              sight: trending.data![index],
                                             );
                                           },
                                         );
-                                      } else if (snapshot.error is SocketException) {
-                                        showErrorDialog(context, false);
-                                      } else if (snapshot.error is HttpException) {
-                                        showErrorDialog(context, true);
                                       }
 
                                       return ListView.separated(

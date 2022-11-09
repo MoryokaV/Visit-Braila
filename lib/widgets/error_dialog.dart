@@ -4,9 +4,7 @@ import 'dart:io' show Platform;
 
 void showErrorDialog(BuildContext context, bool isServerError) {
   const String title = "Eroare";
-  final String content = isServerError
-      ? "Auch! Serverul a întâmpinat o problemă. Reîncearcă mai târziu."
-      : "Oops! Conexiunea la internet se pare că este offline. Mai încearcă.";
+  const String content = "Auch! Serverul a întâmpinat o problemă. Reîncearcă mai târziu.";
 
   Future.delayed(Duration.zero, () {
     if (Platform.isIOS) {
@@ -14,7 +12,7 @@ void showErrorDialog(BuildContext context, bool isServerError) {
         context: context,
         builder: (context) => CupertinoAlertDialog(
           title: const Text(title),
-          content: Text(content),
+          content: const Text(content),
           actions: [
             CupertinoDialogAction(
               child: const Text("Ok"),
@@ -28,7 +26,7 @@ void showErrorDialog(BuildContext context, bool isServerError) {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text(title),
-          content: Text(content),
+          content: const Text(content),
           actions: [
             TextButton(
               child: const Text("Ok"),
