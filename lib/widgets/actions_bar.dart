@@ -25,7 +25,7 @@ class ActionsBar extends StatelessWidget {
         top: 14,
         left: Responsive.screenWidth / 8,
         right: Responsive.screenWidth / 8,
-        bottom: Responsive.safePaddingBottom,
+        bottom: Responsive.safePaddingBottom != 0 ? Responsive.safePaddingBottom : 14,
       ),
       decoration: const BoxDecoration(
         color: Colors.white,
