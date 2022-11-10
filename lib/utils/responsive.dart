@@ -10,6 +10,7 @@ class Responsive {
   static late double safeBlockVertical;
 
   static late double safePaddingTop;
+  static late double safePaddingBottom;
 
   void init() {
     _mediaQueryData = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
@@ -21,5 +22,6 @@ class Responsive {
     safeBlockVertical = (screenHeight - (_mediaQueryData.padding.top + _mediaQueryData.padding.bottom)) / 100;
 
     safePaddingTop = _mediaQueryData.padding.top;
+    safePaddingBottom = _mediaQueryData.padding.bottom;
   }
 }

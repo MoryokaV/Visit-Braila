@@ -36,13 +36,9 @@ class _TourViewState extends State<TourView> {
 
     await Future.delayed(const Duration(milliseconds: 300));
 
-    try {
-      Sight sight = await sightController.findSight(id);
+    Sight? sight = await sightController.findSight(id);
 
-      navigateToSightView(sight);
-    } on HttpException {
-      navigateNotFoundView();
-    }
+    sight != null ? navigateToSightView(sight) : navigateNotFoundView();
 
     setState(() => isLoading = false);
   }

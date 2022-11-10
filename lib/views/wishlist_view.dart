@@ -29,11 +29,20 @@ class _WishlistViewState extends State<WishlistView> {
   bool isLoadingTours = true;
 
   void fetchSights() async {
-    List<String> ids = Provider.of<Wishlist>(context, listen: false).items['sights']!.toList();
+    Wishlist wishlist = Provider.of<Wishlist>(context, listen: false);
+    List<String> ids = wishlist.items['sights']!.toList();
 
-    sights = await Future.wait(
+    (await Future.wait(
       ids.map((id) => sightController.findSight(id)),
-    );
+    ))
+        .asMap()
+        .forEach((index, sight) {
+      if (sight == null) {
+        wishlist.toggleSightWishState(ids.elementAt(index));
+      } else {
+        sights.add(sight);
+      }
+    });
 
     setState(() {
       isLoadingSights = false;
@@ -41,11 +50,20 @@ class _WishlistViewState extends State<WishlistView> {
   }
 
   void fetchTours() async {
-    List<String> ids = Provider.of<Wishlist>(context, listen: false).items['tours']!.toList();
+    Wishlist wishlist = Provider.of<Wishlist>(context, listen: false);
+    List<String> ids = wishlist.items['tours']!.toList();
 
-    tours = await Future.wait(
+    (await Future.wait(
       ids.map((id) => tourController.findTour(id)),
-    );
+    ))
+        .asMap()
+        .forEach((index, tour) {
+      if (tour == null) {
+        wishlist.toggleTourWishState(ids.elementAt(index));
+      } else {
+        tours.add(tour);
+      }
+    });
 
     setState(() {
       isLoadingTours = false;

@@ -21,7 +21,7 @@ class SightController {
     }
   }
 
-  Future<Sight> findSight(String id) async {
+  Future<Sight?> findSight(String id) async {
     try {
       final response = await http.get(Uri.parse("$apiUrl/findSight/$id"));
 
@@ -31,7 +31,7 @@ class SightController {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
     } on HttpException {
-      rethrow;
+      return null;
     }
   }
 
@@ -42,9 +42,18 @@ class SightController {
       if (response.statusCode == 200) {
         List trending = jsonDecode(response.body);
 
-        return await Future.wait(
+        List<Object?> data = await Future.wait(
           trending.map((item) => findSight(item['sight_id'])),
         );
+
+        List<Sight> sights = [];
+        for (var entry in data) {
+          if (entry != null) {
+            sights.add(entry as Sight);
+          }
+        }
+
+        return sights;
       } else {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }

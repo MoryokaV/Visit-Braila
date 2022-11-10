@@ -21,7 +21,7 @@ class TourController {
     }
   }
 
-  Future<Tour> findTour(String id) async {
+  Future<Tour?> findTour(String id) async {
     try {
       final response = await http.get(Uri.parse("$apiUrl/findTour/$id"));
 
@@ -31,7 +31,7 @@ class TourController {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
     } on HttpException {
-      rethrow;
+      return null;
     }
   }
 }

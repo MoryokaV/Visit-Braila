@@ -21,9 +21,11 @@ class ActionsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: 14,
-        horizontal: Responsive.screenWidth / 8,
+      padding: EdgeInsets.only(
+        top: 14,
+        left: Responsive.screenWidth / 8,
+        right: Responsive.screenWidth / 8,
+        bottom: Responsive.safePaddingBottom,
       ),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -43,7 +45,7 @@ class ActionsBar extends StatelessWidget {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                   backgroundColor: kPrimaryColor,
                   foregroundColor: Colors.white,
                   textStyle: Theme.of(context).textTheme.button,
