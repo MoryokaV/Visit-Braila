@@ -6,7 +6,7 @@ import 'package:visit_braila/services/navigation_service.dart';
 class ConnectionService extends ChangeNotifier {
   static late bool initialConnectionStatus;
   late bool isOnline;
-  bool block = false;
+  bool popup = false;
 
   ConnectionService() {
     isOnline = initialConnectionStatus;
@@ -15,11 +15,21 @@ class ConnectionService extends ChangeNotifier {
       isOnline = checkConnectivity(result);
       notifyListeners();
 
-      if (!isOnline && !block) {
+      if (!isOnline && !popup) {
         NavigationService.navigateTo('/nointernet');
-        block = true;
+        enablePopup();
       }
     });
+  }
+
+  void enablePopup() {
+    popup = true;
+    notifyListeners();
+  }
+
+  void disablePopup() {
+    popup = false;
+    notifyListeners();
   }
 
   static Future<void> init() async {

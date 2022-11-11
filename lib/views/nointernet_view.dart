@@ -72,7 +72,12 @@ class NoInternetView extends StatelessWidget {
                         return const SizedBox();
                       }
                       return TextButton(
-                        onPressed: connection.isOnline ? () => Navigator.pop(context) : null,
+                        onPressed: connection.isOnline
+                            ? () {
+                                connection.disablePopup();
+                                Navigator.pop(context);
+                              }
+                            : null,
                         child: const Text(
                           "Înapoi",
                           style: TextStyle(
