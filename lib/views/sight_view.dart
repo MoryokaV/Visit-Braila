@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/actions_bar.dart';
@@ -128,25 +130,29 @@ class SightView extends StatelessWidget {
                             const SizedBox(
                               height: 8,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/map-pin.svg",
-                                  width: 24,
-                                  color: kPrimaryColor,
-                                ),
-                                const SizedBox(
-                                  width: 6,
-                                ),
-                                const Text(
-                                  "N/A",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
+                            Consumer<LocationService>(
+                              builder: (context, location, _) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/map-pin.svg",
+                                      width: 22,
+                                      color: kPrimaryColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Text(
+                                      "${location.getDistance(45.26910997303915, 27.953397264369354)} depărtare",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                             if (sight.tags.isNotEmpty)
                               Padding(

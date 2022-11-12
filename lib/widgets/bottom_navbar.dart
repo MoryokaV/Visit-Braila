@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/views/home_view.dart';
 import 'package:visit_braila/views/wishlist_view.dart';

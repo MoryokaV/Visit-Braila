@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
+import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/search_all.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
@@ -447,25 +448,29 @@ class TrendingSightCard extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/map-pin.svg",
-                        width: 20,
-                        color: kDisabledIconColor,
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      const Text(
-                        "N/A",
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                  Consumer<LocationService>(
+                    builder: (context, location, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/icons/map-pin.svg",
+                            width: 20,
+                            color: kDisabledIconColor,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Text(
+                            location.getDistance(45.26910997303915, 27.953397264369354),
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/services/localstorage_service.dart';
+import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/services/navigation_service.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
@@ -17,6 +18,8 @@ void main() async {
 
   await ConnectionService.init();
 
+  await LocationService.init();
+
   runApp(const MyApp());
 }
 
@@ -29,6 +32,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => Wishlist()),
         ChangeNotifierProvider(create: (_) => ConnectionService()),
+        ChangeNotifierProvider(create: (_) => LocationService()),
       ],
       child: MaterialApp(
         title: 'Visit Brăila',

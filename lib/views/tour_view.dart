@@ -8,7 +8,7 @@ import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/actions_bar.dart';
 import 'package:visit_braila/widgets/html_description.dart';
-import 'dart:io' show HttpException, Platform;
+import 'dart:io' show Platform;
 
 import 'package:visit_braila/widgets/loading_spinner.dart';
 
