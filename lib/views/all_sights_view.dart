@@ -305,7 +305,7 @@ class SightCard extends StatelessWidget {
                       style: const TextStyle(
                         color: kBlackColor,
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 17,
                       ),
                     ),
                     const SizedBox(
@@ -328,7 +328,7 @@ class SightCard extends StatelessWidget {
                             Text(
                               location.getDistance(45.26910997303915, 27.953397264369354),
                               style: const TextStyle(
-                                fontSize: 12,
+                                fontSize: 14,
                               ),
                             ),
                           ],

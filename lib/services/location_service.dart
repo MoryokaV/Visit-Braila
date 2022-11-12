@@ -64,7 +64,7 @@ class LocationService extends ChangeNotifier {
     try {
       await checkPermission();
 
-      initialPosition = await Geolocator.getCurrentPosition();
+      initialPosition = await Geolocator.getLastKnownPosition();
     } catch (_) {
       initialPosition = null;
     }

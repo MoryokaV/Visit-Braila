@@ -147,7 +147,7 @@ class SightView extends StatelessWidget {
                                     Text(
                                       "${location.getDistance(45.26910997303915, 27.953397264369354)} depărtare",
                                       style: const TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ],

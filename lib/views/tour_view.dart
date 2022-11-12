@@ -179,7 +179,7 @@ class _TourViewState extends State<TourView> {
                                       const Text(
                                         "N/A lungime",
                                         style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ],
