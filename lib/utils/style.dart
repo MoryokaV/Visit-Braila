@@ -15,10 +15,10 @@ List<Color> fadeEffect = [
 ];
 
 const BoxShadow shadowSm = BoxShadow(
-  color: Colors.black26,
+  color: Colors.black12,
   offset: Offset(0, 1),
-  blurRadius: 3,
-  spreadRadius: 1.5,
+  blurRadius: 3.5,
+  spreadRadius: 3,
 );
 
 const BoxShadow bottomShadowMd = BoxShadow(
@@ -38,7 +38,8 @@ const BoxShadow globalShadow = BoxShadow(
 const BoxShadow topShadow = BoxShadow(
   color: Colors.black12,
   offset: Offset(0, -1.5),
-  blurRadius: 2,
+  blurRadius: 4,
+  spreadRadius: 0.5,
 );
 
 const String labelFont = "Inter";

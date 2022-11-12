@@ -74,7 +74,7 @@ class HomeView extends StatelessWidget {
                                     ],
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontFamily: "Merriweather",
+                                      fontFamily: bodyFont,
                                       height: 1.4,
                                     ),
                                   ),
