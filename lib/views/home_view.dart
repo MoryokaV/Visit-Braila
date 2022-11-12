@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +10,7 @@ import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/search_all.dart';
+import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
 import 'package:visit_braila/utils/style.dart';
@@ -127,6 +130,8 @@ class HomeView extends StatelessWidget {
                                             );
                                           },
                                         );
+                                      } else if (trending.hasError && trending.error is HttpException) {
+                                        showErrorDialog(context);
                                       }
 
                                       return ListView.separated(

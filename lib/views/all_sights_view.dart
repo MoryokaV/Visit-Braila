@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
@@ -9,6 +11,7 @@ import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 import 'package:visit_braila/widgets/search_list_field.dart';
@@ -41,11 +44,15 @@ class _AllSightsViewState extends State<AllSightsView> {
   }
 
   void fetchData() async {
-    tags.add("Toate");
-    tags.addAll(await sightController.fetchAllTags());
+    try {
+      tags.add("Toate");
+      tags.addAll(await sightController.fetchAllTags());
 
-    sights = await sightController.fetchSights();
-    filteredData = sights;
+      sights = await sightController.fetchSights();
+      filteredData = sights;
+    } on HttpException {
+      showErrorDialog(context);
+    }
 
     setState(() {
       isLoading = false;

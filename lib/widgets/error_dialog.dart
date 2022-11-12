@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
-void showErrorDialog(BuildContext context, bool isServerError) {
+void showErrorDialog(BuildContext context) {
   const String title = "Eroare";
   const String content = "Auch! Serverul a întâmpinat o problemă. Reîncearcă mai târziu.";
 

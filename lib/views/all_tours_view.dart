@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 import 'package:visit_braila/widgets/search_list_field.dart';
 
@@ -27,10 +30,12 @@ class _AllToursViewState extends State<AllToursView> {
   }
 
   void fetchData() async {
-    tours = await tourController.fetchTours();
-    filteredData = tours;
-    
-    //TODO: what if it has error
+    try {
+      tours = await tourController.fetchTours();
+      filteredData = tours;
+    } on HttpException {
+      showErrorDialog(context);
+    }
 
     setState(() {
       isLoading = false;
