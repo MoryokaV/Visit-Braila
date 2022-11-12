@@ -7,6 +7,8 @@ class LocationService extends ChangeNotifier {
   Position? currentPosition;
 
   static bool isPermissionEnabled = false;
+  static bool initialServiceEnabled = false;
+
   StreamSubscription<Position>? positionStream;
 
   final LocationSettings locationSettings = const LocationSettings(
@@ -21,18 +23,17 @@ class LocationService extends ChangeNotifier {
       return;
     }
 
+    if (initialServiceEnabled) {
+      listenLocationService();
+    }
+
     Geolocator.getServiceStatusStream().listen((ServiceStatus status) {
       if (status == ServiceStatus.enabled) {
-        positionStream ??= Geolocator.getPositionStream(locationSettings: locationSettings).listen(
-          (Position? position) {
-            currentPosition = position;
-            notifyListeners();
-          },
-          onError: handleError,
-          cancelOnError: false,
-        );
+        listenLocationService();
       } else {
-        positionStream = null;
+        if (positionStream != null) {
+          positionStream!.cancel();
+        }
 
         currentPosition = null;
         notifyListeners();
@@ -40,7 +41,18 @@ class LocationService extends ChangeNotifier {
     });
   }
 
-  void handleError(Object object, StackTrace st) {
+  void listenLocationService() {
+    positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+      (Position? position) {
+        currentPosition = position;
+        notifyListeners();
+      },
+      onError: handleError,
+      cancelOnError: false,
+    );
+  }
+
+  void handleError(Object _, StackTrace __) {
     currentPosition = null;
     notifyListeners();
   }
@@ -63,10 +75,19 @@ class LocationService extends ChangeNotifier {
   static Future<void> init() async {
     try {
       await checkPermission();
+      await checkServiceStatus();
 
       initialPosition = await Geolocator.getLastKnownPosition();
     } catch (_) {
       initialPosition = null;
+    }
+  }
+
+  static Future<void> checkServiceStatus() async {
+    initialServiceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!initialServiceEnabled) {
+      return Future.error('Location service is disabled');
     }
   }
 
