@@ -113,10 +113,34 @@ class HomeView extends StatelessWidget {
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: SizedBox(
                                   height: Responsive.safeBlockHorizontal * 70,
+                                  width: double.infinity,
                                   child: FutureBuilder<List<Sight>>(
                                     future: sightController.fetchTrending(),
                                     builder: (context, trending) {
                                       if (trending.hasData) {
+                                        if (trending.data!.isEmpty) {
+                                          return Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/icons/trending-up.svg",
+                                                width: 50,
+                                                color: kPrimaryColor,
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Nimic în tendințe astăzi",
+                                                textAlign: TextAlign.center,
+                                                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                                      color: kDimmedForegroundColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          );
+                                        }
+
                                         return ListView.separated(
                                           itemCount: trending.data!.length,
                                           clipBehavior: Clip.none,
