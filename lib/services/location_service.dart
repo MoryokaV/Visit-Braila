@@ -68,7 +68,7 @@ class LocationService extends ChangeNotifier {
     if (distanceInMeters > 1000) {
       return "${(distanceInMeters / 1000).toStringAsFixed(1)}km";
     } else {
-      return "${(distanceInMeters / 10).toStringAsFixed(0)}m";
+      return "${(distanceInMeters / 10).toStringAsFixed(0)}0m";
     }
   }
 

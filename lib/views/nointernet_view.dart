@@ -6,11 +6,7 @@ import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 
 class NoInternetView extends StatelessWidget {
-  final bool start;
-  const NoInternetView({
-    super.key,
-    required this.start,
-  });
+  const NoInternetView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,22 +60,17 @@ class NoInternetView extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: Consumer<ConnectionService>(
                     builder: (context, connection, _) {
-                      if (connection.isOnline && start) {
-                        Navigator.pushNamed(context, '/');
-                      }
-
-                      if (start) {
-                        return const SizedBox();
-                      }
                       return TextButton(
                         onPressed: connection.isOnline
                             ? () {
-                                connection.disablePopup();
-                                Navigator.pop(context);
+                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  connection.popup = false;
+                                  Navigator.of(context).pushReplacementNamed('/');
+                                });
                               }
                             : null,
                         child: const Text(
-                          "Înapoi",
+                          "Reîncearcă",
                           style: TextStyle(
                             fontSize: 18,
                           ),

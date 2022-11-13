@@ -20,9 +20,9 @@ class PageRouter {
       case '/':
         return PageRouteBuilder(
           pageBuilder: (context, _, __) {
-            final connection = Provider.of<ConnectionService>(context);
-            if (!connection.isOnline) {
-              return const NoInternetView(start: true);
+            final connection = Provider.of<ConnectionService>(context, listen: false);
+            if(!connection.isOnline){
+              return const NoInternetView();
             }
 
             return const BottomNavbar();
@@ -89,7 +89,7 @@ class PageRouter {
       case '/nointernet':
         return PageRouteBuilder(
           pageBuilder: (context, _, __) {
-            return const NoInternetView(start: false);
+            return const NoInternetView();
           },
         );
       default:

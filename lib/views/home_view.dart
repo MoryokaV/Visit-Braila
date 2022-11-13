@@ -492,7 +492,7 @@ class TrendingSightCard extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            location.getDistance(45.26910997303915, 27.953397264369354),
+                            location.getDistance(45.268200283564916, 27.952353505723423),
                             style: const TextStyle(
                               fontSize: 12,
                             ),

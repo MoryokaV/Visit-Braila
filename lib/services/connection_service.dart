@@ -1,9 +1,11 @@
 import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/services/navigation_service.dart';
 
 class ConnectionService extends ChangeNotifier {
+  final Duration interval = const Duration(seconds: 3);
+  
   static late bool initialConnectionStatus;
   late bool isOnline;
   bool popup = false;
@@ -11,36 +13,28 @@ class ConnectionService extends ChangeNotifier {
   ConnectionService() {
     isOnline = initialConnectionStatus;
 
-    Connectivity().onConnectivityChanged.listen((result) {
-      isOnline = checkConnectivity(result);
-      notifyListeners();
+    if (!isOnline) {
+      popup = true;
+    }
 
-      if (!isOnline && !popup) {
-        NavigationService.navigateTo('/nointernet');
-        enablePopup();
+    InternetConnectionChecker.createInstance(
+      checkInterval: interval,
+      checkTimeout: interval,
+    ).onStatusChange.listen((status) {
+      if (status == InternetConnectionStatus.connected) {
+        isOnline = true;
+      } else {
+        isOnline = false;
+        if (!popup) {
+          NavigationService.navigateTo('/nointernet');
+        }
       }
+
+      notifyListeners();
     });
   }
 
-  void enablePopup() {
-    popup = true;
-    notifyListeners();
-  }
-
-  void disablePopup() {
-    popup = false;
-    notifyListeners();
-  }
-
   static Future<void> init() async {
-    initialConnectionStatus = checkConnectivity(await Connectivity().checkConnectivity());
-  }
-
-  static bool checkConnectivity(ConnectivityResult connectivity) {
-    if (connectivity != ConnectivityResult.mobile && connectivity != ConnectivityResult.wifi) {
-      return false;
-    }
-
-    return true;
+    initialConnectionStatus = await InternetConnectionChecker().hasConnection;
   }
 }
