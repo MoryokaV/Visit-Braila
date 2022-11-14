@@ -20,7 +20,7 @@ export const fetchSights = async () => {
           <td>${sight._id}</td>
           <td>${sight.name}</td>
           <td>${sight.tags}</td>
-          <td><a href=${sight.position} target="_blank" class="link">${sight.position}</a></td>
+          <td><a href=${sight.external_link} target="_blank" class="link">${sight.external_link}</a></td>
           <td id=${sight._id}>
             <div class="group">
               <button class="btn action-edit-sight"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>
@@ -46,7 +46,7 @@ export const fetchTours = async () => {
           <td>${tour._id}</td>
           <td>${tour.name}</td>
           <td>${tour.stages}</td>
-          <td><a href=${tour.route} target="_blank" class="link">${tour.route}</a></td>
+          <td><a href=${tour.external_link} target="_blank" class="link">${tour.external_link}</a></td>
           <td id=${tour._id}>
             <div class="group">
               <button class="btn action-edit-tour"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>

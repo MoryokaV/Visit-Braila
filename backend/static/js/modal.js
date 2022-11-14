@@ -142,8 +142,8 @@ export const openEditSightModal = async (id) => {
 
   $("#sight-primary-image").val(sight.primary_image);
 
-  // POSITION
-  $("#sight-position").val(sight.position)
+  // EXTERNAL LINK
+  $("#sight-external-link").val(sight.external_link)
 }
 
 export const openEditTourModal = async (id) => {
@@ -170,8 +170,8 @@ export const openEditTourModal = async (id) => {
 
   $("#tour-primary-image").val(tour.primary_image);
 
-  // ROUTE 
-  $("#tour-route").val(tour.route);
+  // EXTERNAL LINK 
+  $("#tour-external-link").val(tour.external_link);
 }
 
 $(document).ready(async function() {
@@ -235,7 +235,7 @@ $(document).ready(async function() {
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
     sight.primary_image = parseInt($("#sight-primary-image").val());
-    sight.position = $("#sight-position").val();
+    sight.external_link = $("#sight-external-link").val();
 
     if (formData.getAll("files[]").length > 0)
       await $.ajax({
@@ -331,7 +331,7 @@ $(document).ready(async function() {
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = parseInt($("#tour-primary-image").val());
-    tour.route = $("#tour-route").val();
+    tour.external_link = $("#tour-external-link").val();
 
     if (formData.getAll("files[]").length > 0)
       await $.ajax({

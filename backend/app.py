@@ -87,7 +87,7 @@ def about():
 def insertSight():
     sight = request.get_json()
 
-    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']})
+    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "external_link": sight['external_link']})
     
     return make_response("New entry has been inserted", 200)
 
@@ -138,14 +138,14 @@ def editSight():
     deleteImages(data['images_to_delete'])
     sight = data['sight']
 
-    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
+    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "external_link": sight['external_link']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/insertTour", methods=["POST"])
 def insertTour():
     tour = request.get_json()
     
-    db.tours.insert_one({"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']})
+    db.tours.insert_one({"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "external_link": tour['external_link']})
     return make_response("New entry has been inserted", 200) 
 
 @app.route("/api/fetchTours")
@@ -177,7 +177,7 @@ def editTour():
     deleteImages(data['images_to_delete'])
     tour = data['tour'] 
 
-    db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "route": tour['route']}})
+    db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "external_link": tour['external_link']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/fetchTags")
@@ -200,7 +200,7 @@ def deleteTag(name):
     for sight in sights:
         if name in sight['tags']:
             sight['tags'].remove(name)
-            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "position": sight['position']}})
+            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "external_link": sight['external_link']}})
          
     db.tags.delete_one({"name": name})
 

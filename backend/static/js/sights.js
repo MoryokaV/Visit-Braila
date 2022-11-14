@@ -13,7 +13,7 @@ let sight = {
   description: ``,
   images: [],
   primary_image: 1,
-  position: "",
+  external_link: "",
 };
 
 const appendActiveTags = () => {
@@ -195,7 +195,7 @@ $(document).ready(async function() {
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
     sight.primary_image = parseInt($("#sight-primary-image").val());
-    sight.position = $("#sight-position").val();
+    sight.external_link = $("#sight-external-link").val();
 
     await $.ajax({
       type: "POST",

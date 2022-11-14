@@ -17,7 +17,7 @@ let tour = {
   description: ``,
   images: [],
   primary_image: 1,
-  route: "",
+  external_link: "",
 };
 
 const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
@@ -233,7 +233,7 @@ $(document).ready(async function() {
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = parseInt($("#tour-primary-image").val());
-    tour.route = $("#tour-route").val();
+    tour.external_link = $("#tour-external-link").val();
 
     await $.ajax({
       type: "POST",
