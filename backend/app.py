@@ -87,7 +87,7 @@ def about():
 def insertSight():
     sight = request.get_json()
 
-    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "external_link": sight['external_link']})
+    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": sight['latitude'], "longitude": sight['longitude'], "external_link": sight['external_link']})
     
     return make_response("New entry has been inserted", 200)
 
@@ -112,11 +112,12 @@ def deleteSight(_id):
             trending_item_index = item['index']
             break
     
-    for item in trending:
-        if item['index'] > trending_item_index:
-            db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"sight_id": item['sight_id'], "index": item['index'] - 1}})
-          
-    db.trending.delete_one({"_id": ObjectId(trending_item_id)})
+    if(trending_item_id is not ""):
+        for item in trending:
+            if item['index'] > trending_item_index:
+                db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"sight_id": item['sight_id'], "index": item['index'] - 1}})
+              
+        db.trending.delete_one({"_id": ObjectId(trending_item_id)})
 
     # delete sight
     db.sights.delete_one({"_id": ObjectId(_id)})
@@ -138,7 +139,7 @@ def editSight():
     deleteImages(data['images_to_delete'])
     sight = data['sight']
 
-    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "external_link": sight['external_link']}})
+    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": sight['latitude'], "longitude": sight['longitude'], "external_link": sight['external_link']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/insertTour", methods=["POST"])
@@ -200,7 +201,7 @@ def deleteTag(name):
     for sight in sights:
         if name in sight['tags']:
             sight['tags'].remove(name)
-            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "external_link": sight['external_link']}})
+            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": sight['latitude'], "longitude": sight['longitude'], "external_link": sight['external_link']}})
          
     db.tags.delete_one({"name": name})
 

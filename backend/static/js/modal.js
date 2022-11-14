@@ -9,6 +9,10 @@ import {
   addressRegExpTitle,
   idRegExp,
   idRegExpTitle,
+  latitudeRegExp,
+  latitudeRegExpTitle,
+  longitudeRegExp,
+  longitudeRegExpTitle
 } from './utils.js';
 
 let sight = {};
@@ -142,6 +146,10 @@ export const openEditSightModal = async (id) => {
 
   $("#sight-primary-image").val(sight.primary_image);
 
+  // COORDINATES
+  $("#sight-modal #sight-latitude").val(sight.latitude);
+  $("#sight-modal #sight-longitude").val(sight.longitude);
+
   // EXTERNAL LINK
   $("#sight-external-link").val(sight.external_link)
 }
@@ -229,6 +237,10 @@ $(document).ready(async function() {
     removeImage($(this), "sight");
   });
 
+  // SIGHT COORDINATES
+  $("#sight-latitude").attr("pattern", latitudeRegExp).attr("title", latitudeRegExpTitle);
+  $("#sight-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
+
   // SIGHT SUBMIT
   $("#sight-modal form").submit(async function(e) {
     e.preventDefault();
@@ -238,6 +250,8 @@ $(document).ready(async function() {
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
     sight.primary_image = parseInt($("#sight-primary-image").val());
+    sight.latitude = parseFloat($("#sight-latitude").val());
+    sight.longitude = parseFloat($("#sight-longitude").val());
     sight.external_link = $("#sight-external-link").val();
 
     if (formData.getAll("files[]").length > 0)

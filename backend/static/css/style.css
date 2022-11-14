@@ -471,6 +471,12 @@ tbody tr:hover {
     gap: 1.2rem;
 }
 
+.grid-2-inputs {
+    column-gap: 2rem; 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); 
+}
+
 /* #### LIVE PREVIEW #### */
 
 .preview {

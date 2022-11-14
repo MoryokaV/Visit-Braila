@@ -2,7 +2,11 @@ import {
   getFilename,
   startLoadingAnimation,
   nameRegExp,
-  nameRegExpTitle
+  nameRegExpTitle,
+  longitudeRegExp,
+  latitudeRegExp,
+  latitudeRegExpTitle,
+  longitudeRegExpTitle
 } from './utils.js';
 
 let quill = undefined;
@@ -13,6 +17,8 @@ let sight = {
   description: ``,
   images: [],
   primary_image: 1,
+  latitude: "",
+  longitude: "",
   external_link: "",
 };
 
@@ -186,6 +192,11 @@ $(document).ready(async function() {
     $("#preview-primary-image").prop("src", $("#preview-images img").eq($(this).val() - 1).prop("src"));
   });
 
+  // COORDINATES
+  $("#sight-latitude").attr("pattern", latitudeRegExp).attr("title", latitudeRegExpTitle);
+  $("#sight-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
+
+
   // SUBMIT
   $("#insert-sight-form").submit(async function(e) {
     e.preventDefault();
@@ -195,6 +206,8 @@ $(document).ready(async function() {
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
     sight.primary_image = parseInt($("#sight-primary-image").val());
+    sight.latitude = parseFloat($("#sight-latitude").val());
+    sight.longitude = parseFloat($("#sight-longitude").val());
     sight.external_link = $("#sight-external-link").val();
 
     await $.ajax({
