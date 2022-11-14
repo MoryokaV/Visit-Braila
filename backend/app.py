@@ -101,6 +101,24 @@ def deleteSight(_id):
     images = json.loads(findSight(_id))['images']
     deleteImages(images)
 
+    # delete corresponding trending item
+    trending = json.loads(fetchTrendingItems())
+    trending_item_id = ""
+    trending_item_index = 0
+
+    for item in trending:
+        if _id in item['sight_id']:    
+            trending_item_id = item['_id']
+            trending_item_index = item['index']
+            break
+    
+    for item in trending:
+        if item['index'] > trending_item_index:
+            db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"sight_id": item['sight_id'], "index": item['index'] - 1}})
+          
+    db.trending.delete_one({"_id": ObjectId(trending_item_id)})
+
+    # delete sight
     db.sights.delete_one({"_id": ObjectId(_id)})
     return make_response("Successfully deleted document", 200)
 
