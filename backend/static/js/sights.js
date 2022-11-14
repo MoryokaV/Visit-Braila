@@ -17,8 +17,13 @@ let sight = {
 };
 
 const appendActiveTags = () => {
-  $("#active-tags").empty()
-  sight.tags.map((tag) => $("#active-tags").append(`<p class="tag-item">${tag}</p>`));
+  $("#active-tags").empty();
+  $("#preview-tags").empty();
+
+  sight.tags.map((tag, index) => {
+    $("#active-tags").append(`<p class="tag-item">${tag}</p>`);
+    $("#preview-tags").append(`<p>${tag}</p>${index != sight.tags.length - 1 ? ", " : " "}`)
+  });
 }
 
 const appendImageElement = (image) => {
