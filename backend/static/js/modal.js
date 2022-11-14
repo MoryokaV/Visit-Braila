@@ -170,6 +170,9 @@ export const openEditTourModal = async (id) => {
 
   $("#tour-primary-image").val(tour.primary_image);
 
+  // LENGTH
+  $("#tour-modal #tour-length").val(tour.length);
+
   // EXTERNAL LINK 
   $("#tour-external-link").val(tour.external_link);
 }
@@ -331,6 +334,7 @@ $(document).ready(async function() {
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = parseInt($("#tour-primary-image").val());
+    tour.length = parseFloat($("#tour-length").val());
     tour.external_link = $("#tour-external-link").val();
 
     if (formData.getAll("files[]").length > 0)

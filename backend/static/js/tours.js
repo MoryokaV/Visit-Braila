@@ -17,6 +17,7 @@ let tour = {
   description: ``,
   images: [],
   primary_image: 1,
+  length: 0,
   external_link: "",
 };
 
@@ -233,6 +234,7 @@ $(document).ready(async function() {
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = parseInt($("#tour-primary-image").val());
+    tour.length = parseFloat($("#tour-length").val());
     tour.external_link = $("#tour-external-link").val();
 
     await $.ajax({
