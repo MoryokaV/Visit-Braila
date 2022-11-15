@@ -237,23 +237,32 @@ $(document).ready(async function() {
     tour.length = parseFloat($("#tour-length").val());
     tour.external_link = $("#tour-external-link").val();
 
-    await $.ajax({
-      type: "POST",
-      url: "/api/uploadImages/tours",
-      contentType: false,
-      data: formData,
-      cache: false,
-      processData: false,
-    });
+    try {
+      await $.ajax({
+        type: "POST",
+        url: "/api/uploadImages/tours",
+        contentType: false,
+        data: formData,
+        cache: false,
+        processData: false,
+        statusCode: {
+          413: function() {
+            alert("Files size should be less than 15MB")
+          }
+        },
+      });
 
-    await $.ajax({
-      url: "/api/insertTour",
-      type: "POST",
-      data: JSON.stringify(tour),
-      processData: false,
-      contentType: "application/json; charset=UTF-8",
-    });
+      await $.ajax({
+        url: "/api/insertTour",
+        type: "POST",
+        data: JSON.stringify(tour),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
 
-    location.reload();
+      location.reload();
+    } catch {
+      endLoadingAnimation($(this));
+    }
   });
 });

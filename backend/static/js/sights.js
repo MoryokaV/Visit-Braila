@@ -6,7 +6,8 @@ import {
   longitudeRegExp,
   latitudeRegExp,
   latitudeRegExpTitle,
-  longitudeRegExpTitle
+  longitudeRegExpTitle,
+  endLoadingAnimation
 } from './utils.js';
 
 let quill = undefined;
@@ -210,23 +211,32 @@ $(document).ready(async function() {
     sight.longitude = parseFloat($("#sight-longitude").val());
     sight.external_link = $("#sight-external-link").val();
 
-    await $.ajax({
-      type: "POST",
-      url: "/api/uploadImages/sights",
-      contentType: false,
-      data: formData,
-      cache: false,
-      processData: false,
-    });
+    try {
+      await $.ajax({
+        type: "POST",
+        url: "/api/uploadImages/sights",
+        contentType: false,
+        data: formData,
+        cache: false,
+        processData: false,
+        statusCode: {
+          413: function() {
+            alert("Files size should be less than 15MB")
+          }
+        },
+      });
 
-    await $.ajax({
-      url: "/api/insertSight",
-      type: "POST",
-      data: JSON.stringify(sight),
-      processData: false,
-      contentType: "application/json; charse=UTF-8",
-    });
+      await $.ajax({
+        url: "/api/insertSight",
+        type: "POST",
+        data: JSON.stringify(sight),
+        processData: false,
+        contentType: "application/json; charse=UTF-8",
+      });
 
-    location.reload();
+      location.reload();
+    } catch {
+      endLoadingAnimation($(this));
+    }
   });
 });

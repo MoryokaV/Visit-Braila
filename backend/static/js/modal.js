@@ -254,29 +254,38 @@ $(document).ready(async function() {
     sight.longitude = parseFloat($("#sight-longitude").val());
     sight.external_link = $("#sight-external-link").val();
 
-    if (formData.getAll("files[]").length > 0)
+    try {
+      if (formData.getAll("files[]").length > 0)
+        await $.ajax({
+          type: "POST",
+          url: "/api/uploadImages/sights",
+          contentType: false,
+          data: formData,
+          cache: false,
+          processData: false,
+          statusCode: {
+            413: function() {
+              alert("Files size should be less than 15MB")
+            }
+          },
+        });
+
+      sight.images = [...current_images];
+
       await $.ajax({
-        type: "POST",
-        url: "/api/uploadImages/sights",
-        contentType: false,
-        data: formData,
-        cache: false,
+        url: "/api/editSight",
+        type: "PUT",
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "sight": sight }),
         processData: false,
+        contentType: "application/json; charset=UTF-8",
       });
 
-    sight.images = [...current_images];
-
-    await $.ajax({
-      url: "/api/editSight",
-      type: "PUT",
-      data: JSON.stringify({ "images_to_delete": images_to_delete, "sight": sight }),
-      processData: false,
-      contentType: "application/json; charset=UTF-8",
-    });
-
-    await fetchSights();
-    closeModal();
-    endLoadingAnimation($(this));
+      await fetchSights();
+      closeModal();
+      endLoadingAnimation($(this));
+    } catch {
+      endLoadingAnimation($(this));
+    }
   });
 
   // TOUR NAME
@@ -351,28 +360,37 @@ $(document).ready(async function() {
     tour.length = parseFloat($("#tour-length").val());
     tour.external_link = $("#tour-external-link").val();
 
-    if (formData.getAll("files[]").length > 0)
+    try {
+      if (formData.getAll("files[]").length > 0)
+        await $.ajax({
+          type: "POST",
+          url: "/api/uploadImages/tours",
+          contentType: false,
+          data: formData,
+          cache: false,
+          processData: false,
+          statusCode: {
+            413: function() {
+              alert("Files size should be less than 15MB")
+            }
+          },
+        });
+
+      tour.images = [...current_images];
+
       await $.ajax({
-        type: "POST",
-        url: "/api/uploadImages/tours",
-        contentType: false,
-        data: formData,
-        cache: false,
+        url: "/api/editTour",
+        type: "PUT",
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "tour": tour }),
         processData: false,
+        contentType: "application/json; charset=UTF-8",
       });
 
-    tour.images = [...current_images];
-
-    await $.ajax({
-      url: "/api/editTour",
-      type: "PUT",
-      data: JSON.stringify({ "images_to_delete": images_to_delete, "tour": tour }),
-      processData: false,
-      contentType: "application/json; charset=UTF-8",
-    });
-
-    await fetchTours();
-    closeModal();
-    endLoadingAnimation($(this));
+      await fetchTours();
+      closeModal();
+      endLoadingAnimation($(this));
+    } catch {
+      endLoadingAnimation($(this));
+    }
   });
 });
