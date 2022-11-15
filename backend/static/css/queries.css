@@ -1,7 +1,7 @@
 /* BELOW 1344px */
-@media (max-width:  84em) {
+@media (max-width:  90em) {
 	.modal-content {
-        width: 50%;
+        width: 60%;
 	}
 }
 
@@ -29,9 +29,9 @@
 		display: block;
 	}
 
-    .modal-content {
-        width: 90%;  
-    }   
+  .modal-content {
+      width: 90%;  
+  }   
 
 	.preview-body {
 		max-height: none;
