@@ -7,8 +7,9 @@ class Tour {
   final List<Stage> stages;
   final String description;
   final List<String> images;
-  final String route;
   final int primaryImage;
+  final double length;
+  final String externalLink;
 
   const Tour({
     required this.id,
@@ -16,8 +17,9 @@ class Tour {
     required this.stages,
     required this.description,
     required this.images,
-    required this.route,
     required this.primaryImage,
+    required this.length,
+    required this.externalLink,
   });
 
   factory Tour.fromJSON(Map<String, dynamic> json) {
@@ -27,8 +29,9 @@ class Tour {
       stages: List<Stage>.from(json['stages'].map((stage) => Stage.fromJSON(stage))),
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
-      route: json['route'],
       primaryImage: json['primary_image'],
+      length: json['length'],
+      externalLink: json['external_link'],
     );
   }
 }

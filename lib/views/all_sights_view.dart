@@ -333,7 +333,7 @@ class SightCard extends StatelessWidget {
                               width: 6,
                             ),
                             Text(
-                              location.getDistance(45.268200283564916, 27.952353505723423),
+                              location.getDistance(sight.latitude, sight.longitude),
                               style: const TextStyle(
                                 fontSize: 14,
                               ),

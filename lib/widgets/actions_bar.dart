@@ -4,16 +4,19 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/utils/url_constants.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 
 class ActionsBar extends StatelessWidget {
   final String id;
   final String collection;
+  final String link;
 
   ActionsBar({
     super.key,
     required this.id,
     required this.collection,
+    required this.link,
   });
 
   final likeAnimationKey = GlobalKey<LikeAnimationState>();
@@ -42,7 +45,7 @@ class ActionsBar extends StatelessWidget {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => openBrowserURL(link),
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),

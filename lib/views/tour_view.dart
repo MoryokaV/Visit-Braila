@@ -51,12 +51,17 @@ class _TourViewState extends State<TourView> {
     Navigator.pushNamed(context, "/error");
   }
 
+  String calcLength(double length) {
+    return length > 1 ? "${length}km" : "${(length * 1000).toStringAsFixed(0)}m";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: ActionsBar(
         id: widget.tour.id,
         collection: "tours",
+        link: widget.tour.externalLink,
       ),
       body: SafeArea(
         top: false,
@@ -176,9 +181,9 @@ class _TourViewState extends State<TourView> {
                                       const SizedBox(
                                         width: 6,
                                       ),
-                                      const Text(
-                                        "N/A lungime",
-                                        style: TextStyle(
+                                      Text(
+                                        "${calcLength(widget.tour.length)} lungime",
+                                        style: const TextStyle(
                                           fontSize: 14,
                                         ),
                                       ),

@@ -28,6 +28,7 @@ class SightView extends StatelessWidget {
       bottomNavigationBar: ActionsBar(
         id: sight.id,
         collection: "sights",
+        link: sight.externalLink,
       ),
       body: SafeArea(
         top: false,
@@ -145,7 +146,7 @@ class SightView extends StatelessWidget {
                                       width: 6,
                                     ),
                                     Text(
-                                      "${location.getDistance(45.268200283564916, 27.952353505723423)} depărtare",
+                                      "${location.getDistance(sight.latitude, sight.longitude)} depărtare",
                                       style: const TextStyle(
                                         fontSize: 14,
                                       ),
