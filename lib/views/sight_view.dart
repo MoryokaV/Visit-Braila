@@ -146,7 +146,7 @@ class SightView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        width: 8,
+                        width: 12,
                       ),
                       CircleAvatar(
                         radius: 18,
