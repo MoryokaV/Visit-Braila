@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
@@ -21,6 +23,44 @@ class SightView extends StatelessWidget {
   });
 
   final SightController sightController = SightController();
+
+  void openMap(double latitude, double longitude, String name, BuildContext context) async {
+    final availableMaps = await MapLauncher.installedMaps;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              child: Wrap(
+                children: [
+                  for (var map in availableMaps)
+                    ListTile(
+                      onTap: () => map.showMarker(
+                        coords: Coords(latitude, longitude),
+                        title: name,
+                      ),
+                      title: Text(
+                        map.mapName,
+                        style: const TextStyle(
+                          fontFamily: labelFont,
+                        ),
+                      ),
+                      leading: SvgPicture.asset(
+                        map.icon,
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,18 +130,38 @@ class SightView extends StatelessWidget {
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  CircleAvatar(
-                    radius: 18,
-                    backgroundColor: Colors.white,
-                    child: IconButton(
-                      color: kForegroundColor,
-                      icon: Icon(
-                        Icons.adaptive.share,
-                        size: 18,
-                        color: kBlackColor,
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.white,
+                        child: IconButton(
+                          color: kForegroundColor,
+                          icon: const Icon(
+                            CupertinoIcons.location,
+                            size: 18,
+                            color: kBlackColor,
+                          ),
+                          onPressed: () => openMap(sight.latitude, sight.longitude, sight.name, context),
+                        ),
                       ),
-                      onPressed: () {},
-                    ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.white,
+                        child: IconButton(
+                          color: kForegroundColor,
+                          icon: Icon(
+                            Icons.adaptive.share,
+                            size: 18,
+                            color: kBlackColor,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
