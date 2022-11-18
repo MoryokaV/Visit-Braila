@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.visit_braila">
+    package="com.vmasoftware.visit_braila">
    <application
         android:label="Visit Brăila"
         android:name="${applicationName}"
