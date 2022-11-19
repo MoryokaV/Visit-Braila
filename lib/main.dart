@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/connection_service.dart';
+import 'package:visit_braila/services/deeplink_service.dart';
 import 'package:visit_braila/services/localstorage_service.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/services/navigation_service.dart';
@@ -19,6 +20,8 @@ void main() async {
   await ConnectionService.init();
 
   await LocationService.init();
+
+  await DeepLinkService.init();
 
   runApp(const MyApp());
 }
