@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:visit_braila/firebase_options.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/services/deeplink_service.dart';
@@ -21,7 +23,11 @@ void main() async {
 
   await LocationService.init();
 
-  await DeepLinkService.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  DeepLinkService.init();
 
   runApp(const MyApp());
 }

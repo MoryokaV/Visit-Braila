@@ -43,6 +43,9 @@ dependencies:
   geolocator: ^9.0.2
   internet_connection_checker: ^1.0.0+1
   map_launcher: ^2.4.0
+  firebase_core: ^2.3.0
+  firebase_dynamic_links: ^5.0.6
+  share_plus: ^6.3.0
 
 dev_dependencies:
   flutter_test:

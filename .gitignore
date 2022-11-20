@@ -25,6 +25,10 @@ backend/static/media/tours/
 .pub-cache/
 .pub/
 /build/
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+lib/firebase_options.dart
 
 # Android Studio will place build artifacts here
 /android/app/debug

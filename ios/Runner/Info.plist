@@ -55,18 +55,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-    <key>CFBundleURLTypes</key>
-    <array>
-    <dict>
-    <key>CFBundleTypeRole</key>
-    <string>Editor</string>
-    <key>CFBundleURLName</key>
-    <string>visit.braila</string>
-    <key>CFBundleURLSchemes</key>
-    <array>
-    <string>city</string>
-    </array>
-    </dict>
-    </array>
 </dict>
 </plist>
