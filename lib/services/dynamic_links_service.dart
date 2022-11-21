@@ -10,7 +10,7 @@ import 'package:visit_braila/utils/navigation_util.dart';
 const String uriPrefix = "https://visitbraila.page.link";
 const String customDomain = "https://visitbraila.ro";
 
-class DeepLinkService {
+class DynamicLinksService {
   static bool initialLinkGathered = false;
 
   static Future<Uri> generateDynamicLink({
@@ -122,79 +122,3 @@ class DeepLinkService {
     }
   }
 }
-
-/*
-class DeepLinkService {
-  static const platform = MethodChannel("city.visit.braila");
-  static const stream = EventChannel("city.visit.braila/incomingRedirects");
-
-  static final StreamController<String> _streamController = StreamController();
-
-  DeepLinkService() {
-    startUrl();
-
-    stream.receiveBroadcastStream().listen((d) {
-      onRedirected(d);
-    });
-  }
-
-  static init() {
-    startUrl();
-
-    stream.receiveBroadcastStream().listen((d) {
-      onRedirected(d);
-    });
-  }
-
-  static void onRedirected(String url) {
-    _streamController.sink.add(url);
-
-    handleRouteRedirection(Uri.parse(url));
-  }
-
-  static Future<void> startUrl() async {
-    try {
-      String? url = await platform.invokeMethod('initialLink');
-
-      if (url == null) {
-        return;
-      }
-
-      onRedirected(url);
-    } catch (_) {
-      return;
-    }
-  }
-
-  static void redirect(String route, arguments) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      NavigationService.navigateToWithArguments(route, arguments);
-    });
-  }
-
-  static void handleRouteRedirection(Uri uri) async {
-    switch (uri.pathSegments.first) {
-      case 'sight':
-        String? id = uri.queryParameters['id'];
-        
-        if (id == null) {
-          return;
-        }
-
-        redirect('/sight', await SightController().findSight(id));
-        break;
-      case 'tour':
-        String? id = uri.queryParameters['id'];
-
-        if(id == null){
-          return;
-        }
-
-        redirect('/tour', await TourController().findTour(id));
-        break;
-      default:
-        return;
-    }
-  }
-}
-*/

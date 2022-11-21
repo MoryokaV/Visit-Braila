@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
-import 'package:visit_braila/services/deeplink_service.dart';
+import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
@@ -161,7 +161,7 @@ class SightView extends StatelessWidget {
                             color: kBlackColor,
                           ),
                           onPressed: () async {
-                            final link = await DeepLinkService.generateDynamicLink(
+                            final link = await DynamicLinksService.generateDynamicLink(
                               id: sight.id,
                               image: sight.images[sight.primaryImage - 1],
                               name: sight.name,

@@ -3,9 +3,9 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
 
+const Duration kInterval = Duration(seconds: 3);
+
 class ConnectionService extends ChangeNotifier {
-  final Duration interval = const Duration(seconds: 3);
-  
   static late bool initialConnectionStatus;
   late bool isOnline;
   bool popup = false;
@@ -18,8 +18,7 @@ class ConnectionService extends ChangeNotifier {
     }
 
     InternetConnectionChecker.createInstance(
-      checkInterval: interval,
-      checkTimeout: interval,
+      checkInterval: kInterval,
     ).onStatusChange.listen((status) {
       if (status == InternetConnectionStatus.connected) {
         isOnline = true;

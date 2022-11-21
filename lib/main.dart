@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/firebase_options.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/connection_service.dart';
-import 'package:visit_braila/services/deeplink_service.dart';
+import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/services/localstorage_service.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
@@ -27,7 +27,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  DeepLinkService.init();
+  DynamicLinksService.init();
 
   runApp(const MyApp());
 }

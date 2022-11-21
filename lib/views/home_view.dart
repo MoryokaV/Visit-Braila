@@ -54,6 +54,7 @@ class HomeView extends StatelessWidget {
                                 "assets/images/braila_night.jpg",
                                 fit: BoxFit.cover,
                                 height: Responsive.safeBlockVertical * 35,
+                                width: Responsive.screenWidth,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 12, top: 12),

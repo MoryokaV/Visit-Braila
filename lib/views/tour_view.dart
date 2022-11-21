@@ -5,7 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
-import 'package:visit_braila/services/deeplink_service.dart';
+import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/actions_bar.dart';
@@ -136,7 +136,7 @@ class _TourViewState extends State<TourView> {
                         color: kBlackColor,
                       ),
                       onPressed: () async {
-                        final link = await DeepLinkService.generateDynamicLink(
+                        final link = await DynamicLinksService.generateDynamicLink(
                           id: widget.tour.id,
                           image: widget.tour.images[widget.tour.primaryImage - 1],
                           name: widget.tour.name,
