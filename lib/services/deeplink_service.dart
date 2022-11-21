@@ -5,7 +5,7 @@ import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
-import 'package:visit_braila/services/navigation_service.dart';
+import 'package:visit_braila/utils/navigation_util.dart';
 
 const String uriPrefix = "https://visitbraila.page.link";
 const String customDomain = "https://visitbraila.ro";
@@ -57,16 +57,16 @@ class DeepLinkService {
   }
 
   static void handleError(Object? _) {
-    NavigationService.navigateTo('/error');
+    NavigationUtil.navigateTo('/error');
   }
 
   static void redirect(String route, arguments) {
     if (!initialLinkGathered) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        NavigationService.navigateToWithArguments(route, arguments);
+        NavigationUtil.navigateToWithArguments(route, arguments);
       });
     } else {
-      NavigationService.navigateToWithArguments(route, arguments);
+      NavigationUtil.navigateToWithArguments(route, arguments);
     }
   }
 

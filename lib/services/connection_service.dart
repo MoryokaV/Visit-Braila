@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
-import 'package:visit_braila/services/navigation_service.dart';
+import 'package:visit_braila/utils/navigation_util.dart';
 
 class ConnectionService extends ChangeNotifier {
   final Duration interval = const Duration(seconds: 3);
@@ -26,7 +26,7 @@ class ConnectionService extends ChangeNotifier {
       } else {
         isOnline = false;
         if (!popup) {
-          NavigationService.navigateTo('/nointernet');
+          NavigationUtil.navigateTo('/nointernet');
         }
       }
 
