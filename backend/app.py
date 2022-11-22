@@ -73,6 +73,11 @@ def sights():
 def tours():
     return render_template("tours.html")
 
+@app.route("/admin/events")
+@logged_in
+def events():
+    return render_template("events.html")
+
 @app.route("/admin/trending")
 @logged_in
 def trending():
