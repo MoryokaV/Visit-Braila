@@ -99,7 +99,7 @@ def fetchSights():
 def deleteSight(_id):
     # delete local sight images first
     images = json.loads(findSight(_id))['images']
-    deleteImages(images)
+    deleteImages(images, 'sights')
 
     # delete corresponding trending item
     trending = json.loads(fetchTrendingItems())
@@ -112,7 +112,7 @@ def deleteSight(_id):
             trending_item_index = item['index']
             break
     
-    if(trending_item_id is not ""):
+    if trending_item_id != "":
         for item in trending:
             if item['index'] > trending_item_index:
                 db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"sight_id": item['sight_id'], "index": item['index'] - 1}})
@@ -136,7 +136,7 @@ def findSight(_id):
 def editSight():
     data = request.get_json()
 
-    deleteImages(data['images_to_delete'])
+    deleteImages(data['images_to_delete'], 'sights')
     sight = data['sight']
 
     db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": sight['latitude'], "longitude": sight['longitude'], "external_link": sight['external_link']}})
@@ -157,7 +157,7 @@ def fetchTours():
 def deleteTour(_id):
     # delete local tour images first
     images = json.loads(findTour(_id))['images']
-    deleteImages(images)
+    deleteImages(images, 'tours')
 
     db.tours.delete_one({"_id": ObjectId(_id)})
     return make_response("Successfully deleted document", 200)
@@ -175,7 +175,7 @@ def findTour(_id):
 def editTour():
     data = request.get_json()
 
-    deleteImages(data['images_to_delete'])
+    deleteImages(data['images_to_delete'], 'tours')
     tour = data['tour'] 
 
     db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "length": tour['length'], "external_link": tour['external_link']}})
@@ -271,12 +271,20 @@ def uploadImages(folder):
 
     return make_response("Images have been uploaded", 200)
 
-def deleteImages(images):
+def deleteImages(images, collection):
     for image in images:
-        try:
-            os.remove(app.root_path + image)
-        except:
-            pass
+        occurrences = 1
+        
+        if collection == 'sights':
+            occurrences = len(list(db.sights.find({"images": image})))
+        elif collection == 'tours':
+            occurrences = len(list(db.tours.find({"images": image})))
+
+        if occurrences == 1:
+            try:
+                os.remove(app.root_path + image)
+            except:
+                pass
 
 @app.route("/api/serverStorage")
 def serverStorage():
