@@ -295,7 +295,8 @@ tbody tr:hover {
 
 .table-card {
     width: 90%;
-    height: calc(65% - 4.8rem);
+    height: calc(65% - 6.4rem);
+    min-height: 30rem;
     margin: 3.2rem auto;
 }
 

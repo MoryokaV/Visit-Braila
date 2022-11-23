@@ -117,6 +117,26 @@
           </table>
         </div>
       </div>
+
+      <div class="card table-card">
+        <div class="card-header">
+          <h3>Events</h3>
+          <p id="events-records"></p>
+        </div>
+        <div class="card-body table-card-body"> 
+          <table id="events-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
     </main>
 
     <!-- SIGHT EDIT MODAL -->
@@ -257,6 +277,60 @@
               <input type="url" id="tour-external-link" name="external-link" required />
             </div>
             <button type="submit" class="btn primary-btn"><span>Save</span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOUR EVENT MODAL -->
+    <div class="modal" id="event-modal">
+      <div class="modal-content">
+        <header>
+          <button class="btn close-btn">
+            <ion-icon class="icon" name="close-circle-outline"></ion-icon>
+          </button>
+          <h2 class="subtitle">Edit entry</h2>
+        </header>
+        <div class="modal-body">
+          <form>
+            <div class="input-field">
+              <label for="event-name">Name</label>
+              <input type="text" id="event-name" name="name" maxlength="60" required />
+            </div>
+            <div class="input-field">
+              <label for="datetime">Date & time</label>
+              <input id="event-datetime" type="datetime-local" name="datetime" required></input>
+            </div>
+            <div class="input-field" style="gap: 0">
+              <label for="event-description" style="margin-bottom: 1.2rem">Description</label>
+              <div id="event-description"></div>
+            </div>
+            <div class="input-field row">
+              <label for="event-images" style="cursor: pointer">
+                Images
+                <input
+                  type="file"
+                  class="hidden-input"
+                  id="event-images"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                />
+              </label>
+              <ul class="img-container"></ul>
+            </div>
+            <div class="input-field row">
+              <label for="event-primary-image">Primary image index</label>
+              <input 
+                id="event-primary-image" 
+                name="primary-image" 
+                type="number" 
+                min="1" 
+                value="1" 
+                required
+              />
+            </div>
+            <button type="submit" class="btn primary-btn"><span>Insert</span></button>
           </form>
         </div>
       </div>

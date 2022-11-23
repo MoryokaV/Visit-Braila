@@ -216,9 +216,9 @@ def findEvent(_id):
 
     return json.dumps(event, default=str)
 
-@app.route("/api/editEvent<_id>", methods=["POST"])
-def editEvent(_id):
-    event = request.get_json()
+@app.route("/api/editEvent", methods=["PUT"])
+def editEvent():
+    data = request.get_json()
     
     deleteImages(data['images_to_delete'], 'events')
     event = data['event'] 

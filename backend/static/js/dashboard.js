@@ -1,4 +1,4 @@
-import { openEditSightModal, openEditTourModal } from './modal.js';
+import { openEditEventModal, openEditSightModal, openEditTourModal } from './modal.js';
 
 const getRecords = (data) => {
   if (data.length === 0) return "No records";
@@ -58,6 +58,31 @@ export const fetchTours = async () => {
   });
 }
 
+export const fetchEvents = async () => {
+  const data = await $.getJSON("/api/fetchEvents");
+
+  $("#events-records").text(getRecords(data));
+  $("#events-table tbody").empty();
+
+  data.map((event) => {
+    const date_time = new Intl.DateTimeFormat('ro-RO', { dateStyle: "long", timeStyle: 'short', }).format(new Date(event.date_time));
+
+    $("#events-table").append(
+      `<tr>
+          <td>${event._id}</td>
+          <td>${event.name}</td>
+          <td>${date_time}</td>
+          <td id=${event._id}>
+            <div class="group">
+              <button class="btn action-edit-event"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>
+              <button class="btn action-delete-event"><ion-icon class="small-icon" name="remove-circle-outline"></ion-icon></button>
+            </div>
+          </td>
+        </tr>`
+    );
+  });
+}
+
 $(document).ready(async function() {
   await fetchSights();
 
@@ -93,5 +118,23 @@ $(document).ready(async function() {
   $("#tours-table").on('click', ".action-edit-tour", async function() {
     await openEditTourModal($(this).parent().parent().attr("id"));
     $("#tour-modal").addClass("show");
+  });
+
+  await fetchEvents();
+
+  $("#events-table").on('click', ".action-delete-event", async function() {
+    if (confirm("Are you sure you want to delete the entry?")) {
+      await $.ajax({
+        url: "/api/deleteEvent/" + $(this).parent().parent().attr("id"),
+        type: "DELETE",
+      });
+
+      fetchEvents();
+    }
+  });
+
+  $("#events-table").on('click', ".action-edit-event", async function() {
+    await openEditEventModal($(this).parent().parent().attr("id"));
+    $("#event-modal").addClass("show");
   });
 });

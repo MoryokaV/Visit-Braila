@@ -39,7 +39,7 @@
 }
 
 /* Landscape phone */
-@media (max-height: 27em) {
+@media (max-height: 29em) {
 	body > aside .storage-info {
 		display: none;
 	}

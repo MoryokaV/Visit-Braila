@@ -1,4 +1,4 @@
-import { fetchSights, fetchTours } from './dashboard.js';
+import { fetchEvents, fetchSights, fetchTours } from './dashboard.js';
 import {
   getFilename,
   startLoadingAnimation,
@@ -17,6 +17,7 @@ import {
 
 let sight = {};
 let tour = {};
+let event = {};
 let current_images = [];
 let formData = undefined;
 let images_to_delete = [];
@@ -43,7 +44,7 @@ const addImage = (folder, elem, modal) => {
   elem.val(null)
 }
 
-const removeImage = (elem, modal) => {
+const removeImage = (elem, modal, savedImages) => {
   if (current_images.length === 1) {
     alert("Entry must have at least one image.");
     return;
@@ -60,7 +61,6 @@ const removeImage = (elem, modal) => {
   files.map((file) => formData.append("files[]", file));
 
   //mark for deletion
-  const savedImages = modal === "sight" ? sight.images : tour.images;
   if (savedImages.includes(current_images[elem.parent().index()])) {
     images_to_delete.push(current_images[elem.parent().index()]);
   }
@@ -116,6 +116,13 @@ const appendStages = () => {
   });
 
   $("#tour-modal #stages .stage input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
+}
+
+const getCurrentDate = () => {
+  const date = new Date(Date.now());
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 1000 * 60);
+
+  return localDate.toISOString().slice(0, -8);
 }
 
 export const openEditSightModal = async (id) => {
@@ -185,6 +192,30 @@ export const openEditTourModal = async (id) => {
   $("#tour-external-link").val(tour.external_link);
 }
 
+export const openEditEventModal = async (id) => {
+  event = await $.getJSON("/api/findEvent/" + id);
+  current_images = [...event.images];
+  formData = new FormData();
+  images_to_delete = [];
+
+  // NAME
+  $("#event-name").val(event.name);
+
+  // DATE & TIME
+  $("#event-datetime").val(event.date_time);
+
+  quill = new Quill("#event-description", {
+    theme: "snow",
+  });
+  $("#event-description .ql-editor").html(event.description);
+
+  // IMAGES
+  $("#event-modal .img-container").empty()
+  event.images.map((image) => appendImageElement(image, "event", true));
+
+  $("#event-primary-image").val(event.primary_image);
+}
+
 $(document).ready(async function() {
   $(".close-btn").click(closeModal);
 
@@ -234,7 +265,7 @@ $(document).ready(async function() {
   });
 
   $("#sight-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), "sight");
+    removeImage($(this), "sight", sight.images);
   });
 
   // SIGHT COORDINATES
@@ -345,7 +376,7 @@ $(document).ready(async function() {
   });
 
   $("#tour-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), "tour");
+    removeImage($(this), "tour", tour.images);
   });
 
   // TOUR SUBMIT 
@@ -387,6 +418,75 @@ $(document).ready(async function() {
       });
 
       await fetchTours();
+      closeModal();
+      endLoadingAnimation($(this));
+    } catch {
+      endLoadingAnimation($(this));
+    }
+  });
+
+  // EVENT NAME
+  $("#event-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
+
+  // EVENT DATE & TIME
+  $("#event-datetime").attr("min", getCurrentDate());
+  $("#event-datetime").focus(function() {
+    $("#event-datetime").attr("min", getCurrentDate());
+  });
+
+  // EVENT IMAGES 
+  $('#event-images').change(function() {
+    addImage("events", $(this), "event");
+  });
+
+  $("#event-modal .img-container").on("click", ".remove-img-btn", function() {
+    removeImage($(this), "event", event.images);
+  });
+
+  //EVENT SUBMIT
+  $("#event-modal form").submit(async function(e) {
+    e.preventDefault();
+
+    startLoadingAnimation($(this));
+
+    event.name = $("#event-name").val();
+    event.date_time = new Date($("#event-datetime").val());
+    event.description = quill.root.innerHTML;
+    event.primary_image = parseInt($("#event-primary-image").val());
+
+    if (event.date_time < Date.now()) {
+      $("#event-datetime").focus();
+
+      endLoadingAnimation($(this));
+      return false;
+    }
+
+    try {
+      await $.ajax({
+        type: "POST",
+        url: "/api/uploadImages/events",
+        contentType: false,
+        data: formData,
+        cache: false,
+        processData: false,
+        statusCode: {
+          413: function() {
+            alert("Files size should be less than 15MB")
+          }
+        },
+      });
+
+      event.images = [...current_images];
+
+      await $.ajax({
+        url: "/api/editEvent",
+        type: "PUT",
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "event": event }),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+
+      await fetchEvents();
       closeModal();
       endLoadingAnimation($(this));
     } catch {
