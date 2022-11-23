@@ -10,7 +10,7 @@ let quill = undefined;
 let formData = new FormData();
 let event = {
   name: "",
-  date_time: "",
+  date_time: new Date(),
   images: [],
   primary_image: 1,
   description: ``,
@@ -106,6 +106,13 @@ const removeImage = (elem) => {
   elem.parent().remove();
 }
 
+const getCurrentDate = () => {
+  const date = new Date(Date.now());
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 1000 * 60);
+
+  return localDate.toISOString().slice(0, -8);
+}
+
 $(document).ready(async function() {
   // NAME
   $("#event-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
@@ -136,6 +143,18 @@ $(document).ready(async function() {
     $("#preview-primary-image").prop("src", $("#preview-images img").eq($(this).val() - 1).prop("src"));
   });
 
+  // DATE & TIME
+  $("#event-datetime").attr("min", getCurrentDate());
+  $("#event-datetime").focus(function() {
+    $("#event-datetime").attr("min", getCurrentDate());
+  });
+  $("#event-datetime").on('change', function() {
+    const date = new Date($(this).val());
+    const formatedDate = new Intl.DateTimeFormat('ro-RO', { dateStyle: "long", timeStyle: 'short', }).format(date);
+
+    $("#preview-datetime").text(formatedDate);
+  });
+
   // SUBMIT
   $("#insert-event-form").submit(async function(e) {
     e.preventDefault();
@@ -143,14 +162,21 @@ $(document).ready(async function() {
     startLoadingAnimation($(this));
 
     event.name = $("#event-name").val();
-    event.date_time = $("#event-datetime").val();
+    event.date_time = new Date($("#event-datetime").val());
     event.description = quill.root.innerHTML;
     event.primary_image = parseInt($("#event-primary-image").val());
+
+    if (event.date_time < Date.now()) {
+      $("#event-datetime").focus();
+
+      endLoadingAnimation($(this));
+      return false;
+    }
 
     try {
       await $.ajax({
         type: "POST",
-        url: "/api/uploadImages/event",
+        url: "/api/uploadImages/events",
         contentType: false,
         data: formData,
         cache: false,

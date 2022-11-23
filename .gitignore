@@ -14,6 +14,7 @@ migrate_working_dir/
 backend/flask_session/
 backend/static/media/sights/
 backend/static/media/tours/
+backend/static/media/events/
 
 # Flutter/Dart/Pub related
 **/doc/api/

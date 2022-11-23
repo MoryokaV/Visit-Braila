@@ -10,6 +10,7 @@ from PIL import Image
 import os
 import json
 import hashlib
+from dateutil import parser
 
 app = Flask(__name__)
 app.config["MEDIA_FOLDER"] = os.path.join(app.root_path, "static/media")
@@ -186,6 +187,45 @@ def editTour():
     db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "length": tour['length'], "external_link": tour['external_link']}})
     return make_response("Entry has been updated", 200)
 
+@app.route("/api/insertEvent", methods=["POST"])
+def insertEvent():
+    event = request.get_json()
+    
+    db.events.insert_one({"name": event['name'], "date_time": parser.isoparse(event['date_time']), "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
+    return make_response("New entry has been inserted", 200) 
+
+@app.route("/api/fetchEvents")
+def fetchEvents():
+    return json.dumps(list(db.events.find()), default=str)
+
+@app.route("/api/deleteEvent/<_id>", methods=["DELETE"])
+def deleteEvent(_id):
+    # delete local event images first
+    images = json.loads(findEvent(_id))['images']
+    deleteImages(images, 'events')
+
+    db.events.delete_one({"_id": ObjectId(_id)})
+    return make_response("Successfully deleted document", 200)
+
+@app.route("/api/findEvent/<_id>")
+def findEvent(_id):
+    event = db.events.find_one({"_id": ObjectId(_id)})
+
+    if event is None:
+        return make_response("Invalid tour id", 404)
+
+    return json.dumps(event, default=str)
+
+@app.route("/api/editEvent<_id>", methods=["POST"])
+def editEvent(_id):
+    event = request.get_json()
+    
+    deleteImages(data['images_to_delete'], 'events')
+    event = data['event'] 
+
+    db.events.update_one({"_id": ObjectId(event['_id'])}, {"$set": {"name": event['name'], "date_time": parser.isoparse(event['date_time']), "description": event['description'], "images": event['images'], "primary_image": event['primary_image']}})
+    return make_response("Entry has been updated", 200)
+
 @app.route("/api/fetchTags")
 def fetchTags():
     return json.dumps(list(db.tags.find()), default=str)
@@ -284,6 +324,8 @@ def deleteImages(images, collection):
             occurrences = len(list(db.sights.find({"images": image})))
         elif collection == 'tours':
             occurrences = len(list(db.tours.find({"images": image})))
+        elif collection == 'events':
+            occurrences = len(list(db.events.find({"images": image})))
 
         if occurrences == 1:
             try:
@@ -305,6 +347,8 @@ def init_dir():
         os.makedirs(app.config["MEDIA_FOLDER"] + "/sights")
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/tours"):
         os.makedirs(app.config["MEDIA_FOLDER"] + "/tours")
+    if not os.path.exists(app.config["MEDIA_FOLDER"] + "/events"):
+        os.makedirs(app.config["MEDIA_FOLDER"] + "/events")
 
 if __name__ == '__main__':
     init_dir()

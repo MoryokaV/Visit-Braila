@@ -526,6 +526,14 @@ tbody tr:hover {
     line-height: 1.2;
 }
 
+.preview-content span {
+    color: #868e96;
+    font-size: 1.4rem;
+    font-weight: 600; 
+    letter-spacing: 0.075rem;
+    margin-bottom: 1.4rem
+}
+
 .hyperlink {
   color: var(--primary-color);
   text-decoration: underline;
