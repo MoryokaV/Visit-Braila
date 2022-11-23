@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -7,6 +8,7 @@ import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 
 class SearchAll extends SearchDelegate<String> {
@@ -18,13 +20,17 @@ class SearchAll extends SearchDelegate<String> {
   List data = [];
 
   Future<List> fetchData() async {
-    allTours.addAll(await tourController.fetchTours());
-    allSights.addAll(await sightController.fetchSights());
+    try {
+      allTours = await tourController.fetchTours();
+      allSights = await sightController.fetchSights();
 
-    data.addAll(allSights);
-    data.addAll(allTours);
+      data.addAll(allSights);
+      data.addAll(allTours);
 
-    return data;
+      return data;
+    } on HttpException {
+      rethrow;
+    }
   }
 
   @override
@@ -171,9 +177,10 @@ class SearchAll extends SearchDelegate<String> {
               ],
             ),
           );
+        } else if (snapshot.hasError && snapshot.error is HttpException) {
+          showErrorDialog(context);
         }
 
-        //TODO: what if it has error
         return const LoadingSpinner();
       },
     );
