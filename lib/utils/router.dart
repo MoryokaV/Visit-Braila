@@ -21,7 +21,7 @@ class PageRouter {
         return PageRouteBuilder(
           pageBuilder: (context, _, __) {
             final connection = Provider.of<ConnectionService>(context, listen: false);
-            if(!connection.isOnline){
+            if (!connection.isOnline) {
               return const NoInternetView();
             }
 
@@ -80,10 +80,8 @@ class PageRouter {
         return adaptivePageRoute(
           builder: (context) => GalleryView(
             startIndex: args['startIndex'],
-            images: args['images'],
-            title: args['title'],
-            id: args['id'],
-            collection: args['collection'],
+            sight: args['sight'],
+            tour: args['tour'],
           ),
         );
       case '/nointernet':

@@ -229,10 +229,7 @@ class _TourViewState extends State<TourView> {
                                             "/gallery",
                                             arguments: {
                                               "startIndex": index,
-                                              "images": widget.tour.images,
-                                              "title": widget.tour.name,
-                                              "id": widget.tour.id,
-                                              "collection": "tours",
+                                              "tour": widget.tour,
                                             },
                                           ),
                                           child: index != 4
