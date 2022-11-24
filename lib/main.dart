@@ -27,7 +27,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  DynamicLinksService.init();
+  await DynamicLinksService.init();
 
   runApp(const MyApp());
 }

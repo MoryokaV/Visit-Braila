@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:visit_braila/controllers/event_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
+import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
@@ -11,7 +13,7 @@ const String uriPrefix = "https://visitbraila.page.link";
 const String customDomain = "https://visitbraila.ro";
 
 class DynamicLinksService {
-  static bool initialLinkGathered = false;
+  static bool handleInitialLink = true;
 
   static Future<Uri> generateDynamicLink({
     required String id,
@@ -48,8 +50,8 @@ class DynamicLinksService {
     return dynamicLink.shortUrl;
   }
 
-  static init() {
-    startUrl();
+  static init() async {
+    await startUrl();
 
     FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
       handleRouteRedirection(dynamicLinkData.link);
@@ -61,10 +63,12 @@ class DynamicLinksService {
   }
 
   static void redirect(String route, arguments) {
-    if (!initialLinkGathered) {
+    if (handleInitialLink) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         NavigationUtil.navigateToWithArguments(route, arguments);
       });
+
+      handleInitialLink = false;
     } else {
       NavigationUtil.navigateToWithArguments(route, arguments);
     }
@@ -74,11 +78,11 @@ class DynamicLinksService {
     final PendingDynamicLinkData? initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
 
     if (initialLink == null) {
+      handleInitialLink = false;
       return;
     }
 
     handleRouteRedirection(initialLink.link);
-    initialLinkGathered = true;
   }
 
   static void handleRouteRedirection(Uri uri) async {
@@ -116,6 +120,23 @@ class DynamicLinksService {
         }
 
         redirect('/tour', tour);
+        break;
+      case 'event':
+        String? id = uri.queryParameters['id'];
+
+        if (id == null) {
+          handleError(null);
+          return;
+        }
+
+        Event? event = await EventController().findEvent(id);
+
+        if (event == null) {
+          handleError(null);
+          return;
+        }
+
+        redirect('/event', event);
         break;
       default:
         handleError(null);

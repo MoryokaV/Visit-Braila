@@ -42,5 +42,11 @@ const BoxShadow topShadow = BoxShadow(
   spreadRadius: 0.5,
 );
 
+const BoxShadow tinyShadow = BoxShadow(
+  color: Colors.black12,
+  offset: Offset(0, 0.5),
+  blurRadius: 2,
+);
+
 const String labelFont = "Inter";
 const String bodyFont = "Merriweather";

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/views/all_events_view.dart';
 import 'package:visit_braila/views/home_view.dart';
 import 'package:visit_braila/views/wishlist_view.dart';
 
@@ -17,6 +18,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   List<Widget> pages = [
     HomeView(),
     const WishlistView(),
+    AllEventsView(),
   ];
 
   AppBar? getAppBar(BuildContext context) {
@@ -60,6 +62,15 @@ class _BottomNavbarState extends State<BottomNavbar> {
                   fontSize: 24,
                 ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.notifications_active_rounded,
+                color: kForegroundColor,
+              ),
+            ),
+          ],
         );
       default:
         return null;

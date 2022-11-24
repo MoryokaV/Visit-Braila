@@ -17,11 +17,11 @@ class Event {
     required this.primaryImage,
   });
 
-  factory Event.fromJSON(Map<String, dynamic> json){
+  factory Event.fromJSON(Map<String, dynamic> json) {
     return Event(
       id: json['_id'],
       name: json['name'],
-      dateTime: json['date_time'],
+      dateTime: DateTime.parse(json['date_time']),
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       primaryImage: json['primary_image'],

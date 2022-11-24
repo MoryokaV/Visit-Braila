@@ -4,6 +4,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
@@ -15,12 +16,14 @@ class GalleryView extends StatefulWidget {
   final int startIndex;
   final Sight? sight;
   final Tour? tour;
+  final Event? event;
 
   const GalleryView({
     super.key,
     required this.startIndex,
     required this.sight,
     required this.tour,
+    required this.event,
   });
 
   @override
@@ -60,6 +63,16 @@ class _GalleryViewState extends State<GalleryView> {
         "type": "tour",
         "primaryImage": widget.tour!.primaryImage,
         "externalLink": widget.tour!.externalLink,
+      };
+    } else if (widget.event != null) {
+      data = {
+        "images": widget.event!.images,
+        "title": widget.event!.name,
+        "id": widget.event!.id,
+        "collection": "",
+        "type": "event",
+        "primaryImage": widget.event!.primaryImage,
+        "externalLink": "", // TODO
       };
     } else {
       data = {};
@@ -102,30 +115,31 @@ class _GalleryViewState extends State<GalleryView> {
             },
             icon: Icon(Icons.adaptive.share),
           ),
-          LikeAnimation(
-            key: likeAnimationKey,
-            child: Consumer<Wishlist>(
-              builder: (context, wishlist, _) {
-                return IconButton(
-                  splashRadius: 1,
-                  onPressed: () {
-                    data['collection'] == "sights"
-                        ? wishlist.toggleSightWishState(data['id'])
-                        : wishlist.toggleTourWishState(data['id']);
-                    likeAnimationKey.currentState!.animate();
-                  },
-                  icon: Icon(
-                    wishlist.items[data['collection']]!.contains(data['id'])
-                        ? CupertinoIcons.heart_fill
-                        : CupertinoIcons.heart,
-                    color: wishlist.items[data['collection']]!.contains(data['id'])
-                        ? Theme.of(context).colorScheme.secondary
-                        : Colors.white,
-                  ),
-                );
-              },
+          if (widget.sight != null || widget.tour != null)
+            LikeAnimation(
+              key: likeAnimationKey,
+              child: Consumer<Wishlist>(
+                builder: (context, wishlist, _) {
+                  return IconButton(
+                    splashRadius: 1,
+                    onPressed: () {
+                      data['collection'] == "sights"
+                          ? wishlist.toggleSightWishState(data['id'])
+                          : wishlist.toggleTourWishState(data['id']);
+                      likeAnimationKey.currentState!.animate();
+                    },
+                    icon: Icon(
+                      wishlist.items[data['collection']]!.contains(data['id'])
+                          ? CupertinoIcons.heart_fill
+                          : CupertinoIcons.heart,
+                      color: wishlist.items[data['collection']]!.contains(data['id'])
+                          ? Theme.of(context).colorScheme.secondary
+                          : Colors.white,
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
         ],
       ),
       body: SafeArea(
