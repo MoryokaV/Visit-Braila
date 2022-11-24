@@ -2,6 +2,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 const baseUrl = "http://193.22.95.33:8080";
 const apiUrl = "http://193.22.95.33:8080/api";
+const obiectivUrl = "https://obiectivbr.ro";
 
 void openBrowserURL(String url) async {
   if (await canLaunchUrl(Uri.parse(url))) {

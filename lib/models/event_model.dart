@@ -7,6 +7,7 @@ class Event {
   final String description;
   final List<String> images;
   final int primaryImage;
+  final String externalLink = obiectivUrl;
 
   Event({
     required this.id,

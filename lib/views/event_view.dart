@@ -104,7 +104,7 @@ class EventView extends StatelessWidget {
                               image: event.images[event.primaryImage - 1],
                               name: event.name,
                               collection: "event",
-                              alternativeUrl: "", // TODO
+                              alternativeUrl: event.externalLink,
                             );
 
                             Share.share(link.toString());

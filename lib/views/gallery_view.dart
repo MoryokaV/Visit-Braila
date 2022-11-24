@@ -72,7 +72,7 @@ class _GalleryViewState extends State<GalleryView> {
         "collection": "",
         "type": "event",
         "primaryImage": widget.event!.primaryImage,
-        "externalLink": "", // TODO
+        "externalLink": widget.event!.externalLink,
       };
     } else {
       data = {};
