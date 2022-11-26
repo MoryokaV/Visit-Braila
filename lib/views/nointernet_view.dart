@@ -63,10 +63,8 @@ class NoInternetView extends StatelessWidget {
                       return TextButton(
                         onPressed: connection.isOnline
                             ? () {
-                                WidgetsBinding.instance.addPostFrameCallback((_) {
-                                  connection.popup = false;
-                                  Navigator.of(context).pushReplacementNamed('/');
-                                });
+                                connection.popup = false;
+                                Navigator.of(context).pushReplacementNamed('/');
                               }
                             : null,
                         child: const Text(
