@@ -203,7 +203,7 @@ def insertEvent():
 
 @app.route("/api/fetchEvents")
 def fetchEvents():
-    return json.dumps(list(db.events.find()), default=str)
+    return json.dumps(list(db.events.find().sort("date_time", 1)), default=str)
 
 @app.route("/api/deleteEvent/<_id>", methods=["DELETE"])
 def deleteEvent(_id):
