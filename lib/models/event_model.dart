@@ -22,7 +22,7 @@ class Event {
     return Event(
       id: json['_id'],
       name: json['name'],
-      dateTime: DateTime.parse(json['date_time']),
+      dateTime: DateTime.parse(json['date_time']).add(DateTime.parse(json['date_time']).timeZoneOffset),
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       primaryImage: json['primary_image'],

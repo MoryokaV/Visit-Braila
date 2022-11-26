@@ -11,6 +11,7 @@ import os
 import json
 import hashlib
 from dateutil import parser
+from dateutil.relativedelta import relativedelta
 
 app = Flask(__name__)
 app.config["MEDIA_FOLDER"] = os.path.join(app.root_path, "static/media")
@@ -190,8 +191,14 @@ def editTour():
 @app.route("/api/insertEvent", methods=["POST"])
 def insertEvent():
     event = request.get_json()
+
+    date_time = parser.isoparse(event['date_time'])
+    expire_at = date_time + relativedelta(days=+1)
     
-    db.events.insert_one({"name": event['name'], "date_time": parser.isoparse(event['date_time']), "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
+    db.events.insert_one({"name": event['name'], "date_time": date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
+    
+    cleanUpEventsImages()
+
     return make_response("New entry has been inserted", 200) 
 
 @app.route("/api/fetchEvents")
@@ -223,7 +230,10 @@ def editEvent():
     deleteImages(data['images_to_delete'], 'events')
     event = data['event'] 
 
-    db.events.update_one({"_id": ObjectId(event['_id'])}, {"$set": {"name": event['name'], "date_time": parser.isoparse(event['date_time']), "description": event['description'], "images": event['images'], "primary_image": event['primary_image']}})
+    date_time = parser.isoparse(event['date_time'])
+    expire_at = date_time + relativedelta(days=+1)
+
+    db.events.update_one({"_id": ObjectId(event['_id'])}, {"$set": {"name": event['name'], "date_time": date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/fetchTags")
@@ -330,6 +340,23 @@ def deleteImages(images, collection):
         if occurrences == 1:
             try:
                 os.remove(app.root_path + image)
+            except:
+                pass
+
+def cleanUpEventsImages():
+    # Because of MongoDB TTL index images don't get deleted automatically
+    # so i will delete them on the next insert
+
+    folder = "/static/media/events/"
+    path = os.path.join(app.config["MEDIA_FOLDER"], "events")
+    images = os.listdir(path)
+
+    for image in images:
+        occurrences = len(list(db.events.find({"images": folder + image})))
+
+        if occurrences == 0:
+            try:
+                os.remove(os.path.join(path, image))
             except:
                 pass
 
