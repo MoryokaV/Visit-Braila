@@ -7,6 +7,7 @@ import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/services/localstorage_service.dart';
 import 'package:visit_braila/services/location_service.dart';
+import 'package:visit_braila/services/messaging_service.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
@@ -28,6 +29,8 @@ void main() async {
   );
 
   await DynamicLinksService.init();
+
+  await MessagingServce.init();
 
   runApp(const MyApp());
 }

@@ -47,6 +47,7 @@ dependencies:
   firebase_dynamic_links: ^5.0.6
   share_plus: ^4.5.3
   intl: ^0.17.0
+  firebase_messaging: ^14.1.2
 
 dev_dependencies:
   flutter_test:

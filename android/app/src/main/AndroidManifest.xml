@@ -4,6 +4,11 @@
         android:label="Visit Brăila"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notif" />
+            
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
