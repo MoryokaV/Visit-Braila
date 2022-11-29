@@ -30,7 +30,7 @@ void main() async {
 
   await DynamicLinksService.init();
 
-  await MessagingServce.init();
+  await MessagingService.init();
 
   runApp(const MyApp());
 }

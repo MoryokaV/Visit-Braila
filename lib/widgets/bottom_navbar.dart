@@ -4,6 +4,7 @@ import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/views/all_events_view.dart';
 import 'package:visit_braila/views/home_view.dart';
 import 'package:visit_braila/views/wishlist_view.dart';
+import 'package:visit_braila/widgets/notifications_button.dart';
 
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({Key? key}) : super(key: key);
@@ -62,14 +63,8 @@ class _BottomNavbarState extends State<BottomNavbar> {
                   fontSize: 24,
                 ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_active_rounded,
-                color: kForegroundColor,
-              ),
-            ),
+          actions: const [
+            NotificationsButton(),
           ],
         );
       default:
