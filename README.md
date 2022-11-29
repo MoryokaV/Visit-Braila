@@ -27,7 +27,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 
 ### Cool stuff
 - Images get deleted automatically when not attached to a db document
-- MD5 login details encryption
+- SHA-256 login encryption  
 - Tags get removed from sights automatically when deleted
 - Trending - admin’s recommendations
 - UI is inspired from [Admin LTE template](https://adminlte.io/) and Bootstrap 5

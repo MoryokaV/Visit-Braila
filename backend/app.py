@@ -47,7 +47,7 @@ def logged_in(f):
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
-        if db.login.find_one()["username"] == request.json["user"] and db.login.find_one()["password"] == hashlib.md5(request.json["pass"].encode('utf-8')).hexdigest():
+        if db.login.find_one()["username"] == request.json["user"] and db.login.find_one()["password"] == hashlib.sha256(request.json["pass"].encode('utf-8')).hexdigest():
             session["logged_in"] = True 
             
             return make_response("Logged in", 200)
