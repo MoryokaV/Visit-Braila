@@ -13,6 +13,8 @@ class MessagingServce {
 
     RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
+    await FirebaseMessaging.instance.subscribeToTopic("events");
+
     if (initialMessage != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         handleNotificationData(initialMessage);

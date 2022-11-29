@@ -12,6 +12,9 @@ import json
 import hashlib
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import messaging
 
 app = Flask(__name__)
 app.config["MEDIA_FOLDER"] = os.path.join(app.root_path, "static/media")
@@ -22,6 +25,9 @@ Session(app)
 
 client = MongoClient(os.getenv("MONGO_URL"))
 db = client.visitbraila
+
+cred = credentials.Certificate(os.getenv("VB_FIREBASE_CREDENTIALS")) 
+firebase_app = firebase_admin.initialize_app(cred)
 
 @app.route("/favicon.ico")
 def favicon():
@@ -195,9 +201,11 @@ def insertEvent():
     date_time = parser.isoparse(event['date_time'])
     expire_at = date_time + relativedelta(days=+1)
     
-    db.events.insert_one({"name": event['name'], "date_time": date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
+    record = db.events.insert_one({"name": event['name'], "date_time": date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
     
     cleanUpEventsImages()
+
+    sendNotification(event['name'], record.inserted_id)
 
     return make_response("New entry has been inserted", 200) 
 
@@ -359,6 +367,21 @@ def cleanUpEventsImages():
                 os.remove(os.path.join(path, image))
             except:
                 pass
+
+def sendNotification(name, _id):
+    message = messaging.Message(
+        notification = messaging.Notification(
+            title=name,
+            body="Un nou eveniment se apropie!",
+        ),
+        data = {
+            'type': 'event',
+            'id': str(_id),
+        },
+        topic = "events",
+    )
+
+    messaging.send(message)
 
 @app.route("/api/serverStorage")
 def serverStorage():

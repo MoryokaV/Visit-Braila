@@ -15,6 +15,7 @@ backend/flask_session/
 backend/static/media/sights/
 backend/static/media/tours/
 backend/static/media/events/
+backend/serviceAccountKey.json
 
 # Flutter/Dart/Pub related
 **/doc/api/
