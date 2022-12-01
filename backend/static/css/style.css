@@ -88,7 +88,7 @@ ion-icon {
     align-items: center;
 }
 
-.gap-sm {
+gap-sm {
     gap: 8px;
 }
 
@@ -345,6 +345,21 @@ tbody tr:hover {
     flex-direction: column;
     margin-bottom: 1.4rem;
     gap: 1rem;
+}
+
+.inline-field {
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.inline-field > label {
+    width: 13rem;
+    white-space: nowrap;
+}
+
+.inline-field > input {
+    flex: 1;
 }
 
 .big-card .input-field {

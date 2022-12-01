@@ -76,7 +76,7 @@
 
     <!-- MAIN CONTENT -->
     <main class="col">
-      <h2 class="tab-title">Tell something about your app</h2>
+      <h2 class="tab-title">Tell something about you & your app</h2>
 
       <div class="center wrap" style="max-width: 100%; margin-top: 3.2rem;">
         <div class="card big-card">
@@ -92,11 +92,22 @@
         </div>
         <div class="card big-card">
           <div class="card-header">
-            <h3>Paragraph 2</h3>
+            <h3>Contact</h3>
           </div>
           <div class="card-body">
-            <form id="paragraph-2-form"> 
-              <div id="paragraph-2-content"></div>
+            <form id="contact-form">
+              <div class="input-field inline-field">
+                <label for="director">Director</label>
+                <input type="text" id="director" name="director" required />
+              </div>
+              <div class="input-field inline-field">
+                <label for="phone">Phone number</label>
+                <input type="tel" id="phone" name="phone" required />
+              </div>
+              <div class="input-field inline-field"> 
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
               <button type="submit" class="btn primary-btn"><span>Save</span></button>
             </form>
           </div>

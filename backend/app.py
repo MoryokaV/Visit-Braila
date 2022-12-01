@@ -300,22 +300,26 @@ def updateTrendingItemIndex():
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
     return make_response("Entry has been updated", 200)
 
-@app.route("/api/fetchAboutParagraphs")
-def fetchAboutParagraphs():
-    return json.dumps(list(db.about.find()), default=str)
+@app.route("/api/fetchAboutParagraph")
+def fetchAboutParagraph():
+    return json.dumps(db.about.find_one({"name": "paragraph1"}), default=str)
+
+@app.route("/api/fetchContactDetails")
+def fetchContactDetails():
+    return json.dumps(db.about.find_one({"name": "contact"}), default=str)
 
 @app.route("/api/updateAboutParagraph", methods=["PUT"])
 def updateAboutParagraph():
     updatedContent = request.get_json()
-    paragraphs = json.loads(fetchAboutParagraphs())
-    _id = None
 
-    for paragraph in paragraphs:
-        if paragraph['name'] == updatedContent['name']:
-            _id = paragraph['_id']            
-            break
+    db.about.update_one({"name": "paragraph1"}, {"$set": {"content": updatedContent['content']}})
+    return make_response("Entry has been updated", 200)
 
-    db.about.update_one({"_id": ObjectId(_id)}, {"$set": {"content": updatedContent['content']}})
+@app.route("/api/updateContactDetails", methods=["PUT"])
+def updateContactDetails():
+    details = request.get_json()
+
+    db.about.update_one({"name": "contact"}, {"$set": {"director": details['director'], "phone": details['phone'], "email": details['email']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
