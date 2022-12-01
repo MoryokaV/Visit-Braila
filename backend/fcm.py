@@ -52,6 +52,14 @@ def sendDailyNotification():
         data = {
             'type': 'tomorrow_events',
         },
+        android = messaging.AndroidConfig(
+            ttl = timedelta(days=2),
+        ),
+        apns = messaging.APNSConfig(
+            headers = {
+                "apns-expiration": "172800",
+            }
+        ),
         topic = "events",
     )
 
