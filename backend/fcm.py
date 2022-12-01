@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from pymongo import MongoClient
 from firebase_admin import credentials
 from firebase_admin import messaging
@@ -26,6 +28,9 @@ def sendDailyNotification():
             tomorrow_events += 1
         elif diff.days > 1:
             break
+
+    if tomorrow_events == 0:
+        return
 
     title = "Mâine în orașul tău"
     body = ""
