@@ -85,7 +85,7 @@ class EventCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: const [tinyShadow],
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
@@ -95,8 +95,8 @@ class EventCard extends StatelessWidget {
                 tag: event.id,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    bottomLeft: Radius.circular(16),
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
                   ),
                   child: Image.network(
                     event.images[event.primaryImage - 1],

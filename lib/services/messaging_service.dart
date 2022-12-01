@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:visit_braila/controllers/event_controller.dart';
 import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
-import 'package:visit_braila/widgets/bottom_navbar.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
