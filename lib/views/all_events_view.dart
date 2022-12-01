@@ -24,6 +24,33 @@ class AllEventsView extends StatelessWidget {
         future: eventController.fetchEvents(),
         builder: (context, events) {
           if (events.hasData) {
+            if (events.data!.isEmpty) {
+              return SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/calendar4-event.svg",
+                      width: 50,
+                      color: kDisabledIconColor,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      "Niciun eveniment activ",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: kDimmedForegroundColor,
+                          ),
+                    ),
+                  ],
+                ),
+              );
+            }
+
             return ListView.separated(
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
