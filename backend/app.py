@@ -300,19 +300,30 @@ def updateTrendingItemIndex():
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
     return make_response("Entry has been updated", 200)
 
-@app.route("/api/fetchAboutParagraph")
-def fetchAboutParagraph():
+@app.route("/api/fetchAboutParagraph1")
+def fetchAboutParagraph1():
     return json.dumps(db.about.find_one({"name": "paragraph1"}), default=str)
+
+@app.route("/api/fetchAboutParagraph2")
+def fetchAboutParagraph2():
+    return json.dumps(db.about.find_one({"name": "paragraph2"}), default=str)
 
 @app.route("/api/fetchContactDetails")
 def fetchContactDetails():
     return json.dumps(db.about.find_one({"name": "contact"}), default=str)
 
-@app.route("/api/updateAboutParagraph", methods=["PUT"])
-def updateAboutParagraph():
+@app.route("/api/updateAboutParagraph1", methods=["PUT"])
+def updateAboutParagraph1():
     updatedContent = request.get_json()
 
     db.about.update_one({"name": "paragraph1"}, {"$set": {"content": updatedContent['content']}})
+    return make_response("Entry has been updated", 200)
+
+@app.route("/api/updateAboutParagraph2", methods=["PUT"])
+def updateAboutParagraph2():
+    updatedContent = request.get_json()
+
+    db.about.update_one({"name": "paragraph2"}, {"$set": {"content": updatedContent['content']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/updateContactDetails", methods=["PUT"])
