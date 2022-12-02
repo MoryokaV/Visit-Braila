@@ -270,7 +270,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                           CircleAvatar(
                                             backgroundColor: lightGrey,
                                             child: const Text(
-                                              "VM",
+                                              "MV",
                                               style: TextStyle(
                                                 fontFamily: labelFont,
                                                 color: kForegroundColor,
@@ -282,7 +282,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                             width: 8,
                                           ),
                                           const Text(
-                                            "Vlaviano Mario",
+                                            "Mario Vlaviano",
                                             style: TextStyle(
                                               fontFamily: labelFont,
                                               color: kForegroundColor,

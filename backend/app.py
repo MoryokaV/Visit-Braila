@@ -340,7 +340,7 @@ def uploadImages(folder):
 
         compressed = Image.open(image)        
         
-        compressed.save(os.path.join(app.config["MEDIA_FOLDER"], path), optimize=True, quality=65)
+        compressed.convert("RGB").save(os.path.join(app.config["MEDIA_FOLDER"], path), format="JPEG", optimize=True, quality=55)
 
     return make_response("Images have been uploaded", 200)
 
