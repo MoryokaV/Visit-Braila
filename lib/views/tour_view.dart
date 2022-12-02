@@ -157,118 +157,117 @@ class _TourViewState extends State<TourView> {
                       height: Responsive.safeBlockVertical * 36,
                       child: const LoadingSpinner(),
                     )
-                  : SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 22,
-                          vertical: 12,
-                        ),
-                        child: AnimatedBuilder(
-                          animation: widget.routeAnimation,
-                          builder: (context, _) {
-                            return FadeTransition(
-                              opacity: CurvedAnimation(
-                                parent: widget.routeAnimation,
-                                curve: const Interval(0.6, 1),
+                  : Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 22,
+                      vertical: 12,
+                    ),
+                    child: AnimatedBuilder(
+                      animation: widget.routeAnimation,
+                      builder: (context, _) {
+                        return FadeTransition(
+                          opacity: CurvedAnimation(
+                            parent: widget.routeAnimation,
+                            curve: const Interval(0.6, 1),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.tour.name,
+                                style: Theme.of(context).textTheme.headline1,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/route.svg",
+                                    width: 24,
+                                    color: kPrimaryColor,
+                                  ),
+                                  const SizedBox(
+                                    width: 6,
+                                  ),
                                   Text(
-                                    widget.tour.name,
-                                    style: Theme.of(context).textTheme.headline1,
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/icons/route.svg",
-                                        width: 24,
-                                        color: kPrimaryColor,
-                                      ),
-                                      const SizedBox(
-                                        width: 6,
-                                      ),
-                                      Text(
-                                        "${calcLength(widget.tour.length)} lungime",
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  buildStagesRow(),
-                                  const SizedBox(
-                                    height: 18,
-                                  ),
-                                  HtmlDescription(
-                                    data: widget.tour.description,
-                                  ),
-                                  const SizedBox(
-                                    height: 18,
-                                  ),
-                                  SizedBox(
-                                    height: Responsive.safeBlockHorizontal * 35,
-                                    child: ListView.separated(
-                                      itemCount: widget.tour.images.length > 4 ? 5 : widget.tour.images.length,
-                                      scrollDirection: Axis.horizontal,
-                                      separatorBuilder: (context, index) {
-                                        return const SizedBox(width: 10);
-                                      },
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: () => Navigator.pushNamed(
-                                            context,
-                                            "/gallery",
-                                            arguments: {
-                                              "startIndex": index,
-                                              "tour": widget.tour,
-                                            },
-                                          ),
-                                          child: index != 4
-                                              ? ClipRRect(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  child: Image.network(
-                                                    widget.tour.images[index],
-                                                    fit: BoxFit.cover,
-                                                    width: Responsive.safeBlockVertical * 25,
-                                                  ),
-                                                )
-                                              : Container(
-                                                  width: Responsive.safeBlockVertical * 25,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: lightGrey,
-                                                      width: 1.5,
-                                                    ),
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "+${widget.tour.images.length - 4}",
-                                                      style:
-                                                          Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
-                                                    ),
-                                                  ),
-                                                ),
-                                        );
-                                      },
+                                    "${calcLength(widget.tour.length)} lungime",
+                                    style: const TextStyle(
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
                               ),
-                            );
-                          },
-                        ),
-                      ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              buildStagesRow(),
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              HtmlDescription(
+                                data: widget.tour.description,
+                                shrink: true,
+                              ),
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              SizedBox(
+                                height: Responsive.safeBlockHorizontal * 35,
+                                child: ListView.separated(
+                                  itemCount: widget.tour.images.length > 4 ? 5 : widget.tour.images.length,
+                                  scrollDirection: Axis.horizontal,
+                                  separatorBuilder: (context, index) {
+                                    return const SizedBox(width: 10);
+                                  },
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () => Navigator.pushNamed(
+                                        context,
+                                        "/gallery",
+                                        arguments: {
+                                          "startIndex": index,
+                                          "tour": widget.tour,
+                                        },
+                                      ),
+                                      child: index != 4
+                                          ? ClipRRect(
+                                              borderRadius: BorderRadius.circular(10),
+                                              child: Image.network(
+                                                widget.tour.images[index],
+                                                fit: BoxFit.cover,
+                                                width: Responsive.safeBlockVertical * 25,
+                                              ),
+                                            )
+                                          : Container(
+                                              width: Responsive.safeBlockVertical * 25,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: lightGrey,
+                                                  width: 1.5,
+                                                ),
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  "+${widget.tour.images.length - 4}",
+                                                  style:
+                                                      Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
+                                                ),
+                                              ),
+                                            ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
+                  ),
             ),
           ],
         ),

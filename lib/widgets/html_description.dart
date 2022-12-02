@@ -7,10 +7,12 @@ import 'package:visit_braila/utils/url_constants.dart';
 
 class HtmlDescription extends StatefulWidget {
   final String data;
+  final bool shrink;
 
   const HtmlDescription({
     super.key,
     required this.data,
+    required this.shrink,
   });
 
   @override
@@ -57,7 +59,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
     caseSensitive: true,
   );
 
-  bool isEmptyDescription(){
+  bool isEmptyDescription() {
     return widget.data == "<p><br></p>";
   }
 
@@ -77,7 +79,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
   Widget build(BuildContext context) {
     return isEmptyDescription()
         ? const Text("Nu există descriere")
-        : longDescription
+        : widget.shrink && longDescription
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

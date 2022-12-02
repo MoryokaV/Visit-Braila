@@ -117,134 +117,133 @@ class EventView extends StatelessWidget {
               ),
             ),
             SliverToBoxAdapter(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 22,
-                    vertical: 12,
-                  ),
-                  child: AnimatedBuilder(
-                    animation: routeAnimation,
-                    builder: (context, _) {
-                      return FadeTransition(
-                        opacity: CurvedAnimation(
-                          parent: routeAnimation,
-                          curve: const Interval(0.6, 1),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              event.name,
-                              style: Theme.of(context).textTheme.headline1,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.calendar_month,
-                                  color: kDisabledIconColor,
-                                  size: 22,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 22,
+                  vertical: 12,
+                ),
+                child: AnimatedBuilder(
+                  animation: routeAnimation,
+                  builder: (context, _) {
+                    return FadeTransition(
+                      opacity: CurvedAnimation(
+                        parent: routeAnimation,
+                        curve: const Interval(0.6, 1),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            event.name,
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_month,
+                                color: kDisabledIconColor,
+                                size: 22,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                DateFormat.yMMMMEEEEd('ro-RO').format(event.dateTime),
+                                style: const TextStyle(
+                                  color: kDimmedForegroundColor,
+                                  fontFamily: labelFont,
+                                  fontSize: 16,
                                 ),
-                                const SizedBox(
-                                  width: 8,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/icons/clock.svg",
+                                color: kDisabledIconColor,
+                                width: 22,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                DateFormat.Hm('ro-RO').format(event.dateTime),
+                                style: const TextStyle(
+                                  color: kDimmedForegroundColor,
+                                  fontFamily: labelFont,
+                                  fontSize: 16,
                                 ),
-                                Text(
-                                  DateFormat.yMMMMEEEEd('ro-RO').format(event.dateTime),
-                                  style: const TextStyle(
-                                    color: kDimmedForegroundColor,
-                                    fontFamily: labelFont,
-                                    fontSize: 16,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          HtmlDescription(
+                            data: event.description,
+                            shrink: true,
+                          ),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          SizedBox(
+                            height: Responsive.safeBlockHorizontal * 35,
+                            child: ListView.separated(
+                              itemCount: event.images.length > 4 ? 5 : event.images.length,
+                              scrollDirection: Axis.horizontal,
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(width: 10);
+                              },
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    "/gallery",
+                                    arguments: {
+                                      "startIndex": index,
+                                      "event": event,
+                                    },
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/clock.svg",
-                                  color: kDisabledIconColor,
-                                  width: 22,
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  DateFormat.Hm('ro-RO').format(event.dateTime),
-                                  style: const TextStyle(
-                                    color: kDimmedForegroundColor,
-                                    fontFamily: labelFont,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 18,
-                            ),
-                            HtmlDescription(
-                              data: event.description,
-                            ),
-                            const SizedBox(
-                              height: 18,
-                            ),
-                            SizedBox(
-                              height: Responsive.safeBlockHorizontal * 35,
-                              child: ListView.separated(
-                                itemCount: event.images.length > 4 ? 5 : event.images.length,
-                                scrollDirection: Axis.horizontal,
-                                separatorBuilder: (context, index) {
-                                  return const SizedBox(width: 10);
-                                },
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () => Navigator.pushNamed(
-                                      context,
-                                      "/gallery",
-                                      arguments: {
-                                        "startIndex": index,
-                                        "event": event,
-                                      },
-                                    ),
-                                    child: index != 4
-                                        ? ClipRRect(
-                                            borderRadius: BorderRadius.circular(10),
-                                            child: Image.network(
-                                              event.images[index],
-                                              fit: BoxFit.cover,
-                                              width: Responsive.safeBlockVertical * 25,
-                                            ),
-                                          )
-                                        : Container(
+                                  child: index != 4
+                                      ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: Image.network(
+                                            event.images[index],
+                                            fit: BoxFit.cover,
                                             width: Responsive.safeBlockVertical * 25,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: lightGrey,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        )
+                                      : Container(
+                                          width: Responsive.safeBlockVertical * 25,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: lightGrey,
+                                              width: 1.5,
                                             ),
-                                            child: Center(
-                                              child: Text(
-                                                "+${event.images.length - 4}",
-                                                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
-                                              ),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "+${event.images.length - 4}",
+                                              style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
                                             ),
                                           ),
-                                  );
-                                },
-                              ),
+                                        ),
+                                );
+                              },
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

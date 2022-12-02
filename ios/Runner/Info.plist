@@ -33,6 +33,7 @@
 		<string>yandexnavi</string>
 		<string>here-location</string>
 		<string>tomtomgo</string>
+		<string>tel</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

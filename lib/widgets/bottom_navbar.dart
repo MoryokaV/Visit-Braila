@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/views/about_view.dart';
 import 'package:visit_braila/views/all_events_view.dart';
 import 'package:visit_braila/views/home_view.dart';
 import 'package:visit_braila/views/wishlist_view.dart';
@@ -20,6 +21,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
     HomeView(),
     const WishlistView(),
     AllEventsView(),
+    const AboutView(),
   ];
 
   AppBar? getAppBar(BuildContext context) {

@@ -42,6 +42,34 @@ const BoxShadow topShadow = BoxShadow(
   spreadRadius: 0.5,
 );
 
+const List<BoxShadow> topOnlyShadows = [
+  BoxShadow(
+    color: Colors.black38,
+    offset: Offset(0, -2),
+    blurRadius: 5,
+  ),
+  BoxShadow(
+    color: Colors.white,
+    offset: Offset(0, 2),
+    spreadRadius: 2,
+  ),
+];
+
+const List<BoxShadow> shadowLg = [
+  BoxShadow(
+    color: Colors.black12,
+    offset: Offset(0, 10),
+    blurRadius: 15,
+    spreadRadius: -3,
+  ),
+  BoxShadow(
+    color: Colors.black12,
+    offset: Offset(0, 4),
+    blurRadius: 6,
+    spreadRadius: -4,
+  ),
+];
+
 const BoxShadow tinyShadow = BoxShadow(
   color: Colors.black12,
   offset: Offset(0, 0.5),
