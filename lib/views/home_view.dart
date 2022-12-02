@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,39 +49,44 @@ class HomeView extends StatelessWidget {
                           child: Stack(
                             alignment: Alignment.topCenter,
                             children: [
-                              Image.asset(
-                                "assets/images/braila_night.jpg",
-                                fit: BoxFit.cover,
-                                height: Responsive.safeBlockVertical * 35,
-                                width: Responsive.screenWidth,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12, top: 12),
-                                child: RichText(
-                                  text: const TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "Brăila",
+                              Stack(
+                                alignment: Alignment.topLeft,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/braila_night.jpg",
+                                    fit: BoxFit.cover,
+                                    height: Responsive.safeBlockVertical * 35,
+                                    width: Responsive.screenWidth,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 18, top: 12),
+                                    child: RichText(
+                                      text: const TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: "Brăila",
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: " - un oraș istoric de pe malul Dunării",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
                                         style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                          fontFamily: bodyFont,
+                                          height: 1.4,
                                         ),
                                       ),
-                                      TextSpan(
-                                        text: " - un oraș istoric de pe malul Dunării",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: bodyFont,
-                                      height: 1.4,
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                               const Positioned(
                                 bottom: 0,

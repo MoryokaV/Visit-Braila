@@ -3,8 +3,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
 
-const Duration kInterval = Duration(seconds: 3);
-
 class ConnectionService extends ChangeNotifier {
   static late bool initialConnectionStatus;
   late bool isOnline;

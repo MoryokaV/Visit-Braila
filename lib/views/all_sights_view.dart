@@ -259,6 +259,7 @@ class SightCard extends StatelessWidget {
                         sight.images[sight.primaryImage - 1],
                         fit: BoxFit.cover,
                         height: double.infinity,
+                        width: double.infinity,
                       ),
                       if (sight.tags.isNotEmpty)
                         Align(

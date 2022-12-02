@@ -95,7 +95,7 @@ def about():
 def insertSight():
     sight = request.get_json()
 
-    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": sight['latitude'], "longitude": sight['longitude'], "external_link": sight['external_link']})
+    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": float(sight['latitude']), "longitude": float(sight['longitude']), "external_link": sight['external_link']})
     
     return make_response("New entry has been inserted", 200)
 
@@ -147,7 +147,7 @@ def editSight():
     deleteImages(data['images_to_delete'], 'sights')
     sight = data['sight']
 
-    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": sight['latitude'], "longitude": sight['longitude'], "external_link": sight['external_link']}})
+    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": float(sight['latitude']), "longitude": float(sight['longitude']), "external_link": sight['external_link']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/insertTour", methods=["POST"])
@@ -259,7 +259,7 @@ def deleteTag(name):
     for sight in sights:
         if name in sight['tags']:
             sight['tags'].remove(name)
-            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": sight['latitude'], "longitude": sight['longitude'], "external_link": sight['external_link']}})
+            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": float(sight['latitude']), "longitude": float(sight['longitude']), "external_link": sight['external_link']}})
          
     db.tags.delete_one({"name": name})
 
