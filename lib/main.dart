@@ -18,7 +18,7 @@ void main() async {
 
   await LocalStorage.init();
 
-  Responsive().init();
+  await Responsive().init();
 
   await ConnectionService.init();
 
