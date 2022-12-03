@@ -1,13 +1,15 @@
 export const getFilename = path => path.substring(path.lastIndexOf('/') + 1);
+const diacritice = "ĂăÂâÎîȘșȚț";
+const diacritice_mari = "ĂÂÎȘȚ";
 
 // Loading animation
 export const startLoadingAnimation = container => container.find(`button[type="submit"]`).addClass("loading-btn");
 export const endLoadingAnimation = container => container.find(`button[type="submit"]`).removeClass("loading-btn");
 
 // Form Validation
-export const nameRegExp = "^[A-Za-z][A-Za-z0-9,.\"'() -]*$"
-export const addressRegExp = "^[A-Za-z0-9][A-Za-z0-9,.\"'() -]*$"
-export const tagRegExp = "^[A-Z][A-Za-z]*$"
+export const nameRegExp = `^[A-Za-z${diacritice}][A-Za-z0-9${diacritice},.\"'() -]*$`
+export const addressRegExp = `^[A-Za-z0-9${diacritice}][A-Za-z0-9${diacritice},.\"'() -]*$`
+export const tagRegExp = `^[A-Z${diacritice_mari}][A-Za-z${diacritice}]*$`
 export const idRegExp = "^[0-9a-fA-F]{24}$"
 export const phoneRegExp = "^(\\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?([0-9]{3}){2}$"
 export const latitudeRegExp = "^(\\+|-)?(?:90(?:(?:\\.0{1,15})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,15})?))$"
