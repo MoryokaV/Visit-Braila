@@ -31,7 +31,7 @@ const appendStages = () => {
   tour.stages.map((stage, index) => {
     $("#stages").append(
       `<div class="stage">
-        <input type="text" value="${stage.text}" size="${stage.text.length}" maxlength="55" required /> 
+        <input type="text" size="${stage.text.length}" maxlength="55" required /> 
         <ion-icon name="link-outline" class="stage-input-icon ${stage.sight_link !== "" ? "active" : ""}"></ion-icon>
       </div>
       ${stage.sight_link !== "" ? linkInputElement(stage.sight_link) : ``}
@@ -44,6 +44,7 @@ const appendStages = () => {
       }`
     );
 
+    $("#stages > div").eq(index).find(" > input").val(stage.text);
     $("#preview-stages").append(`${$("#preview-stages p").length > 0 ? " &ndash; " : ""}<p class="${stage.sight_link !== "" ? "hyperlink" : ""}">${stage.text}</p>`);
   });
 
