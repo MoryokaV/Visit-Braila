@@ -31,7 +31,7 @@ const appendStages = () => {
   tour.stages.map((stage, index) => {
     $("#stages").append(
       `<div class="stage">
-        <input type="text" value="${stage.text}" size="${stage.text.length}" maxlength="40" required /> 
+        <input type="text" value="${stage.text}" size="${stage.text.length}" maxlength="55" required /> 
         <ion-icon name="link-outline" class="stage-input-icon ${stage.sight_link !== "" ? "active" : ""}"></ion-icon>
       </div>
       ${stage.sight_link !== "" ? linkInputElement(stage.sight_link) : ``}
