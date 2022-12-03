@@ -11,6 +11,7 @@ import 'package:visit_braila/utils/navigation_util.dart';
 
 const String uriPrefix = "https://visitbraila.page.link";
 const String customDomain = "https://visitbraila.ro";
+final FirebaseDynamicLinks _firebaseDynamicLinks = FirebaseDynamicLinks.instance;
 
 class DynamicLinksService {
   static bool handleInitialLink = true;
@@ -42,7 +43,7 @@ class DynamicLinksService {
       ),
     );
 
-    final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(
+    final dynamicLink = await _firebaseDynamicLinks.buildShortLink(
       dynamicLinkParams,
       shortLinkType: ShortDynamicLinkType.unguessable,
     );
@@ -51,9 +52,7 @@ class DynamicLinksService {
   }
 
   static init() async {
-    await startUrl();
-
-    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+    _firebaseDynamicLinks.onLink.listen((dynamicLinkData) {
       handleRouteRedirection(dynamicLinkData.link);
     }).onError(handleError);
   }
@@ -75,7 +74,7 @@ class DynamicLinksService {
   }
 
   static Future<void> startUrl() async {
-    final PendingDynamicLinkData? initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData? initialLink = await _firebaseDynamicLinks.getInitialLink();
 
     if (initialLink == null) {
       handleInitialLink = false;

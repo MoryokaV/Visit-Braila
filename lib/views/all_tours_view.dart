@@ -94,35 +94,40 @@ class _AllToursViewState extends State<AllToursView> {
       body: SafeArea(
         child: isLoading
             ? const LoadingSpinner()
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 14,
+            : CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 14,
+                        right: 14,
+                        top: 10,
+                      ),
+                      child: Column(
+                        children: [
+                          SearchListField(
+                            onChanged: updateList,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      SearchListField(
-                        onChanged: updateList,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      StaggeredGridView.countBuilder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: filteredData.length,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        itemBuilder: (context, index) {
-                          return TourCard(tour: filteredData[index]);
-                        },
-                        staggeredTileBuilder: (_) => const StaggeredTile.fit(1),
-                      ),
-                    ],
+                  SliverPadding(
+                    padding: const EdgeInsets.only(left: 14, right: 14, bottom: 20),
+                    sliver: SliverMasonryGrid.count(
+                      childCount: filteredData.length,
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      itemBuilder: (context, index) {
+                        return TourCard(tour: filteredData[index]);
+                      },
+                    ),
                   ),
-                ),
+                ],
               ),
       ),
     );

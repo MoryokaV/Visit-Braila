@@ -132,11 +132,10 @@ class SearchAll extends SearchDelegate<String> {
         if (snapshot.hasData) {
           List filteredData = getResults(snapshot.data!);
 
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
+          return CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
                   padding: const EdgeInsets.only(left: 16, top: 12),
                   child: Text(
                     filteredData.length != 1
@@ -148,11 +147,11 @@ class SearchAll extends SearchDelegate<String> {
                         ),
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: filteredData.length,
-                  itemBuilder: (context, index) {
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: filteredData.length,
+                  (context, index) {
                     var result = filteredData[index];
                     bool isSight = allSights.contains(result);
 
@@ -165,17 +164,18 @@ class SearchAll extends SearchDelegate<String> {
                         color: kPrimaryColor,
                       ),
                       title: RichText(
-                          text: TextSpan(
-                        children: highlightedText(result.name.toString()),
-                        style: const TextStyle(
-                          color: Colors.grey,
+                        text: TextSpan(
+                          children: highlightedText(result.name.toString()),
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
-                      )),
+                      ),
                     );
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         } else if (snapshot.hasError && snapshot.error is HttpException) {
           showErrorDialog(context);

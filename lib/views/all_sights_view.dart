@@ -140,80 +140,75 @@ class _AllSightsViewState extends State<AllSightsView> {
         body: SafeArea(
           child: isLoading
               ? const LoadingSpinner()
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8,
-                      bottom: 24,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: SearchListField(
-                            onChanged: updateList,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        SizedBox(
-                          height: 40,
-                          child: ListView.separated(
-                            itemCount: tags.length,
-                            scrollDirection: Axis.horizontal,
+              : CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(
-                                width: 10,
-                              );
-                            },
-                            itemBuilder: (context, index) {
-                              bool isSelected = selectedIndex == index;
+                            child: SearchListField(
+                              onChanged: updateList,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                            height: 40,
+                            child: ListView.separated(
+                              itemCount: tags.length,
+                              scrollDirection: Axis.horizontal,
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  width: 10,
+                                );
+                              },
+                              itemBuilder: (context, index) {
+                                bool isSelected = selectedIndex == index;
 
-                              return ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  backgroundColor: isSelected ? kBlackColor : lightGrey,
-                                  foregroundColor: isSelected ? Colors.white : kForegroundColor,
-                                  textStyle: Theme.of(context).textTheme.button!.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                        color: isSelected ? Colors.white : kForegroundColor,
-                                      ),
-                                  shape: const StadiumBorder(),
-                                ),
-                                onPressed: () => setTag(index),
-                                child: Text(
-                                  tags[index],
-                                ),
-                              );
-                            },
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor: isSelected ? kBlackColor : lightGrey,
+                                    foregroundColor: isSelected ? Colors.white : kForegroundColor,
+                                    textStyle: Theme.of(context).textTheme.button!.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                          color: isSelected ? Colors.white : kForegroundColor,
+                                        ),
+                                    shape: const StadiumBorder(),
+                                  ),
+                                  onPressed: () => setTag(index),
+                                  child: Text(
+                                    tags[index],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: filteredData.length,
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(height: 25);
-                            },
-                            itemBuilder: (context, index) {
-                              return SightCard(
-                                sight: filteredData[index],
-                                heroTag: disableHero ? index.toString() : filteredData[index].id,
-                              );
-                            },
+                          const SizedBox(
+                            height: 30,
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          childCount: filteredData.length,
+                          (context, index) {
+                            return SightCard(
+                              sight: filteredData[index],
+                              heroTag: disableHero ? index.toString() : filteredData[index].id,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
         ),
       ),
@@ -374,6 +369,9 @@ class SightCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          const SizedBox(
+            height: 24,
           ),
         ],
       ),

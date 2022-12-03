@@ -7,9 +7,11 @@ import 'package:visit_braila/utils/navigation_util.dart';
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
 class MessagingService {
   static init() async {
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage = await _firebaseMessaging.getInitialMessage();
 
     if (initialMessage != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -17,7 +19,10 @@ class MessagingService {
       });
     }
 
-    await FirebaseMessaging.instance.subscribeToTopic("events");
+    await _firebaseMessaging
+        .subscribeToTopic("events")
+        .timeout(const Duration(seconds: 3))
+        .onError((error, stackTrace) => null);
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -63,7 +68,7 @@ class MessagingService {
   }
 
   static Future<bool> checkNotificationPermission() async {
-    NotificationSettings settings = await FirebaseMessaging.instance.getNotificationSettings();
+    NotificationSettings settings = await _firebaseMessaging.getNotificationSettings();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       return true;
