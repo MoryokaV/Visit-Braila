@@ -8,7 +8,8 @@
 Admin panel used by app owners to manage database entries. This custom tool is a GUI which helps you update content safely with validation, encryption and no technical skills. The CMS allows managers to keep their apps up-to-date in realtime with no need for consultation.
 
 ### Screenshots
-![all white bg](https://user-images.githubusercontent.com/55505135/185123116-4d9f7fe0-b61b-4f40-9cc0-e70a9fc88557.png)
+![cms](https://user-images.githubusercontent.com/55505135/205488743-8b2f64e9-f597-4b5e-bf5e-0da82032bf8a.png)
+
 
 ### Features
 📝 Form validation using regexp  
@@ -31,6 +32,8 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 - Tags get removed from sights automatically when deleted
 - Trending - admin’s recommendations
 - UI is inspired from [Admin LTE template](https://adminlte.io/) and Bootstrap 5
+- Linux Cron Job for daily notifications
+- MongoDB TTL events index for automatically deletion
 
 ## Tech Stack used:
 - Backend:
