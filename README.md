@@ -1,15 +1,54 @@
-# Visit-Braila
+# Visit Brăila
 
 <img alt="Danube at Braila" src="https://user-images.githubusercontent.com/55505135/190634742-a9624d79-a607-4ee4-b927-9b22949596f4.png" width="280" height="280">
 
 *Your personal guide for discovering the small community of Brăila, România* 📍
+
+## Mobile App
+***Visit Brăila*** connects citizens and tourists with each other. Sights, tours and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
+
+### Features
+📲 Cross-platform compatibility: Android & iOS  
+✏️ Responsive & Adaptive UI  
+🔎 Search system  
+💦 Native iOS & Android splash screen  
+♥️ Persistent items wishlist  
+🌆 Network images caching  
+💬 Firebase Cloud Messaging implementation  
+🧲 Dynamic Links  
+⚠️ Proper error & connectivity handling  
+🧭 Real-time gps service  
+
+### Dependencies
+- [firebase_core](https://pub.dev/packages/firebase_core), [firebase_dynamic_links](https://pub.dev/packages/firebase_dynamic_links), [firebase_messaging](https://pub.dev/packages/firebase_messaging): link between Firebase services and Flutter app
+- [share_plus](https://pub.dev/packages/share_plus): native share popup
+- [geolocator](https://pub.dev/packages/geolocator): geolocation api
+- [flutter_html](https://pub.dev/packages/flutter_html): html content render
+- [provider](https://pub.dev/packages/provider): state management
+- [map_launcher](https://pub.dev/packages/map_launcher): maps app launcher at given coordinates
+- [photo_view](https://pub.dev/packages/photo_view): gallery helper widget
+
+### Cool stuff
+- Adaptive Android app icon
+- Rich text descriptions in HTML format
+- MVC design pattern 
+- Preferred maps app navigation
+- Daily events newsletter
+
+### Requirements
+```
+- Android 5.1 or above (API level 22)
+- iOS 12.0 or above
+- 65Mb free space storage
+- Internet connection
+- Google Play Services installed (Android users only)
+```
 
 ## CMS
 Admin panel used by app owners to manage database entries. This custom tool is a GUI which helps you update content safely with validation, encryption and no technical skills. The CMS allows managers to keep their apps up-to-date in realtime with no need for consultation.
 
 ### Screenshots
 ![cms](https://user-images.githubusercontent.com/55505135/205488743-8b2f64e9-f597-4b5e-bf5e-0da82032bf8a.png)
-
 
 ### Features
 📝 Form validation using regexp  
@@ -46,7 +85,9 @@ Admin panel used by app owners to manage database entries. This custom tool is a
   - JavaScript + jQuery 3.6.0 (AJAX calls, manipulate DOM)
   
 - Mobile App Frontend:
-  - Flutter
-  - Google Maps API
-  - Sqflite
-  - Provider
+  - Dart
+  - Flutter Framework v3.3.9 stable
+  - Local Storage API
+  - Provider state management
+  - Firebase
+  - Geolocation API
