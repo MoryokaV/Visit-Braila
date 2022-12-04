@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -419,8 +420,10 @@ class TrendingSightCard extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      sight.images[sight.primaryImage - 1],
+                    child: CachedNetworkImage(
+                      fadeOutDuration: const Duration(milliseconds: 700),
+                      fadeInDuration: const Duration(milliseconds: 300),
+                      imageUrl: sight.images[sight.primaryImage - 1],
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),

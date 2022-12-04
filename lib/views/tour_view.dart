@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -83,8 +84,8 @@ class _TourViewState extends State<TourView> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        widget.tour.images[widget.tour.primaryImage - 1],
+                      CachedNetworkImage(
+                        imageUrl: widget.tour.images[widget.tour.primaryImage - 1],
                         fit: BoxFit.cover,
                       ),
                       Positioned(

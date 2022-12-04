@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -189,8 +190,8 @@ class SightCard extends StatelessWidget {
             tag: sight.id,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                sight.images[sight.primaryImage - 1],
+              child: CachedNetworkImage(
+                imageUrl: sight.images[sight.primaryImage - 1],
                 fit: BoxFit.cover,
                 width: 110,
                 height: 75,
@@ -266,8 +267,10 @@ class TourCard extends StatelessWidget {
             tag: tour.id,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                tour.images[tour.primaryImage - 1],
+              child: CachedNetworkImage(
+                fadeOutDuration: const Duration(milliseconds: 700),
+                fadeInDuration: const Duration(milliseconds: 300),
+                imageUrl: tour.images[tour.primaryImage - 1],
                 fit: BoxFit.cover,
                 width: 110,
                 height: 75,

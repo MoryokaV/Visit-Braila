@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -125,8 +126,10 @@ class EventCard extends StatelessWidget {
                     topLeft: Radius.circular(12),
                     bottomLeft: Radius.circular(12),
                   ),
-                  child: Image.network(
-                    event.images[event.primaryImage - 1],
+                  child: CachedNetworkImage(
+                    fadeOutDuration: const Duration(milliseconds: 700),
+                    fadeInDuration: const Duration(milliseconds: 300),
+                    imageUrl: event.images[event.primaryImage - 1],
                     width: double.infinity,
                     height: double.infinity,
                     fit: BoxFit.cover,

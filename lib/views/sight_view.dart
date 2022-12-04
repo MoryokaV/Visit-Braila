@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -87,8 +88,8 @@ class SightView extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        sight.images[sight.primaryImage - 1],
+                      CachedNetworkImage(
+                        imageUrl: sight.images[sight.primaryImage - 1],
                         fit: BoxFit.cover,
                       ),
                       Positioned(

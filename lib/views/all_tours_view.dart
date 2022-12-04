@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
@@ -154,8 +155,10 @@ class TourCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Stack(
               children: [
-                Image.network(
-                  tour.images[tour.primaryImage - 1],
+                CachedNetworkImage(
+                  fadeOutDuration: const Duration(milliseconds: 700),
+                  fadeInDuration: const Duration(milliseconds: 300),
+                  imageUrl: tour.images[tour.primaryImage - 1],
                   fit: BoxFit.cover,
                 ),
                 Positioned.fill(

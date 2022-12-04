@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
@@ -250,8 +251,10 @@ class SightCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   child: Stack(
                     children: [
-                      Image.network(
-                        sight.images[sight.primaryImage - 1],
+                      CachedNetworkImage(
+                        fadeOutDuration: const Duration(milliseconds: 700),
+                        fadeInDuration: const Duration(milliseconds: 300),
+                        imageUrl: sight.images[sight.primaryImage - 1],
                         fit: BoxFit.cover,
                         height: double.infinity,
                         width: double.infinity,

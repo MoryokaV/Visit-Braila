@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -44,8 +45,8 @@ class EventView extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        event.images[event.primaryImage - 1],
+                      CachedNetworkImage(
+                        imageUrl: event.images[event.primaryImage - 1],
                         fit: BoxFit.cover,
                       ),
                       Positioned(
