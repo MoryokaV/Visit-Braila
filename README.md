@@ -7,12 +7,14 @@
 ## Mobile App
 ***Visit Brăila*** connects citizens and tourists with each other. Sights, tours and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
 
+### Screenshots
+Coming soon...
+
 ### Features
 📲 Cross-platform compatibility: Android & iOS  
 ✏️ Responsive & Adaptive UI  
 🔎 Search system  
 💦 Native iOS & Android splash screen  
-♥️ Persistent items wishlist  
 🌆 Network images caching  
 💬 Firebase Cloud Messaging implementation  
 🧲 Dynamic Links  
@@ -34,6 +36,7 @@
 - MVC design pattern 
 - Preferred maps app navigation
 - Daily events newsletter
+- Persistent items wishlist
 
 ### Requirements
 ```
