@@ -8,7 +8,9 @@
 ***Visit Brăila*** connects citizens and tourists with each other. Sights, tours and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
 
 ### Screenshots
-Coming soon...
+Photos are coming soon...
+
+[Demo video](https://youtu.be/HjvV7aP4mrg)
 
 ### Features
 📲 Cross-platform compatibility: Android & iOS  
@@ -77,7 +79,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 - Linux Cron Job for daily notifications
 - MongoDB TTL events index for automatically deletion
 
-## Tech Stack used:
+## Tech Stack
 - Backend:
   - MongoDB
   - Python3 + Flask
@@ -87,7 +89,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
   - HTML & CSS
   - JavaScript + jQuery 3.6.0 (AJAX calls, manipulate DOM)
   
-- Mobile App Frontend:
+- Mobile App
   - Dart
   - Flutter Framework v3.3.9 stable
   - Local Storage API
