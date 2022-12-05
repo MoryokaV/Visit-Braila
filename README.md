@@ -96,3 +96,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
   - Provider state management
   - Firebase
   - Geolocation API
+
+## Contributors
+[Biblioteca Judeţeană "Panait Istrati"](https://web.facebook.com/BibliotecaBraila) - linux server provider  
+[Raluca Toma](https://www.instagram.com/ralucaa.toma/) - UI/UX design decisions and [mockup](https://www.figma.com/file/20RJnecT6sd7QwHSs7eMyA/Visit-Braila-UI?node-id=0%3A1&t=6mLhPV29pQgJXYSS-0) creator
