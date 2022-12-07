@@ -8,7 +8,7 @@
 ***Visit Brăila*** connects citizens and tourists with each other. Sights, tours and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
 
 ### Screenshots
-Photos are coming soon...
+![app](https://user-images.githubusercontent.com/55505135/205710233-87fd398a-50b1-4e8e-b50f-cb5a6cae6073.png)
 
 [Demo video](https://youtu.be/HjvV7aP4mrg)
 
@@ -39,6 +39,7 @@ Photos are coming soon...
 - Preferred maps app navigation
 - Daily events newsletter
 - Persistent items wishlist
+- Smoothly animated widgets
 
 ### Requirements
 ```
@@ -96,3 +97,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
   - Provider state management
   - Firebase
   - Geolocation API
+
+## Contributors
+[Biblioteca Judeţeană "Panait Istrati"](https://web.facebook.com/BibliotecaBraila) - linux server provider  
+[Raluca Toma](https://www.instagram.com/ralucaa.toma/) - UI/UX design decisions and [mockup](https://www.figma.com/file/20RJnecT6sd7QwHSs7eMyA/Visit-Braila-UI?node-id=0%3A1&t=6mLhPV29pQgJXYSS-0) creator
