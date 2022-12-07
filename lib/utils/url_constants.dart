@@ -1,7 +1,7 @@
 import 'package:url_launcher/url_launcher.dart';
 
-const baseUrl = "http://193.22.95.33:8080";
-const apiUrl = "http://193.22.95.33:8080/api";
+const baseUrl = "https://vizit.bjbraila.ro";
+const apiUrl = "https://vizit.bjbraila.ro/api";
 const obiectivUrl = "https://obiectivbr.ro";
 const authorFacebookUrl = "https://www.facebook.com/mario.vlaviano.75";
 const authorInstagramUrl = "https://www.instagram.com/mario.vlv";
