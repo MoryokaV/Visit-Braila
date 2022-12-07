@@ -58,6 +58,13 @@ export const fetchTours = async () => {
   });
 }
 
+const convert2LocalDate = (iso_date) => {
+  const date = new Date(iso_date);
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 1000 * 60);
+
+  return localDate;
+}
+
 export const fetchEvents = async () => {
   const data = await $.getJSON("/api/fetchEvents");
 
@@ -65,7 +72,7 @@ export const fetchEvents = async () => {
   $("#events-table tbody").empty();
 
   data.map((event) => {
-    const date_time = new Intl.DateTimeFormat('ro-RO', { dateStyle: "long", timeStyle: 'short', }).format(new Date(event.date_time));
+    const date_time = new Intl.DateTimeFormat('ro-RO', { dateStyle: "long", timeStyle: 'short', }).format(convert2LocalDate(event.date_time));
 
     $("#events-table").append(
       `<tr>

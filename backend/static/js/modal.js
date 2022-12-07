@@ -127,6 +127,13 @@ const getCurrentDate = () => {
   return localDate.toISOString().slice(0, -8);
 }
 
+const convert2LocalDate = (iso_date) => {
+  const date = new Date(iso_date);
+  const localDate = new Date(date.getTime() - 2 * (date.getTimezoneOffset() * 1000 * 60));
+
+  return localDate.toISOString().slice(0, -8);
+}
+
 export const openEditSightModal = async (id) => {
   sight = await $.getJSON("/api/findSight/" + id);
   current_images = [...sight.images];
@@ -204,7 +211,13 @@ export const openEditEventModal = async (id) => {
   $("#event-name").val(event.name);
 
   // DATE & TIME
-  $("#event-datetime").val(event.date_time);
+  console.log(getCurrentDate());
+  $("#event-datetime").attr("min", getCurrentDate());
+  $("#event-datetime").focus(function() {
+    $("#event-datetime").attr("min", getCurrentDate());
+  });
+
+  $("#event-datetime").val(convert2LocalDate(event.date_time));
 
   quill = new Quill("#event-description", {
     theme: "snow",
@@ -429,12 +442,6 @@ $(document).ready(async function() {
 
   // EVENT NAME
   $("#event-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
-
-  // EVENT DATE & TIME
-  $("#event-datetime").attr("min", getCurrentDate());
-  $("#event-datetime").focus(function() {
-    $("#event-datetime").attr("min", getCurrentDate());
-  });
 
   // EVENT IMAGES 
   $('#event-images').change(function() {
