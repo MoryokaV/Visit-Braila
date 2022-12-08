@@ -12,9 +12,12 @@ import 'package:visit_braila/utils/navigation_util.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/router.dart';
+import 'package:visit_braila/utils/url_constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await trustServer();
 
   await LocalStorage.init();
 

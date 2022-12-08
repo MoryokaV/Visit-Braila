@@ -1,11 +1,18 @@
+import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const baseUrl = "https://vizit.bjbraila.ro";
-const apiUrl = "https://vizit.bjbraila.ro/api";
+const baseUrl = "http://visit.bjbraila.ro";
+const apiUrl = "https://visit.bjbraila.ro/api";
 const obiectivUrl = "https://obiectivbr.ro";
 const authorFacebookUrl = "https://www.facebook.com/mario.vlaviano.75";
 const authorInstagramUrl = "https://www.instagram.com/mario.vlv";
 const authorGithubUrl = "https://github.com/moryokav";
+
+Future<void> trustServer() async {
+  ByteData data = await PlatformAssetBundle().load('assets/certs/isrgrootx1.pem');
+  SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
+}
 
 void openBrowserURL(String url) async {
   if (await canLaunchUrl(Uri.parse(url))) {
