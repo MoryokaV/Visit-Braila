@@ -112,19 +112,23 @@ const addImages = (elem) => {
 }
 
 const removePreviewImage = (elem) => {
+  if (tour.images.length === 1) {
+    $("#preview-primary-image").removeAttr("src");
+  }
+
   $("#preview-images img").eq(elem.parent().index()).remove();
 
   $("#tour-primary-image").change();
 }
 
 const removeImage = (elem) => {
-  if (tour.images.length === 1) {
-    alert("Entry must have at least one image.");
-    return;
-  }
-
   if (parseInt($("#tour-primary-image").val()) === tour.images.length) {
     $("#tour-primary-image").val(tour.images.length - 1);
+  }
+
+  if (tour.images.length === 1) {
+    $("#tour-images").prop("required", true);
+    $("#tour-primary-image").val(1);
   }
 
   removePreviewImage(elem);

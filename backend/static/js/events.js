@@ -77,19 +77,23 @@ const addImages = (elem) => {
 }
 
 const removePreviewImage = (elem) => {
+  if (event.images.length === 1) {
+    $("#preview-primary-image").removeAttr("src");
+  }
+
   $("#preview-images img").eq(elem.parent().index()).remove();
 
   $("#event-primary-image").change();
 }
 
 const removeImage = (elem) => {
-  if (event.images.length === 1) {
-    alert("Entry must have at least one image.");
-    return;
-  }
-
   if (parseInt($("#event-primary-image").val()) === event.images.length) {
     $("#event-primary-image").val(event.images.length - 1);
+  }
+
+  if (event.images.length === 1) {
+    $("#event-images").prop("required", true);
+    $("#event-primary-image").val(1);
   }
 
   removePreviewImage(elem);

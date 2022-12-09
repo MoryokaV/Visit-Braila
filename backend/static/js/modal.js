@@ -45,13 +45,13 @@ const addImage = (folder, elem, modal) => {
 }
 
 const removeImage = (elem, modal, savedImages) => {
-  if (current_images.length === 1) {
-    alert("Entry must have at least one image.");
-    return;
-  }
-
   if (parseInt($(`#${modal}-primary-image`).val()) === current_images.length) {
     $(`#${modal}-primary-image`).val(current_images.length - 1);
+  }
+
+  if (current_images.length === 1) {
+    $(`#${modal}-images`).prop("required", true);
+    $(`#${modal}-primary-image`).val(1);
   }
 
   //clean up FormData
@@ -211,7 +211,6 @@ export const openEditEventModal = async (id) => {
   $("#event-name").val(event.name);
 
   // DATE & TIME
-  console.log(getCurrentDate());
   $("#event-datetime").attr("min", getCurrentDate());
   $("#event-datetime").focus(function() {
     $("#event-datetime").attr("min", getCurrentDate());
@@ -276,6 +275,7 @@ $(document).ready(async function() {
 
   // SIGHT IMAGES 
   $('#sight-images').change(function() {
+    $(this).prop("required", false);
     addImage("sights", $(this), "sight");
   });
 
@@ -387,6 +387,7 @@ $(document).ready(async function() {
 
   // TOUR IMAGES 
   $('#tour-images').change(function() {
+    $(this).prop("required", false);
     addImage("tours", $(this), "tour");
   });
 
@@ -445,6 +446,7 @@ $(document).ready(async function() {
 
   // EVENT IMAGES 
   $('#event-images').change(function() {
+    $(this).prop("required", false);
     addImage("events", $(this), "event");
   });
 

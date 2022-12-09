@@ -94,20 +94,25 @@ const addImages = (elem) => {
 }
 
 const removePreviewImage = (elem) => {
+  if (sight.images.length === 1) {
+    $("#preview-primary-image").removeAttr("src");
+  }
+
   $("#preview-images img").eq(elem.parent().index()).remove();
 
   $("#sight-primary-image").change();
 }
 
 const removeImage = (elem) => {
-  if (sight.images.length === 1) {
-    alert("Entry must have at least one image.");
-    return;
-  }
-
   if (parseInt($("#sight-primary-image").val()) === sight.images.length) {
     $("#sight-primary-image").val(sight.images.length - 1);
   }
+
+  if (sight.images.length === 1) {
+    $("#sight-images").prop("required", true);
+    $("#sight-primary-image").val(1);
+  }
+
 
   removePreviewImage(elem);
 
