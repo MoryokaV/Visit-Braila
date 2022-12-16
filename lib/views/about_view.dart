@@ -98,13 +98,12 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: isLoading
-                  ? SizedBox(
-                      height: Responsive.safeBlockVertical * 36,
-                      child: const LoadingSpinner(),
-                    )
-                  : Padding(
+            isLoading
+                ? const SliverFillRemaining(
+                    child: LoadingSpinner(),
+                  )
+                : SliverToBoxAdapter(
+                    child: Padding(
                       padding: const EdgeInsets.only(
                         bottom: 24,
                         top: 8,
@@ -334,7 +333,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-            ),
+                  ),
           ],
         ),
       ),

@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoadingSpinner extends StatelessWidget {
@@ -5,8 +7,15 @@ class LoadingSpinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator.adaptive(),
+    return Center(
+      child: Platform.isIOS
+          ? const CupertinoActivityIndicator(
+              radius: 15,
+            )
+          : CircularProgressIndicator(
+              strokeWidth: 2.0,
+              color: Theme.of(context).primaryColor,
+            ),
     );
   }
 }

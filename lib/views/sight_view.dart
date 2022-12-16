@@ -176,123 +176,124 @@ class SightView extends StatelessWidget {
                 ],
               ),
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 22,
-                  vertical: 12,
-                ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 22,
+                vertical: 12,
+              ),
+              sliver: SliverToBoxAdapter(
                 child: AnimatedBuilder(
                   animation: routeAnimation,
-                  builder: (context, _) {
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        sight.name,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Consumer<LocationService>(
+                        builder: (context, location, _) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                "assets/icons/map-pin.svg",
+                                width: 22,
+                                color: kPrimaryColor,
+                              ),
+                              const SizedBox(
+                                width: 6,
+                              ),
+                              Text(
+                                "${location.getDistance(sight.latitude, sight.longitude)} depărtare",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      if (sight.tags.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            sight.tags.join(", "),
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      HtmlDescription(
+                        data: sight.description,
+                        shrink: true,
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      SizedBox(
+                        height: Responsive.safeBlockHorizontal * 35,
+                        child: ListView.separated(
+                          itemCount: sight.images.length > 4 ? 5 : sight.images.length,
+                          scrollDirection: Axis.horizontal,
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(width: 10);
+                          },
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                "/gallery",
+                                arguments: {
+                                  "startIndex": index,
+                                  "sight": sight,
+                                },
+                              ),
+                              child: index != 4
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        sight.images[index],
+                                        fit: BoxFit.cover,
+                                        width: Responsive.safeBlockVertical * 25,
+                                      ),
+                                    )
+                                  : Container(
+                                      width: Responsive.safeBlockVertical * 25,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: lightGrey,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "+${sight.images.length - 4}",
+                                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
+                                        ),
+                                      ),
+                                    ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  builder: (context, child) {
                     return FadeTransition(
                       opacity: CurvedAnimation(
                         parent: routeAnimation,
                         curve: const Interval(0.6, 1),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            sight.name,
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Consumer<LocationService>(
-                            builder: (context, location, _) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/icons/map-pin.svg",
-                                    width: 22,
-                                    color: kPrimaryColor,
-                                  ),
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  Text(
-                                    "${location.getDistance(sight.latitude, sight.longitude)} depărtare",
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                          if (sight.tags.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Text(
-                                sight.tags.join(", "),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          const SizedBox(
-                            height: 18,
-                          ),
-                          HtmlDescription(
-                            data: sight.description,
-                            shrink: true,
-                          ),
-                          const SizedBox(
-                            height: 18,
-                          ),
-                          SizedBox(
-                            height: Responsive.safeBlockHorizontal * 35,
-                            child: ListView.separated(
-                              itemCount: sight.images.length > 4 ? 5 : sight.images.length,
-                              scrollDirection: Axis.horizontal,
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(width: 10);
-                              },
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    "/gallery",
-                                    arguments: {
-                                      "startIndex": index,
-                                      "sight": sight,
-                                    },
-                                  ),
-                                  child: index != 4
-                                      ? ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Image.network(
-                                            sight.images[index],
-                                            fit: BoxFit.cover,
-                                            width: Responsive.safeBlockVertical * 25,
-                                          ),
-                                        )
-                                      : Container(
-                                          width: Responsive.safeBlockVertical * 25,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: lightGrey,
-                                              width: 1.5,
-                                            ),
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "+${sight.images.length - 4}",
-                                              style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
-                                            ),
-                                          ),
-                                        ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: child,
                     );
                   },
                 ),

@@ -288,21 +288,22 @@ class HomeView extends StatelessWidget {
                   ),
                   AnimatedBuilder(
                     animation: _scrollController,
+                    child: Container(
+                      color: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          SearchBar(),
+                        ],
+                      ),
+                    ),
                     builder: (context, child) {
                       return AnimatedOpacity(
                         duration: const Duration(milliseconds: 150),
                         opacity: _scrollController.offset >= appBarBreakpoint ? 1 : 0,
-                        child: Container(
-                          color: Colors.black,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              SearchBar(),
-                            ],
-                          ),
-                        ),
+                        child: child,
                       );
                     },
                   ),

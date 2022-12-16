@@ -53,26 +53,24 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
     ),
   };
 
-  RegExp htmlTagsRegExp = RegExp(
-    r"<[^>]*>",
-    multiLine: true,
-    caseSensitive: true,
-  );
-
   bool isEmptyDescription() {
     return widget.data == "<p><br></p>";
+  }
+
+  void analyzeHtml() {
+    var doc = HtmlParser.parseHTML(widget.data);
+    var body = doc.body!;
+
+    if (body.children.length > 12 || body.text.length > 400) {
+      longDescription = true;
+    }
   }
 
   @override
   void initState() {
     super.initState();
 
-    final int lines = widget.data.split("<p").length - 1;
-    final int chars = widget.data.replaceAll(htmlTagsRegExp, '').length;
-
-    if (lines > 12 || chars > 400) {
-      longDescription = true;
-    }
+    analyzeHtml();
   }
 
   @override
