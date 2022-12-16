@@ -186,7 +186,7 @@ def editTour():
     deleteImages(data['images_to_delete'], 'tours')
     tour = data['tour'] 
 
-    db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "length": tour['length'], "external_link": tour['external_link']}})
+    db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "length": float(tour['length']), "external_link": tour['external_link']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/insertEvent", methods=["POST"])
