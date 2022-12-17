@@ -22,9 +22,11 @@ class PageRouter {
       case '/':
         return PageRouteBuilder(
           pageBuilder: (context, _, __) {
-            final connection = Provider.of<ConnectionService>(context, listen: false);
-            if (!connection.isOnline) {
-              return const NoInternetView();
+            if (!Platform.isIOS) {
+              final connection = Provider.of<ConnectionService>(context, listen: false);
+              if (!connection.isOnline) {
+                return const NoInternetView();
+              }
             }
 
             return const BottomNavbar();
