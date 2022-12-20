@@ -308,6 +308,7 @@ class _TourViewState extends State<TourView> {
           fontFamily: bodyFont,
           color: kForegroundColor,
           fontSize: 14,
+          height: 1.5,
         ),
       ),
     );
