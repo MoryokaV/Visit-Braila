@@ -50,7 +50,10 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
 
-    if db.login.find_one()["username"] == request.json["user"] and db.login.find_one()["password"] == hashlib.sha256(request.json["pass"].encode('utf-8')).hexdigest():
+    username = request.json['user']
+    password = hashlib.sha256(request.json["pass"].encode('utf-8')).hexdigest()
+
+    if db.login.find_one({"username": username, "password": password}) is not None:
         session["logged_in"] = True 
         
         return make_response("Logged in", 200)
