@@ -17,7 +17,14 @@ class AboutView extends StatefulWidget {
 }
 
 class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
-  Map<String, dynamic> data = {"paragraph1": "", "paragraph2": "", "director": "", "phone": "", "email": ""};
+  Map<String, dynamic> data = {
+    "paragraph1": "",
+    "paragraph2": "",
+    "director": "",
+    "phone": "",
+    "email": "",
+    "cover_image": ""
+  };
   AboutController aboutController = AboutController();
 
   late final AnimationController fadeAnimationController;
@@ -76,10 +83,12 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
               backgroundColor: Colors.white,
               expandedHeight: Responsive.safeBlockVertical * 30,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  "assets/images/bjpi.jpg",
-                  fit: BoxFit.cover,
-                ),
+                background: data['cover_image'] != ""
+                    ? Image.network(
+                        "$baseUrl${data['cover_image']}",
+                        fit: BoxFit.cover,
+                      )
+                    : Container(color: kDimmedForegroundColor),
               ),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(16),

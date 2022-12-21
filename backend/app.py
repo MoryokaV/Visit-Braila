@@ -341,7 +341,6 @@ def updateCoverImage():
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImages(folder):
-    print(request.files.getlist("files[]"))
     for image in request.files.getlist('files[]'):
         path = folder + "/" + image.filename 
 
