@@ -45,9 +45,9 @@ class _WishlistViewState extends State<WishlistView> {
       }
     });
 
-    setState(() {
-      isLoadingSights = false;
-    });
+    if (mounted) {
+      setState(() => isLoadingSights = false);
+    }
   }
 
   void fetchTours() async {
@@ -66,9 +66,9 @@ class _WishlistViewState extends State<WishlistView> {
       }
     });
 
-    setState(() {
-      isLoadingTours = false;
-    });
+    if (mounted) {
+      setState(() => isLoadingTours = false);
+    }
   }
 
   @override

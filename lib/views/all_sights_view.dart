@@ -55,9 +55,9 @@ class _AllSightsViewState extends State<AllSightsView> {
       showErrorDialog(context);
     }
 
-    setState(() {
-      isLoading = false;
-    });
+    if (mounted) {
+      setState(() => isLoading = false);
+    }
   }
 
   void updateList(String query) {

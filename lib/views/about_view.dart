@@ -17,39 +17,38 @@ class AboutView extends StatefulWidget {
 }
 
 class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
-  String paragraph1 = "";
-  String paragraph2 = "";
-  Map<String, dynamic> contact = {"director": "", "phone": "", "email": ""};
-
+  Map<String, dynamic> data = {"paragraph1": "", "paragraph2": "", "director": "", "phone": "", "email": ""};
   AboutController aboutController = AboutController();
 
+  late final AnimationController fadeAnimationController;
+  late final Animation<double> fadeAnimation;
+
   bool isLoading = true;
-
-  late final AnimationController fadeAnimationController = AnimationController(
-    duration: const Duration(seconds: 1),
-    vsync: this,
-  );
-
-  late final Animation<double> fadeAnimation = CurvedAnimation(
-    parent: fadeAnimationController,
-    curve: const Interval(0, 0.5),
-  );
 
   @override
   void initState() {
     super.initState();
+
+    fadeAnimationController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    fadeAnimation = CurvedAnimation(
+      parent: fadeAnimationController,
+      curve: const Interval(0, 0.5),
+    );
 
     getAboutData();
   }
 
   void getAboutData() async {
     try {
-      paragraph1 = await aboutController.fetchAboutParagraph1();
-      paragraph2 = await aboutController.fetchAboutParagraph2();
-      contact = await aboutController.fetchContactDetails();
+      data = await aboutController.fetchAboutData();
 
-      setState(() => isLoading = false);
-      fadeAnimationController.forward();
+      if (mounted) {
+        setState(() => isLoading = false);
+        fadeAnimationController.forward();
+      }
     } on HttpException {
       showErrorDialog(context);
     }
@@ -124,7 +123,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                             ),
                             const SizedBox(height: 8),
                             HtmlDescription(
-                              data: paragraph1,
+                              data: data["paragraph1"]!,
                               shrink: false,
                             ),
                             const Padding(
@@ -141,7 +140,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                             ),
                             const SizedBox(height: 8),
                             HtmlDescription(
-                              data: paragraph2,
+                              data: data["paragraph2"]!,
                               shrink: false,
                             ),
                             const Padding(
@@ -173,7 +172,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  contact['director'],
+                                  data['director']!,
                                   style: const TextStyle(
                                     fontFamily: labelFont,
                                     fontWeight: FontWeight.w600,
@@ -198,9 +197,9 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                                 const SizedBox(width: 8),
                                 GestureDetector(
-                                  onTap: () => openTel(contact['phone']),
+                                  onTap: () => openTel(data['phone']!),
                                   child: Text(
-                                    contact['phone'],
+                                    data['phone']!,
                                     style: TextStyle(
                                       decoration: TextDecoration.underline,
                                       color: Theme.of(context).primaryColor,
@@ -228,9 +227,9 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                                 const SizedBox(width: 8),
                                 GestureDetector(
-                                  onTap: () => openEmail(contact['email']),
+                                  onTap: () => openEmail(data['email']!),
                                   child: Text(
-                                    contact['email'],
+                                    data['email']!,
                                     style: TextStyle(
                                       decoration: TextDecoration.underline,
                                       color: Theme.of(context).primaryColor,

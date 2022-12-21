@@ -25,7 +25,9 @@ class _NotificationsButtonState extends State<NotificationsButton> with WidgetsB
   void getPermissionStatus() async {
     notificationsEnabled = await MessagingService.checkNotificationPermission();
 
-    setState(() => isLoading = false);
+    if (mounted) {
+      setState(() => isLoading = false);
+    }
   }
 
   @override

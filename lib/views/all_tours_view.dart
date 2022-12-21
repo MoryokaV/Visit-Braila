@@ -38,9 +38,9 @@ class _AllToursViewState extends State<AllToursView> {
       showErrorDialog(context);
     }
 
-    setState(() {
-      isLoading = false;
-    });
+    if (mounted) {
+      setState(() => isLoading = false);
+    }
   }
 
   void updateList(String query) {
