@@ -6,16 +6,14 @@ let paragraph2 = undefined;
 const LIMIT = 500;
 
 $(document).ready(async function() {
-  // PARAGRAPHS
-  const paragraph1_data = await $.getJSON("/api/fetchAboutParagraph1");
-  const paragraph2_data = await $.getJSON("/api/fetchAboutParagraph2");
+  const data = await $.getJSON("/api/fetchAboutData")
 
-  // P1
+  // PARAGRAPHS
   paragraph1 = new Quill("#paragraph-1-content", {
     theme: "snow",
     placeholder: "Type something here...",
   });
-  $("#paragraph-1-content .ql-editor").html(paragraph1_data.content);
+  $("#paragraph-1-content .ql-editor").html(data.paragraph1);
 
   paragraph1.on('text-change', function() {
     if (paragraph1.getLength() > LIMIT) {
@@ -23,28 +21,11 @@ $(document).ready(async function() {
     }
   });
 
-  $("#paragraph-1-form").submit(async function(e) {
-    e.preventDefault();
-
-    startLoadingAnimation($(this));
-
-    await $.ajax({
-      type: "PUT",
-      url: "/api/updateAboutParagraph1",
-      data: JSON.stringify({ "content": paragraph1.root.innerHTML }),
-      processData: false,
-      contentType: "application/json; charset=UTF-8",
-    });
-
-    setTimeout(() => endLoadingAnimation($(this)), 400);
-  });
-
-  //P2
   paragraph2 = new Quill("#paragraph-2-content", {
     theme: "snow",
     placeholder: "Type something here...",
   });
-  $("#paragraph-2-content .ql-editor").html(paragraph2_data.content);
+  $("#paragraph-2-content .ql-editor").html(data.paragraph2);
 
   paragraph2.on('text-change', function() {
     if (paragraph2.getLength() > LIMIT) {
@@ -52,15 +33,15 @@ $(document).ready(async function() {
     }
   });
 
-  $("#paragraph-2-form").submit(async function(e) {
+  $("#paragraphs-form").submit(async function(e) {
     e.preventDefault();
 
     startLoadingAnimation($(this));
 
     await $.ajax({
       type: "PUT",
-      url: "/api/updateAboutParagraph2",
-      data: JSON.stringify({ "content": paragraph2.root.innerHTML }),
+      url: "/api/updateAboutParagraphs",
+      data: JSON.stringify({ "paragraph1": paragraph1.root.innerHTML, "paragraph2": paragraph2.root.innerHTML }),
       processData: false,
       contentType: "application/json; charset=UTF-8",
     });
@@ -69,14 +50,12 @@ $(document).ready(async function() {
   });
 
   // CONTACT
-  const contact_details = await $.getJSON("/api/fetchContactDetails");
-
-  $("#director").val(contact_details.director);
+  $("#director").val(data.director);
 
   $("#phone").attr("pattern", phoneRegExp).attr("title", phoneRegExpTitle);
-  $("#phone").val(contact_details.phone);
+  $("#phone").val(data.phone);
 
-  $("#email").val(contact_details.email);
+  $("#email").val(data.email);
 
   $("#contact-form").submit(async function(e) {
     e.preventDefault();

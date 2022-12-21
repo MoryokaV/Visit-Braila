@@ -311,37 +311,22 @@ def updateTrendingItemIndex():
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
     return make_response("Entry has been updated", 200)
 
-@app.route("/api/fetchAboutParagraph1")
-def fetchAboutParagraph1():
-    return json.dumps(db.about.find_one({"name": "paragraph1"}), default=str)
+@app.route("/api/fetchAboutData")
+def fetchAboutData():
+    return json.dumps(db.about.find_one(), default=str);
 
-@app.route("/api/fetchAboutParagraph2")
-def fetchAboutParagraph2():
-    return json.dumps(db.about.find_one({"name": "paragraph2"}), default=str)
-
-@app.route("/api/fetchContactDetails")
-def fetchContactDetails():
-    return json.dumps(db.about.find_one({"name": "contact"}), default=str)
-
-@app.route("/api/updateAboutParagraph1", methods=["PUT"])
-def updateAboutParagraph1():
+@app.route("/api/updateAboutParagraphs", methods=["PUT"])
+def updateAboutParagraphs():
     updatedContent = request.get_json()
 
-    db.about.update_one({"name": "paragraph1"}, {"$set": {"content": updatedContent['content']}})
-    return make_response("Entry has been updated", 200)
-
-@app.route("/api/updateAboutParagraph2", methods=["PUT"])
-def updateAboutParagraph2():
-    updatedContent = request.get_json()
-
-    db.about.update_one({"name": "paragraph2"}, {"$set": {"content": updatedContent['content']}})
+    db.about.update_one({"name": "about"}, {"$set": {"paragraph1": updatedContent['paragraph1'], "paragraph2": updatedContent['paragraph2']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/updateContactDetails", methods=["PUT"])
 def updateContactDetails():
     details = request.get_json()
 
-    db.about.update_one({"name": "contact"}, {"$set": {"director": details['director'], "phone": details['phone'], "email": details['email']}})
+    db.about.update_one({"name": "about"}, {"$set": {"director": details['director'], "phone": details['phone'], "email": details['email']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
