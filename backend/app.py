@@ -47,14 +47,22 @@ def logged_in(f):
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    if request.method == "POST":
-        if db.login.find_one()["username"] == request.json["user"] and db.login.find_one()["password"] == hashlib.sha256(request.json["pass"].encode('utf-8')).hexdigest():
-            session["logged_in"] = True 
-            
-            return make_response("Logged in", 200)
-        else:
-            return make_response("Wrong user or password!", 401)
-    return render_template("login.html")
+    if request.method == "GET":
+        return render_template("login.html")
+
+    if db.login.find_one()["username"] == request.json["user"] and db.login.find_one()["password"] == hashlib.sha256(request.json["pass"].encode('utf-8')).hexdigest():
+        session["logged_in"] = True 
+        
+        return make_response("Logged in", 200)
+    else:
+        return make_response("Wrong user or password!", 401)
+
+
+@app.route("/logout")
+def logout():
+    session.pop('logged_in', None)     
+        
+    return redirect("/login")
 
 @app.route("/admin")
 @logged_in
