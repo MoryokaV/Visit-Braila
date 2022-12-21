@@ -329,14 +329,25 @@ def updateContactDetails():
     db.about.update_one({"name": "about"}, {"$set": {"director": details['director'], "phone": details['phone'], "email": details['email']}})
     return make_response("Entry has been updated", 200)
 
+@app.route("/api/updateCoverImage", methods=["PUT"])
+def updateCoverImage():
+    item = request.get_json()
+
+    about = db.about.find_one()
+    deleteImages([about['cover_image']], "about")
+
+    db.about.update_one({"name": "about"}, {"$set": {"cover_image": item['cover_image']}})
+    return make_response("Entry has been updated", 200)
+
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImages(folder):
+    print(request.files.getlist("files[]"))
     for image in request.files.getlist('files[]'):
         path = folder + "/" + image.filename 
 
         compressed = Image.open(image)        
         
-        compressed.convert("RGB").save(os.path.join(app.config["MEDIA_FOLDER"], path), format="JPEG", optimize=True, quality=55)
+        compressed.convert("RGB").save(os.path.join(app.config["MEDIA_FOLDER"], path), format="JPEG", optimize=True, quality=60)
 
     return make_response("Images have been uploaded", 200)
 
@@ -390,6 +401,8 @@ def init_dir():
         os.makedirs(app.config["MEDIA_FOLDER"] + "/tours")
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/events"):
         os.makedirs(app.config["MEDIA_FOLDER"] + "/events")
+    if not os.path.exists(app.config["MEDIA_FOLDER"] + "/about"):
+        os.makedirs(app.config["MEDIA_FOLDER"] + "/about")
 
 if __name__ == '__main__':
     init_dir()
