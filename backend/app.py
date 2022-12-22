@@ -205,13 +205,20 @@ def insertEvent():
     event = request.get_json()
 
     date_time = parser.isoparse(event['date_time'])
+    end_date_time = None
     expire_at = date_time + relativedelta(days=+1)
-    
-    record = db.events.insert_one({"name": event['name'], "date_time": date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
-    
-    cleanUpEventsImages()
 
-    sendNewEventNotification(event['name'], record.inserted_id)
+    try:
+        end_date_time = parser.isoparse(event['end_date_time'])
+        expire_at = end_date_time + relativedelta(days =+ 1) 
+    except KeyError:
+        pass
+        
+    record = db.events.insert_one({"name": event['name'], "date_time": date_time, "end_date_time": end_date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
+    
+    #cleanUpEventsImages()
+
+    #sendNewEventNotification(event['name'], record.inserted_id)
 
     return make_response("New entry has been inserted", 200) 
 
@@ -245,9 +252,16 @@ def editEvent():
     event = data['event'] 
 
     date_time = parser.isoparse(event['date_time'])
+    end_date_time = None
     expire_at = date_time + relativedelta(days=+1)
 
-    db.events.update_one({"_id": ObjectId(event['_id'])}, {"$set": {"name": event['name'], "date_time": date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']}})
+    try:
+        end_date_time = parser.isoparse(event['end_date_time'])
+        expire_at = end_date_time + relativedelta(days =+ 1) 
+    except KeyError:
+        pass
+
+    db.events.update_one({"_id": ObjectId(event['_id'])}, {"$set": {"name": event['name'], "date_time": date_time, "end_date_time": end_date_time,  "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/fetchTags")

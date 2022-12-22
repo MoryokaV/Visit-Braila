@@ -120,8 +120,8 @@ const appendStages = () => {
   $("#tour-modal #stages .stage input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
 }
 
-const getCurrentDate = () => {
-  const date = new Date(Date.now());
+const getOffsettedDate = (timestamp) => {
+  const date = new Date(timestamp);
   const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 1000 * 60);
 
   return localDate.toISOString().slice(0, -8);
@@ -132,6 +132,15 @@ const convert2LocalDate = (iso_date) => {
   const localDate = new Date(date.getTime() - 2 * (date.getTimezoneOffset() * 1000 * 60));
 
   return localDate.toISOString().slice(0, -8);
+}
+
+const getMinEndDate = () => {
+  const start_date = new Date($("#event-datetime").val());
+  const day = 1 * 1000 * 60 * 60 * 24;
+  const convertedDate = new Date(start_date.getTime() + day);
+  convertedDate.setHours(0, 0, 0, 0);
+
+  return getOffsettedDate(convertedDate);
 }
 
 export const openEditSightModal = async (id) => {
@@ -211,13 +220,27 @@ export const openEditEventModal = async (id) => {
   $("#event-name").val(event.name);
 
   // DATE & TIME
-  $("#event-datetime").attr("min", getCurrentDate());
   $("#event-datetime").focus(function() {
-    $("#event-datetime").attr("min", getCurrentDate());
+    $("#event-datetime").attr("min", getOffsettedDate(Date.now()));
   });
 
   $("#event-datetime").val(convert2LocalDate(event.date_time));
 
+  if (event.end_date_time !== null) {
+    $("#multiple-days").prop("checked", true);
+
+    $("#end-event-datetime").parent().remove()
+    $("#multiple-days").parent().after(`
+      <div class="input-field">
+        <label for="end-datetime">End date & time</label>
+        <input id="end-event-datetime" type="datetime-local" name="end-datetime" required></input>
+      </div>
+    `);
+
+    $("#end-event-datetime").val(convert2LocalDate(event.end_date_time));
+  }
+
+  // DESCRIPTION
   quill = new Quill("#event-description", {
     theme: "snow",
   });
@@ -444,6 +467,24 @@ $(document).ready(async function() {
   // EVENT NAME
   $("#event-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
 
+  // EVENT DATE
+  $("#multiple-days").on('change', function() {
+    if ($(this).prop('checked') === true) {
+      $(this).parent().after(`
+        <div class="input-field">
+          <label for="end-datetime">End date & time</label>
+          <input id="end-event-datetime" type="datetime-local" name="end-datetime" required></input>
+        </div>
+      `);
+    } else {
+      $(this).parent().next().remove();
+    }
+  });
+
+  $("#event-modal").on('focus', '#end-event-datetime', function() {
+    $("#end-event-datetime").attr("min", getMinEndDate());
+  });
+
   // EVENT IMAGES 
   $('#event-images').change(function() {
     $(this).prop("required", false);
@@ -462,11 +503,23 @@ $(document).ready(async function() {
 
     event.name = $("#event-name").val();
     event.date_time = new Date($("#event-datetime").val());
+    if ($("#multiple-days").prop('checked')) {
+      event.end_date_time = new Date($("#end-event-datetime").val());
+    } else {
+      event.end_date_time = undefined;
+    }
     event.description = quill.root.innerHTML;
     event.primary_image = parseInt($("#event-primary-image").val());
 
     if (event.date_time < Date.now()) {
       $("#event-datetime").focus();
+
+      endLoadingAnimation($(this));
+      return false;
+    }
+
+    if (event.end_date_time < event.date_time) {
+      $("#end-event-datetime").focus();
 
       endLoadingAnimation($(this));
       return false;

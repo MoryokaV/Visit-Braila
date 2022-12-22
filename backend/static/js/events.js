@@ -11,6 +11,7 @@ let formData = new FormData();
 let event = {
   name: "",
   date_time: new Date(),
+  end_date_time: undefined,
   images: [],
   primary_image: 1,
   description: ``,
@@ -110,11 +111,20 @@ const removeImage = (elem) => {
   elem.parent().remove();
 }
 
-const getCurrentDate = () => {
-  const date = new Date(Date.now());
+const convert2LocalDate = (timestamp) => {
+  const date = new Date(timestamp);
   const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 1000 * 60);
 
   return localDate.toISOString().slice(0, -8);
+}
+
+const getMinEndDate = () => {
+  const start_date = new Date($("#event-datetime").val());
+  const day = 1 * 1000 * 60 * 60 * 24;
+  const convertedDate = new Date(start_date.getTime() + day);
+  convertedDate.setHours(0, 0, 0, 0);
+
+  return convert2LocalDate(convertedDate);
 }
 
 $(document).ready(async function() {
@@ -148,15 +158,38 @@ $(document).ready(async function() {
   });
 
   // DATE & TIME
-  $("#event-datetime").attr("min", getCurrentDate());
   $("#event-datetime").focus(function() {
-    $("#event-datetime").attr("min", getCurrentDate());
+    $("#event-datetime").attr("min", convert2LocalDate(Date.now()));
   });
   $("#event-datetime").on('change', function() {
     const date = new Date($(this).val());
     const formatedDate = new Intl.DateTimeFormat('ro-RO', { dateStyle: "long", timeStyle: 'short', }).format(date);
 
-    $("#preview-datetime").text(formatedDate);
+    $("#start-date").text(formatedDate);
+  });
+
+  $("#multiple-days").on('change', function() {
+    if ($(this).prop('checked') === true) {
+      $(this).parent().after(`
+        <div class="input-field">
+          <label for="end-datetime">End date & time</label>
+          <input id="end-event-datetime" type="datetime-local" name="end-datetime" required></input>
+        </div>
+      `);
+    } else {
+      $(this).parent().next().remove();
+      $("#end-date").html(``);
+    }
+  });
+
+  $("#insert-event-form").on('focus', '#end-event-datetime', function() {
+    $("#end-event-datetime").attr("min", getMinEndDate());
+  });
+  $("#insert-event-form").on('change', '#end-event-datetime', function() {
+    const date = new Date($(this).val());
+    const formatedDate = new Intl.DateTimeFormat('ro-RO', { dateStyle: "long", timeStyle: 'short', }).format(date);
+
+    $("#end-date").html(`&rarr; ${formatedDate}`);
   });
 
   // SUBMIT
@@ -167,11 +200,21 @@ $(document).ready(async function() {
 
     event.name = $("#event-name").val();
     event.date_time = new Date($("#event-datetime").val());
+    if ($("#multiple-days").prop('checked')) {
+      event.end_date_time = new Date($("#end-event-datetime").val());
+    }
     event.description = quill.root.innerHTML;
     event.primary_image = parseInt($("#event-primary-image").val());
 
     if (event.date_time < Date.now()) {
       $("#event-datetime").focus();
+
+      endLoadingAnimation($(this));
+      return false;
+    }
+
+    if (event.end_date_time < event.date_time) {
+      $("#end-event-datetime").focus();
 
       endLoadingAnimation($(this));
       return false;
