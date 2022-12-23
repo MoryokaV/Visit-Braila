@@ -11,6 +11,7 @@ import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
+import 'package:visit_braila/utils/search_all.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
@@ -64,9 +65,24 @@ class _AllSightsViewState extends State<AllSightsView> {
     filteredData = [];
 
     query.trim().toLowerCase().split(" ").forEach((word) {
+      if (word == "") {
+        return;
+      }
+
+      if (prepositions.contains(word)) {
+        return;
+      }
+
       filteredData.addAll(
         sights.where((sight) {
-          if (sight.name.toString().toLowerCase().contains(word) && !filteredData.contains(sight)) {
+          if ((sight.name
+                      .toString()
+                      .toLowerCase()
+                      .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
+                      .split(" ")
+                      .any((entryWord) => entryWord.startsWith(word)) ||
+                  sight.name.toString().toLowerCase().split(" ").any((entryWord) => entryWord.startsWith(word))) &&
+              !filteredData.contains(sight)) {
             if (selectedIndex == 0) {
               return true;
             } else if (selectedIndex != 0 && sight.tags.contains(tags[selectedIndex])) {
@@ -80,6 +96,10 @@ class _AllSightsViewState extends State<AllSightsView> {
         }),
       );
     });
+
+    if (query.trim().isEmpty) {
+      filteredData.addAll(sights);
+    }
 
     setState(() {
       currentQuery = query;

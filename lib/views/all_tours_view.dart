@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/tour_model.dart';
+import 'package:visit_braila/utils/search_all.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
@@ -47,12 +48,32 @@ class _AllToursViewState extends State<AllToursView> {
     filteredData = [];
 
     query.trim().toLowerCase().split(" ").forEach((word) {
+      if (word == "") {
+        return;
+      }
+
+      if (prepositions.contains(word)) {
+        return;
+      }
+
       filteredData.addAll(
         tours.where(
-          (tour) => tour.name.toString().toLowerCase().contains(word) && !filteredData.contains(tour),
+          (tour) =>
+              (tour.name
+                      .toString()
+                      .toLowerCase()
+                      .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
+                      .split(" ")
+                      .any((entryWord) => entryWord.startsWith(word)) ||
+                  tour.name.toString().toLowerCase().split(" ").any((entryWord) => entryWord.startsWith(word))) &&
+              !filteredData.contains(tour),
         ),
       );
     });
+
+    if (query.trim().isEmpty) {
+      filteredData.addAll(tours);
+    }
 
     setState(() {});
   }

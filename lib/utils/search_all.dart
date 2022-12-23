@@ -11,6 +11,34 @@ import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 
+const Map<String, String> diacriticsMapping = {
+  "Ă": "A",
+  "ă": "a",
+  "Â": "A",
+  "â": "a",
+  "Î": "I",
+  "î": "i",
+  "Ș": "S",
+  "ș": "s",
+  "Ț": "T",
+  "ț": "t",
+};
+const List<String> prepositions = [
+  "de",
+  "pe",
+  "cu",
+  "despre",
+  "în",
+  "in",
+  "a",
+  "al",
+  "la",
+  "fără",
+  "sub",
+  "pentru",
+  "prin"
+];
+
 class SearchAll extends SearchDelegate<String> {
   final SightController sightController = SightController();
   final TourController tourController = TourController();
@@ -65,8 +93,19 @@ class SearchAll extends SearchDelegate<String> {
   List<TextSpan> highlightedText(String resultName) {
     final List<Match> matches = [];
 
-    for (String word in query.trim().toLowerCase().split(" ")) {
-      matches.addAll(word.allMatches(resultName.toLowerCase()));
+    for (String word in query
+        .trim()
+        .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
+        .toLowerCase()
+        .split(" ")) {
+      if (word == "") {
+        continue;
+      }
+      matches.addAll(
+        word.allMatches(resultName
+            .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
+            .toLowerCase()),
+      );
     }
 
     if (matches.isEmpty) {
@@ -110,9 +149,24 @@ class SearchAll extends SearchDelegate<String> {
     Set filteredData = {};
 
     query.trim().toLowerCase().split(" ").forEach((word) {
+      if(word == ""){
+        return;
+      }
+
+      if (prepositions.contains(word)) {
+        return;
+      }
+
       filteredData.addAll(
         data.where(
-          (entry) => entry.name.toString().toLowerCase().contains(word),
+          (entry) =>
+              entry.name
+                  .toString()
+                  .toLowerCase()
+                  .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
+                  .split(" ")
+                  .any((entryWord) => entryWord.startsWith(word)) ||
+              entry.name.toString().toLowerCase().split(" ").any((entryWord) => entryWord.startsWith(word)),
         ),
       );
     });
