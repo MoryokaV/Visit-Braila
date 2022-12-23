@@ -255,6 +255,11 @@ export const openEditEventModal = async (id) => {
 
 $(document).ready(async function() {
   $(".close-btn").click(closeModal);
+  document.onkeydown = function(e) {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  }
 
   // SIGHT NAME
   $("#sight-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
