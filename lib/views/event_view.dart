@@ -22,6 +22,18 @@ class EventView extends StatelessWidget {
     required this.routeAnimation,
   });
 
+  String getDateInterval() {
+    if (event.endDateTime == null) {
+      return DateFormat.yMMMMEEEEd('ro-RO').format(event.dateTime);
+    }
+
+    if (event.dateTime.month == event.endDateTime!.month && event.dateTime.year == event.endDateTime!.year) {
+      return "${DateFormat.EEEE('ro-RO').format(event.dateTime)} ${DateFormat.d('ro-RO').format(event.dateTime)} -> ${DateFormat.EEEE('ro-RO').format(event.endDateTime!)} ${DateFormat.d('ro-RO').format(event.endDateTime!)}, ${DateFormat.yMMMM('ro-RO').format(event.endDateTime!)}";
+    }
+
+    return "${DateFormat.yMMMMEEEEd('ro-RO').format(event.dateTime)} -> ${DateFormat.yMMMMEEEEd('ro-RO').format(event.endDateTime!)}";
+  }
+
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting();
@@ -145,12 +157,14 @@ class EventView extends StatelessWidget {
                           const SizedBox(
                             width: 8,
                           ),
-                          Text(
-                            DateFormat.yMMMMEEEEd('ro-RO').format(event.dateTime),
-                            style: const TextStyle(
-                              color: kDimmedForegroundColor,
-                              fontFamily: labelFont,
-                              fontSize: 16,
+                          Flexible(
+                            child: Text(
+                              getDateInterval(),
+                              style: const TextStyle(
+                                color: kDateTimeForegroundColor,
+                                fontFamily: labelFont,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ],
@@ -171,7 +185,7 @@ class EventView extends StatelessWidget {
                           Text(
                             DateFormat.Hm('ro-RO').format(event.dateTime),
                             style: const TextStyle(
-                              color: kDimmedForegroundColor,
+                              color: kDateTimeForegroundColor,
                               fontFamily: labelFont,
                               fontSize: 16,
                             ),

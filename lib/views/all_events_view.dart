@@ -104,6 +104,18 @@ class EventCard extends StatelessWidget {
     required this.event,
   });
 
+  String getDateInterval() {
+    if (event.endDateTime == null) {
+      return DateFormat.yMMMd('ro-RO').format(event.dateTime);
+    }
+
+    if (event.dateTime.month == event.endDateTime!.month && event.dateTime.year == event.endDateTime!.year) {
+      return "${DateFormat.d('ro-RO').format(event.dateTime)} - ${DateFormat.d('ro-RO').format(event.endDateTime!)} ${DateFormat.MMM('ro-RO').format(event.endDateTime!)} ${DateFormat.y('ro-RO').format(event.endDateTime!)}";
+    }
+
+    return "${DateFormat.MMMd('ro-RO').format(event.dateTime)} -> ${DateFormat.MMMd('ro-RO').format(event.endDateTime!)}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -175,10 +187,10 @@ class EventCard extends StatelessWidget {
                           width: 6,
                         ),
                         Text(
-                          DateFormat.yMMMd('ro-RO').format(event.dateTime),
+                          getDateInterval(),
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            color: kDimmedForegroundColor,
+                            color: kDateTimeForegroundColor,
                             fontFamily: labelFont,
                             fontSize: 14,
                           ),
@@ -202,7 +214,7 @@ class EventCard extends StatelessWidget {
                         Text(
                           DateFormat.Hm('ro-RO').format(event.dateTime),
                           style: const TextStyle(
-                            color: kDimmedForegroundColor,
+                            color: kDateTimeForegroundColor,
                             fontFamily: labelFont,
                             fontSize: 14,
                           ),
