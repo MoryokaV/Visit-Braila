@@ -12,8 +12,8 @@
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script type="module" src="/static/js/about.js" defer></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
-    <link rel="stylesheet" href="/static/css/reset.css" />
     <link rel="stylesheet" href="/static/css/panel.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="stylesheet" href="/static/css/queries.css" />
@@ -22,16 +22,17 @@
     <!-- HEADER -->
     <header>
       <div class="group">
-        <button class="btn menu-btn">
+        <button class="btn-icon menu-btn btn-header">
           <ion-icon class="icon" name="menu-outline"></ion-icon>
         </button>
         <h1 class="title">Visit Brăila</h1>
       </div>
-      <a href="/logout"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
+      <a href="/logout" role="button" class="btn-icon btn-header"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
     </header>
 
     <!-- SIDEBAR -->
     <aside>
+      <hr>
       <nav>
         <a href="/" class="nav-item group">
           <ion-icon name="speedometer-outline"></ion-icon>
@@ -62,6 +63,7 @@
           <p>About</p>
         </a>
       </nav>
+      <hr>
       
       <section class="storage-info">
         <p>Server storage: <span id="space-used">0.0 GB</span> of <span id="space-total">0.0 GB</span> Used</p>
@@ -72,72 +74,94 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="col">
-      <h2 class="tab-title">Tell something about you & your app</h2>
+    <main class="d-flex">
+      <div class="container-sm m-auto py-3">
+        <h2 class="tab-title">Tell something about you & your app</h2>
 
-      <div class="center wrap" style="max-width: 100%; margin-top: 3.2rem;">
-        <div class="card big-card">
-          <div class="card-header">
-            <h3>Help</h3>
+        <div class="row justify-content-center gx-4 gy-3 mt-3 px-2">
+          <div class="col-xl-6">
+            <div class="card shadow-sm">
+              <h5 class="card-header">Help</h5>
+              <form id="paragraphs-form"> 
+                <div class="card-body row g-3">
+                  <div class="col-12">
+                    <label for="paragraph-1-content" class="form-label">About you</label>
+                    <div id="paragraph-1-content"></div>
+                  </div>
+                  <div class="col-12">
+                    <label for="paragraph-2-content" class="form-label">About app</label>
+                    <div id="paragraph-2-content"></div>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary"><span>Save</span></button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-          <div class="card-body">
-            <form id="paragraphs-form"> 
-              <div class="input-field" style="gap: 0">
-                <label for="paragraph-1-content" style="margin-bottom: 1.2rem">About you</label>
-                <div id="paragraph-1-content"></div>
-              </div>
-              <div class="input-field" style="gap: 0">
-                <label for="paragraph-2-content" style="margin-bottom: 1.2rem">About app</label>
-                <div id="paragraph-2-content"></div>
-              </div>
-              <button type="submit" class="btn primary-btn"><span>Save</span></button>
-            </form>
+          <div class="col-xl-6">
+            <div class="card shadow-sm">
+              <h5 class="card-header">Contact</h5>
+              <form id="contact-form">
+                <div class="card-body row g-3">
+                  <div class="col-12">
+                    <div class="row gx-3 gy-0">
+                      <label for="director" class="col-sm-3 form-label">Director</label>
+                      <div class="col-sm-9">
+                        <input type="text" id="director" class="form-control" name="director" required />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="row gx-3 gy-0">
+                      <label for="phone" class="col-sm-3 form-label">Phone number</label>
+                      <div class="col-sm-9">
+                        <input type="tel" id="phone" class="form-control" name="phone" required />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="row gx-3 gy-0">
+                      <label for="email" class="col-sm-3 form-label">Email</label>
+                      <div class="col-sm-9">
+                        <input type="email" id="email" class="form-control" name="email" required />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary"><span>Save</span></button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-        <div class="card big-card">
-          <div class="card-header">
-            <h3>Contact</h3>
-          </div>
-          <div class="card-body">
-            <form id="contact-form">
-              <div class="input-field inline-field">
-                <label for="director">Director</label>
-                <input type="text" id="director" name="director" required />
-              </div>
-              <div class="input-field inline-field">
-                <label for="phone">Phone number</label>
-                <input type="tel" id="phone" name="phone" required />
-              </div>
-              <div class="input-field inline-field"> 
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required />
-              </div>
-              <button type="submit" class="btn primary-btn"><span>Save</span></button>
-            </form>
-          </div>
-        </div>
-        <div class="card big-card">
-          <div class="card-header">
-            <h3>Cover</h3>
-          </div>
-          <div class="card-body">
-            <form id="cover-form">
-              <div class="input-field row">
-                <label for="cover-image" style="cursor: pointer">
-                  Image
-                  <input
-                    type="file"
-                    class="hidden-input"
-                    id="cover-image"
-                    name="image"
-                    accept="image/*"
-                    required
-                  />
-                </label>
-                <ul class="img-container"></ul>
-              </div>
-              <button type="submit" class="btn primary-btn"><span>Save</span></button>
-            </form>
+          <div class="col-xl-6">
+            <div class="card shadow-sm">
+              <h5 class="card-header">Cover</h5>
+              <form id="cover-form">
+                <div class="card-body row g-3">
+                  <div class="col-12">
+                    <div class="d-flex gap-3">
+                      <label for="cover-image" style="cursor: pointer">
+                        Image
+                        <input
+                          type="file"
+                          class="hidden-input"
+                          id="cover-image"
+                          name="image"
+                          accept="image/*"
+                          required
+                        />
+                      </label>
+                      <ul class="img-container"></ul>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary"><span>Save</span></button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

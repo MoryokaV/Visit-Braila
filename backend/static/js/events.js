@@ -24,7 +24,7 @@ const appendImageElement = (image) => {
           <ion-icon name="cloud-upload-outline"></ion-icon>
           ${image}
         </a>
-        <button type="button" class="btn icon-btn remove-img-btn">
+        <button type="button" class="btn btn-icon remove-img-btn">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`
@@ -48,7 +48,7 @@ const addPreviewImages = async (images) => {
 
   const blobs = await Promise.all(images.map(image => getBase64(image)));
 
-  blobs.map((blob) => $("#preview-images").append(`<img src="${blob}" class="img-sm">`));
+  blobs.map((blob) => $("#preview-images").append(`<img src="${blob}">`));
 
   if ($("#preview-primary-image").attr("src") === undefined) {
     $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
@@ -170,14 +170,14 @@ $(document).ready(async function() {
 
   $("#multiple-days").on('change', function() {
     if ($(this).prop('checked') === true) {
-      $(this).parent().after(`
-        <div class="input-field">
-          <label for="end-datetime">End date & time</label>
-          <input id="end-event-datetime" type="datetime-local" name="end-datetime" required></input>
+      $(this).parent().parent().after(`
+        <div class="col-12">
+          <label for="end-datetime" class="form-label">End date & time</label>
+          <input id="end-event-datetime" type="datetime-local" class="form-control" name="end-datetime" required></input>
         </div>
       `);
     } else {
-      $(this).parent().next().remove();
+      $(this).parent().parent().next().remove();
       $("#end-date").html(``);
     }
   });

@@ -12,8 +12,8 @@
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script type="module" src="/static/js/dashboard.js" defer></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
-    <link rel="stylesheet" href="/static/css/reset.css" />
     <link rel="stylesheet" href="/static/css/panel.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="stylesheet" href="/static/css/queries.css" />
@@ -22,16 +22,17 @@
     <!-- HEADER -->
     <header>
       <div class="group">
-        <button class="btn menu-btn">
+        <button class="btn-icon menu-btn btn-header">
           <ion-icon class="icon" name="menu-outline"></ion-icon>
         </button>
         <h1 class="title">Visit Brăila</h1>
       </div>
-      <a href="/logout"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
+      <a href="/logout" role="button" class="btn-icon btn-header"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
     </header>
 
     <!-- SIDEBAR -->
     <aside>
+      <hr>
       <nav>
         <a href="/" class="nav-item active group">
           <ion-icon name="speedometer-outline"></ion-icon>
@@ -62,6 +63,7 @@
           <p>About</p>
         </a>
       </nav>
+      <hr>
       
       <section class="storage-info">
         <p>Server storage: <span id="space-used">0.0 GB</span> of <span id="space-total">0.0 GB</span> Used</p>
@@ -73,65 +75,69 @@
 
     <!-- MAIN CONTENT -->
     <main>
-      <div class="card table-card">
-        <div class="card-header">
-          <h3>Sights</h3>
-          <p id="sights-records"></p>
-        </div>
-        <div class="card-body table-card-body">
-          <table id="sights-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Tags</th>
-                <th>External link</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
+      <div class="container-fluid p-3">
+        <div class="row gy-3 gx-0">
+          <div class="card shadow-sm table-card">
+            <h5 class="card-header d-flex justify-content-between align-items-baseline">
+              Sights
+              <p id="sights-records"></p>
+            </h5>
+            <div class="card-body table-card-body">
+              <table id="sights-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Tags</th>
+                    <th>External link</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
 
-      <div class="card table-card">
-        <div class="card-header">
-          <h3>Tours</h3>
-          <p id="tours-records"></p>
-        </div>
-        <div class="card-body table-card-body"> 
-          <table id="tours-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Stages</th>
-                <th>External link</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
+          <div class="card shadow-sm table-card">
+            <h5 class="card-header d-flex justify-content-between align-items-baseline">
+              Tours
+              <p id="tours-records"></p>
+            </h5>
+            <div class="card-body table-card-body"> 
+              <table id="tours-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Stages</th>
+                    <th>External link</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
 
-      <div class="card table-card">
-        <div class="card-header">
-          <h3>Events</h3>
-          <p id="events-records"></p>
-        </div>
-        <div class="card-body table-card-body"> 
-          <table id="events-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+          <div class="card shadow-sm table-card">
+            <h5 class="card-header d-flex justify-content-between align-items-baseline">
+              Events
+              <p id="events-records"></p>
+            </h5>
+            <div class="card-body table-card-body"> 
+              <table id="events-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </main>

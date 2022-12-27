@@ -15,7 +15,7 @@ const appendImageElement = (image, uploaded = false) => {
           ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
           ${getFilename(image)}
         </a>
-        <button type="button" class="btn icon-btn remove-img-btn">
+        <button type="button" class="btn btn-icon remove-img-btn">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`

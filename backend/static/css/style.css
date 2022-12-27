@@ -49,7 +49,7 @@ html, body {
     max-width: 90%;
     font-weight: 200;
     letter-spacing: -0.5px;
-    font-size: 2.8rem;
+    font-size: 1.75rem;
     color: #868e96; 
     text-align: center; 
 }
@@ -68,9 +68,13 @@ ion-icon {
     font-size: 1.5rem;
 }
 
-.small-icon {
-    font-size: 2.2rem;
+.edit-icon {
+    font-size: 1.45rem;
     color: #495057;
+}
+
+.edit-icon:hover {
+    color: #212529;
 }
 
 .row {
@@ -136,6 +140,7 @@ ion-icon {
     user-select: none;
     padding: 0;
     margin: 0;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
   
 .btn-icon > * {
@@ -152,14 +157,14 @@ ion-icon {
 .loading-btn::after {
   content: "";
   position: absolute;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.25rem;
+  height: 1.25rem;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
-  border: 3px solid transparent;
+  border: 2.5px solid transparent;
   border-top-color: #fff;
   border-radius: 50%;
   animation: button-loading-spinner 0.7s ease infinite;
@@ -192,10 +197,6 @@ ion-icon {
 .hint-text {
     font-size: 1rem;
     color: var(--text-color-dimmed);
-}
-
-.link {
-    color: var(--primary-color);
 }
 
 .highlight-onhover {
@@ -232,11 +233,11 @@ ion-icon {
     color: var(--text-color);
 }
 
-/* #### TABLE #### */
+/* #### TABLE #### */ 
 
 table {
     width: 100%;
-    font-size: 1.6rem;
+    font-size: 1rem;
 }
 
 thead tr{
@@ -245,18 +246,19 @@ thead tr{
     background-color: #fff;
     position: sticky;
     top: 0px;
-    border-bottom: 2px solid var(--border-color);
+    box-shadow: 0 1px 4px 1.5px var(--border-color);
     z-index: 1;
 }
 
 th, td {
-    padding: 1.2rem 1.6rem;
+    padding: 0.75rem 1rem;
     text-align: left;
     vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 35rem;
+    max-width: 22rem;
+    line-height: 1;
 }
 
 tbody tr {
@@ -298,15 +300,6 @@ tbody tr:hover {
     max-height: 90%;
 }
 
-.card-header h3 {
-    font-size: 2rem;
-}
-
-.card-header p {
-    font-size: 1.4rem;
-    font-weight: 200;
-}
-
 .card-body {
     flex-grow: 1;
     overflow: auto;
@@ -325,6 +318,23 @@ tbody tr:hover {
 .card-header {
     background: linear-gradient(180deg, #fff 0%, #f1f3f5 100%);
     font-weight: 400;
+}
+
+.card-header p {
+    font-size: 0.9rem;
+    font-weight: 200;
+    margin: 0;
+}
+
+.table-card-body {
+    overflow: auto;
+    padding: 0;
+}
+
+.table-card {
+    min-height: 19rem;
+    max-height: 65vh; 
+    overflow-y: hidden;
 }
 
 /* #### FORM #### */
@@ -582,6 +592,14 @@ tbody tr:hover {
 .preview-body img {
     width: 40%;
     object-fit: cover;
+}
+
+.preview-body span {
+    color: #868e96;
+    font-size: 0.9rem;
+    font-weight: 600; 
+    letter-spacing: 0.75px;
+    margin-bottom: 1.4rem
 }
 
 /* #### MODAL #### */

@@ -20,11 +20,11 @@ export const fetchSights = async () => {
           <td>${sight._id}</td>
           <td>${sight.name}</td>
           <td>${sight.tags}</td>
-          <td><a href=${sight.external_link} target="_blank" class="link">${sight.external_link}</a></td>
+          <td><a href=${sight.external_link} target="_blank">${sight.external_link}</a></td>
           <td id=${sight._id}>
             <div class="group">
-              <button class="btn action-edit-sight"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>
-              <button class="btn action-delete-sight"><ion-icon class="small-icon" name="remove-circle-outline"></ion-icon></button>
+              <button class="btn-icon action-edit-sight"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+              <button class="btn-icon action-delete-sight"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
             </div>
           </td>
         </tr>`
@@ -46,11 +46,11 @@ export const fetchTours = async () => {
           <td>${tour._id}</td>
           <td>${tour.name}</td>
           <td>${tour.stages}</td>
-          <td><a href=${tour.external_link} target="_blank" class="link">${tour.external_link}</a></td>
+          <td><a href=${tour.external_link} target="_blank">${tour.external_link}</a></td>
           <td id=${tour._id}>
             <div class="group">
-              <button class="btn action-edit-tour"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>
-              <button class="btn action-delete-tour"><ion-icon class="small-icon" name="remove-circle-outline"></ion-icon></button>
+              <button class="btn-icon action-edit-tour"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+              <button class="btn-icon action-delete-tour"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
             </div>
           </td>
         </tr>`
@@ -81,8 +81,8 @@ export const fetchEvents = async () => {
           <td>${date_time}</td>
           <td id=${event._id}>
             <div class="group">
-              <button class="btn action-edit-event"><ion-icon class="small-icon" name="create-outline"></ion-icon></button>
-              <button class="btn action-delete-event"><ion-icon class="small-icon" name="remove-circle-outline"></ion-icon></button>
+              <button class="btn-icon action-edit-event"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+              <button class="btn-icon action-delete-event"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
             </div>
           </td>
         </tr>`
