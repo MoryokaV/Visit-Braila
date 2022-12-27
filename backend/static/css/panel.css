@@ -7,24 +7,32 @@ body {
 
 body > header {
     grid-column: 2;
-    color: var(--text-color);
+    color: var(--text-color-dimmed);
     background-color: var(--accent-color-light);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.2rem 1.6rem;
+    padding: 0.75rem 1rem;
+}
+
+.btn-header {
+    color: var(--text-color-dimmed); 
+}
+
+.btn-header:hover {
+    color: #fff;
 }
 
 .menu-btn {
     display: none;
-    color: var(--text-color-dimmed);
 }
 
 body > aside {
     background-color: var(--accent-color-darker);
+    color: #fff;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
     grid-column: 1;
     grid-row: 1/-1;
     justify-content: center;
@@ -39,26 +47,25 @@ body > aside.show {
 }
 
 aside > nav { 
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     list-style: none;
-    font-size: 1.8rem;
+    font-size: 1.1rem;
     width: 100%;
-    padding: 0 1.2rem;
 }
 
 .nav-item {
-    margin-bottom: 1.2rem;
-    padding: 1rem 1.6rem;
+    padding: 0.625rem 1rem;
     border-radius: 3px;
     font-weight: 500;
-    color: var(--text-color-dimmed)
+    color: var(--text-color-dimmed);
+    line-height: 1; 
+    text-decoration: none;
 }
 
-.nav-item:first-child {
-    border-top: 1px solid #4f5962;
-}
-
-.nav-item:last-child {
-    border-bottom: 1px solid #4f5962;
+.nav-item p {
+    margin: 0;
 }
 
 .nav-item:hover {
@@ -77,7 +84,7 @@ aside > nav {
     left: 0;
     bottom: 0;
     width: 100%;
-    padding: 2.4rem 1.2rem;
+    padding: 1.5rem 0.75rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,11 +92,12 @@ aside > nav {
 
 .storage-info p {
     color: var(--text-color-dimmed);
-    font-size: 1rem;
+    font-size: 0.625rem;
+    margin: 0;
 }
 
 .bar-outline {
-    margin-top: 1.2rem; 
+    margin-top: 0.75rem; 
     width: 100%;
     height: 6px;
     background-color: var(--accent-color-light);

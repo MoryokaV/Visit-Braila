@@ -28,7 +28,7 @@ const appendActiveTags = () => {
   $("#preview-tags").empty();
 
   sight.tags.map((tag, index) => {
-    $("#active-tags").append(`<p class="tag-item">${tag}</p>`);
+    $("#active-tags").append(`<span class="badge bg-primary">${tag}</span>`);
     $("#preview-tags").append(`<p>${tag}</p>${index != sight.tags.length - 1 ? ", " : " "}`)
   });
 }
@@ -40,7 +40,7 @@ const appendImageElement = (image) => {
           <ion-icon name="cloud-upload-outline"></ion-icon>
           ${image}
         </a>
-        <button type="button" class="btn icon-btn remove-img-btn">
+        <button type="button" class="btn btn-icon remove-img-btn">
           <ion-icon name="close-outline"></ion-icon>
         </button>
       </li>`
@@ -64,7 +64,7 @@ const addPreviewImages = async (images) => {
 
   const blobs = await Promise.all(images.map(image => getBase64(image)));
 
-  blobs.map((blob) => $("#preview-images").append(`<img src="${blob}" class="img-sm">`));
+  blobs.map((blob) => $("#preview-images").append(`<img src="${blob}">`));
 
   if ($("#preview-primary-image").attr("src") === undefined) {
     $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
@@ -142,7 +142,7 @@ $(document).ready(async function() {
   $("#tags").change(function() {
     if (!sight.tags.includes($(this).val())) {
       $("#tag-btn")
-        .removeClass("danger")
+        .removeClass("text-danger")
         .text("Add")
         .off("click")
         .click(function() {
@@ -160,7 +160,7 @@ $(document).ready(async function() {
         });
     } else {
       $("#tag-btn")
-        .addClass("danger")
+        .addClass("text-danger")
         .text("Remove")
         .off("click")
         .click(function() {
@@ -169,7 +169,7 @@ $(document).ready(async function() {
 
           appendActiveTags();
 
-          $(this).removeClass("danger").text("Add").off("click");
+          $(this).removeClass("text-danger").text("Add").off("click");
           $("#tags").val("-");
         });
     }
