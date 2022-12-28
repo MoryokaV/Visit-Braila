@@ -12,7 +12,7 @@ const appendTags = async () => {
         <td>
           <div class="highlight-onhover" id="${tag._id}">
             <p>${tag.name}</p>
-            <button type="button" class="btn icon-btn remove-tag-btn">
+            <button type="button" class="btn btn-icon remove-tag-btn">
               <ion-icon name="close-outline"></ion-icon>
             </button>
           </div>
@@ -23,7 +23,7 @@ const appendTags = async () => {
 }
 
 $(document).ready(async function() {
-  $("#tag").attr("pattern", tagRegExp).attr("title", tagRegExpTitle); 
+  $("#tag").attr("pattern", tagRegExp).attr("title", tagRegExpTitle);
   appendTags();
 
   $("#tags-table").on('click', ".remove-tag-btn", async function() {
@@ -31,15 +31,15 @@ $(document).ready(async function() {
       type: "DELETE",
       url: "/api/deleteTag/" + $(this).siblings().text(),
     });
-    
+
     appendTags();
   });
 
   $("#insert-tag").submit(async function(e) {
     e.preventDefault();
 
-    const tags = await $.getJSON("/api/fetchTags"); 
-    if(tags.filter((tag) => tag.name === $("#tag").val()).length > 0){
+    const tags = await $.getJSON("/api/fetchTags");
+    if (tags.filter((tag) => tag.name === $("#tag").val()).length > 0) {
       alert("Tag already exists");
       return;
     }
@@ -49,7 +49,7 @@ $(document).ready(async function() {
       url: "/api/insertTag",
       contentType: "application/json; charset=UTF-8",
       processData: false,
-      data: JSON.stringify({"name": $("#tag").val()}),
+      data: JSON.stringify({ "name": $("#tag").val() }),
     });
 
     $("#tag").val("");

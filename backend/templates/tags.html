@@ -11,7 +11,7 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script type="module" src="/static/js/tags.js" defer></script>
 
-    <link rel="stylesheet" href="/static/css/reset.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/panel.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="stylesheet" href="/static/css/queries.css" />
@@ -20,26 +20,27 @@
     <!-- HEADER -->
     <header>
       <div class="group">
-        <button class="btn menu-btn">
+        <button class="btn-icon menu-btn btn-header">
           <ion-icon class="icon" name="menu-outline"></ion-icon>
         </button>
         <h1 class="title">Visit Brăila</h1>
       </div>
-      <a href="/logout"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
+      <a href="/logout" role="button" class="btn-icon btn-header"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
     </header>
 
     <!-- SIDEBAR -->
     <aside>
+      <hr>
       <nav>
         <a href="/" class="nav-item group">
           <ion-icon name="speedometer-outline"></ion-icon>
           <p>Dashboard</p>
         </a>
-        <a href="/admin/tags" class="nav-item active group">
+        <a href="/admin/tags" class="nav-item group">
           <ion-icon name="bookmarks-outline"></ion-icon>
           <p>Tags</p>
         </a>
-        <a href="/admin/sights" class="nav-item group">
+        <a href="/admin/sights" class="nav-item active group">
           <ion-icon name="business-outline"></ion-icon>
           <p>Sights</p>
         </a>
@@ -60,6 +61,7 @@
           <p>About</p>
         </a>
       </nav>
+      <hr>
       
       <section class="storage-info">
         <p>Server storage: <span id="space-used">0.0 GB</span> of <span id="space-total">0.0 GB</span> Used</p>
@@ -70,35 +72,41 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="center">
-      <div class="card tag-card">
-        <div class="card-header">
-          <h3>Insert tag</h3>
-        </div>
-        <div class="card-body">
-          <form id="insert-tag">
-            <div class="input-field">
-              <label for="tag">Name</label>
-              <input type="text" id="tag" name="tag" maxlength="30" required />
+    <main class="d-flex">
+      <div class="container-md m-auto py-3">
+        <div class="row justify-content-center gx-4 gy-3">
+          <div class="col-sm-6 col-lg-4">
+            <div class="card shadow-sm">
+              <h5 class="card-header">Insert tag</h5>
+              <form id="insert-tag">
+                <div class="card-body row g-3">
+                  <div class="col-12">
+                    <label for="tag" class="form-label">Name</label>
+                    <input type="text" id="tag" class="form-control" name="tag" maxlength="30" required />
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary" id="insert-tag-btn">Insert</button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <button type="submit" class="btn primary-btn" id="insert-tag-btn">Insert</button>
-          </form>
-        </div>
-      </div>
-      <div class="card tag-card">
-        <div class="card-header">
-          <h3>Tags list</h3>
-        </div>
-        <div class="card-body table-card-body">
-          <table id="tags-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <div class="card shadow-sm">
+              <h5 class="card-header">Tags list</h5>
+              <div class="card-body table-card-body">
+                <table id="tags-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

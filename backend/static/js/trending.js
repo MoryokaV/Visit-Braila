@@ -26,7 +26,7 @@ const appendElements = async () => {
           <p>${sights[index].name}</p>
           <div class="loading-spinner"></div>
           <ion-icon name="heart-outline"></ion-icon>
-          <button class="btn icon-btn remove-item">
+          <button class="btn btn-icon remove-item">
             <ion-icon name="close-outline"></ion-icon>
           </button>
         </footer>
@@ -76,8 +76,8 @@ $(document).ready(async function() {
   $("#sight-id").attr("pattern", idRegExp).attr("title", idRegExpTitle);
 
   $("#add-item").click(function() {
-    $(this).hide();
-    $(".trending-form").show();
+    $(this).addClass("d-none");
+    $("#trending-form").removeClass("d-none");
   });
 
   // Remove item 
@@ -93,7 +93,7 @@ $(document).ready(async function() {
   });
 
   // SUBMIT
-  $(".trending-form").submit(async function(e) {
+  $("#trending-form").submit(async function(e) {
     e.preventDefault();
 
     const item = {
@@ -122,15 +122,15 @@ $(document).ready(async function() {
       appendElements();
     }
 
-    $("#add-item").show();
+    $("#add-item").removeClass("d-none");
     $("#sight-id").val("");
-    $(this).hide();
+    $(this).addClass("d-none");
   });
 
   $("body").click(function(e) {
-    if (!document.querySelector(".trending-form").contains(e.target) && !document.querySelector("#add-item").contains(e.target)) {
-      $(".trending-form").hide();
-      $("#add-item").show();
+    if (!document.querySelector("#trending-form").contains(e.target) && !document.querySelector("#add-item").contains(e.target)) {
+      $("#add-item").removeClass("d-none");
+      $("#trending-form").addClass("d-none");
     }
   });
 });

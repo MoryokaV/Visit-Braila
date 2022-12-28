@@ -77,12 +77,6 @@ ion-icon {
     color: #212529;
 }
 
-.row {
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-}
-
 .gap-sm {
     gap: 8px;
 }
@@ -96,21 +90,6 @@ ion-icon {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-}
-
-.primary-btn {
-    position: relative;
-    background-color: var(--primary-color);
-    padding: 1rem 2rem;
-    color: #fff;
-    font-size: 1.6rem;
-    margin-top: 1rem;
-    border-radius: 3px;
-    transition: background-color 0.1s ease-in;
-}
-
-.primary-btn:hover {
-    background-color: var(--primary-color-shade);
 }
 
 .close-btn {
@@ -206,11 +185,15 @@ ion-icon {
     font-size: 1rem;
 }
 
-.highlight-onhover a{
+.highlight-onhover a {
     color: #868e96; 
     word-break: break-word;
     max-width: 90%;
     text-decoration: none;
+}
+
+.highlight-onhover p {
+    margin: 0;
 }
 
 .highlight-onhover:hover a {
@@ -262,7 +245,7 @@ th, td {
 }
 
 tbody tr {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 0.5px solid var(--border-color);
 }
 
 tbody tr:hover {
@@ -331,7 +314,7 @@ tbody tr:hover {
     padding: 0;
 }
 
-.table-card {
+.dashboard-card {
     min-height: 19rem;
     max-height: 65vh; 
     overflow-y: hidden;
@@ -657,28 +640,27 @@ tbody tr:hover {
 
 .trending-container {
     max-width: 100%;
-    min-height: 35rem;
-    margin: 3.2rem auto;
-    gap: 2.4rem;
-    padding: 2.4rem 3.2rem;
+    min-height: 22rem;
+    margin: 2rem auto;
+    gap: 1.5rem;
+    padding: 1.5rem 0.5rem;
     overflow-x: auto;
 }
 
 .trending-container.empty {
-    width: 60rem;
+    width: 36rem;
     max-width: 90%;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     background-color: #fff;
     box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);
-    font-size: 1.4rem;
 }
 
 .trending-item {
-    width: 26rem;
+    width: 17rem;
     flex-shrink: 0;
-    padding: 6px;
+    padding: 0.5rem;
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -703,11 +685,11 @@ tbody tr:hover {
 }
 
 .trending-item > img {
-    height: 23rem;
+    height: 15rem;
     width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.25);
-    margin-bottom: 6px;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3.5px 3px rgba(0, 0, 0, 0.31);
+    margin-bottom: 0.5rem;
     object-fit: cover; 
 }
 
@@ -715,13 +697,14 @@ tbody tr:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
-    font-size: 1.6rem;
+    padding: 0.5rem;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.5;
 }
 
 .trending-item footer > p {
+    margin: 0;
     max-width: 85%;
     white-space: nowrap;
     overflow: hidden;
@@ -729,29 +712,10 @@ tbody tr:hover {
 }
 
 .trending-item footer > button {
+    color: #aaa;
     display: none;
 }
 
 .trending-item footer > button:hover {
     color: var(--text-color);
-}
-
-.trending-form {
-    display: none;
-    max-width: 90%;
-}
-
-.trending-form > .input-field {
-    margin: 0;
-    width: 100%;
-    justify-content: center;
-}
-
-.trending-form > .input-field > * {
-    height: 3.8rem;
-    max-width: 60%;
-}
-
-.trending-form > .input-field > input {
-    width: 25rem;
 }
