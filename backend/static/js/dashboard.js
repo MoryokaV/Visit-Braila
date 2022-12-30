@@ -23,7 +23,7 @@ export const fetchSights = async () => {
           <td><a href=${sight.external_link} target="_blank">${sight.external_link}</a></td>
           <td id=${sight._id}>
             <div class="group">
-              <button class="btn-icon action-edit-sight"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+              <button class="btn-icon action-edit-sight" data-bs-toggle="modal" data-bs-target="#sight-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
               <button class="btn-icon action-delete-sight"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
             </div>
           </td>
@@ -49,7 +49,7 @@ export const fetchTours = async () => {
           <td><a href=${tour.external_link} target="_blank">${tour.external_link}</a></td>
           <td id=${tour._id}>
             <div class="group">
-              <button class="btn-icon action-edit-tour"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+              <button class="btn-icon action-edit-tour" data-bs-toggle="modal" data-bs-target="#tour-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
               <button class="btn-icon action-delete-tour"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
             </div>
           </td>
@@ -81,7 +81,7 @@ export const fetchEvents = async () => {
           <td>${date_time}</td>
           <td id=${event._id}>
             <div class="group">
-              <button class="btn-icon action-edit-event"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+              <button class="btn-icon action-edit-event" data-bs-toggle="modal" data-bs-target="#event-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
               <button class="btn-icon action-delete-event"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
             </div>
           </td>
@@ -106,7 +106,6 @@ $(document).ready(async function() {
 
   $("#sights-table").on('click', ".action-edit-sight", async function() {
     await openEditSightModal($(this).parent().parent().attr("id"));
-    $("#sight-modal").addClass("show");
   });
 
   await fetchTours();
@@ -124,7 +123,6 @@ $(document).ready(async function() {
 
   $("#tours-table").on('click', ".action-edit-tour", async function() {
     await openEditTourModal($(this).parent().parent().attr("id"));
-    $("#tour-modal").addClass("show");
   });
 
   await fetchEvents();
@@ -142,6 +140,5 @@ $(document).ready(async function() {
 
   $("#events-table").on('click', ".action-edit-event", async function() {
     await openEditEventModal($(this).parent().parent().attr("id"));
-    $("#event-modal").addClass("show");
   });
 });

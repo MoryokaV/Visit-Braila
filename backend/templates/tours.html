@@ -12,8 +12,8 @@
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script type="module" src="/static/js/tours.js" defer></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
-    <link rel="stylesheet" href="/static/css/reset.css" />
     <link rel="stylesheet" href="/static/css/panel.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="stylesheet" href="/static/css/queries.css" />
@@ -22,16 +22,17 @@
     <!-- HEADER -->
     <header>
       <div class="group">
-        <button class="btn menu-btn">
+        <button class="btn-icon menu-btn btn-header">
           <ion-icon class="icon" name="menu-outline"></ion-icon>
         </button>
         <h1 class="title">Visit Brăila</h1>
       </div>
-      <a href="/logout"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
+      <a href="/logout" role="button" class="btn-icon btn-header"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
     </header>
 
     <!-- SIDEBAR -->
     <aside>
+      <hr>
       <nav>
         <a href="/" class="nav-item group">
           <ion-icon name="speedometer-outline"></ion-icon>
@@ -62,6 +63,7 @@
           <p>About</p>
         </a>
       </nav>
+      <hr>
       
       <section class="storage-info">
         <p>Server storage: <span id="space-used">0.0 GB</span> of <span id="space-total">0.0 GB</span> Used</p>
@@ -72,85 +74,96 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="center">
-      <div class="card big-card">
-        <div class="card-header">
-          <h3>Insert tour</h3>
-        </div>
-        <div class="card-body">
-           <form id="insert-tour-form">
-            <div class="input-field">
-              <label for="tour-name">Name</label>
-              <input type="text" id="tour-name" name="name" maxlength="60" required />
+    <main class="d-flex">
+      <div class="container-sm m-auto py-3">
+        <div class="row justify-content-center gx-4 gy-3">
+          <div class="col-lg-8">
+            <div class="card shadow-sm">
+              <h5 class="card-header">Insert tour</h5>
+              <form id="insert-tour-form" class="card-body row g-3">
+                <div class="col-12">
+                  <label for="tour-name" class="form-label">Name</label>
+                  <input type="text" id="tour-name" class="form-control" name="name" maxlength="60" required />
+                </div>
+                <div class="col-12">
+                  <label for="stages" class="form-label">Stages</label>
+                  <div id="stages" class="stages-container"></div>
+                </div>
+                <div class="col-12">
+                  <label for="tour-description" class="form-label">Description</label>
+                  <div id="tour-description"></div>
+                </div>
+                <div class="col-12 d-flex gap-3">
+                  <label for="tour-images" style="cursor: pointer">
+                    Images
+                    <input
+                      type="file"
+                      class="hidden-input"
+                      id="tour-images"
+                      name="images"
+                      accept="image/*"
+                      multiple
+                      required
+                    />
+                  </label>
+                  <ul class="img-container"></ul>
+                </div>
+                <div class="col-12">
+                  <div class="row gx-3 gy-0">
+                    <label for="tour-primary-image" class="col-auto col-form-label">Primary image index</label>
+                    <div class="col">
+                      <input 
+                        class="form-control"
+                        id="tour-primary-image" 
+                        name="primary-image" 
+                        type="number" 
+                        min="1" 
+                        max="1"
+                        value="1" 
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 d-flex gap-3 align-items-center">
+                  <label for="tour-length">Length</label>
+                  <input 
+                    id="tour-length" 
+                    class="form-control"
+                    name="length" 
+                    type="number" 
+                    min="0" 
+                    value="0" 
+                    step="0.01"
+                    required
+                  />
+                  <span class="text-muted">km</span>
+                </div>
+                <div class="col-12">
+                  <label for="tour-external-link" class="form-label">External link</label>
+                  <input type="url" id="tour-external-link" class="form-control" name="external-link" required />
+                  <div class="form-text">Note: it must be a website URL</div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary"><span>Insert</span></button>
+                </div>
+              </form>
             </div>
-            <div class="input-field">
-              <label for="stages">Stages</label>
-              <div id="stages" class="stages-container wrap"></div>
+          </div>
+          <div class="col-sm-10 col-lg-4">
+            <p class="preview-title">Live preview</p>
+            <div class="card">
+              <img class="card-img-top" id="preview-primary-image">
+              <section class="card-body preview-body">
+                <h4 id="preview-name" class="card-title"></h4>
+                <div id="preview-stages" class="d-flex align-items-center flex-wrap"></div>
+                <div id="preview-description" class="card-text"></div>
+                <footer class="d-flex align-items-center gap-2" id="preview-images"></footer>
+              </section>
             </div>
-            <div class="input-field" style="gap: 0">
-              <label for="tour-description" style="margin-bottom: 1.2rem">Description</label>
-              <div id="tour-description"></div>
-            </div>
-            <div class="input-field row">
-              <label for="tour-images" style="cursor: pointer">
-                Images
-                <input
-                  type="file"
-                  class="hidden-input"
-                  id="tour-images"
-                  name="images"
-                  accept="image/*"
-                  multiple
-                  required
-                />
-              </label>
-              <ul class="img-container"></ul>
-            </div>
-            <div class="input-field row">
-              <label for="tour-primary-image">Primary image index</label>
-              <input 
-                id="tour-primary-image" 
-                name="primary-image" 
-                type="number" 
-                min="1" 
-                value="1" 
-                required
-              />
-            </div>
-            <div class="input-field row">
-              <label for="tour-length">Length</label>
-              <input 
-                id="tour-length" 
-                name="length" 
-                type="number" 
-                min="0" 
-                value="0" 
-                step="0.01"
-                required
-              />
-              <span class="hint-text" style="font-size: 1.6rem">km</span>
-            </div>
-            <div class="input-field">
-              <label for="tour-external-link">External link <span class="hint-text">Note: it must be a website URL</span></label>
-              <input type="url" id="tour-external-link" name="external-link" required />
-            </div>
-            <button type="submit" class="btn primary-btn"><span>Insert</span></button>
-          </form>
+          </div>
         </div>
       </div>
-
-      <div class="preview">
-        <p class="preview-title">Live preview</p>
-        <div class="preview-body">
-          <img class="img-md" id="preview-primary-image">
-          <section class="preview-content">
-            <h2 id="preview-name"></h2>
-            <div id="preview-stages" class="row wrap"></div>
-            <div id="preview-description"></div>
-            <footer class="row" style="gap: 2rem" id="preview-images"></footer>
-          </section>
-        </div>
-     </div>
     </main>
   </body>
 </html>

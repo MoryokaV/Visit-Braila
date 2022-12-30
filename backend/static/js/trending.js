@@ -8,13 +8,13 @@ const appendElements = async () => {
   if (items.length === 0) {
     $(".trending-container")
       .empty()
-      .addClass("empty center")
+      .addClass("empty")
       .append(`<p>No items in list</p>`);
 
     return;
   }
 
-  $(".trending-container").removeClass("empty center").empty();
+  $(".trending-container").removeClass("empty").empty();
 
   const sights = await Promise.all(items.map((item) => getSight(item)));
 

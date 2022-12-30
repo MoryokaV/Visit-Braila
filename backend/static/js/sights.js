@@ -1,5 +1,4 @@
 import {
-  getFilename,
   startLoadingAnimation,
   nameRegExp,
   nameRegExpTitle,
@@ -7,7 +6,9 @@ import {
   latitudeRegExp,
   latitudeRegExpTitle,
   longitudeRegExpTitle,
-  endLoadingAnimation
+  endLoadingAnimation,
+  addImages,
+  removeImage
 } from './utils.js';
 
 let quill = undefined;
@@ -31,101 +32,6 @@ const appendActiveTags = () => {
     $("#active-tags").append(`<span class="badge bg-primary">${tag}</span>`);
     $("#preview-tags").append(`<p>${tag}</p>${index != sight.tags.length - 1 ? ", " : " "}`)
   });
-}
-
-const appendImageElement = (image) => {
-  $(".img-container").append(
-    `<li class="highlight-onhover">
-        <a class="group">
-          <ion-icon name="cloud-upload-outline"></ion-icon>
-          ${image}
-        </a>
-        <button type="button" class="btn btn-icon remove-img-btn">
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-      </li>`
-  );
-
-  $("#sight-primary-image").attr("max", sight.images.length);
-}
-
-const addPreviewImages = async (images) => {
-  function getBase64(image) {
-    const reader = new FileReader();
-
-    return new Promise(resolve => {
-      reader.onload = e => {
-        resolve(e.target.result)
-      };
-
-      reader.readAsDataURL(image);
-    });
-  }
-
-  const blobs = await Promise.all(images.map(image => getBase64(image)));
-
-  blobs.map((blob) => $("#preview-images").append(`<img src="${blob}">`));
-
-  if ($("#preview-primary-image").attr("src") === undefined) {
-    $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
-  }
-}
-
-const addImages = (elem) => {
-  const images = Array.from(elem.prop('files')).filter((image) => {
-    if (sight.images.includes("/static/media/sights/" + image.name)) {
-      alert(`'${image.name}' is already present in list!`);
-      return false;
-    }
-
-    return true;
-  });
-
-  addPreviewImages(images);
-
-  images.map((image) => {
-    formData.append("files[]", image);
-    sight.images.push("/static/media/sights/" + image.name);
-
-    appendImageElement(image.name);
-  });
-
-  elem.val(null);
-}
-
-const removePreviewImage = (elem) => {
-  if (sight.images.length === 1) {
-    $("#preview-primary-image").removeAttr("src");
-  }
-
-  $("#preview-images img").eq(elem.parent().index()).remove();
-
-  $("#sight-primary-image").change();
-}
-
-const removeImage = (elem) => {
-  if (parseInt($("#sight-primary-image").val()) === sight.images.length) {
-    $("#sight-primary-image").val(sight.images.length - 1);
-  }
-
-  if (sight.images.length === 1) {
-    $("#sight-images").prop("required", true);
-    $("#sight-primary-image").val(1);
-  }
-
-
-  removePreviewImage(elem);
-
-  let files = [...formData.getAll("files[]")];
-  formData.delete("files[]");
-  files = files.filter((file) => file.name != getFilename(sight.images[elem.parent().index()]));
-  files.map((file) => formData.append("files[]", file));
-
-  sight.images.splice(elem.parent().index(), 1);
-
-  $("#sight-primary-image").attr("max", sight.images.length);
-
-  elem.parent().remove();
 }
 
 $(document).ready(async function() {
@@ -187,11 +93,14 @@ $(document).ready(async function() {
   // IMAGES 
   $("#sight-images").change(function() {
     $(this).prop("required", false);
-    addImages($(this));
+
+    addImages($(this).prop('files'), "/static/media/sights/", true, sight.images, formData, $("#sight-primary-image"));
+
+    $(this).val(null);
   });
 
   $(".img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this));
+    removeImage($(this), true, sight.images, formData, $("#sight-primary-image"), $("#sight-images"));
   });
 
   $("#sight-primary-image").on('change', function() {

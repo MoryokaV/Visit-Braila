@@ -216,9 +216,9 @@ def insertEvent():
         
     record = db.events.insert_one({"name": event['name'], "date_time": date_time, "end_date_time": end_date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
     
-    #cleanUpEventsImages()
+    cleanUpEventsImages()
 
-    #sendNewEventNotification(event['name'], record.inserted_id)
+    sendNewEventNotification(event['name'], record.inserted_id)
 
     return make_response("New entry has been inserted", 200) 
 

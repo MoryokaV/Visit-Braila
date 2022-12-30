@@ -12,7 +12,10 @@ import {
   latitudeRegExp,
   latitudeRegExpTitle,
   longitudeRegExp,
-  longitudeRegExpTitle
+  longitudeRegExpTitle,
+  addImages,
+  appendImageElement,
+  removeImage
 } from './utils.js';
 
 let sight = {};
@@ -23,77 +26,12 @@ let formData = undefined;
 let images_to_delete = [];
 let quill = undefined;
 
-const closeModal = () => {
-  $(".modal").removeClass("show");
-  $(".ql-toolbar").remove();
-}
-
-const addImage = (folder, elem, modal) => {
-  Array.from(elem.prop('files')).map((image) => {
-    if (current_images.includes(`/static/media/${folder}/${image.name}`)) {
-      alert(`'${image.name}' is already present in list!`);
-      return;
-    }
-
-    formData.append("files[]", image);
-    current_images.push("/static/media/" + folder + "/" + image.name);
-
-    appendImageElement(folder + "/" + image.name, modal);
-  });
-
-  elem.val(null)
-}
-
-const removeImage = (elem, modal, savedImages) => {
-  if (parseInt($(`#${modal}-primary-image`).val()) === current_images.length) {
-    $(`#${modal}-primary-image`).val(current_images.length - 1);
-  }
-
-  if (current_images.length === 1) {
-    $(`#${modal}-images`).prop("required", true);
-    $(`#${modal}-primary-image`).val(1);
-  }
-
-  //clean up FormData
-  let files = [...formData.getAll("files[]")];
-  formData.delete("files[]");
-  files = files.filter((file) => file.name !== getFilename(current_images[elem.parent().index()]));
-  files.map((file) => formData.append("files[]", file));
-
-  //mark for deletion
-  if (savedImages.includes(current_images[elem.parent().index()])) {
-    images_to_delete.push(current_images[elem.parent().index()]);
-  }
-
-  current_images.splice(elem.parent().index(), 1)
-
-  $(`#${modal}-primary-image`).attr("max", current_images.length);
-
-  elem.parent().remove();
-}
-
-const appendImageElement = (image, modal_name, uploaded = false) => {
-  $(`#${modal_name}-modal .img-container`).append(
-    `<li class="highlight-onhover">
-        <a ${uploaded ? `href="${image}" target="_blank"` : ``} class="group">
-          ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
-          ${getFilename(image)}
-        </a>
-        <button type="button" class="btn icon-btn remove-img-btn">
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-      </li>`
-  );
-
-  $(`#${modal_name}-modal #${modal_name}-primary-image`).attr("max", current_images.length);
-}
-
 const appendActiveTags = () => {
   $("#sight-modal #active-tags").empty()
-  sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<p class="tag-item">${tag}</p>`));
+  sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<span class="badge bg-primary">${tag}</span>`));
 }
 
-const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
+const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link form-control text-primary" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
 
 const appendStages = () => {
   $("#tour-modal #stages").empty();
@@ -101,12 +39,12 @@ const appendStages = () => {
   tour.stages.map((stage, index) => {
     $("#stages").append(
       `<div class="stage">
-        <input type="text" size="${stage.text.length}" maxlength="55" required /> 
+        <input type="text" size="${stage.text.length}" class="form-control" maxlength="55" required /> 
         <ion-icon name="link-outline" class="stage-input-icon ${stage.sight_link !== "" ? "active" : ""}"></ion-icon>
       </div>
       ${stage.sight_link !== "" ? linkInputElement(stage.sight_link) : ``}
       ${index === tour.stages.length - 1 ?
-        `<button type="button" class="btn icon-btn link" id="add-stage"> 
+        `<button type="button" class="btn btn-icon text-primary" id="add-stage"> 
           <ion-icon name="add-outline"></ion-icon> 
         </button>`
         :
@@ -166,9 +104,9 @@ export const openEditSightModal = async (id) => {
   $("#sight-description .ql-editor").html(sight.description)
 
   // IMAGES
-  $("#sight-modal .img-container").empty()
-  sight.images.map((image) => appendImageElement(image, "sight", true));
+  sight.images.map((image) => appendImageElement(image, true));
 
+  $("#sight-primary-image").attr("max", sight.images.length);
   $("#sight-primary-image").val(sight.primary_image);
 
   // COORDINATES
@@ -198,9 +136,9 @@ export const openEditTourModal = async (id) => {
   $("#tour-description .ql-editor").html(tour.description);
 
   // IMAGES
-  $("#tour-modal .img-container").empty()
-  tour.images.map((image) => appendImageElement(image, "tour", true));
+  tour.images.map((image) => appendImageElement(image, true));
 
+  $("#tour-primary-image").attr("max", tour.images.length);
   $("#tour-primary-image").val(tour.primary_image);
 
   // LENGTH
@@ -230,10 +168,10 @@ export const openEditEventModal = async (id) => {
     $("#multiple-days").prop("checked", true);
 
     $("#end-event-datetime").parent().remove()
-    $("#multiple-days").parent().after(`
-      <div class="input-field">
-        <label for="end-datetime">End date & time</label>
-        <input id="end-event-datetime" type="datetime-local" name="end-datetime" required></input>
+    $("#multiple-days").parent().parent().after(`
+      <div class="col-12">
+        <label for="end-datetime" class="form-label">End date & time</label>
+        <input id="end-event-datetime" class="form-control" type="datetime-local" name="end-datetime" required></input>
       </div>
     `);
 
@@ -247,19 +185,17 @@ export const openEditEventModal = async (id) => {
   $("#event-description .ql-editor").html(event.description);
 
   // IMAGES
-  $("#event-modal .img-container").empty()
-  event.images.map((image) => appendImageElement(image, "event", true));
+  event.images.map((image) => appendImageElement(image, true));
 
+  $("#event-primary-image").attr("max", event.images.length);
   $("#event-primary-image").val(event.primary_image);
 }
 
 $(document).ready(async function() {
-  $(".close-btn").click(closeModal);
-  document.onkeydown = function(e) {
-    if (e.key === "Escape") {
-      closeModal();
-    }
-  }
+  $("#sight-modal").on("hidden.bs.modal", function() {
+    $(".ql-toolbar").remove();
+    $(".img-container").empty();
+  })
 
   // SIGHT NAME
   $("#sight-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
@@ -268,7 +204,7 @@ $(document).ready(async function() {
   $("#sight-modal #tags").change(function() {
     if (!sight.tags.includes($(this).val())) {
       $("#sight-modal #tag-btn")
-        .removeClass("danger")
+        .removeClass("text-danger")
         .text("Add")
         .off("click")
         .click(function() {
@@ -286,7 +222,7 @@ $(document).ready(async function() {
         });
     } else {
       $("#sight-modal #tag-btn")
-        .addClass("danger")
+        .addClass("text-danger")
         .text("Remove")
         .off("click")
         .click(function() {
@@ -295,7 +231,7 @@ $(document).ready(async function() {
 
           appendActiveTags();
 
-          $(this).removeClass("danger").text("Add").off("click");
+          $(this).removeClass("text-danger").text("Add").off("click");
           $("#sight-modal #tags").val("-");
         });
     }
@@ -304,11 +240,19 @@ $(document).ready(async function() {
   // SIGHT IMAGES 
   $('#sight-images').change(function() {
     $(this).prop("required", false);
-    addImage("sights", $(this), "sight");
+
+    addImages($(this).prop('files'), "/static/media/sights/", false, current_images, formData, $("#sight-primary-image"));
+
+    $(this).val(null);
   });
 
   $("#sight-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), "sight", sight.images);
+    removeImage($(this), false, current_images, formData, $("#sight-primary-image"), $("#sight-images"));
+
+    //mark for deletion
+    if (sight.images.includes(current_images[$(this).parent().index()])) {
+      images_to_delete.push(current_images[$(this).parent().index()]);
+    }
   });
 
   // SIGHT COORDINATES
@@ -355,12 +299,16 @@ $(document).ready(async function() {
       });
 
       await fetchSights();
-      closeModal();
       endLoadingAnimation($(this));
     } catch {
       endLoadingAnimation($(this));
     }
   });
+
+  $("#tour-modal").on("hidden.bs.modal", function() {
+    $(".ql-toolbar").remove();
+    $(".img-container").empty();
+  })
 
   // TOUR NAME
   $("#tour-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
@@ -416,11 +364,19 @@ $(document).ready(async function() {
   // TOUR IMAGES 
   $('#tour-images').change(function() {
     $(this).prop("required", false);
-    addImage("tours", $(this), "tour");
+
+    addImages($(this).prop('files'), "/static/media/tours/", false, tour.images, formData, $("#tour-primary-image"));
+
+    $(this).val(null);
   });
 
   $("#tour-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), "tour", tour.images);
+    removeImage($(this), false, current_images, formData, $("#tour-primary-image"), $("#tour-images"));
+
+    //mark for deletion
+    if (tour.images.includes(current_images[$(this).parent().index()])) {
+      images_to_delete.push(current_images[$(this).parent().index()]);
+    }
   });
 
   // TOUR SUBMIT 
@@ -462,12 +418,16 @@ $(document).ready(async function() {
       });
 
       await fetchTours();
-      closeModal();
       endLoadingAnimation($(this));
     } catch {
       endLoadingAnimation($(this));
     }
   });
+
+  $("#event-modal").on("hidden.bs.modal", function() {
+    $(".ql-toolbar").remove();
+    $(".img-container").empty();
+  })
 
   // EVENT NAME
   $("#event-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
@@ -475,14 +435,14 @@ $(document).ready(async function() {
   // EVENT DATE
   $("#multiple-days").on('change', function() {
     if ($(this).prop('checked') === true) {
-      $(this).parent().after(`
-        <div class="input-field">
-          <label for="end-datetime">End date & time</label>
-          <input id="end-event-datetime" type="datetime-local" name="end-datetime" required></input>
+      $(this).parent().parent().after(`
+        <div class="col-12">
+          <label for="end-datetime" class="form-label">End date & time</label>
+          <input id="end-event-datetime" class="form-control" type="datetime-local" name="end-datetime" required></input>
         </div>
       `);
     } else {
-      $(this).parent().next().remove();
+      $(this).parent().parent().next().remove();
     }
   });
 
@@ -493,11 +453,14 @@ $(document).ready(async function() {
   // EVENT IMAGES 
   $('#event-images').change(function() {
     $(this).prop("required", false);
-    addImage("events", $(this), "event");
+
+    addImages($(this).prop('files'), "/static/media/events/", false, event.images, formData, $("#event-primary-image"));
+
+    $(this).val(null);
   });
 
   $("#event-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), "event", event.images);
+    removeImage($(this), false, event.images, formData, $("#event-primary-image"), $("#event-images"));
   });
 
   //EVENT SUBMIT
@@ -556,7 +519,6 @@ $(document).ready(async function() {
       });
 
       await fetchEvents();
-      closeModal();
       endLoadingAnimation($(this));
     } catch {
       endLoadingAnimation($(this));

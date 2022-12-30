@@ -28,7 +28,7 @@ body > header {
 }
 
 body > aside {
-    background-color: var(--accent-color-darker);
+    background-color: var(--sidebar-color);
     color: #fff;
     padding: 1rem;
     display: flex;
@@ -74,7 +74,7 @@ aside > nav {
 }
 
 .nav-item.active {
-    background-color: var(--primary-color);
+    background-color: var(--bs-primary);
     box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
     color: #fff; 
 }

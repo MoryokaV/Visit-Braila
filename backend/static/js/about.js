@@ -1,4 +1,10 @@
-import { startLoadingAnimation, endLoadingAnimation, phoneRegExp, phoneRegExpTitle, getFilename } from './utils.js';
+import {
+  startLoadingAnimation,
+  endLoadingAnimation,
+  phoneRegExp,
+  phoneRegExpTitle,
+  appendImageElement
+} from './utils.js';
 
 let paragraph1 = undefined;
 let paragraph2 = undefined;
@@ -7,43 +13,6 @@ const LIMIT = 500;
 
 let formData = new FormData();
 let current_image = undefined;
-
-const appendImageElement = (image, uploaded = false) => {
-  $(".img-container").append(
-    `<li class="highlight-onhover">
-        <a ${uploaded ? `href="${image}" target="_blank"` : ``} class="group">
-          ${uploaded ? `<ion-icon name="image-outline"></ion-icon>` : `<ion-icon name="cloud-upload-outline"></ion-icon>`}
-          ${getFilename(image)}
-        </a>
-        <button type="button" class="btn btn-icon remove-img-btn">
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-      </li>`
-  );
-}
-
-const addImage = (elem) => {
-  if ($(".img-container").children().length > 0) {
-    alert("You must have only one cover image!")
-    return;
-  }
-
-  const file = elem.prop("files")[0];
-
-  formData.append("files[]", file);
-  current_image = "/static/media/about/" + file.name;
-
-  appendImageElement(file.name);
-}
-
-const removeImage = (elem) => {
-  $("#cover-image").prop("required", true);
-
-  formData.delete("files[]");
-  current_image = undefined
-
-  elem.parent().remove();
-}
 
 $(document).ready(async function() {
   const data = await $.getJSON("/api/fetchAboutData")
@@ -125,12 +94,29 @@ $(document).ready(async function() {
 
   $("#cover-image").change(function() {
     $(this).prop("required", false);
-    addImage($(this));
+
+    if ($(".img-container").children().length > 0) {
+      alert("You must have only one cover image!")
+      return;
+    }
+
+    const file = $(this).prop("files")[0];
+
+    formData.append("files[]", file);
+    current_image = "/static/media/about/" + file.name;
+
+    appendImageElement(file.name);
+
     $(this).val(null);
   });
 
   $(".img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this));
+    $("#cover-image").prop("required", true);
+
+    formData.delete("files[]");
+    current_image = undefined
+
+    $(this).parent().remove();
   });
 
   $("#cover-form").submit(async function(e) {

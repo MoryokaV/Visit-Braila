@@ -1,9 +1,10 @@
 import {
-  getFilename,
   startLoadingAnimation,
   nameRegExp,
   nameRegExpTitle,
-  endLoadingAnimation
+  endLoadingAnimation,
+  addImages,
+  removeImage
 } from './utils.js';
 
 let quill = undefined;
@@ -16,100 +17,6 @@ let event = {
   primary_image: 1,
   description: ``,
 };
-
-const appendImageElement = (image) => {
-  $(".img-container").append(
-    `<li class="highlight-onhover">
-        <a class="group">
-          <ion-icon name="cloud-upload-outline"></ion-icon>
-          ${image}
-        </a>
-        <button type="button" class="btn btn-icon remove-img-btn">
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-      </li>`
-  );
-
-  $("#event-primary-image").attr("max", event.images.length);
-}
-
-const addPreviewImages = async (images) => {
-  function getBase64(image) {
-    const reader = new FileReader();
-
-    return new Promise(resolve => {
-      reader.onload = e => {
-        resolve(e.target.result)
-      };
-
-      reader.readAsDataURL(image);
-    });
-  }
-
-  const blobs = await Promise.all(images.map(image => getBase64(image)));
-
-  blobs.map((blob) => $("#preview-images").append(`<img src="${blob}">`));
-
-  if ($("#preview-primary-image").attr("src") === undefined) {
-    $("#preview-primary-image").prop("src", $("#preview-images img").eq(0).prop("src"));
-  }
-}
-
-const addImages = (elem) => {
-  const images = Array.from(elem.prop('files')).filter((image) => {
-    if (event.images.includes("/static/media/events/" + image.name)) {
-      alert(`'${image.name}' is already present in list!`);
-      return false;
-    }
-
-    return true;
-  });
-
-  addPreviewImages(images);
-
-  images.map((image) => {
-    formData.append("files[]", image);
-    event.images.push("/static/media/events/" + image.name);
-
-    appendImageElement(image.name);
-  });
-
-  elem.val(null);
-}
-
-const removePreviewImage = (elem) => {
-  if (event.images.length === 1) {
-    $("#preview-primary-image").removeAttr("src");
-  }
-
-  $("#preview-images img").eq(elem.parent().index()).remove();
-
-  $("#event-primary-image").change();
-}
-
-const removeImage = (elem) => {
-  if (parseInt($("#event-primary-image").val()) === event.images.length) {
-    $("#event-primary-image").val(event.images.length - 1);
-  }
-
-  if (event.images.length === 1) {
-    $("#event-images").prop("required", true);
-    $("#event-primary-image").val(1);
-  }
-
-  removePreviewImage(elem);
-
-  let files = [...formData.getAll("files[]")];
-  formData.delete("files[]");
-  files = files.filter((file) => file.name != getFilename(event.images[elem.parent().index()]));
-  files.map((file) => formData.append("files[]", file));
-
-  event.images.splice(elem.parent().index(), 1);
-
-  $("#event-primary-image").attr("max", event.images.length);
-
-  elem.parent().remove();
-}
 
 const convert2LocalDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -146,11 +53,14 @@ $(document).ready(async function() {
   // IMAGES 
   $("#event-images").change(function() {
     $(this).prop("required", false);
-    addImages($(this));
+
+    addImages($(this).prop('files'), "/static/media/events/", true, event.images, formData, $("#event-primary-image"));
+
+    $(this).val(null);
   });
 
   $(".img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this));
+    removeImage($(this), true, event.images, formData, $("#event-primary-image"), $("#event-images"));
   });
 
   $("#event-primary-image").on('change', function() {
