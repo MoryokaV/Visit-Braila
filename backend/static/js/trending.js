@@ -39,7 +39,7 @@ const appendElements = async () => {
   new Sortable(list, {
     animation: 150,
     easing: "cubic-bezier(0.65, 0, 0.35, 1)",
-    delay: 75,
+    delay: 200,
     delayOnTouchOnly: true,
     onEnd: async function(e) {
       for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
