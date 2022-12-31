@@ -1,6 +1,5 @@
 import { fetchEvents, fetchSights, fetchTours } from './dashboard.js';
 import {
-  getFilename,
   startLoadingAnimation,
   endLoadingAnimation,
   nameRegExp,
@@ -300,6 +299,7 @@ $(document).ready(async function() {
 
       await fetchSights();
       endLoadingAnimation($(this));
+      $("#sight-modal").modal('hide');
     } catch {
       endLoadingAnimation($(this));
     }
@@ -419,6 +419,7 @@ $(document).ready(async function() {
 
       await fetchTours();
       endLoadingAnimation($(this));
+      $("#tour-modal").modal('hide');
     } catch {
       endLoadingAnimation($(this));
     }
@@ -520,6 +521,7 @@ $(document).ready(async function() {
 
       await fetchEvents();
       endLoadingAnimation($(this));
+      $("#event-modal").modal('hide');
     } catch {
       endLoadingAnimation($(this));
     }
