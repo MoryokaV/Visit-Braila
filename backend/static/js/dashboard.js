@@ -72,20 +72,24 @@ export const fetchEvents = async () => {
   $("#events-table tbody").empty();
 
   data.map((event) => {
-    const date_time = new Intl.DateTimeFormat('ro-RO', { dateStyle: "long", timeStyle: 'short', }).format(convert2LocalDate(event.date_time));
+    const date_time = new Intl.DateTimeFormat('ro-RO', { dateStyle: "short", timeStyle: 'short', }).format(convert2LocalDate(event.date_time));
+    let end_date_time = undefined;
+    if (event.end_date_time !== null) {
+      end_date_time = new Intl.DateTimeFormat('ro-RO', { dateStyle: "short", timeStyle: 'short', }).format(convert2LocalDate(event.end_date_time));
+    }
 
     $("#events-table").append(
       `<tr>
           <td>${event._id}</td>
           <td>${event.name}</td>
-          <td>${date_time}</td>
+          <td>${end_date_time === undefined ? date_time : date_time + " &rarr; " + end_date_time}</td >
           <td id=${event._id}>
             <div class="group">
               <button class="btn-icon action-edit-event" data-bs-toggle="modal" data-bs-target="#event-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
               <button class="btn-icon action-delete-event"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
             </div>
           </td>
-        </tr>`
+      </tr> `
     );
   });
 }
