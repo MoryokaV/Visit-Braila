@@ -1,5 +1,5 @@
-$(document).ready(function () {
-  $("form").submit(function (e) {
+$(document).ready(function() {
+  $("form").submit(function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -8,16 +8,16 @@ $(document).ready(function () {
       data: JSON.stringify({ user: $("#user").val(), pass: $("#pass").val() }),
       processData: false,
       contentType: "application/json; charset=UTF-8",
-      success: function () {
-        window.location.replace("/admin");
+      success: function(data) {
+        window.location.replace(JSON.parse(data).url);
       },
-      error: function (data) {
+      error: function(data) {
         alert(data.responseText);
       },
     });
   });
 
-  $(".eye-icon").on("click", function () {
+  $(".eye-icon").on("click", function() {
     const passwordField = $("#pass");
 
     if (passwordField.attr("type") === "password") {

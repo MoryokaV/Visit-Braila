@@ -36,13 +36,24 @@ def apple_touch_icon():
 def root():
     return redirect("/admin")
 
-def logged_in(f):
+def master_login_required(f):
+    @wraps(f)
+    def checkForMasterUser(*args, **kwargs):
+        if session['username'] == "master":
+            return f(*args, **kwargs) 
+        else:
+            return redirect("/login")
+
+    return checkForMasterUser
+
+def login_required(f):
     @wraps(f)
     def checkLoginStatus(*args, **kwargs):
         if session.get("logged_in"):
             return f(*args, **kwargs)
         else:
             return redirect("/login")
+
     return checkLoginStatus 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -54,51 +65,60 @@ def login():
     password = hashlib.sha256(request.json["pass"].encode('utf-8')).hexdigest()
 
     if db.login.find_one({"username": username, "password": password}) is not None:
-        session["logged_in"] = True 
-        
-        return make_response("Logged in", 200)
+        session['logged_in'] = True 
+        session['username'] = username
+
+        if username == "master":
+            return make_response(json.dumps({"url": "/master"}), 200)
+
+        return make_response(json.dumps({"url": "/admin"}), 200)
     else:
         return make_response("Wrong user or password!", 401)
 
-
 @app.route("/logout")
 def logout():
-    session.pop('logged_in', None)     
+    session.clear()
         
     return redirect("/login")
 
+@app.route("/master")
+@login_required
+@master_login_required
+def master():
+    return render_template("master.html")
+
 @app.route("/admin")
-@logged_in
+@login_required
 def index():
     return render_template("index.html") 
 
 @app.route("/admin/tags")
-@logged_in
+@login_required
 def tags():
     return render_template("tags.html")
 
 @app.route("/admin/sights")
-@logged_in
+@login_required
 def sights():
     return render_template("sights.html")
 
 @app.route("/admin/tours")
-@logged_in
+@login_required
 def tours():
     return render_template("tours.html")
 
 @app.route("/admin/events")
-@logged_in
+@login_required
 def events():
     return render_template("events.html")
 
 @app.route("/admin/trending")
-@logged_in
+@login_required
 def trending():
     return render_template("trending.html")
 
 @app.route("/admin/about")
-@logged_in
+@login_required
 def about():
     return render_template("about.html")
 
