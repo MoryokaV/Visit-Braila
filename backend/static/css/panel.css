@@ -5,6 +5,10 @@ body {
     overflow: hidden;
 }
 
+body.master {
+    grid-template-columns: 1fr;
+}
+
 body > header {
     grid-column: 2;
     color: var(--text-color-dimmed);
@@ -13,6 +17,10 @@ body > header {
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 1rem;
+}
+
+body.master > header {
+    grid-column: 1;
 }
 
 .title {

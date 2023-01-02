@@ -1,14 +1,16 @@
 import { tagRegExp, tagRegExpTitle } from './utils.js';
 
-const appendTags = async () => {
+let tags = [];
+
+const fetchTags = async () => {
   $("#tags-table tbody").empty();
 
-  const tags = await $.getJSON("/api/fetchTags");
+  tags = await $.getJSON("/api/fetchTags");
 
   tags.map((tag, index) => {
     $("#tags-table tbody").append(
       `<tr>
-        <td style="width: 5rem">${index + 1}</td> 
+        <td class="small-cell">${index + 1}</td> 
         <td>
           <div class="highlight-onhover" id="${tag._id}">
             <p>${tag.name}</p>
@@ -24,7 +26,7 @@ const appendTags = async () => {
 
 $(document).ready(async function() {
   $("#tag").attr("pattern", tagRegExp).attr("title", tagRegExpTitle);
-  appendTags();
+  await fetchTags();
 
   $("#tags-table").on('click', ".remove-tag-btn", async function() {
     await $.ajax({
@@ -32,13 +34,12 @@ $(document).ready(async function() {
       url: "/api/deleteTag/" + $(this).siblings().text(),
     });
 
-    appendTags();
+    await fetchTags();
   });
 
-  $("#insert-tag").submit(async function(e) {
+  $("#insert-tag-form").submit(async function(e) {
     e.preventDefault();
 
-    const tags = await $.getJSON("/api/fetchTags");
     if (tags.filter((tag) => tag.name === $("#tag").val()).length > 0) {
       alert("Tag already exists");
       return;
@@ -54,6 +55,6 @@ $(document).ready(async function() {
 
     $("#tag").val("");
 
-    appendTags();
+    await fetchTags();
   });
 });

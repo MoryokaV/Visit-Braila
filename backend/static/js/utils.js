@@ -135,8 +135,10 @@ $(document).ready(function() {
   $(".menu-btn").click(() => $("aside").toggleClass("show"));
 
   $("body").click(function(e) {
-    if (!document.querySelector("aside").contains(e.target) && !document.querySelector(".menu-btn").contains(e.target)) {
-      $('aside').removeClass("show");
+    if (document.querySelector("aside") !== null) {
+      if (!document.querySelector("aside").contains(e.target) && !document.querySelector(".menu-btn").contains(e.target)) {
+        $('aside').removeClass("show");
+      }
     }
   });
 });

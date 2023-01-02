@@ -122,6 +122,28 @@ def trending():
 def about():
     return render_template("about.html")
 
+# --- USERS --- 
+
+@app.route("/api/insertUser", methods=["POST"])
+def insertUser():
+    user = request.get_json()
+
+    db.login.insert_one({"username": user['username'], "password": hashlib.sha256(user['password'].encode("utf-8")).hexdigest()})
+    
+    return make_response("New entry has been inserted", 200)
+
+@app.route("/api/fetchUsers")
+def fetchUsers():
+    return json.dumps(list(db.login.find()), default=str)
+
+@app.route("/api/deleteUser/<_id>", methods=["DELETE"])
+def deleteUser(_id):
+    db.login.delete_one({"_id": ObjectId(_id)})
+
+    return make_response("Successfully deleted document", 200)
+
+# --- SIGHTS ---  
+
 @app.route("/api/insertSight", methods=["POST"])
 def insertSight():
     sight = request.get_json()
@@ -181,6 +203,8 @@ def editSight():
     db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": float(sight['latitude']), "longitude": float(sight['longitude']), "external_link": sight['external_link']}})
     return make_response("Entry has been updated", 200)
 
+# --- TOURS ---  
+
 @app.route("/api/insertTour", methods=["POST"])
 def insertTour():
     tour = request.get_json()
@@ -219,6 +243,8 @@ def editTour():
 
     db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "length": float(tour['length']), "external_link": tour['external_link']}})
     return make_response("Entry has been updated", 200)
+
+# --- EVENTS ---  
 
 @app.route("/api/insertEvent", methods=["POST"])
 def insertEvent():
@@ -284,6 +310,8 @@ def editEvent():
     db.events.update_one({"_id": ObjectId(event['_id'])}, {"$set": {"name": event['name'], "date_time": date_time, "end_date_time": end_date_time,  "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']}})
     return make_response("Entry has been updated", 200)
 
+# --- TAGS ---
+
 @app.route("/api/fetchTags")
 def fetchTags():
     return json.dumps(list(db.tags.find()), default=str)
@@ -309,6 +337,8 @@ def deleteTag(name):
     db.tags.delete_one({"name": name})
 
     return make_response("Successfully deleted document", 200)
+
+# --- TRENDING --- 
 
 @app.route("/api/insertTrendingItem", methods=["POST"])
 def insertTrendingItem():
@@ -345,6 +375,8 @@ def updateTrendingItemIndex():
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
     return make_response("Entry has been updated", 200)
 
+# --- ABOUT DATA ---
+
 @app.route("/api/fetchAboutData")
 def fetchAboutData():
     return json.dumps(db.about.find_one(), default=str);
@@ -372,6 +404,8 @@ def updateCoverImage():
 
     db.about.update_one({"name": "about"}, {"$set": {"cover_image": item['cover_image']}})
     return make_response("Entry has been updated", 200)
+
+# --- IMAGES ---
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImages(folder):
