@@ -28,17 +28,20 @@
             <div class="card shadow-sm">
               <h5 class="card-header">Insert user</h5>
               <form id="insert-user-form" class="card-body row g-3">
-                <div class="col-12">
+                <section class="col-12">
                   <label for="username" class="form-label">Username</label>
-                  <input type="text" id="username" class="form-control" name="tag" maxlength="30" required />
-                </div>
-                <div class="col-12">
+                  <input type="text" id="username" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" name="username" required />
+                </section>
+                <section class="col-12">
                   <label for="password" class="form-label">Password</label>
-                  <input type="text" id="password" class="form-control" name="password" maxlength="40" required />
-                </div>
-                <div class="col-12">
-                  <button type="submit" class="btn btn-primary">Insert</button>
-                </div>
+                  <div class="input-group">
+                    <input type="password" id="password" class="form-control rounded-end" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="new-password" name="password" maxlength="20" required />
+                    <ion-icon name="eye-off-outline" class="eye-icon"></ion-icon>
+                  </div>
+                </section>
+                <section class="col-12">
+                  <button type="submit" class="btn btn-primary"><span>Insert</span></button>
+                </section>
               </form>
             </div>
           </div>

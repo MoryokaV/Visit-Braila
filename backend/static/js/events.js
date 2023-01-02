@@ -81,10 +81,10 @@ $(document).ready(async function() {
   $("#multiple-days").on('change', function() {
     if ($(this).prop('checked') === true) {
       $(this).parent().parent().after(`
-        <div class="col-12">
+        <section class="col-12">
           <label for="end-datetime" class="form-label">End date & time</label>
           <input id="end-event-datetime" type="datetime-local" class="form-control" name="end-datetime" required></input>
-        </div>
+        </section>
       `);
     } else {
       $(this).parent().parent().next().remove();

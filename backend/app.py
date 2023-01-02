@@ -24,6 +24,8 @@ Session(app)
 client = MongoClient(os.getenv("MONGO_URL"))
 db = client.visitbraila
 
+# --- ICONS --- 
+
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
@@ -31,6 +33,8 @@ def favicon():
 @app.route("/apple-touch-icon.png")
 def apple_touch_icon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'apple-touch-icon.png')
+
+# --- LOGIN --- 
     
 @app.route("/")
 def root():
@@ -80,6 +84,8 @@ def logout():
     session.clear()
         
     return redirect("/login")
+
+# --- CMS ROUTES --- 
 
 @app.route("/master")
 @login_required

@@ -80,25 +80,25 @@
             <div class="card shadow-sm">
               <h5 class="card-header">Insert event</h5>
               <form id="insert-event-form" class="card-body row g-3">
-                <div class="col-12">
+                <section class="col-12">
                   <label for="event-name" class="form-label">Name</label>
                   <input type="text" id="event-name" class="form-control" name="name" maxlength="60" required />
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <label for="datetime" class="form-label">Date & time</label>
                   <input id="event-datetime" type="datetime-local" class="form-control" name="datetime" required></input>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <div class="form-check">
                     <input id="multiple-days" class="form-check-input" type="checkbox" name="multiple-days">
                     <label for="multiple-days" class="form-check-label">Multiple days</label>
                   </div>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <label for="event-description" class="form-label">Description</label>
                   <div id="event-description"></div>
-                </div>
-                <div class="col-12 d-flex gap-3">
+                </section>
+                <section class="col-12 d-flex gap-3">
                   <label for="event-images" style="cursor: pointer">
                     Images
                     <input
@@ -112,8 +112,8 @@
                     />
                   </label>
                   <ul class="img-container"></ul>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <div class="row gx-3 gy-0">
                     <label for="event-primary-image" class="col-auto col-form-label">Primary image index</label>
                     <div class="col">
@@ -129,10 +129,10 @@
                       />
                     </div>
                   </div>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <button type="submit" class="btn btn-primary"><span>Insert</span></button>
-                </div>
+                </section>
               </form>
             </div>
           </div>

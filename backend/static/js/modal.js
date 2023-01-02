@@ -168,10 +168,10 @@ export const openEditEventModal = async (id) => {
 
     $("#end-event-datetime").parent().remove()
     $("#multiple-days").parent().parent().after(`
-      <div class="col-12">
+      <section class="col-12">
         <label for="end-datetime" class="form-label">End date & time</label>
         <input id="end-event-datetime" class="form-control" type="datetime-local" name="end-datetime" required></input>
-      </div>
+      </section>
     `);
 
     $("#end-event-datetime").val(convert2LocalDate(event.end_date_time));

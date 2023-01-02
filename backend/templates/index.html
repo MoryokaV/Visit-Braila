@@ -151,11 +151,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form class="modal-body row g-3">
-            <div class="col-12">
+            <section class="col-12">
               <label for="sight-name" class="form-label">Name</label>
               <input type="text" id="sight-name" class="form-control" name="name" maxlength="60" required>
-            </div> 
-            <div class="col-12 d-flex flex-wrap gap-3">
+            </section> 
+            <section class="col-12 d-flex flex-wrap gap-3">
               <label for="tags" class="col-form-label">Tags</label>
               <div class="col-sm-3">
                 <select id="tags" name="tags" class="form-select">
@@ -164,12 +164,12 @@
               </div>
               <a role="button" class="btn btn-text text-primary" id="tag-btn">Add</a>
               <div id="active-tags" class="d-flex align-items-center flex-wrap gap-2"></div>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <label for="sight-description" class="form-label">Description</label>
               <div id="sight-description"></div>
-            </div>
-            <div class="col-12 d-flex gap-3">
+            </section>
+            <section class="col-12 d-flex gap-3">
               <label for="sight-images" style="cursor: pointer">
                 Images
                 <input
@@ -182,8 +182,8 @@
                 />
               </label>
               <ul class="img-container"></ul>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <div class="row gx-3 gy-0">
                 <label for="sight-primary-image" class="col-auto col-form-label">Primary image index</label>
                 <div class="col">
@@ -199,23 +199,23 @@
                   />
                 </div>
               </div>
-            </div>
-            <div class="col-sm-6">
+            </section>
+            <section class="col-sm-6">
               <label class="form-label" for="sight-latitude">Latitude</label>
               <input type="text" class="form-control" id="sight-latitude" name="latitude" required />
-            </div>
-            <div class="col-sm-6">
+            </section>
+            <section class="col-sm-6">
               <label class="form-label" for="sight-longitude">Longitude</label>
               <input type="text" class="form-control" id="sight-longitude" name="longitude" required />
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <label class="form-label" for="sight-external-link">External link</label>
               <input type="url" id="sight-external-link" class="form-control" name="external-link" required />
               <div class="form-text">Note: it must be a website URL</div>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <button type="submit" class="btn btn-primary"><span>Insert</span></button>
-            </div>
+            </section>
           </form>
         </div>
       </div>
@@ -230,19 +230,19 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form class="modal-body row g-3">
-            <div class="col-12">
+            <section class="col-12">
               <label for="tour-name" class="form-label">Name</label>
               <input type="text" id="tour-name" class="form-control" name="name" maxlength="60" required />
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <label for="stages" class="form-label">Stages</label>
               <div id="stages" class="stages-container"></div>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <label for="tour-description" class="form-label">Description</label>
               <div id="tour-description"></div>
-            </div>
-            <div class="col-12 d-flex gap-3">
+            </section>
+            <section class="col-12 d-flex gap-3">
               <label for="tour-images" style="cursor: pointer">
                 Images
                 <input
@@ -255,8 +255,8 @@
                 />
               </label>
               <ul class="img-container"></ul>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <div class="row gx-3 gy-0">
                 <label for="tour-primary-image" class="col-auto col-form-label">Primary image index</label>
                 <div class="col">
@@ -272,8 +272,8 @@
                   />
                 </div>
               </div>
-            </div>
-            <div class="col-12 d-flex gap-3 align-items-center">
+            </section>
+            <section class="col-12 d-flex gap-3 align-items-center">
               <label for="tour-length">Length</label>
               <input 
                 id="tour-length" 
@@ -286,15 +286,15 @@
                 required
               />
               <span class="text-muted">km</span>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <label for="tour-external-link" class="form-label">External link</label>
               <input type="url" id="tour-external-link" class="form-control" name="external-link" required />
               <div class="form-text">Note: it must be a website URL</div>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <button type="submit" class="btn btn-primary"><span>Insert</span></button>
-            </div>
+            </section>
           </form>
         </div>
       </div>
@@ -309,25 +309,25 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form class="modal-body row g-3">
-            <div class="col-12">
+            <section class="col-12">
               <label for="event-name" class="form-label">Name</label>
               <input type="text" id="event-name" class="form-control" name="name" maxlength="60" required />
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <label for="datetime" class="form-label">Date & time</label>
               <input id="event-datetime" type="datetime-local" class="form-control" name="datetime" required></input>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <div class="form-check">
                 <input id="multiple-days" class="form-check-input" type="checkbox" name="multiple-days">
                 <label for="multiple-days" class="form-check-label">Multiple days</label>
               </div>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <label for="event-description" class="form-label">Description</label>
               <div id="event-description"></div>
-            </div>
-            <div class="col-12 d-flex gap-3">
+            </section>
+            <section class="col-12 d-flex gap-3">
               <label for="event-images" style="cursor: pointer">
                 Images
                 <input
@@ -340,8 +340,8 @@
                 />
               </label>
               <ul class="img-container"></ul>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <div class="row gx-3 gy-0">
                 <label for="event-primary-image" class="col-auto col-form-label">Primary image index</label>
                 <div class="col">
@@ -357,10 +357,10 @@
                   />
                 </div>
               </div>
-            </div>
-            <div class="col-12">
+            </section>
+            <section class="col-12">
               <button type="submit" class="btn btn-primary"><span>Insert</span></button>
-            </div>
+            </section>
           </form>
         </div>
       </div>

@@ -41,6 +41,18 @@ $(document).ready(async function() {
     }
   });
 
+  $(".eye-icon").on("click", function() {
+    const passwordField = $("#password");
+
+    if (passwordField.attr("type") === "password") {
+      $(this).attr("name", "eye-outline");
+      passwordField.attr("type", "text");
+    } else {
+      $(this).attr("name", "eye-off-outline");
+      passwordField.attr("type", "password");
+    }
+  });
+
   $("#insert-user-form").submit(async function(e) {
     e.preventDefault();
 
@@ -55,6 +67,7 @@ $(document).ready(async function() {
     }
 
     startLoadingAnimation($(this));
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     await $.ajax({
       type: "POST",

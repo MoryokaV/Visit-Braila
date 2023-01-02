@@ -81,84 +81,78 @@
           <div class="col-xl-6">
             <div class="card shadow-sm">
               <h5 class="card-header">Help</h5>
-              <form id="paragraphs-form"> 
-                <div class="card-body row g-3">
-                  <div class="col-12">
-                    <label for="paragraph-1-content" class="form-label">About you</label>
-                    <div id="paragraph-1-content"></div>
-                  </div>
-                  <div class="col-12">
-                    <label for="paragraph-2-content" class="form-label">About app</label>
-                    <div id="paragraph-2-content"></div>
-                  </div>
-                  <div class="col-12">
-                    <button type="submit" class="btn btn-primary"><span>Save</span></button>
-                  </div>
-                </div>
+              <form id="paragraphs-form" class="card-body row g-3"> 
+                <section class="col-12">
+                  <label for="paragraph-1-content" class="form-label">About you</label>
+                  <div id="paragraph-1-content"></div>
+                </section>
+                <section class="col-12">
+                  <label for="paragraph-2-content" class="form-label">About app</label>
+                  <div id="paragraph-2-content"></div>
+                </section>
+                <section class="col-12">
+                  <button type="submit" class="btn btn-primary"><span>Save</span></button>
+                </section>
               </form>
             </div>
           </div>
           <div class="col-xl-6">
             <div class="card shadow-sm">
               <h5 class="card-header">Contact</h5>
-              <form id="contact-form">
-                <div class="card-body row g-3">
-                  <div class="col-12">
-                    <div class="row gx-3 gy-0">
-                      <label for="director" class="col-sm-3 form-label">Director</label>
-                      <div class="col-sm-9">
-                        <input type="text" id="director" class="form-control" name="director" required />
-                      </div>
+              <form id="contact-form" class="card-body row g-3">
+                <section class="col-12">
+                  <div class="row gx-3 gy-0">
+                    <label for="director" class="col-sm-3 form-label">Director</label>
+                    <div class="col-sm-9">
+                      <input type="text" id="director" class="form-control" name="director" required />
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="row gx-3 gy-0">
-                      <label for="phone" class="col-sm-3 form-label">Phone number</label>
-                      <div class="col-sm-9">
-                        <input type="tel" id="phone" class="form-control" name="phone" required />
-                      </div>
+                </section>
+                <section class="col-12">
+                  <div class="row gx-3 gy-0">
+                    <label for="phone" class="col-sm-3 form-label">Phone number</label>
+                    <div class="col-sm-9">
+                      <input type="tel" id="phone" class="form-control" name="phone" required />
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="row gx-3 gy-0">
-                      <label for="email" class="col-sm-3 form-label">Email</label>
-                      <div class="col-sm-9">
-                        <input type="email" id="email" class="form-control" name="email" required />
-                      </div>
+                </section>
+                <section class="col-12">
+                  <div class="row gx-3 gy-0">
+                    <label for="email" class="col-sm-3 form-label">Email</label>
+                    <div class="col-sm-9">
+                      <input type="email" id="email" class="form-control" name="email" required />
                     </div>
                   </div>
-                  <div class="col-12">
-                    <button type="submit" class="btn btn-primary"><span>Save</span></button>
-                  </div>
-                </div>
+                </section>
+                <section class="col-12">
+                  <button type="submit" class="btn btn-primary"><span>Save</span></button>
+                </section>
               </form>
             </div>
           </div>
           <div class="col-xl-6">
             <div class="card shadow-sm">
               <h5 class="card-header">Cover</h5>
-              <form id="cover-form">
-                <div class="card-body row g-3">
-                  <div class="col-12">
-                    <div class="d-flex gap-3">
-                      <label for="cover-image" style="cursor: pointer">
-                        Image
-                        <input
-                          type="file"
-                          class="hidden-input"
-                          id="cover-image"
-                          name="image"
-                          accept="image/*"
-                          required
-                        />
-                      </label>
-                      <ul class="img-container"></ul>
-                    </div>
+              <form id="cover-form" class="card-body row g-3">
+                <section class="col-12">
+                  <div class="d-flex gap-3">
+                    <label for="cover-image" style="cursor: pointer">
+                      Image
+                      <input
+                        type="file"
+                        class="hidden-input"
+                        id="cover-image"
+                        name="image"
+                        accept="image/*"
+                        required
+                      />
+                    </label>
+                    <ul class="img-container"></ul>
                   </div>
-                  <div class="col-12">
-                    <button type="submit" class="btn btn-primary"><span>Save</span></button>
-                  </div>
-                </div>
+                </section>
+                <section class="col-12">
+                  <button type="submit" class="btn btn-primary"><span>Save</span></button>
+                </section>
               </form>
             </div>
           </div>

@@ -19,16 +19,16 @@
       <form>
         <img class="mb-3 img-fluid" src="static/media/assets/icon.png" width="128" height="128">
         <h1 class="h2 mb-3 text-white fw-semibold">Visit Brăila</h1>
-        <div class="form-floating">
-          <input type="text" class="form-control" id="user" name="user" placeholder="user" required />
+        <section class="form-floating">
+          <input type="text" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="username" id="user" name="user" placeholder="user" required />
           <label class="floatingInput">Username</label>
-        </div>
+        </section>
 
-        <div class="form-floating">
-          <input type="password" class="form-control" id="pass" name="pass" placeholder="password" required />
+        <section class="form-floating">
+          <input type="password" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="current-password" id="pass" name="pass" placeholder="password" maxlength="20" required />
           <ion-icon name="eye-off-outline" class="eye-icon"></ion-icon>
           <label class="floatingInput">Password</label>
-        </div>
+        </section>
 
         <button type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
       </form>

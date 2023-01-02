@@ -32,6 +32,10 @@ ion-icon {
     min-width: 16px;
 }
 
+.icon {
+    font-size: 1.5rem;
+}
+
 .tab-title {
     max-width: 90%;
     font-weight: 200;
@@ -49,8 +53,14 @@ ion-icon {
 
 /* BUTTONS */
 
-.icon {
-    font-size: 1.5rem;
+.eye-icon {
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	right: 0.5rem;
+	font-size: 1.2rem;
+	cursor: pointer;
+    z-index: 5;
 }
 
 .edit-icon {
@@ -439,7 +449,7 @@ td.small-cell {
     height: 15rem;
     width: 100%;
     border-radius: 0.75rem;
-    box-shadow: 0 1px 3.5px 3px rgba(0, 0, 0, 0.31);
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 30%);
     margin-bottom: 0.5rem;
     object-fit: cover; 
 }

@@ -80,11 +80,11 @@
             <div class="card shadow-sm">
               <h5 class="card-header">Insert sight</h5>
               <form id="insert-sight-form" class="card-body row g-3">
-                <div class="col-12">
+                <section class="col-12">
                   <label for="sight-name" class="form-label">Name</label>
                   <input type="text" id="sight-name" class="form-control" name="name" maxlength="60" required>
-                </div> 
-                <div class="col-12 d-flex flex-wrap gap-3">
+                </section> 
+                <section class="col-12 d-flex flex-wrap gap-3">
                   <label for="tags" class="col-form-label">Tags</label>
                   <div class="col-sm-3">
                     <select id="tags" name="tags" class="form-select">
@@ -93,12 +93,12 @@
                   </div>
                   <a role="button" class="btn btn-text text-primary" id="tag-btn">Add</a>
                   <div id="active-tags" class="d-flex align-items-center flex-wrap gap-2"></div>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <label for="sight-description" class="form-label">Description</label>
                   <div id="sight-description"></div>
-                </div>
-                <div class="col-12 d-flex gap-3">
+                </section>
+                <section class="col-12 d-flex gap-3">
                   <label for="sight-images" style="cursor: pointer">
                     Images
                     <input
@@ -112,8 +112,8 @@
                     />
                   </label>
                   <ul class="img-container"></ul>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <div class="row gx-3 gy-0">
                     <label for="sight-primary-image" class="col-auto col-form-label">Primary image index</label>
                     <div class="col">
@@ -129,23 +129,23 @@
                       />
                     </div>
                   </div>
-                </div>
-                <div class="col-sm-6">
+                </section>
+                <section class="col-sm-6">
                   <label class="form-label" for="sight-latitude">Latitude</label>
                   <input type="text" class="form-control" id="sight-latitude" name="latitude" required />
-                </div>
-                <div class="col-sm-6">
+                </section>
+                <section class="col-sm-6">
                   <label class="form-label" for="sight-longitude">Longitude</label>
                   <input type="text" class="form-control" id="sight-longitude" name="longitude" required />
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <label class="form-label" for="sight-external-link">External link</label>
                   <input type="url" id="sight-external-link" class="form-control" name="external-link" required />
                   <div class="form-text">Note: it must be a website URL</div>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <button type="submit" class="btn btn-primary"><span>Insert</span></button>
-                </div>
+                </section>
               </form>
             </div>
           </div>

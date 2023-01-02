@@ -80,19 +80,19 @@
             <div class="card shadow-sm">
               <h5 class="card-header">Insert tour</h5>
               <form id="insert-tour-form" class="card-body row g-3">
-                <div class="col-12">
+                <section class="col-12">
                   <label for="tour-name" class="form-label">Name</label>
                   <input type="text" id="tour-name" class="form-control" name="name" maxlength="60" required />
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <label for="stages" class="form-label">Stages</label>
                   <div id="stages" class="stages-container"></div>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <label for="tour-description" class="form-label">Description</label>
                   <div id="tour-description"></div>
-                </div>
-                <div class="col-12 d-flex gap-3">
+                </section>
+                <section class="col-12 d-flex gap-3">
                   <label for="tour-images" style="cursor: pointer">
                     Images
                     <input
@@ -106,8 +106,8 @@
                     />
                   </label>
                   <ul class="img-container"></ul>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <div class="row gx-3 gy-0">
                     <label for="tour-primary-image" class="col-auto col-form-label">Primary image index</label>
                     <div class="col">
@@ -123,8 +123,8 @@
                       />
                     </div>
                   </div>
-                </div>
-                <div class="col-12 d-flex gap-3 align-items-center">
+                </section>
+                <section class="col-12 d-flex gap-3 align-items-center">
                   <label for="tour-length">Length</label>
                   <input 
                     id="tour-length" 
@@ -137,15 +137,15 @@
                     required
                   />
                   <span class="text-muted">km</span>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <label for="tour-external-link" class="form-label">External link</label>
                   <input type="url" id="tour-external-link" class="form-control" name="external-link" required />
                   <div class="form-text">Note: it must be a website URL</div>
-                </div>
-                <div class="col-12">
+                </section>
+                <section class="col-12">
                   <button type="submit" class="btn btn-primary"><span>Insert</span></button>
-                </div>
+                </section>
               </form>
             </div>
           </div>
