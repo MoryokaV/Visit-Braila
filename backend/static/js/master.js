@@ -20,7 +20,7 @@ const fetchUsers = async () => {
         <td class="small-cell">${index + 1}</td>
         <td>${user.username}</td>
         <td class="small-cell text-center" id=${user._id}>
-          <button class="btn-icon action-delete-user"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
+          ${user.username === "master" ? `<button class="btn-icon action-edit-user" data-bs-toggle="modal" data-bs-target="#edit-master-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>` : `<button class="btn-icon action-delete-user"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>`}
         </td>
       </tr>`
     );
@@ -42,7 +42,7 @@ $(document).ready(async function() {
   });
 
   $(".eye-icon").on("click", function() {
-    const passwordField = $("#password");
+    const passwordField = $(this).siblings();
 
     if (passwordField.attr("type") === "password") {
       $(this).attr("name", "eye-outline");
@@ -51,6 +51,29 @@ $(document).ready(async function() {
       $(this).attr("name", "eye-off-outline");
       passwordField.attr("type", "password");
     }
+  });
+
+  $("#edit-master-modal").on("hidden.bs.modal", function() {
+    $("#edit-master-form")[0].reset();
+  });
+
+  $("#edit-master-form").submit(async function(e) {
+    e.preventDefault();
+
+    startLoadingAnimation($(this));
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    await $.ajax({
+      type: "PUT",
+      url: "/api/editMasterPassword",
+      contentType: "application/json; charset=UTF-8",
+      processData: false,
+      data: JSON.stringify({ "new_password": $("#new-password").val() }),
+    });
+
+    endLoadingAnimation($(this));
+    $(this)[0].reset();
+    $("#edit-master-modal").modal("hide");
   });
 
   $("#insert-user-form").submit(async function(e) {

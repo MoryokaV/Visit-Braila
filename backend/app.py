@@ -148,6 +148,14 @@ def deleteUser(_id):
 
     return make_response("Successfully deleted document", 200)
 
+@app.route("/api/editMasterPassword", methods=["PUT"])
+def editMasterPassword():
+    data = request.get_json()
+
+    db.login.update_one({"username": "master"}, {"$set": {"password": hashlib.sha256(data['new_password'].encode('utf-8')).hexdigest()}})
+
+    return make_response("Entry has been updated", 200)
+
 # --- SIGHTS ---  
 
 @app.route("/api/insertSight", methods=["POST"])

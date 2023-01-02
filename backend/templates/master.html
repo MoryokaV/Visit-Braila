@@ -68,5 +68,28 @@
         </div>
       </div>
     </main>  
+
+    <div class="modal fade" id="edit-master-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit master account</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="edit-master-form" class="modal-body row g-3">
+            <section class="col-12">
+              <label for="new-password" class="form-label">New password</label>
+              <div class="input-group">
+                <input type="password" id="new-password" class="form-control rounded-end" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="new-password" name="new-password" maxlength="20" required>
+                <ion-icon name="eye-off-outline" class="eye-icon"></ion-icon>
+              </div>
+            </section>
+            <section class="col-12">
+              <button type="submit" class="btn btn-primary"><span>Update</span></button>
+            </section>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
