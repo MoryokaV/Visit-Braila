@@ -20,7 +20,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
   Map<String, dynamic> data = {
     "paragraph1": "",
     "paragraph2": "",
-    "director": "",
+    "oraganization": "",
     "phone": "",
     "email": "",
     "cover_image": ""
@@ -130,7 +130,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                               "Biblioteca Județeană \"Panait Istrati\" Brăila",
                               style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
                             HtmlDescription(
                               data: data["paragraph1"]!,
                               shrink: false,
@@ -147,7 +147,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                               "Despre Visit Brăila",
                               style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
                             HtmlDescription(
                               data: data["paragraph2"]!,
                               shrink: false,
@@ -164,7 +164,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                               "Contact",
                               style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
                                 SvgPicture.asset(
@@ -174,22 +174,24 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                                 const SizedBox(width: 4),
                                 const Text(
-                                  "Director: ",
+                                  "Oraganizaition: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                Text(
-                                  data['director']!,
-                                  style: const TextStyle(
-                                    fontFamily: labelFont,
-                                    fontWeight: FontWeight.w600,
+                                Flexible(
+                                  child: Text(
+                                    data['organization']!,
+                                    style: const TextStyle(
+                                      fontFamily: labelFont,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 8),
                             Row(
                               children: [
                                 SvgPicture.asset(
@@ -219,7 +221,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 8),
                             Row(
                               children: [
                                 SvgPicture.asset(
@@ -244,6 +246,70 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                       color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: labelFont,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/link-outline.svg",
+                                  width: 20,
+                                  color: kForegroundColor,
+                                ),
+                                const SizedBox(width: 4),
+                                const Text(
+                                  "Official website: ",
+                                  style: TextStyle(
+                                    fontFamily: labelFont,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: GestureDetector(
+                                    onTap: () => openBrowserURL(data['website']!),
+                                    child: Text(
+                                      data['website']!,
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: labelFont,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/link-outline.svg",
+                                  width: 20,
+                                  color: kForegroundColor,
+                                ),
+                                const SizedBox(width: 4),
+                                const Text(
+                                  "Facebook: ",
+                                  style: TextStyle(
+                                    fontFamily: labelFont,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: GestureDetector(
+                                    onTap: () => openBrowserURL(data['facebook']!),
+                                    child: Text(
+                                      data['facebook']!,
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: labelFont,
+                                      ),
                                     ),
                                   ),
                                 ),
