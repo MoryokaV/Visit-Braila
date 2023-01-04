@@ -59,26 +59,31 @@ $(document).ready(async function() {
   });
 
   // CONTACT
-  $("#director").val(data.director);
+  $("#organization").val(data.organization);
 
   $("#phone").attr("pattern", phoneRegExp).attr("title", phoneRegExpTitle);
   $("#phone").val(data.phone);
 
   $("#email").val(data.email);
 
+  $("#website").val(data.website);
+  $("#facebook").val(data.facebook);
+
   $("#contact-form").submit(async function(e) {
     e.preventDefault();
 
     startLoadingAnimation($(this));
 
-    const director = $("#director").val();
+    const organization = $("#organization").val();
     const phone = $("#phone").val();
     const email = $("#email").val();
+    const website = $("#website").val();
+    const facebook = $("#facebook").val();
 
     await $.ajax({
       type: "PUT",
       url: "/api/updateContactDetails",
-      data: JSON.stringify({ "director": director, "phone": phone, "email": email }),
+      data: JSON.stringify({ "organization": organization, "phone": phone, "email": email, "website": website, "facebook": facebook }),
       processData: false,
       contentType: "application/json; charset=UTF-8",
     });

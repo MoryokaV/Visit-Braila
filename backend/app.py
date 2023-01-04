@@ -406,7 +406,7 @@ def updateAboutParagraphs():
 def updateContactDetails():
     details = request.get_json()
 
-    db.about.update_one({"name": "about"}, {"$set": {"director": details['director'], "phone": details['phone'], "email": details['email']}})
+    db.about.update_one({"name": "about"}, {"$set": {"organization": details['organization'], "phone": details['phone'], "email": details['email'], "website": details['website'], "facebook": details['facebook']}})
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/updateCoverImage", methods=["PUT"])
