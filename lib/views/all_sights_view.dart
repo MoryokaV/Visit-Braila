@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +97,11 @@ class _AllSightsViewState extends State<AllSightsView> {
     });
 
     if (query.trim().isEmpty) {
-      filteredData.addAll(sights);
+      if (selectedIndex == 0) {
+        filteredData.addAll(sights);
+      } else {
+        filteredData.addAll(sights.where((sight) => sight.tags.contains(tags[selectedIndex])));
+      }
     }
 
     setState(() {
@@ -109,8 +112,9 @@ class _AllSightsViewState extends State<AllSightsView> {
   void setTag(int index) {
     setState(() {
       selectedIndex = index;
-      updateList(currentQuery);
     });
+
+    updateList(currentQuery);
   }
 
   @override
