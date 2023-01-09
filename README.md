@@ -76,7 +76,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 - SHA-256 login encryption  
 - Tags get removed from sights automatically when deleted
 - Trending - admin’s recommendations
-- UI is inspired from [Admin LTE template](https://adminlte.io/) and Bootstrap 5
+- UI is inspired from [Admin LTE template](https://adminlte.io/)  
 - Linux Cron Job for daily notifications
 - MongoDB TTL events index for automatically deletion
 - SSL certificate
@@ -89,6 +89,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
   
 - CMS Frontend:
   - HTML & CSS
+  - Bootstrap 5
   - JavaScript + jQuery 3.6.0 (AJAX calls, manipulate DOM)
   
 - Mobile App
