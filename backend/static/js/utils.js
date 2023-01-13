@@ -8,7 +8,7 @@ export const endLoadingAnimation = container => container.find(`button[type="sub
 
 // Form Validation
 export const nameRegExp = `^[A-Za-z${diacritice}][A-Za-z0-9${diacritice},.\"'() -]*$`
-export const addressRegExp = `^[A-Za-z0-9${diacritice}][A-Za-z0-9${diacritice},.\"'() -&/]*$`
+export const addressRegExp = `^[A-Za-z0-9${diacritice}][A-Za-z0-9${diacritice},.\-\"'() &]*$`
 export const tagRegExp = `^[A-Z${diacritice_mari}][A-Za-z${diacritice}]*$`
 export const idRegExp = "^[0-9a-fA-F]{24}$"
 export const phoneRegExp = "^(\\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?([0-9]{3}){2}$"
