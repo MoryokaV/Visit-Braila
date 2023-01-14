@@ -11,10 +11,47 @@ import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
 
-class AllEventsView extends StatelessWidget {
-  AllEventsView({super.key});
+class AllEventsView extends StatefulWidget {
+  const AllEventsView({super.key});
 
+  @override
+  State<AllEventsView> createState() => _AllEventsViewState();
+}
+
+class _AllEventsViewState extends State<AllEventsView> {
   final EventController eventController = EventController();
+
+  String? currentRange;
+  List<int> ranges = [];
+  bool firstListBuild = true;
+
+  String? getSeparatorText(DateTime date) {
+    if (date.year > DateTime.now().year) {
+      return "-- ${date.year.toString()}";
+    } else if (date.day.compareTo(DateTime.now().day) == 0) {
+      return "-- Astăzi";
+    } else if (date.month == DateTime.now().month && date.day - DateTime.now().day < 0) {
+      return null;
+    } else if (date.month == DateTime.now().month && date.day - DateTime.now().day <= 7 - DateTime.now().weekday) {
+      return "-- Săptămâna aceasta";
+    } else if (date.year == DateTime.now().year) {
+      String month = DateFormat.MMMM('ro-RO').format(date);
+      return "-- ${month[0].toUpperCase()}${month.substring(1)}";
+    }
+
+    return null;
+  }
+
+  void setRanges(List<Event> events) {
+    for (int i = 0; i < events.length; i++) {
+      if (getSeparatorText(events[i].dateTime) != currentRange) {
+        currentRange = getSeparatorText(events[i].dateTime);
+        ranges.add(i);
+      }
+    }
+
+    firstListBuild = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +96,33 @@ class AllEventsView extends StatelessWidget {
               ),
               itemCount: events.data!.length,
               itemBuilder: (context, index) {
-                return EventCard(
-                  event: events.data![index],
+                if (firstListBuild) {
+                  setRanges(events.data!);
+                }
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (ranges.contains(index))
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          getSeparatorText(events.data![index].dateTime)!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontFamily: labelFont,
+                            color: kDateTimeForegroundColor,
+                          ),
+                        ),
+                      ),
+                    EventCard(
+                      event: events.data![index],
+                    ),
+                  ],
                 );
               },
               separatorBuilder: (_, __) {
-                return const SizedBox(
-                  height: 16,
-                );
+                return const SizedBox(height: 16);
               },
             );
           } else if (events.hasError && events.error is HttpException) {
