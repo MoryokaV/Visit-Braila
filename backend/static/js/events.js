@@ -148,7 +148,7 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/insertEvent",
         type: "POST",
-        data: JSON.stringify(event),
+        data: JSON.stringify({ "notify": $("#send-notif").prop("checked"), "event": event }),
         processData: false,
         contentType: "application/json; charse=UTF-8",
       });

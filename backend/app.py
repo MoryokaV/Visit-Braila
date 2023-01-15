@@ -262,7 +262,10 @@ def editTour():
 
 @app.route("/api/insertEvent", methods=["POST"])
 def insertEvent():
-    event = request.get_json()
+    data = request.get_json()
+
+    notify = data['notify']
+    event = data['event']
 
     date_time = parser.isoparse(event['date_time'])
     end_date_time = None
@@ -278,7 +281,8 @@ def insertEvent():
     
     cleanUpEventsImages()
 
-    sendNewEventNotification(event['name'], record.inserted_id)
+    if notify:
+        sendNewEventNotification(event['name'], record.inserted_id)
 
     return make_response("New entry has been inserted", 200) 
 
