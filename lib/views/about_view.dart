@@ -130,83 +130,73 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                               "Biblioteca Județeană \"Panait Istrati\" Brăila",
                               style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 14),
                             HtmlDescription(
                               data: data["paragraph1"]!,
                               shrink: false,
                             ),
                             const Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 10,
-                              ),
-                              child: Divider(
-                                thickness: 1.1,
-                              ),
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Divider(thickness: 1.1),
                             ),
                             Text(
                               "Despre Visit Brăila",
                               style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 14),
                             HtmlDescription(
                               data: data["paragraph2"]!,
                               shrink: false,
                             ),
                             const Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 10,
-                              ),
-                              child: Divider(
-                                thickness: 1.1,
-                              ),
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Divider(thickness: 1.1),
                             ),
                             Text(
                               "Contact",
                               style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
                             ),
-                            const SizedBox(height: 10),
-                            Row(
+                            const SizedBox(height: 14),
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
                               children: [
                                 SvgPicture.asset(
                                   "assets/icons/user.svg",
                                   width: 20,
-                                  color: kForegroundColor,
+                                  color: kDisabledIconColor,
                                 ),
-                                const SizedBox(width: 4),
                                 const Text(
-                                  "Oraganizaition: ",
+                                  "Organizație: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    data['organization']!,
-                                    style: const TextStyle(
-                                      fontFamily: labelFont,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                Text(
+                                  data['organization']!,
+                                  style: const TextStyle(
+                                    fontFamily: labelFont,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
-                            Row(
+                            const SizedBox(height: 10),
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
                               children: [
                                 SvgPicture.asset(
                                   "assets/icons/phone.svg",
                                   width: 20,
-                                  color: kForegroundColor,
+                                  color: kDisabledIconColor,
                                 ),
-                                const SizedBox(width: 4),
                                 const Text(
                                   "Telefon: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
                                 GestureDetector(
                                   onTap: () => openTel(data['phone']!),
                                   child: Text(
@@ -221,22 +211,22 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
-                            Row(
+                            const SizedBox(height: 10),
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
                               children: [
                                 SvgPicture.asset(
                                   "assets/icons/mail.svg",
                                   width: 20,
-                                  color: kForegroundColor,
+                                  color: kDisabledIconColor,
                                 ),
-                                const SizedBox(width: 4),
                                 const Text(
                                   "Email: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
                                 GestureDetector(
                                   onTap: () => openEmail(data['email']!),
                                   child: Text(
@@ -251,71 +241,67 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
-                            Row(
+                            const SizedBox(height: 10),
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
                               children: [
                                 SvgPicture.asset(
                                   "assets/icons/link-outline.svg",
                                   width: 20,
-                                  color: kForegroundColor,
+                                  color: kDisabledIconColor,
                                 ),
-                                const SizedBox(width: 4),
                                 const Text(
-                                  "Official website: ",
+                                  "Website oficial: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
-                                Flexible(
-                                  child: GestureDetector(
-                                    onTap: () => openBrowserURL(data['website']!),
-                                    child: Text(
-                                      data['website']!,
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: labelFont,
-                                      ),
+                                GestureDetector(
+                                  onTap: () => openBrowserURL(data['website']!),
+                                  child: Text(
+                                    data['website']!,
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: labelFont,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
-                            Row(
+                            const SizedBox(height: 10),
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
                               children: [
                                 SvgPicture.asset(
                                   "assets/icons/link-outline.svg",
                                   width: 20,
-                                  color: kForegroundColor,
+                                  color: kDisabledIconColor,
                                 ),
-                                const SizedBox(width: 4),
                                 const Text(
                                   "Facebook: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
-                                Flexible(
-                                  child: GestureDetector(
-                                    onTap: () => openBrowserURL(data['facebook']!),
-                                    child: Text(
-                                      data['facebook']!,
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: labelFont,
-                                      ),
+                                GestureDetector(
+                                  onTap: () => openBrowserURL(data['facebook']!),
+                                  child: Text(
+                                    data['facebook']!,
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: labelFont,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 18),
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),

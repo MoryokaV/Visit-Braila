@@ -115,7 +115,7 @@ class SightView extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 18,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.white.withOpacity(0.8),
                     child: IconButton(
                       color: kForegroundColor,
                       padding: EdgeInsets.zero,
@@ -134,7 +134,7 @@ class SightView extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 18,
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.white.withOpacity(0.8),
                         child: IconButton(
                           color: kForegroundColor,
                           icon: const Icon(
@@ -148,27 +148,30 @@ class SightView extends StatelessWidget {
                       const SizedBox(
                         width: 12,
                       ),
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          color: kForegroundColor,
-                          icon: Icon(
-                            Icons.adaptive.share,
-                            size: 18,
-                            color: kBlackColor,
-                          ),
-                          onPressed: () async {
-                            final link = await DynamicLinksService.generateDynamicLink(
-                              id: sight.id,
-                              image: sight.images[sight.primaryImage - 1],
-                              name: sight.name,
-                              collection: "sight",
-                              alternativeUrl: sight.externalLink,
-                            );
+                      FractionalTranslation(
+                        translation: Platform.isIOS ? const Offset(0, 0) : const Offset(0, 0),
+                        child: CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Colors.white.withOpacity(0.8),
+                          child: IconButton(
+                            color: kForegroundColor,
+                            icon: Icon(
+                              Icons.adaptive.share,
+                              size: 18,
+                              color: kBlackColor,
+                            ),
+                            onPressed: () async {
+                              final link = await DynamicLinksService.generateDynamicLink(
+                                id: sight.id,
+                                image: sight.images[sight.primaryImage - 1],
+                                name: sight.name,
+                                collection: "sight",
+                                alternativeUrl: sight.externalLink,
+                              );
 
-                            Share.share(link.toString());
-                          },
+                              Share.share(link.toString());
+                            },
+                          ),
                         ),
                       ),
                     ],

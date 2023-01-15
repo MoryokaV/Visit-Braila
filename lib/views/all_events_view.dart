@@ -109,7 +109,6 @@ class _AllEventsViewState extends State<AllEventsView> {
                         child: Text(
                           getSeparatorText(events.data![index].dateTime)!,
                           style: const TextStyle(
-                            fontWeight: FontWeight.w600,
                             fontFamily: labelFont,
                             color: kDateTimeForegroundColor,
                           ),

@@ -111,7 +111,7 @@ class _TourViewState extends State<TourView> {
                 children: [
                   CircleAvatar(
                     radius: 18,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.white.withOpacity(0.8),
                     child: IconButton(
                       color: kForegroundColor,
                       padding: EdgeInsets.zero,
@@ -128,7 +128,7 @@ class _TourViewState extends State<TourView> {
                   ),
                   CircleAvatar(
                     radius: 18,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.white.withOpacity(0.8),
                     child: IconButton(
                       color: kForegroundColor,
                       icon: Icon(
@@ -308,7 +308,7 @@ class _TourViewState extends State<TourView> {
           fontFamily: bodyFont,
           color: kForegroundColor,
           fontSize: 14,
-          height: 1.5,
+          height: 1.6,
         ),
       ),
     );
