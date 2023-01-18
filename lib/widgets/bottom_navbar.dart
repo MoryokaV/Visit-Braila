@@ -83,7 +83,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
         appBar: getAppBar(context),
         bottomNavigationBar: BottomNavigationBar(
           elevation: 10,
-          selectedFontSize: 12,
+          selectedFontSize: 14,
           unselectedLabelStyle: const TextStyle(fontFamily: labelFont),
           selectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
