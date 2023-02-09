@@ -5,6 +5,7 @@ import 'package:visit_braila/controllers/about_controller.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/url_constants.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/html_description.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
@@ -84,9 +85,9 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
               expandedHeight: Responsive.safeBlockVertical * 30,
               flexibleSpace: FlexibleSpaceBar(
                 background: data['cover_image'] != ""
-                    ? Image.network(
-                        "$baseUrl${data['cover_image']}",
-                        fit: BoxFit.cover,
+                    ? CachedApiImage(
+                        imageUrl: "$baseUrl${data['cover_image']}",
+                        cacheWidth: Responsive.screenWidth,
                       )
                     : Container(color: kDimmedForegroundColor),
               ),

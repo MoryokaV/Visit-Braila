@@ -14,6 +14,8 @@ class Responsive {
   static late double safePaddingTop;
   static late double safePaddingBottom;
 
+  static late double pixelRatio;
+
   void getMediaQueryData() {
     _mediaQueryData = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
 
@@ -25,6 +27,8 @@ class Responsive {
 
     safePaddingTop = _mediaQueryData.padding.top;
     safePaddingBottom = _mediaQueryData.padding.bottom;
+
+    pixelRatio = _mediaQueryData.devicePixelRatio;
   }
 
   Future<void> init() async {

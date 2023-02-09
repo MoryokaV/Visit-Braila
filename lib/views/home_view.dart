@@ -10,6 +10,7 @@ import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/search_all.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
@@ -53,11 +54,10 @@ class HomeView extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topLeft,
                               children: [
-                                Image.asset(
+                                CachedAssetImage(
                                   "assets/images/braila_night.jpg",
-                                  fit: BoxFit.cover,
-                                  height: Responsive.safeBlockVertical * 35,
-                                  width: Responsive.screenWidth,
+                                  cacheHeight: Responsive.safeBlockVertical * 35,
+                                  cacheWidth: Responsive.screenWidth,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 18, top: 12),
@@ -195,11 +195,11 @@ class HomeView extends StatelessWidget {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
-                                    child: Image.asset(
+                                    child: CachedAssetImage(
                                       "assets/images/republicii.jpg",
-                                      height: Responsive.safeBlockVertical * 30,
                                       width: double.infinity,
-                                      fit: BoxFit.cover,
+                                      height: Responsive.safeBlockVertical * 30,
+                                      cacheHeight: Responsive.safeBlockVertical * 30,
                                     ),
                                   ),
                                   Padding(
@@ -241,11 +241,11 @@ class HomeView extends StatelessWidget {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
-                                    child: Image.asset(
+                                    child: CachedAssetImage(
                                       "assets/images/biserica_greceasca.jpg",
                                       height: Responsive.safeBlockVertical * 30,
                                       width: double.infinity,
-                                      fit: BoxFit.cover,
+                                      cacheHeight: Responsive.safeBlockVertical * 30,
                                     ),
                                   ),
                                   Padding(
@@ -421,12 +421,10 @@ class TrendingSightCard extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
-                      fadeOutDuration: const Duration(milliseconds: 700),
-                      fadeInDuration: const Duration(milliseconds: 300),
+                    child: CachedApiImage(
                       imageUrl: sight.images[sight.primaryImage - 1],
-                      fit: BoxFit.cover,
                       width: double.infinity,
+                      cacheWidth: Responsive.safeBlockHorizontal * 60,
                     ),
                   ),
                 ),

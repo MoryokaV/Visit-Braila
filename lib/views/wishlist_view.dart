@@ -9,6 +9,7 @@ import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 
@@ -190,11 +191,12 @@ class SightCard extends StatelessWidget {
             tag: sight.id,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
+              child: CachedApiImage(
                 imageUrl: sight.images[sight.primaryImage - 1],
-                fit: BoxFit.cover,
                 width: 110,
                 height: 75,
+                cacheWidth: 110,
+                cacheHeight: 75,
               ),
             ),
           ),
@@ -267,13 +269,12 @@ class TourCard extends StatelessWidget {
             tag: tour.id,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                fadeOutDuration: const Duration(milliseconds: 700),
-                fadeInDuration: const Duration(milliseconds: 300),
+              child: CachedApiImage(
                 imageUrl: tour.images[tour.primaryImage - 1],
-                fit: BoxFit.cover,
                 width: 110,
                 height: 75,
+                cacheWidth: 110,
+                cacheHeight: 75,
               ),
             ),
           ),

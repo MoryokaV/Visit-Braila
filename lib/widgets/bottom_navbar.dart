@@ -20,7 +20,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   List<Widget> pages = [
     HomeView(),
     const WishlistView(),
-    AllEventsView(),
+    const AllEventsView(),
     const AboutView(),
   ];
 

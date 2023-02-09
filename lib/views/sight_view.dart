@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +10,7 @@ import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/actions_bar.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/html_description.dart';
 import 'dart:io' show Platform;
 
@@ -88,9 +88,9 @@ class SightView extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      CachedNetworkImage(
+                      CachedApiImage(
                         imageUrl: sight.images[sight.primaryImage - 1],
-                        fit: BoxFit.cover,
+                        cacheWidth: Responsive.screenWidth,
                       ),
                       Positioned(
                         bottom: 0,
@@ -262,10 +262,10 @@ class SightView extends StatelessWidget {
                               child: index != 4
                                   ? ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        sight.images[index],
-                                        fit: BoxFit.cover,
+                                      child: CachedApiImage(
+                                        imageUrl: sight.images[index],
                                         width: Responsive.safeBlockVertical * 25,
+                                        cacheWidth: Responsive.safeBlockVertical * 25,
                                       ),
                                     )
                                   : Container(

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
@@ -12,6 +11,7 @@ import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/search_all.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
@@ -275,11 +275,9 @@ class SightCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   child: Stack(
                     children: [
-                      CachedNetworkImage(
-                        fadeOutDuration: const Duration(milliseconds: 700),
-                        fadeInDuration: const Duration(milliseconds: 300),
+                      CachedApiImage(
                         imageUrl: sight.images[sight.primaryImage - 1],
-                        fit: BoxFit.cover,
+                        cacheHeight: Responsive.safeBlockVertical * 35,
                         height: double.infinity,
                         width: double.infinity,
                       ),

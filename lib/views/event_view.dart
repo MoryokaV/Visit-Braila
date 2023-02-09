@@ -10,6 +10,7 @@ import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/html_description.dart';
 
 class EventView extends StatelessWidget {
@@ -57,9 +58,9 @@ class EventView extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      CachedNetworkImage(
+                      CachedApiImage(
                         imageUrl: event.images[event.primaryImage - 1],
-                        fit: BoxFit.cover,
+                        cacheWidth: Responsive.screenWidth,
                       ),
                       Positioned(
                         bottom: 0,
@@ -223,10 +224,10 @@ class EventView extends StatelessWidget {
                               child: index != 4
                                   ? ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        event.images[index],
-                                        fit: BoxFit.cover,
+                                      child: CachedApiImage(
+                                        imageUrl: event.images[index],
                                         width: Responsive.safeBlockVertical * 25,
+                                        cacheWidth: Responsive.safeBlockVertical * 25,
                                       ),
                                     )
                                   : Container(

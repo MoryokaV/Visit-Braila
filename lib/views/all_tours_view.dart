@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/tour_model.dart';
+import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/search_all.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 import 'package:visit_braila/widgets/search_list_field.dart';
@@ -176,11 +178,9 @@ class TourCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Stack(
               children: [
-                CachedNetworkImage(
-                  fadeOutDuration: const Duration(milliseconds: 700),
-                  fadeInDuration: const Duration(milliseconds: 300),
+                CachedApiImage(
                   imageUrl: tour.images[tour.primaryImage - 1],
-                  fit: BoxFit.cover,
+                  cacheWidth: Responsive.screenWidth / 2,
                 ),
                 Positioned.fill(
                   child: Container(

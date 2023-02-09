@@ -10,6 +10,7 @@ import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/actions_bar.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/html_description.dart';
 import 'dart:io' show Platform;
 
@@ -84,9 +85,9 @@ class _TourViewState extends State<TourView> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      CachedNetworkImage(
+                      CachedApiImage(
                         imageUrl: widget.tour.images[widget.tour.primaryImage - 1],
-                        fit: BoxFit.cover,
+                        cacheWidth: Responsive.screenWidth,
                       ),
                       Positioned(
                         bottom: 0,
@@ -229,10 +230,10 @@ class _TourViewState extends State<TourView> {
                                     child: index != 4
                                         ? ClipRRect(
                                             borderRadius: BorderRadius.circular(10),
-                                            child: Image.network(
-                                              widget.tour.images[index],
-                                              fit: BoxFit.cover,
+                                            child: CachedApiImage(
+                                              imageUrl: widget.tour.images[index],
                                               width: Responsive.safeBlockVertical * 25,
+                                              cacheWidth: Responsive.safeBlockVertical * 25,
                                             ),
                                           )
                                         : Container(

@@ -8,6 +8,7 @@ import 'package:visit_braila/controllers/event_controller.dart';
 import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/skeleton.dart';
 
@@ -193,13 +194,11 @@ class EventCard extends StatelessWidget {
                     topLeft: Radius.circular(12),
                     bottomLeft: Radius.circular(12),
                   ),
-                  child: CachedNetworkImage(
-                    fadeOutDuration: const Duration(milliseconds: 700),
-                    fadeInDuration: const Duration(milliseconds: 300),
+                  child: CachedApiImage(
                     imageUrl: event.images[event.primaryImage - 1],
                     width: double.infinity,
                     height: double.infinity,
-                    fit: BoxFit.cover,
+                    cacheHeight: Responsive.safeBlockVertical * 25,
                   ),
                 ),
               ),

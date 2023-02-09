@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -10,6 +11,7 @@ import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 
 class GalleryView extends StatefulWidget {
@@ -156,7 +158,11 @@ class _GalleryViewState extends State<GalleryView> {
                 return PhotoViewGalleryPageOptions.customChild(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: separator),
-                    child: Image(image: NetworkImage(data['images'][index])),
+                    child: CachedApiImage(
+                      imageUrl: data['images'][index],
+                      fit: BoxFit.contain,
+                      cacheWidth: Responsive.screenWidth * 1.8,
+                    ),
                   ),
                   minScale: PhotoViewComputedScale.contained,
                   maxScale: PhotoViewComputedScale.contained * 3.5,
