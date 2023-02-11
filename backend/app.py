@@ -425,6 +425,41 @@ def updateCoverImage():
 
 # --- IMAGES ---
 
+def resizeImage(image):
+    MEDIUM = 1500
+    LARGE = 2100
+
+    w, h = image.size
+
+    if w >= h:
+        coef = 0
+        breakpoint = MEDIUM;
+
+        if w > LARGE:
+            coef = w / LARGE
+            breakpoint = LARGE
+        elif w > MEDIUM:
+            coef = w / MEDIUM
+            breakpoint = MEDIUM
+
+        if coef != 0:
+            return image.resize((breakpoint, int(h / coef)), Image.Resampling.LANCZOS)
+    elif w < h:
+        coef = 0
+        breakpoint = MEDIUM;
+
+        if h > LARGE:
+            coef = h / LARGE
+            breakpoint = LARGE;
+        elif h > MEDIUM:
+            coef = h / MEDIUM
+            breakpoint = MEDIUM;
+
+        if coef != 0:
+            return image.resize((int(w / coef), breakpoint), Image.Resampling.LANCZOS)
+
+    return image
+
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
 def uploadImages(folder):
     for image in request.files.getlist('files[]'):
@@ -432,7 +467,9 @@ def uploadImages(folder):
 
         compressed = Image.open(image)        
         
-        compressed.convert("RGB").save(os.path.join(app.config["MEDIA_FOLDER"], path), format="JPEG", optimize=True, quality=60)
+        compressed = compressed.convert("RGB")
+        compressed = resizeImage(compressed)
+        compressed.save(os.path.join(app.config["MEDIA_FOLDER"], path), format="JPEG", optimize=True, quality=60)
 
     return make_response("Images have been uploaded", 200)
 
