@@ -28,8 +28,8 @@ class CachedApiImage extends StatelessWidget {
       height: height,
       memCacheWidth: cacheWidth == null ? null : (cacheWidth! * Responsive.pixelRatio).round(),
       memCacheHeight: cacheHeight == null ? null : (cacheHeight! * Responsive.pixelRatio).round(),
-      fadeOutDuration: const Duration(milliseconds: 700),
-      fadeInDuration: const Duration(milliseconds: 300),
+      fadeOutDuration: const Duration(milliseconds: 600),
+      fadeInDuration: const Duration(milliseconds: 250),
       fit: fit ?? BoxFit.cover,
     );
   }

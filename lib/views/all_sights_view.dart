@@ -119,6 +119,7 @@ class _AllSightsViewState extends State<AllSightsView> {
 
   @override
   Widget build(BuildContext context) {
+    print(sights.length);
     return WillPopScope(
       onWillPop: () async {
         setState(() => disableHero = true);
@@ -355,10 +356,7 @@ class SightCard extends StatelessWidget {
                             ),
                             Text(
                               location.getDistance(sight.latitude, sight.longitude),
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: kForegroundColor.withOpacity(0.85)
-                              ),
+                              style: TextStyle(fontSize: 14, color: kForegroundColor.withOpacity(0.85)),
                             ),
                           ],
                         );
