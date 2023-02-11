@@ -491,7 +491,7 @@ class TrendingSightCard extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             "assets/icons/map-pin.svg",
-                            width: 20,
+                            width: 18,
                             color: kDisabledIconColor,
                           ),
                           const SizedBox(
@@ -499,8 +499,9 @@ class TrendingSightCard extends StatelessWidget {
                           ),
                           Text(
                             location.getDistance(sight.latitude, sight.longitude),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
+                              color: kForegroundColor.withOpacity(0.85)
                             ),
                           ),
                         ],

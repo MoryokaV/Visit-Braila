@@ -337,7 +337,7 @@ class SightCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 6,
                     ),
                     Consumer<LocationService>(
                       builder: (context, location, _) {
@@ -348,15 +348,16 @@ class SightCard extends StatelessWidget {
                             SvgPicture.asset(
                               "assets/icons/map-pin.svg",
                               width: 22,
-                              color: kBlackColor,
+                              color: kDisabledIconColor,
                             ),
                             const SizedBox(
                               width: 6,
                             ),
                             Text(
                               location.getDistance(sight.latitude, sight.longitude),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
+                                color: kForegroundColor.withOpacity(0.85)
                               ),
                             ),
                           ],
