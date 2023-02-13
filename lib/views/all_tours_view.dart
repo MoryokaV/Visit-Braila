@@ -99,7 +99,7 @@ class _AllToursViewState extends State<AllToursView> {
                 ),
               )
             ],
-            style: Theme.of(context).textTheme.headline4!.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 22,
                 ),
@@ -179,6 +179,7 @@ class TourCard extends StatelessWidget {
                 CachedApiImage(
                   imageUrl: tour.images[tour.primaryImage - 1],
                   cacheWidth: Responsive.screenWidth / 2,
+                  blur: false,
                 ),
                 Positioned.fill(
                   child: Container(

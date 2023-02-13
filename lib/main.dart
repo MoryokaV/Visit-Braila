@@ -60,23 +60,23 @@ class MyApp extends StatelessWidget {
           primaryColor: kPrimaryColor,
           colorScheme: ColorScheme.fromSwatch().copyWith(secondary: kSecondaryColor),
           textTheme: const TextTheme(
-            button: TextStyle(
+            labelLarge: TextStyle(
               color: kBlackColor,
               fontFamily: labelFont,
               fontWeight: FontWeight.w600,
               fontSize: 16,
             ),
-            bodyText1: TextStyle(
+            bodyLarge: TextStyle(
               color: kForegroundColor,
               fontFamily: labelFont,
               fontSize: 16,
             ),
-            bodyText2: TextStyle(
+            bodyMedium: TextStyle(
               color: kForegroundColor,
               fontFamily: bodyFont,
               fontSize: 16,
             ),
-            headline1: TextStyle(
+            displayLarge: TextStyle(
               color: kBlackColor,
               fontFamily: bodyFont,
               fontSize: 24,
@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w700,
               letterSpacing: -0.2,
             ),
-            headline2: TextStyle(
+            displayMedium: TextStyle(
               color: kBlackColor,
               fontFamily: bodyFont,
               fontWeight: FontWeight.w700,
@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
               height: 1.3,
               letterSpacing: -0.2,
             ),
-            headline3: TextStyle(
+            displaySmall: TextStyle(
               color: kBlackColor,
               fontFamily: bodyFont,
               fontWeight: FontWeight.w600,
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
               height: 1.3,
               letterSpacing: -0.1,
             ),
-            headline4: TextStyle(
+            headlineMedium: TextStyle(
               color: kForegroundColor,
               fontFamily: labelFont,
               letterSpacing: -0.1,

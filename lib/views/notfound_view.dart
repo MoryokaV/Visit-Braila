@@ -29,7 +29,7 @@ class NotFoundView extends StatelessWidget {
                     ),
                     Text(
                       "Ooops 404!",
-                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                             fontSize: 32,
                             fontWeight: FontWeight.w700,
                           ),
@@ -40,7 +40,7 @@ class NotFoundView extends StatelessWidget {
                     ),
                     Text(
                       "Ne pare rău, dar pagina cerută tocmai ce a dispărut... Încearcă mai târziu!",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: kDimmedForegroundColor,
                           ),
                       textAlign: TextAlign.center,

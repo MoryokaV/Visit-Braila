@@ -126,7 +126,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                       children: [
                         Text(
                           readMore ? "Citește mai puțin" : "Citește mai mult",
-                          style: Theme.of(context).textTheme.button!.copyWith(
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                 decoration: TextDecoration.underline,
                               ),
                         ),

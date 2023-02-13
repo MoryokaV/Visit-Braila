@@ -87,6 +87,7 @@ class _TourViewState extends State<TourView> {
                       CachedApiImage(
                         imageUrl: widget.tour.images[widget.tour.primaryImage - 1],
                         cacheWidth: Responsive.screenWidth,
+                        blur: false,
                       ),
                       Positioned(
                         bottom: 0,
@@ -169,7 +170,7 @@ class _TourViewState extends State<TourView> {
                           children: [
                             Text(
                               widget.tour.name,
-                              style: Theme.of(context).textTheme.headline1,
+                              style: Theme.of(context).textTheme.displayLarge,
                             ),
                             const SizedBox(
                               height: 8,
@@ -233,6 +234,7 @@ class _TourViewState extends State<TourView> {
                                               imageUrl: widget.tour.images[index],
                                               width: Responsive.safeBlockVertical * 25,
                                               cacheWidth: Responsive.safeBlockVertical * 25,
+                                              blur: false,
                                             ),
                                           )
                                         : Container(
@@ -247,7 +249,7 @@ class _TourViewState extends State<TourView> {
                                             child: Center(
                                               child: Text(
                                                 "+${widget.tour.images.length - 4}",
-                                                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
+                                                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 24),
                                               ),
                                             ),
                                           ),

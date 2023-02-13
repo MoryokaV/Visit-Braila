@@ -50,6 +50,7 @@ dependencies:
   firebase_messaging: ^14.1.2
   app_settings: ^4.1.8
   cached_network_image: ^3.2.3
+  octo_image: ^1.0.2
 
 dev_dependencies:
   flutter_test:

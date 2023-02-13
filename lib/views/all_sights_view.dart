@@ -119,7 +119,6 @@ class _AllSightsViewState extends State<AllSightsView> {
 
   @override
   Widget build(BuildContext context) {
-    print(sights.length);
     return WillPopScope(
       onWillPop: () async {
         setState(() => disableHero = true);
@@ -145,7 +144,7 @@ class _AllSightsViewState extends State<AllSightsView> {
                   ),
                 )
               ],
-              style: Theme.of(context).textTheme.headline4!.copyWith(
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     fontWeight: FontWeight.w600,
                     fontSize: 22,
                   ),
@@ -199,7 +198,7 @@ class _AllSightsViewState extends State<AllSightsView> {
                                     elevation: 0,
                                     backgroundColor: isSelected ? kBlackColor : lightGrey,
                                     foregroundColor: isSelected ? Colors.white : kForegroundColor,
-                                    textStyle: Theme.of(context).textTheme.button!.copyWith(
+                                    textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                           color: isSelected ? Colors.white : kForegroundColor,
@@ -281,6 +280,7 @@ class SightCard extends StatelessWidget {
                         cacheHeight: Responsive.safeBlockVertical * 35,
                         height: double.infinity,
                         width: double.infinity,
+                        blur: true,
                       ),
                       if (sight.tags.isNotEmpty)
                         Align(

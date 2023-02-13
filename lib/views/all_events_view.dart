@@ -80,7 +80,7 @@ class _AllEventsViewState extends State<AllEventsView> {
                     Text(
                       "Niciun eveniment activ",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: kDimmedForegroundColor,
                           ),
                     ),
@@ -198,6 +198,7 @@ class EventCard extends StatelessWidget {
                     width: double.infinity,
                     height: double.infinity,
                     cacheHeight: Responsive.safeBlockVertical * 25,
+                    blur: true,
                   ),
                 ),
               ),

@@ -9,16 +9,17 @@ class CachedApiImage extends StatelessWidget {
   final double? cacheWidth;
   final double? cacheHeight;
   final BoxFit? fit;
+  final bool blur;
 
-  const CachedApiImage({
-    super.key,
-    required this.imageUrl,
-    this.cacheWidth,
-    this.cacheHeight,
-    this.width,
-    this.height,
-    this.fit,
-  });
+  const CachedApiImage(
+      {super.key,
+      required this.imageUrl,
+      this.cacheWidth,
+      this.cacheHeight,
+      this.width,
+      this.height,
+      this.fit,
+      required this.blur});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,24 @@ class CachedApiImage extends StatelessWidget {
       fadeInDuration: const Duration(milliseconds: 250),
       fit: fit ?? BoxFit.cover,
     );
+    // return OctoImage(
+    //   image: CachedNetworkImageProvider(
+    //     imageUrl,
+    //   ),
+    //   width: width,
+    //   height: height,
+    //   placeholderBuilder: !blur
+    //       ? null
+    //       : OctoPlaceholder.blurHash(
+    //           "LdGS.Ue7JDsl?^rWR.adEns*sRWX",
+    //           fit: fit ?? BoxFit.cover,
+    //         ),
+    //   fit: fit ?? BoxFit.cover,
+    //   memCacheWidth: cacheWidth == null ? null : (cacheWidth! * Responsive.pixelRatio).round(),
+    //   memCacheHeight: cacheHeight == null ? null : (cacheHeight! * Responsive.pixelRatio).round(),
+    //   fadeOutDuration: const Duration(milliseconds: 600),
+    //   fadeInDuration: const Duration(milliseconds: 250),
+    // );
   }
 }
 

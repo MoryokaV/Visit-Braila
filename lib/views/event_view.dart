@@ -59,6 +59,7 @@ class EventView extends StatelessWidget {
                       CachedApiImage(
                         imageUrl: event.images[event.primaryImage - 1],
                         cacheWidth: Responsive.screenWidth,
+                        blur: false,
                       ),
                       Positioned(
                         bottom: 0,
@@ -141,7 +142,7 @@ class EventView extends StatelessWidget {
                     children: [
                       Text(
                         event.name,
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const SizedBox(
                         height: 8,
@@ -226,6 +227,7 @@ class EventView extends StatelessWidget {
                                         imageUrl: event.images[index],
                                         width: Responsive.safeBlockVertical * 25,
                                         cacheWidth: Responsive.safeBlockVertical * 25,
+                                        blur: false,
                                       ),
                                     )
                                   : Container(
@@ -240,7 +242,7 @@ class EventView extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           "+${event.images.length - 4}",
-                                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
+                                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 24),
                                         ),
                                       ),
                                     ),

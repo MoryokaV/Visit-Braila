@@ -51,7 +51,7 @@ class ActionsBar extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                   backgroundColor: kPrimaryColor,
                   foregroundColor: Colors.white,
-                  textStyle: Theme.of(context).textTheme.button,
+                  textStyle: Theme.of(context).textTheme.labelLarge,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),

@@ -45,7 +45,7 @@ class _SearchListFieldState extends State<SearchListField> {
           borderRadius: BorderRadius.circular(100),
           borderSide: BorderSide.none,
         ),
-        hintStyle: Theme.of(context).textTheme.bodyText1,
+        hintStyle: Theme.of(context).textTheme.bodyLarge,
         prefixIcon: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.0),
           child: Icon(

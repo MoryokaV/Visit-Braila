@@ -95,7 +95,7 @@ class _GalleryViewState extends State<GalleryView> {
         elevation: 0,
         title: Text(
           data['title'],
-          style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
@@ -161,6 +161,7 @@ class _GalleryViewState extends State<GalleryView> {
                       imageUrl: data['images'][index],
                       fit: BoxFit.contain,
                       cacheWidth: Responsive.screenWidth * 1.8,
+                      blur: false,
                     ),
                   ),
                   minScale: PhotoViewComputedScale.contained,
@@ -175,7 +176,7 @@ class _GalleryViewState extends State<GalleryView> {
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   "${selectedIndex + 1}  —  ${data['images'].length}",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
                 ),
               ),
             ),

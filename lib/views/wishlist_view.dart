@@ -100,7 +100,7 @@ class _WishlistViewState extends State<WishlistView> {
                       Text(
                         "Nu ai niciun obiectiv favorit!",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: kDimmedForegroundColor,
                             ),
                       )
@@ -140,7 +140,7 @@ class _WishlistViewState extends State<WishlistView> {
                       Text(
                         "Nu ai niciun tur favorit!",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: kDimmedForegroundColor,
                             ),
                       )
@@ -196,6 +196,7 @@ class SightCard extends StatelessWidget {
                 height: 75,
                 cacheWidth: 110,
                 cacheHeight: 75,
+                blur: true,
               ),
             ),
           ),
@@ -274,6 +275,7 @@ class TourCard extends StatelessWidget {
                 height: 75,
                 cacheWidth: 110,
                 cacheHeight: 75,
+                blur: true,
               ),
             ),
           ),

@@ -88,6 +88,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                     ? CachedApiImage(
                         imageUrl: "$baseUrl${data['cover_image']}",
                         cacheWidth: Responsive.screenWidth,
+                        blur: true,
                       )
                     : Container(color: kDimmedForegroundColor),
               ),
@@ -129,7 +130,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                           children: [
                             Text(
                               "Biblioteca Județeană \"Panait Istrati\" Brăila",
-                              style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
+                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
                             ),
                             const SizedBox(height: 14),
                             HtmlDescription(
@@ -142,7 +143,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                             ),
                             Text(
                               "Despre Visit Brăila",
-                              style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
+                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
                             ),
                             const SizedBox(height: 14),
                             HtmlDescription(
@@ -155,7 +156,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                             ),
                             Text(
                               "Contact",
-                              style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w700),
+                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
                             ),
                             const SizedBox(height: 14),
                             Wrap(

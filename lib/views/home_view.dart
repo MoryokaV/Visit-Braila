@@ -111,7 +111,7 @@ class HomeView extends StatelessWidget {
                               ),
                               child: Text(
                                 "Inspirație pentru următoarea ta călătorie",
-                                style: Theme.of(context).textTheme.headline2,
+                                style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ),
                             Padding(
@@ -138,7 +138,7 @@ class HomeView extends StatelessWidget {
                                             Text(
                                               "Nimic în tendințe astăzi",
                                               textAlign: TextAlign.center,
-                                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                                     color: kDimmedForegroundColor,
                                                   ),
                                             ),
@@ -185,7 +185,7 @@ class HomeView extends StatelessWidget {
                               ),
                               child: Text(
                                 "Descoperă locuri și oameni",
-                                style: Theme.of(context).textTheme.headline2,
+                                style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ),
                             Padding(
@@ -208,7 +208,7 @@ class HomeView extends StatelessWidget {
                                       children: [
                                         Text(
                                           "Fă o plimbare",
-                                          style: Theme.of(context).textTheme.headline3!.copyWith(
+                                          style: Theme.of(context).textTheme.displaySmall!.copyWith(
                                                 color: Colors.white,
                                               ),
                                         ),
@@ -224,7 +224,7 @@ class HomeView extends StatelessWidget {
                                             ),
                                             backgroundColor: Colors.white,
                                             foregroundColor: Colors.black,
-                                            textStyle: Theme.of(context).textTheme.button,
+                                            textStyle: Theme.of(context).textTheme.labelLarge,
                                           ),
                                           child: const Text("Tururi"),
                                         ),
@@ -254,7 +254,7 @@ class HomeView extends StatelessWidget {
                                       children: [
                                         Text(
                                           "Explorează noi culturi",
-                                          style: Theme.of(context).textTheme.headline3!.copyWith(
+                                          style: Theme.of(context).textTheme.displaySmall!.copyWith(
                                                 color: Colors.white,
                                               ),
                                         ),
@@ -270,7 +270,7 @@ class HomeView extends StatelessWidget {
                                             ),
                                             backgroundColor: Colors.white,
                                             foregroundColor: Colors.black,
-                                            textStyle: Theme.of(context).textTheme.button,
+                                            textStyle: Theme.of(context).textTheme.labelLarge,
                                           ),
                                           child: const Text("Atracții"),
                                         ),
@@ -345,7 +345,7 @@ class SearchBar extends StatelessWidget {
                 "Unde vrei să mergi?",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline4!.copyWith(
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       color: kDimmedForegroundColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -424,6 +424,7 @@ class TrendingSightCard extends StatelessWidget {
                       imageUrl: sight.images[sight.primaryImage - 1],
                       width: double.infinity,
                       cacheWidth: Responsive.safeBlockHorizontal * 60,
+                      blur: true,
                     ),
                   ),
                 ),

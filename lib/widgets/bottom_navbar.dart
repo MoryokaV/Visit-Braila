@@ -35,7 +35,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           elevation: 4,
           title: Text(
             "Favorite",
-            style: Theme.of(context).textTheme.headline4!.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
                 ),
@@ -60,7 +60,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           elevation: 0,
           title: Text(
             "Evenimente",
-            style: Theme.of(context).textTheme.headline4!.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
                 ),

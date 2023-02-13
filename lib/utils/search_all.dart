@@ -195,7 +195,7 @@ class SearchAll extends SearchDelegate<String> {
                     filteredData.length != 1
                         ? "${filteredData.length} rezultate găsite"
                         : "${filteredData.length} rezultat găsit",
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           color: kDimmedForegroundColor,
                           fontSize: 14,
                         ),
@@ -256,7 +256,7 @@ class SearchAll extends SearchDelegate<String> {
           ),
           Text(
             "Ești în căutare de noi activități?",
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: kDimmedForegroundColor,
                 ),
             textAlign: TextAlign.center,

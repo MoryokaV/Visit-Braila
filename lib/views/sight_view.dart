@@ -27,39 +27,41 @@ class SightView extends StatelessWidget {
   void openMap(double latitude, double longitude, String name, BuildContext context) async {
     final availableMaps = await MapLauncher.installedMaps;
 
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              child: Wrap(
-                children: [
-                  for (var map in availableMaps)
-                    ListTile(
-                      onTap: () => map.showMarker(
-                        coords: Coords(latitude, longitude),
-                        title: name,
-                      ),
-                      title: Text(
-                        map.mapName,
-                        style: const TextStyle(
-                          fontFamily: labelFont,
+    if (context.mounted) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                child: Wrap(
+                  children: [
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () => map.showMarker(
+                          coords: Coords(latitude, longitude),
+                          title: name,
+                        ),
+                        title: Text(
+                          map.mapName,
+                          style: const TextStyle(
+                            fontFamily: labelFont,
+                          ),
+                        ),
+                        leading: SvgPicture.asset(
+                          map.icon,
+                          height: 30,
+                          width: 30,
                         ),
                       ),
-                      leading: SvgPicture.asset(
-                        map.icon,
-                        height: 30,
-                        width: 30,
-                      ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -91,6 +93,7 @@ class SightView extends StatelessWidget {
                       CachedApiImage(
                         imageUrl: sight.images[sight.primaryImage - 1],
                         cacheWidth: Responsive.screenWidth,
+                        blur: false,
                       ),
                       Positioned(
                         bottom: 0,
@@ -192,7 +195,7 @@ class SightView extends StatelessWidget {
                     children: [
                       Text(
                         sight.name,
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const SizedBox(
                         height: 8,
@@ -266,6 +269,7 @@ class SightView extends StatelessWidget {
                                         imageUrl: sight.images[index],
                                         width: Responsive.safeBlockVertical * 25,
                                         cacheWidth: Responsive.safeBlockVertical * 25,
+                                        blur: false,
                                       ),
                                     )
                                   : Container(
@@ -280,7 +284,7 @@ class SightView extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           "+${sight.images.length - 4}",
-                                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 24),
+                                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 24),
                                         ),
                                       ),
                                     ),

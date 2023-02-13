@@ -37,7 +37,7 @@ class NoInternetView extends StatelessWidget {
                       ),
                       Text(
                         "Oops!",
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                               fontSize: 32,
                               fontWeight: FontWeight.w700,
                             ),
@@ -48,7 +48,7 @@ class NoInternetView extends StatelessWidget {
                       ),
                       Text(
                         "Conexiunea la internet se pare că este offline. Mai încearcă.",
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: kDimmedForegroundColor,
                             ),
                         textAlign: TextAlign.center,
