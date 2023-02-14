@@ -93,7 +93,6 @@ class SightView extends StatelessWidget {
                       CachedApiImage(
                         imageUrl: sight.images[sight.primaryImage - 1],
                         cacheWidth: Responsive.screenWidth,
-                        blur: false,
                       ),
                       Positioned(
                         bottom: 0,
@@ -269,7 +268,6 @@ class SightView extends StatelessWidget {
                                         imageUrl: sight.images[index],
                                         width: Responsive.safeBlockVertical * 25,
                                         cacheWidth: Responsive.safeBlockVertical * 25,
-                                        blur: false,
                                       ),
                                     )
                                   : Container(

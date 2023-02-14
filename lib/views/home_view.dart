@@ -424,7 +424,7 @@ class TrendingSightCard extends StatelessWidget {
                       imageUrl: sight.images[sight.primaryImage - 1],
                       width: double.infinity,
                       cacheWidth: Responsive.safeBlockHorizontal * 60,
-                      blur: true,
+                      blurhash: sight.primaryImageBlurhash,
                     ),
                   ),
                 ),
@@ -499,10 +499,7 @@ class TrendingSightCard extends StatelessWidget {
                           ),
                           Text(
                             location.getDistance(sight.latitude, sight.longitude),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: kForegroundColor.withOpacity(0.85)
-                            ),
+                            style: TextStyle(fontSize: 12, color: kForegroundColor.withOpacity(0.85)),
                           ),
                         ],
                       );

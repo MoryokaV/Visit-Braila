@@ -8,6 +8,7 @@ class Event {
   final String description;
   final List<String> images;
   final int primaryImage;
+  final String primaryImageBlurhash;
   final String externalLink = obiectivUrl;
 
   Event({
@@ -18,6 +19,7 @@ class Event {
     required this.description,
     required this.images,
     required this.primaryImage,
+    required this.primaryImageBlurhash,
   });
 
   factory Event.fromJSON(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class Event {
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       primaryImage: json['primary_image'],
+      primaryImageBlurhash: json['primary_image_blurhash'],
     );
   }
 }

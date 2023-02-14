@@ -179,7 +179,6 @@ class TourCard extends StatelessWidget {
                 CachedApiImage(
                   imageUrl: tour.images[tour.primaryImage - 1],
                   cacheWidth: Responsive.screenWidth / 2,
-                  blur: false,
                 ),
                 Positioned.fill(
                   child: Container(

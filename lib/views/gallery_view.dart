@@ -161,7 +161,6 @@ class _GalleryViewState extends State<GalleryView> {
                       imageUrl: data['images'][index],
                       fit: BoxFit.contain,
                       cacheWidth: Responsive.screenWidth * 1.8,
-                      blur: false,
                     ),
                   ),
                   minScale: PhotoViewComputedScale.contained,

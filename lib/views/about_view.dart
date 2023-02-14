@@ -24,7 +24,8 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
     "oraganization": "",
     "phone": "",
     "email": "",
-    "cover_image": ""
+    "cover_image": "",
+    "cover_image_blurhash": "",
   };
   AboutController aboutController = AboutController();
 
@@ -88,7 +89,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                     ? CachedApiImage(
                         imageUrl: "$baseUrl${data['cover_image']}",
                         cacheWidth: Responsive.screenWidth,
-                        blur: true,
+                        blurhash: data['cover_image_blurhash'],
                       )
                     : Container(color: kDimmedForegroundColor),
               ),

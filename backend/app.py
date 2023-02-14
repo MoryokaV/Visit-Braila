@@ -13,6 +13,7 @@ import hashlib
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
 from fcm import sendNewEventNotification
+import blurhash
 
 app = Flask(__name__)
 app.config["MEDIA_FOLDER"] = os.path.join(app.root_path, "static/media")
@@ -164,6 +165,7 @@ def insertSight():
 
     sight['latitude'] = float(sight['latitude'])
     sight['longitude'] = float(sight['longitude'])
+    sight['primary_image_blurhash'] = getBlurhash(sight['images'][sight['primary_image'] - 1])
 
     db.sights.insert_one(sight)
     
@@ -220,6 +222,7 @@ def editSight():
     sight = data['sight']
     sight['latitude'] = float(sight['latitude'])
     sight['longitude'] = float(sight['longitude'])
+    sight['primary_image_blurhash'] = getBlurhash(sight['images'][sight['primary_image'] - 1])
 
     db.sights.update_one({"_id": ObjectId(data['_id'])}, {"$set": sight})
 
@@ -294,6 +297,7 @@ def insertEvent():
     event['date_time'] = date_time
     event['end_date_time'] = end_date_time
     event['expire_at'] = expire_at
+    event['primary_image_blurhash'] = getBlurhash(event['images'][event['primary_image'] - 1])
         
     record = db.events.insert_one(event)
     
@@ -348,6 +352,7 @@ def editEvent():
     event['date_time'] = date_time
     event['end_date_time'] = end_date_time
     event['expire_at'] = expire_at
+    event['primary_image_blurhash'] = getBlurhash(event['images'][event['primary_image'] - 1])
 
     db.events.update_one({"_id": ObjectId(data['_id'])}, {"$set": event})
 
@@ -449,6 +454,7 @@ def updateCoverImage():
     deleteImages([about['cover_image']], "about")
 
     db.about.update_one({"name": "about"}, {"$set": new_img})
+    db.about.update_one({"name": "about"}, {"$set": {"cover_image_blurhash": getBlurhash(new_img['cover_image'])}})
 
     return make_response("Entry has been updated", 200)
 
@@ -535,6 +541,12 @@ def cleanUpEventsImages():
                 os.remove(os.path.join(path, image))
             except:
                 pass
+
+def getBlurhash(image):
+    path = app.root_path + image 
+    blur = blurhash.encode(path, x_components=4, y_components=3)
+    
+    return blur
 
 @app.route("/api/serverStorage")
 def serverStorage():

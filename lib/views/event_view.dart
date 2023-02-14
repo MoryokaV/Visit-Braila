@@ -59,7 +59,6 @@ class EventView extends StatelessWidget {
                       CachedApiImage(
                         imageUrl: event.images[event.primaryImage - 1],
                         cacheWidth: Responsive.screenWidth,
-                        blur: false,
                       ),
                       Positioned(
                         bottom: 0,
@@ -227,7 +226,6 @@ class EventView extends StatelessWidget {
                                         imageUrl: event.images[index],
                                         width: Responsive.safeBlockVertical * 25,
                                         cacheWidth: Responsive.safeBlockVertical * 25,
-                                        blur: false,
                                       ),
                                     )
                                   : Container(

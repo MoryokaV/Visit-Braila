@@ -1,6 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/utils/responsive.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CachedApiImage extends StatelessWidget {
   final String imageUrl;
@@ -9,17 +10,18 @@ class CachedApiImage extends StatelessWidget {
   final double? cacheWidth;
   final double? cacheHeight;
   final BoxFit? fit;
-  final bool blur;
+  final String? blurhash;
 
-  const CachedApiImage(
-      {super.key,
-      required this.imageUrl,
-      this.cacheWidth,
-      this.cacheHeight,
-      this.width,
-      this.height,
-      this.fit,
-      required this.blur});
+  const CachedApiImage({
+    super.key,
+    required this.imageUrl,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.width,
+    this.height,
+    this.fit,
+    this.blurhash,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,28 +31,20 @@ class CachedApiImage extends StatelessWidget {
       height: height,
       memCacheWidth: cacheWidth == null ? null : (cacheWidth! * Responsive.pixelRatio).round(),
       memCacheHeight: cacheHeight == null ? null : (cacheHeight! * Responsive.pixelRatio).round(),
-      fadeOutDuration: const Duration(milliseconds: 600),
-      fadeInDuration: const Duration(milliseconds: 250),
       fit: fit ?? BoxFit.cover,
+      placeholder: blurhash == null
+          ? null
+          : (_, __) {
+              return SizedBox.expand(
+                child: Image(
+                  image: BlurHashImage(
+                    blurhash!,
+                  ),
+                  fit: fit ?? BoxFit.cover,
+                ),
+              );
+            },
     );
-    // return OctoImage(
-    //   image: CachedNetworkImageProvider(
-    //     imageUrl,
-    //   ),
-    //   width: width,
-    //   height: height,
-    //   placeholderBuilder: !blur
-    //       ? null
-    //       : OctoPlaceholder.blurHash(
-    //           "LdGS.Ue7JDsl?^rWR.adEns*sRWX",
-    //           fit: fit ?? BoxFit.cover,
-    //         ),
-    //   fit: fit ?? BoxFit.cover,
-    //   memCacheWidth: cacheWidth == null ? null : (cacheWidth! * Responsive.pixelRatio).round(),
-    //   memCacheHeight: cacheHeight == null ? null : (cacheHeight! * Responsive.pixelRatio).round(),
-    //   fadeOutDuration: const Duration(milliseconds: 600),
-    //   fadeInDuration: const Duration(milliseconds: 250),
-    // );
   }
 }
 

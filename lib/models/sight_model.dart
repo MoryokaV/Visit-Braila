@@ -7,6 +7,7 @@ class Sight {
   final String description;
   final List<String> images;
   final int primaryImage;
+  final String primaryImageBlurhash;
   final double latitude;
   final double longitude;
   final String externalLink;
@@ -18,6 +19,7 @@ class Sight {
     required this.description,
     required this.images,
     required this.primaryImage,
+    required this.primaryImageBlurhash,
     required this.latitude,
     required this.longitude,
     required this.externalLink,
@@ -31,6 +33,7 @@ class Sight {
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       primaryImage: json['primary_image'],
+      primaryImageBlurhash: json['primary_image_blurhash'],
       latitude: json['latitude'],
       longitude: json['longitude'],
       externalLink: json['external_link'],

@@ -198,7 +198,7 @@ class EventCard extends StatelessWidget {
                     width: double.infinity,
                     height: double.infinity,
                     cacheHeight: Responsive.safeBlockVertical * 25,
-                    blur: true,
+                    blurhash: event.primaryImageBlurhash,
                   ),
                 ),
               ),

@@ -280,7 +280,7 @@ class SightCard extends StatelessWidget {
                         cacheHeight: Responsive.safeBlockVertical * 35,
                         height: double.infinity,
                         width: double.infinity,
-                        blur: true,
+                        blurhash: sight.primaryImageBlurhash,
                       ),
                       if (sight.tags.isNotEmpty)
                         Align(
