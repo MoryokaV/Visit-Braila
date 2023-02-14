@@ -424,7 +424,6 @@ class TrendingSightCard extends StatelessWidget {
                       imageUrl: sight.images[sight.primaryImage - 1],
                       width: double.infinity,
                       cacheWidth: Responsive.safeBlockHorizontal * 60,
-                      blurhash: sight.primaryImageBlurhash,
                     ),
                   ),
                 ),
