@@ -162,7 +162,10 @@ def editMasterPassword():
 def insertSight():
     sight = request.get_json()
 
-    db.sights.insert_one({"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": float(sight['latitude']), "longitude": float(sight['longitude']), "external_link": sight['external_link']})
+    sight['latitude'] = float(sight['latitude'])
+    sight['longitude'] = float(sight['longitude'])
+
+    db.sights.insert_one(sight)
     
     return make_response("New entry has been inserted", 200)
 
@@ -190,12 +193,13 @@ def deleteSight(_id):
     if trending_item_id != "":
         for item in trending:
             if item['index'] > trending_item_index:
-                db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"sight_id": item['sight_id'], "index": item['index'] - 1}})
+                db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['index'] - 1}})
               
         db.trending.delete_one({"_id": ObjectId(trending_item_id)})
 
     # delete sight
     db.sights.delete_one({"_id": ObjectId(_id)})
+
     return make_response("Successfully deleted document", 200)
 
 @app.route("/api/findSight/<_id>")
@@ -212,9 +216,13 @@ def editSight():
     data = request.get_json()
 
     deleteImages(data['images_to_delete'], 'sights')
-    sight = data['sight']
 
-    db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": float(sight['latitude']), "longitude": float(sight['longitude']), "external_link": sight['external_link']}})
+    sight = data['sight']
+    sight['latitude'] = float(sight['latitude'])
+    sight['longitude'] = float(sight['longitude'])
+
+    db.sights.update_one({"_id": ObjectId(data['_id'])}, {"$set": sight})
+
     return make_response("Entry has been updated", 200)
 
 # --- TOURS ---  
@@ -222,8 +230,11 @@ def editSight():
 @app.route("/api/insertTour", methods=["POST"])
 def insertTour():
     tour = request.get_json()
+
+    tour['length'] = float(tour['length'])
     
-    db.tours.insert_one({"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "length": float(tour['length']), "external_link": tour['external_link']})
+    db.tours.insert_one(tour)
+
     return make_response("New entry has been inserted", 200) 
 
 @app.route("/api/fetchTours")
@@ -237,6 +248,7 @@ def deleteTour(_id):
     deleteImages(images, 'tours')
 
     db.tours.delete_one({"_id": ObjectId(_id)})
+
     return make_response("Successfully deleted document", 200)
 
 @app.route("/api/findTour/<_id>")
@@ -253,9 +265,12 @@ def editTour():
     data = request.get_json()
 
     deleteImages(data['images_to_delete'], 'tours')
-    tour = data['tour'] 
 
-    db.tours.update_one({"_id": ObjectId(tour['_id'])}, {"$set": {"name": tour['name'], "stages": tour['stages'], "description": tour['description'], "images": tour['images'], "primary_image": tour['primary_image'], "length": float(tour['length']), "external_link": tour['external_link']}})
+    tour = data['tour'] 
+    tour['length'] = float(tour['length'])
+
+    db.tours.update_one({"_id": ObjectId(data['_id'])}, {"$set": tour})
+
     return make_response("Entry has been updated", 200)
 
 # --- EVENTS ---  
@@ -264,7 +279,6 @@ def editTour():
 def insertEvent():
     data = request.get_json()
 
-    notify = data['notify']
     event = data['event']
 
     date_time = parser.isoparse(event['date_time'])
@@ -276,12 +290,16 @@ def insertEvent():
         expire_at = end_date_time + relativedelta(days =+ 1) 
     except KeyError:
         pass
+
+    event['date_time'] = date_time
+    event['end_date_time'] = end_date_time
+    event['expire_at'] = expire_at
         
-    record = db.events.insert_one({"name": event['name'], "date_time": date_time, "end_date_time": end_date_time, "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']})
+    record = db.events.insert_one(event)
     
     cleanUpEventsImages()
-
-    if notify:
+    
+    if data['notify'] == True:
         sendNewEventNotification(event['name'], record.inserted_id)
 
     return make_response("New entry has been inserted", 200) 
@@ -297,6 +315,7 @@ def deleteEvent(_id):
     deleteImages(images, 'events')
 
     db.events.delete_one({"_id": ObjectId(_id)})
+
     return make_response("Successfully deleted document", 200)
 
 @app.route("/api/findEvent/<_id>")
@@ -313,6 +332,7 @@ def editEvent():
     data = request.get_json()
     
     deleteImages(data['images_to_delete'], 'events')
+
     event = data['event'] 
 
     date_time = parser.isoparse(event['date_time'])
@@ -325,7 +345,12 @@ def editEvent():
     except KeyError:
         pass
 
-    db.events.update_one({"_id": ObjectId(event['_id'])}, {"$set": {"name": event['name'], "date_time": date_time, "end_date_time": end_date_time,  "expire_at": expire_at, "description": event['description'], "images": event['images'], "primary_image": event['primary_image']}})
+    event['date_time'] = date_time
+    event['end_date_time'] = end_date_time
+    event['expire_at'] = expire_at
+
+    db.events.update_one({"_id": ObjectId(data['_id'])}, {"$set": event})
+
     return make_response("Entry has been updated", 200)
 
 # --- TAGS ---
@@ -350,7 +375,7 @@ def deleteTag(name):
     for sight in sights:
         if name in sight['tags']:
             sight['tags'].remove(name)
-            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"name": sight['name'], "tags": sight['tags'], "description": sight['description'], "images": sight['images'], "primary_image": sight['primary_image'], "latitude": float(sight['latitude']), "longitude": float(sight['longitude']), "external_link": sight['external_link']}})
+            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"tags": sight['tags']}})
          
     db.tags.delete_one({"name": name})
 
@@ -362,7 +387,7 @@ def deleteTag(name):
 def insertTrendingItem():
     item = request.get_json()
 
-    db.trending.insert_one({"sight_id": item['sight_id'], "index": item['index']}) 
+    db.trending.insert_one(item) 
 
     return make_response("New entry has been inserted", 200)
 
@@ -380,7 +405,7 @@ def deleteTrendingItem():
     # Decrease indexes when deleting
     for item in items:
         if item['index'] > index:
-            db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"sight_id": item['sight_id'], "index": item['index'] - 1}})
+            db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['index'] - 1}})
 
     db.trending.delete_one({"_id": ObjectId(_id)})
 
@@ -391,6 +416,7 @@ def updateTrendingItemIndex():
     item = request.get_json()
 
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
+
     return make_response("Entry has been updated", 200)
 
 # --- ABOUT DATA ---
@@ -403,24 +429,27 @@ def fetchAboutData():
 def updateAboutParagraphs():
     updatedContent = request.get_json()
 
-    db.about.update_one({"name": "about"}, {"$set": {"paragraph1": updatedContent['paragraph1'], "paragraph2": updatedContent['paragraph2']}})
+    db.about.update_one({"name": "about"}, {"$set": updatedContent})
+
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/updateContactDetails", methods=["PUT"])
 def updateContactDetails():
     details = request.get_json()
 
-    db.about.update_one({"name": "about"}, {"$set": {"organization": details['organization'], "phone": details['phone'], "email": details['email'], "website": details['website'], "facebook": details['facebook']}})
+    db.about.update_one({"name": "about"}, {"$set": details})
+
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/updateCoverImage", methods=["PUT"])
 def updateCoverImage():
-    item = request.get_json()
-
+    new_img = request.get_json()
     about = db.about.find_one()
+
     deleteImages([about['cover_image']], "about")
 
-    db.about.update_one({"name": "about"}, {"$set": {"cover_image": item['cover_image']}})
+    db.about.update_one({"name": "about"}, {"$set": new_img})
+
     return make_response("Entry has been updated", 200)
 
 # --- IMAGES ---

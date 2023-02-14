@@ -264,6 +264,8 @@ $(document).ready(async function() {
 
     startLoadingAnimation($(this));
 
+    let _id = sight._id;
+    delete sight._id;
     sight.name = $("#sight-name").val();
     sight.description = quill.root.innerHTML;
     sight.primary_image = parseInt($("#sight-primary-image").val());
@@ -292,7 +294,7 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editSight",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "sight": sight }),
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "sight": sight }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
@@ -385,6 +387,8 @@ $(document).ready(async function() {
 
     startLoadingAnimation($(this));
 
+    let _id = tour._id;
+    delete tour._id;
     tour.name = $("#tour-name").val();
     tour.description = quill.root.innerHTML;
     tour.primary_image = parseInt($("#tour-primary-image").val());
@@ -412,7 +416,7 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editTour",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "tour": tour }),
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "tour": tour }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
@@ -470,6 +474,8 @@ $(document).ready(async function() {
 
     startLoadingAnimation($(this));
 
+    let _id = event._id;
+    delete event._id;
     event.name = $("#event-name").val();
     event.date_time = new Date($("#event-datetime").val());
     if ($("#multiple-days").prop('checked')) {
@@ -514,7 +520,7 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editEvent",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "event": event }),
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "event": event }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
