@@ -69,9 +69,12 @@ def login():
     username = request.json['user']
     password = hashlib.sha256(request.json["pass"].encode('utf-8')).hexdigest()
 
-    if db.login.find_one({"username": username, "password": password}) is not None:
+    user = db.login.find_one({"username": username, "password": password}) 
+
+    if user is not None:
         session['logged_in'] = True 
         session['username'] = username
+        session['fullname'] = user['fullname']
 
         if username == "master":
             return make_response(json.dumps({"url": "/master"}), 200)
@@ -85,6 +88,10 @@ def logout():
     session.clear()
         
     return redirect("/login")
+
+@app.route("/api/currentName")
+def getCurrentUserFullname():
+    return make_response(json.dumps({"fullname": session['fullname']}), 200)    
 
 # --- CMS ROUTES --- 
 

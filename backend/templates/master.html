@@ -22,15 +22,15 @@
       <a href="/logout" role="button" class="btn-icon btn-header"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
     </header>
     <main class="d-flex">
-      <div class="container-md m-auto py-3">
+      <div class="container-xl m-auto py-3">
         <div class="row justify-content-center gx-4 gy-3">
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-md-6 col-lg-4">
             <div class="card shadow-sm">
               <h5 class="card-header">Insert user</h5>
               <form id="insert-user-form" class="card-body row g-3">
                 <section class="col-12">
                   <label for="fullname" class="form-label">Full name</label>
-                  <input type="text" id="fullname" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" name="fullname" required />
+                  <input type="text" id="fullname" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" name="fullname" maxlength="22" required />
                 </section>
                 <section class="col-12">
                   <label for="username" class="form-label">Username</label>
@@ -49,7 +49,7 @@
               </form>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-md-12 col-lg-6">
             <div class="card shadow-sm">
               <h5 class="card-header d-flex justify-content-between align-items-baseline">
                 Users list

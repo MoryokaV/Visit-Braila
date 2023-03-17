@@ -21,7 +21,7 @@ html, body {
     --accent-color-light: #495057;
     --border-color: rgb(206, 212, 218);
     --sidebar-color: #343a40;
-    --sidebar-width: 16rem;
+    --sidebar-width: 15.6rem;
 }
 
 .ql-container {
@@ -526,11 +526,7 @@ td.small-cell {
 }
 
 /* Landscape phone */
-@media (max-height: 29em) {
-	body > aside .storage-info {
-		display: none;
-	}
-
+@media (max-height: 36em) {
     body > aside {
         display: block;
         overflow: auto;

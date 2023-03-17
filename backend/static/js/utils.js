@@ -23,6 +23,13 @@ export const phoneRegExpTitle = "Please enter a valid RO phone number (no spaces
 export const latitudeRegExpTitle = "Invalid latitude coordinates"
 export const longitudeRegExpTitle = "Invalid longitude coordinates"
 
+// User fullname
+const getCurrentUserFullname = async () => {
+  const data = await $.getJSON("/api/currentName");
+
+  $("#user-fullname").text(data.fullname);
+}
+
 // Server storage info  
 const getStorageInfo = async () => {
   const disk_usage = await $.getJSON("/api/serverStorage");
@@ -131,6 +138,7 @@ export const removeImage = (elem, preview, current_images, formData, primary_ele
 
 $(document).ready(function() {
   getStorageInfo();
+  getCurrentUserFullname();
 
   $(".menu-btn").click(() => $("aside").toggleClass("show"));
 
