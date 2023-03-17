@@ -29,6 +29,10 @@
               <h5 class="card-header">Insert user</h5>
               <form id="insert-user-form" class="card-body row g-3">
                 <section class="col-12">
+                  <label for="fullname" class="form-label">Full name</label>
+                  <input type="text" id="fullname" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" name="fullname" required />
+                </section>
+                <section class="col-12">
                   <label for="username" class="form-label">Username</label>
                   <input type="text" id="username" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" name="username" required />
                 </section>
@@ -56,6 +60,7 @@
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Full name</th>
                       <th>Username</th>
                       <th>Actions</th>
                     </tr>

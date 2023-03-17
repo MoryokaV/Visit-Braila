@@ -18,6 +18,7 @@ const fetchUsers = async () => {
     $("#users-table").append(
       `<tr>
         <td class="small-cell">${index + 1}</td>
+        <td>${user.fullname}</td>
         <td>${user.username}</td>
         <td class="small-cell text-center" id=${user._id}>
           ${user.username === "master" ? `<button class="btn-icon action-edit-user" data-bs-toggle="modal" data-bs-target="#edit-master-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>` : `<button class="btn-icon action-delete-user"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>`}
@@ -80,6 +81,7 @@ $(document).ready(async function() {
     e.preventDefault();
 
     const user = {
+      "fullname": $("#fullname").val(),
       "username": $("#username").val(),
       "password": $("#password").val(),
     };

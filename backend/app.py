@@ -135,7 +135,7 @@ def about():
 def insertUser():
     user = request.get_json()
 
-    db.login.insert_one({"username": user['username'], "password": hashlib.sha256(user['password'].encode("utf-8")).hexdigest()})
+    db.login.insert_one({"fullname": user['fullname'], "username": user['username'], "password": hashlib.sha256(user['password'].encode("utf-8")).hexdigest()})
     
     return make_response("New entry has been inserted", 200)
 
