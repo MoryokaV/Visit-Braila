@@ -139,6 +139,7 @@ def about():
 # --- USERS --- 
 
 @app.route("/api/insertUser", methods=["POST"])
+@login_required
 def insertUser():
     user = request.get_json()
 
@@ -151,12 +152,15 @@ def fetchUsers():
     return json.dumps(list(db.login.find()), default=str)
 
 @app.route("/api/deleteUser/<_id>", methods=["DELETE"])
+@login_required
 def deleteUser(_id):
     db.login.delete_one({"_id": ObjectId(_id)})
 
     return make_response("Successfully deleted document", 200)
 
 @app.route("/api/editMasterPassword", methods=["PUT"])
+@login_required
+@master_login_required
 def editMasterPassword():
     data = request.get_json()
 
@@ -167,6 +171,7 @@ def editMasterPassword():
 # --- SIGHTS ---  
 
 @app.route("/api/insertSight", methods=["POST"])
+@login_required
 def insertSight():
     sight = request.get_json()
 
@@ -183,6 +188,7 @@ def fetchSights():
     return json.dumps(list(db.sights.find()), default=str)
 
 @app.route("/api/deleteSight/<_id>", methods=["DELETE"])
+@login_required
 def deleteSight(_id):
     # delete local sight images first
     images = json.loads(findSight(_id))['images']
@@ -221,6 +227,7 @@ def findSight(_id):
     return json.dumps(sight, default=str)
 
 @app.route("/api/editSight", methods=["PUT"])
+@login_required
 def editSight():
     data = request.get_json()
 
@@ -238,6 +245,7 @@ def editSight():
 # --- TOURS ---  
 
 @app.route("/api/insertTour", methods=["POST"])
+@login_required
 def insertTour():
     tour = request.get_json()
 
@@ -252,6 +260,7 @@ def fetchTours():
     return json.dumps(list(db.tours.find()), default=str)
 
 @app.route("/api/deleteTour/<_id>", methods=["DELETE"])
+@login_required
 def deleteTour(_id):
     # delete local tour images first
     images = json.loads(findTour(_id))['images']
@@ -271,6 +280,7 @@ def findTour(_id):
     return json.dumps(tour, default=str)
 
 @app.route("/api/editTour", methods=["PUT"])
+@login_required
 def editTour():
     data = request.get_json()
 
@@ -286,6 +296,7 @@ def editTour():
 # --- EVENTS ---  
 
 @app.route("/api/insertEvent", methods=["POST"])
+@login_required
 def insertEvent():
     data = request.get_json()
 
@@ -320,6 +331,7 @@ def fetchEvents():
     return json.dumps(list(db.events.find().sort("date_time", 1)), default=str)
 
 @app.route("/api/deleteEvent/<_id>", methods=["DELETE"])
+@login_required
 def deleteEvent(_id):
     # delete local event images first
     images = json.loads(findEvent(_id))['images']
@@ -339,6 +351,7 @@ def findEvent(_id):
     return json.dumps(event, default=str)
 
 @app.route("/api/editEvent", methods=["PUT"])
+@login_required
 def editEvent():
     data = request.get_json()
     
@@ -372,6 +385,7 @@ def fetchTags():
     return json.dumps(list(db.tags.find()), default=str)
 
 @app.route("/api/insertTag", methods=["POST"])
+@login_required
 def insertTag():
     tag = request.get_json()
 
@@ -380,6 +394,7 @@ def insertTag():
     return make_response("New entry inserted", 200)
 
 @app.route("/api/deleteTag/<name>", methods=["DELETE"])
+@login_required
 def deleteTag(name):
     # Remove this tag from all sights
     sights = json.loads(fetchSights())
@@ -396,6 +411,7 @@ def deleteTag(name):
 # --- TRENDING --- 
 
 @app.route("/api/insertTrendingItem", methods=["POST"])
+@login_required
 def insertTrendingItem():
     item = request.get_json()
 
@@ -408,6 +424,7 @@ def fetchTrendingItems():
     return json.dumps(list(db.trending.find().sort("index", 1)), default=str)
 
 @app.route("/api/deleteTrendingItem", methods=["DELETE"])
+@login_required
 def deleteTrendingItem():
     _id = request.args.get("_id")
     index = int(request.args.get("index"))
@@ -424,6 +441,7 @@ def deleteTrendingItem():
     return make_response("Successfully deleted document", 200)
 
 @app.route("/api/updateTrendingItemIndex", methods=["PUT"])
+@login_required
 def updateTrendingItemIndex():
     item = request.get_json()
 
@@ -438,6 +456,7 @@ def fetchAboutData():
     return json.dumps(db.about.find_one(), default=str);
 
 @app.route("/api/updateAboutParagraphs", methods=["PUT"])
+@login_required
 def updateAboutParagraphs():
     updatedContent = request.get_json()
 
@@ -446,6 +465,7 @@ def updateAboutParagraphs():
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/updateContactDetails", methods=["PUT"])
+@login_required
 def updateContactDetails():
     details = request.get_json()
 
@@ -454,6 +474,7 @@ def updateContactDetails():
     return make_response("Entry has been updated", 200)
 
 @app.route("/api/updateCoverImage", methods=["PUT"])
+@login_required
 def updateCoverImage():
     new_img = request.get_json()
     about = db.about.find_one()
@@ -503,6 +524,7 @@ def resizeImage(image):
     return image
 
 @app.route("/api/uploadImages/<folder>", methods=["POST"])
+@login_required
 def uploadImages(folder):
     for image in request.files.getlist('files[]'):
         path = folder + "/" + image.filename 
