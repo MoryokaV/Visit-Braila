@@ -195,7 +195,7 @@ class HomeView extends StatelessWidget {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
                                     child: CachedAssetImage(
-                                      "assets/images/republicii.jpg",
+                                      "assets/images/plimbare_republicii.jpeg",
                                       width: double.infinity,
                                       height: Responsive.safeBlockVertical * 30,
                                       cacheHeight: Responsive.safeBlockVertical * 30,
@@ -279,7 +279,116 @@ class HomeView extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            )
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: Stack(
+                                      children: [
+                                        ClipPath(
+                                          clipper: CustomClipPath2(),
+                                          child: CachedAssetImage(
+                                            "assets/images/alma.jpg",
+                                            height: Responsive.safeBlockVertical * 30,
+                                            width: Responsive.screenWidth,
+                                          ),
+                                        ),
+                                        Positioned.fill(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                FittedBox(
+                                                  fit: BoxFit.fitWidth,
+                                                  child: Text(
+                                                    "Odihnă și confort",
+                                                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                        ),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 6),
+                                                ElevatedButton(
+                                                  onPressed: () {},
+                                                  style: ElevatedButton.styleFrom(
+                                                    padding: const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10,
+                                                    ),
+                                                    backgroundColor: Colors.white,
+                                                    foregroundColor: Colors.black,
+                                                    textStyle:
+                                                        Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                                  ),
+                                                  child: const Text("Cazare"),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 12),
+                                    child: Stack(
+                                      children: [
+                                        ClipPath(
+                                          clipper: CustomClipPath(),
+                                          child: CachedAssetImage(
+                                            "assets/images/peste.jpeg",
+                                            height: Responsive.safeBlockVertical * 30,
+                                            width: Responsive.screenWidth,
+                                          ),
+                                        ),
+                                        Positioned.fill(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                FittedBox(
+                                                  fit: BoxFit.fitWidth,
+                                                  child: Text(
+                                                    "Gusturi și arome",
+                                                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                        ),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 6),
+                                                ElevatedButton(
+                                                  onPressed: () {},
+                                                  style: ElevatedButton.styleFrom(
+                                                    padding: const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10,
+                                                    ),
+                                                    backgroundColor: Colors.white,
+                                                    foregroundColor: Colors.black,
+                                                    textStyle:
+                                                        Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                                  ),
+                                                  child: const Text("Gastronomie"),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -313,6 +422,55 @@ class HomeView extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class CustomClipPath2 extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double w = size.width;
+    double h = size.height;
+
+    final path = Path();
+
+    path.moveTo(0, h);
+    path.lineTo(w - 6, h);
+    path.quadraticBezierTo(w, h, w, h - 6);
+    path.lineTo(w, 6);
+    path.quadraticBezierTo(w, 0, w - 6, 6);
+    path.lineTo(6, h - 6);
+    path.quadraticBezierTo(0, h, 6, h);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double w = size.width;
+    double h = size.height;
+
+    final path = Path();
+
+    path.lineTo(0, h - 6);
+    path.quadraticBezierTo(0.0, h, 6, h - 6);
+    path.lineTo(w - 6, 6);
+    path.quadraticBezierTo(w, 0, w - 6, 0);
+    path.lineTo(6, 0);
+    path.quadraticBezierTo(0, 0, 0, 6);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
 
