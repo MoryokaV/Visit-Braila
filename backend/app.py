@@ -121,6 +121,16 @@ def sights():
 def tours():
     return render_template("tours.html")
 
+@app.route("/admin/restaurants")
+@login_required
+def restarants():
+    return render_template("restaurants.html")
+
+@app.route("/admin/hotels")
+@login_required
+def hotels():
+    return render_template("hotels.html")
+
 @app.route("/admin/events")
 @login_required
 def events():
@@ -290,6 +300,62 @@ def editTour():
     tour['length'] = float(tour['length'])
 
     db.tours.update_one({"_id": ObjectId(data['_id'])}, {"$set": tour})
+
+    return make_response("Entry has been updated", 200)
+
+# --- RESTAURANTS ---  
+
+@app.route("/api/insertRestaurant", methods=["POST"])
+@login_required
+def insertRestaurant():
+    restaurant = request.get_json()
+
+    restaurant['latitude'] = float(restaurant['latitude'])
+    restaurant['longitude'] = float(restaurant['longitude'])
+    restaurant['primary_image_blurhash'] = getBlurhash(restaurant['images'][restaurant['primary_image'] - 1])
+
+    db.restaurants.insert_one(restaurant)
+    
+    return make_response("New entry has been inserted", 200)
+
+@app.route("/api/fetchRestaurants")
+def fetchRestaurants():
+    return json.dumps(list(db.restaurants.find()), default=str)
+
+@app.route("/api/deleteRestaurant/<_id>", methods=["DELETE"])
+@login_required
+def deleteRestaurant(_id):
+    # delete local restaurant images first
+    images = json.loads(findRestaurant(_id))['images']
+    deleteImages(images, 'restaurants')
+
+    # delete restaurant
+    db.restaurant.delete_one({"_id": ObjectId(_id)})
+
+    return make_response("Successfully deleted document", 200)
+
+@app.route("/api/findRestaurant/<_id>")
+def findRestaurant(_id):
+    restaurant = db.restaurants.find_one({"_id": ObjectId(_id)})
+
+    if restaurant is None:
+        return make_response("Invalid restaurant id", 404)
+
+    return json.dumps(restaurant, default=str)
+
+@app.route("/api/editRestaurant", methods=["PUT"])
+@login_required
+def editRestaurant():
+    data = request.get_json()
+
+    deleteImages(data['images_to_delete'], 'restaurants')
+
+    restaurant = data['restaurants']
+    restaurant['latitude'] = float(restaurant['latitude'])
+    restaurant['longitude'] = float(restaurant['longitude'])
+    restaurant['primary_image_blurhash'] = getBlurhash(restaurant['images'][restaurant['primary_image'] - 1])
+
+    db.restaurants.update_one({"_id": ObjectId(data['_id'])}, {"$set": restaurant})
 
     return make_response("Entry has been updated", 200)
 
@@ -545,6 +611,10 @@ def deleteImages(images, collection):
             occurrences = len(list(db.sights.find({"images": image})))
         elif collection == 'tours':
             occurrences = len(list(db.tours.find({"images": image})))
+        elif collection == 'restaurants':
+            occurrences = len(list(db.restaurants.find({"images": image})))
+        elif collection == 'hotels':
+            occurrences = len(list(db.hotels.find({"images": image})))
         elif collection == 'events':
             occurrences = len(list(db.events.find({"images": image})))
 
@@ -591,6 +661,10 @@ def init_dir():
         os.makedirs(app.config["MEDIA_FOLDER"] + "/sights")
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/tours"):
         os.makedirs(app.config["MEDIA_FOLDER"] + "/tours")
+    if not os.path.exists(app.config["MEDIA_FOLDER"] + "/restaurants"):
+        os.makedirs(app.config["MEDIA_FOLDER"] + "/restaurants")
+    if not os.path.exists(app.config["MEDIA_FOLDER"] + "/hotels"):
+        os.makedirs(app.config["MEDIA_FOLDER"] + "/hotels")
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/events"):
         os.makedirs(app.config["MEDIA_FOLDER"] + "/events")
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/about"):
