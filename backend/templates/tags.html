@@ -95,6 +95,23 @@
                   <input type="text" id="tag" class="form-control" name="tag" maxlength="30" required />
                 </section>
                 <section class="col-12">
+                  <label class="form-label">Used for</label>
+                  <div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="used-for-radio" id="sights-radio" value="sights" required>
+                      <label class="form-check-label dot dot-green">Sights</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="used-for-radio" id="restaurants-radio" value="restaurants">
+                      <label class="form-check-label dot dot-purple">Restaurants</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="used-for-radio" id="hotels-radio" value="hotels">
+                      <label class="form-check-label dot dot-yellow">Hotels</label>
+                    </div>
+                  </div>
+                </section>
+                <section class="col-12">
                   <button type="submit" class="btn btn-primary">Insert</button>
                 </section>
               </form>

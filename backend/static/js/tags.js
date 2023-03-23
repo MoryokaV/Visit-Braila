@@ -2,6 +2,16 @@ import { tagRegExp, tagRegExpTitle } from './utils.js';
 
 let tags = [];
 
+const getDotColor = (used_for) => {
+  if (used_for === "sights") {
+    return "dot-green";
+  } else if (used_for === "restaurants") {
+    return "dot-purple";
+  } else {
+    return "dot-yellow";
+  }
+}
+
 const fetchTags = async () => {
   $("#tags-table tbody").empty();
 
@@ -13,7 +23,7 @@ const fetchTags = async () => {
         <td class="small-cell">${index + 1}</td> 
         <td>
           <div class="highlight-onhover" id="${tag._id}">
-            <p>${tag.name}</p>
+            <p class="dot ${getDotColor(tag.used_for)}">${tag.name}</p>
             <button type="button" class="btn btn-icon remove-tag-btn">
               <ion-icon name="close-outline"></ion-icon>
             </button>
@@ -37,6 +47,7 @@ $(document).ready(async function() {
     await fetchTags();
   });
 
+
   $("#insert-tag-form").submit(async function(e) {
     e.preventDefault();
 
@@ -50,7 +61,7 @@ $(document).ready(async function() {
       url: "/api/insertTag",
       contentType: "application/json; charset=UTF-8",
       processData: false,
-      data: JSON.stringify({ "name": $("#tag").val() }),
+      data: JSON.stringify({ "name": $("#tag").val(), "used_for": $('#insert-tag-form input[type=radio]:checked').val() }),
     });
 
     $("#tag").val("");

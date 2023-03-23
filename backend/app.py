@@ -359,6 +359,62 @@ def editRestaurant():
 
     return make_response("Entry has been updated", 200)
 
+# --- HOTELS ---  
+
+@app.route("/api/insertHotel", methods=["POST"])
+@login_required
+def insertHotel():
+    hotel = request.get_json()
+
+    hotel['latitude'] = float(hotel['latitude'])
+    hotel['longitude'] = float(hotel['longitude'])
+    hotel['primary_image_blurhash'] = getBlurhash(hotel['images'][hotel['primary_image'] - 1])
+
+    db.hotels.insert_one(hotel)
+    
+    return make_response("New entry has been inserted", 200)
+
+@app.route("/api/fetchHotels")
+def fetchHotels():
+    return json.dumps(list(db.hotels.find()), default=str)
+
+@app.route("/api/deleteHotel/<_id>", methods=["DELETE"])
+@login_required
+def deleteHotel(_id):
+    # delete local hotel images first
+    images = json.loads(findHotel(_id))['images']
+    deleteImages(images, 'hotels')
+
+    # delete hotel
+    db.hotels.delete_one({"_id": ObjectId(_id)})
+
+    return make_response("Successfully deleted document", 200)
+
+@app.route("/api/findHotel/<_id>")
+def findHotel(_id):
+    hotel = db.hotels.find_one({"_id": ObjectId(_id)})
+
+    if hotel is None:
+        return make_response("Invalid hotel id", 404)
+
+    return json.dumps(hotel, default=str)
+
+@app.route("/api/editHotel", methods=["PUT"])
+@login_required
+def editHotel():
+    data = request.get_json()
+
+    deleteImages(data['images_to_delete'], 'hotels')
+
+    hotel = data['hotel']
+    hotel['latitude'] = float(hotel['latitude'])
+    hotel['longitude'] = float(hotel['longitude'])
+    hotel['primary_image_blurhash'] = getBlurhash(hotel['images'][hotel['primary_image'] - 1])
+
+    db.hotels.update_one({"_id": ObjectId(data['_id'])}, {"$set": hotels})
+
+    return make_response("Entry has been updated", 200)
+
 # --- EVENTS ---  
 
 @app.route("/api/insertEvent", methods=["POST"])
@@ -455,20 +511,43 @@ def fetchTags():
 def insertTag():
     tag = request.get_json()
 
-    db.tags.insert_one({"name": tag['name']}) 
+    db.tags.insert_one(tag) 
 
     return make_response("New entry inserted", 200)
 
 @app.route("/api/deleteTag/<name>", methods=["DELETE"])
 @login_required
 def deleteTag(name):
-    # Remove this tag from all sights
-    sights = json.loads(fetchSights())
-     
-    for sight in sights:
-        if name in sight['tags']:
-            sight['tags'].remove(name)
-            db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"tags": sight['tags']}})
+    tags = json.loads(fetchTags())
+
+    # Remove this tag from all occurrences 
+    used_for = ""
+    for tag in tags:
+        if tag['name'] == name:
+            used_for = tag['used_for']
+            break
+
+    if used_for == "sights":
+        sights = json.loads(fetchSights())
+         
+        for sight in sights:
+            if name in sight['tags']:
+                sight['tags'].remove(name)
+                db.sights.update_one({"_id": ObjectId(sight['_id'])}, {"$set": {"tags": sight['tags']}})
+    elif used_for == "restaurants":
+        restaurants = json.loads(fetchRestaurants())
+         
+        for restaurant in restaurants:
+            if name in restaurant['tags']:
+                restaurant['tags'].remove(name)
+                db.restaurants.update_one({"_id": ObjectId(restaurant['_id'])}, {"$set": {"tags": restaurant['tags']}})
+    else:
+        hotels = json.loads(fetchHotels())
+         
+        for hotel in hotels:
+            if name in hotel['tags']:
+                hotel['tags'].remove(name)
+                db.hotels.update_one({"_id": ObjectId(hotel['_id'])}, {"$set": {"tags": hotel['tags']}})
          
     db.tags.delete_one({"name": name})
 

@@ -51,6 +51,36 @@ ion-icon {
     gap: 0.75rem;
 }
 
+/* TAG DOT */
+
+.dot {
+    position: relative;
+}
+
+.dot::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(20px, -50%);
+
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+
+.dot-green::after {
+    background-color: #37b24d;
+}
+
+.dot-purple::after {
+    background-color: #9775fa;
+}
+
+.dot-yellow::after {
+    background-color: #fcc419;
+}
+
 /* BUTTONS */
 
 .eye-icon {
