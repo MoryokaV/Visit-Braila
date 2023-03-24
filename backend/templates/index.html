@@ -133,6 +133,27 @@
 
           <div class="card shadow-sm dashboard-card">
             <h5 class="card-header d-flex justify-content-between align-items-baseline">
+              Restaurants
+              <p id="restaurants-records"></p>
+            </h5>
+            <div class="card-body table-card-body">
+              <table id="restaurants-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Tags</th>
+                    <th>External link</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card shadow-sm dashboard-card">
+            <h5 class="card-header d-flex justify-content-between align-items-baseline">
               Events
               <p id="events-records"></p>
             </h5>
@@ -302,6 +323,85 @@
             <section class="col-12">
               <label for="tour-external-link" class="form-label">External link</label>
               <input type="url" id="tour-external-link" class="form-control" name="external-link" required />
+              <div class="form-text">Note: it must be a website URL</div>
+            </section>
+            <section class="col-12">
+              <button type="submit" class="btn btn-primary"><span>Save</span></button>
+            </section>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESTAURANT EDIT MODAL -->
+    <div class="modal fade" id="restaurant-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit entry</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form class="modal-body row g-3">
+            <section class="col-12">
+              <label for="restaurant-name" class="form-label">Name</label>
+              <input type="text" id="restaurant-name" class="form-control" name="name" maxlength="60" required>
+            </section> 
+            <section class="col-12 d-flex flex-wrap gap-3">
+              <label for="tags" class="col-form-label">Tags</label>
+              <div class="col-sm-3">
+                <select id="tags" name="tags" class="form-select">
+                  <option value="-" selected disabled hidden>-</option>
+                </select>
+              </div>
+              <a role="button" class="btn btn-text text-primary" id="tag-btn">Add</a>
+              <div id="active-tags" class="d-flex align-items-center flex-wrap gap-2"></div>
+            </section>
+            <section class="col-12">
+              <label for="restaurant-description" class="form-label">Description</label>
+              <div id="restaurant-description"></div>
+            </section>
+            <section class="col-12 d-flex gap-3">
+              <label for="restaurant-images" style="cursor: pointer">
+                Images
+                <input
+                  type="file"
+                  class="hidden-input"
+                  id="restaurant-images"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                />
+              </label>
+              <ul class="img-container"></ul>
+            </section>
+            <section class="col-12">
+              <div class="row gx-3 gy-0">
+                <label for="restaurant-primary-image" class="col-auto col-form-label">Primary image index</label>
+                <div class="col">
+                  <input 
+                    class="form-control"
+                    id="restaurant-primary-image" 
+                    name="primary-image" 
+                    type="number" 
+                    min="1" 
+                    max="1"
+                    value="1" 
+                    required
+                  />
+                </div>
+              </div>
+            </section>
+            <section class="col-sm-6">
+              <label class="form-label" for="restaurant-latitude">Latitude</label>
+              <input type="text" class="form-control" id="restaurant-latitude" name="latitude" required />
+            </section>
+            <section class="col-sm-6">
+              <label class="form-label" for="restaurant-longitude">Longitude</label>
+              <input type="text" class="form-control" id="restaurant-longitude" name="longitude" required />
+            </section>
+            <section class="col-12">
+              <label class="form-label" for="restaurant-external-link">External link</label>
+              <input type="url" id="restaurant-external-link" class="form-control" name="external-link" required />
               <div class="form-text">Note: it must be a website URL</div>
             </section>
             <section class="col-12">

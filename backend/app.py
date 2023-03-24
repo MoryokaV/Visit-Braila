@@ -330,7 +330,7 @@ def deleteRestaurant(_id):
     deleteImages(images, 'restaurants')
 
     # delete restaurant
-    db.restaurant.delete_one({"_id": ObjectId(_id)})
+    db.restaurants.delete_one({"_id": ObjectId(_id)})
 
     return make_response("Successfully deleted document", 200)
 
@@ -350,7 +350,7 @@ def editRestaurant():
 
     deleteImages(data['images_to_delete'], 'restaurants')
 
-    restaurant = data['restaurants']
+    restaurant = data['restaurant']
     restaurant['latitude'] = float(restaurant['latitude'])
     restaurant['longitude'] = float(restaurant['longitude'])
     restaurant['primary_image_blurhash'] = getBlurhash(restaurant['images'][restaurant['primary_image'] - 1])

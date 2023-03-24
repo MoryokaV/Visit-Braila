@@ -1,4 +1,4 @@
-import { fetchEvents, fetchSights, fetchTours } from './dashboard.js';
+import { fetchEvents, fetchRestaurants, fetchSights, fetchTours } from './dashboard.js';
 import {
   startLoadingAnimation,
   endLoadingAnimation,
@@ -21,6 +21,7 @@ import {
 
 let sight = {};
 let tour = {};
+let restaurant = {};
 let event = {};
 let current_images = [];
 let formData = undefined;
@@ -143,6 +144,41 @@ export const openEditTourModal = async (id) => {
   $("#tour-external-link").val(tour.external_link);
 }
 
+export const openEditRestaurantModal = async (id) => {
+  restaurant = await $.getJSON("/api/findRestaurant/" + id);
+  current_images = [...restaurant.images];
+  formData = new FormData();
+  images_to_delete = [];
+
+  // NAME
+  $("#restaurant-name").val(restaurant.name);
+
+  // TAGS
+  appendActiveTags(restaurant.tags, false, "#restaurant-modal");
+
+  $('#restaurant-modal #tags option:gt(0)').remove()
+  initializeTags("restaurants", restaurant.tags, false, "#restaurant-modal")
+
+  // DESCRIPTION
+  quill = new Quill("#restaurant-description", {
+    theme: "snow",
+  });
+  $("#restaurant-description .ql-editor").html(restaurant.description)
+
+  // IMAGES
+  restaurant.images.map((image) => appendImageElement(image, true));
+
+  $("#restaurant-primary-image").attr("max", restaurant.images.length);
+  $("#restaurant-primary-image").val(restaurant.primary_image);
+
+  // COORDINATES
+  $("#restaurant-modal #restaurant-latitude").val(restaurant.latitude);
+  $("#restaurant-modal #restaurant-longitude").val(restaurant.longitude);
+
+  // EXTERNAL LINK
+  $("#restaurant-external-link").val(restaurant.external_link)
+}
+
 export const openEditEventModal = async (id) => {
   event = await $.getJSON("/api/findEvent/" + id);
   current_images = [...event.images];
@@ -187,6 +223,8 @@ export const openEditEventModal = async (id) => {
 }
 
 $(document).ready(async function() {
+  // ----- SIGHTS ----- 
+
   $("#sight-modal").on("hidden.bs.modal", function() {
     $(".ql-toolbar").remove();
     $(".img-container").empty();
@@ -265,6 +303,89 @@ $(document).ready(async function() {
       endLoadingAnimation($(this));
     }
   });
+
+  // ----- RESTAURANTS ----- 
+
+  $("#restaurant-modal").on("hidden.bs.modal", function() {
+    $(".ql-toolbar").remove();
+    $(".img-container").empty();
+  })
+
+  // RESTAURANT NAME
+  $("#restaurant-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
+
+  // RESTAURANT IMAGES 
+  $('#restaurant-images').change(function() {
+    $(this).prop("required", false);
+
+    addImages($(this).prop('files'), "/static/media/restaurants/", false, current_images, formData, $("#restaurant-primary-image"));
+
+    $(this).val(null);
+  });
+
+  $("#restaurant-modal .img-container").on("click", ".remove-img-btn", function() {
+    removeImage($(this), false, current_images, formData, $("#restaurant-primary-image"), $("#restaurant-images"));
+
+    //mark for deletion
+    if (restaurant.images.includes(current_images[$(this).parent().index()])) {
+      images_to_delete.push(current_images[$(this).parent().index()]);
+    }
+  });
+
+  // RESTAURANT COORDINATES
+  $("#restaurant-latitude").attr("pattern", latitudeRegExp).attr("title", latitudeRegExpTitle);
+  $("#restaurant-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
+
+  // RESTAURANT SUBMIT
+  $("#restaurant-modal form").submit(async function(e) {
+    e.preventDefault();
+
+    startLoadingAnimation($(this));
+
+    let _id = restaurant._id;
+    delete restaurant._id;
+    restaurant.name = $("#restaurant-name").val();
+    restaurant.description = quill.root.innerHTML;
+    restaurant.primary_image = parseInt($("#restaurant-primary-image").val());
+    restaurant.latitude = parseFloat($("#restaurant-latitude").val());
+    restaurant.longitude = parseFloat($("#restaurant-longitude").val());
+    restaurant.external_link = $("#restaurant-external-link").val();
+
+    try {
+      if (formData.getAll("files[]").length > 0)
+        await $.ajax({
+          type: "POST",
+          url: "/api/uploadImages/restaurants",
+          contentType: false,
+          data: formData,
+          cache: false,
+          processData: false,
+          statusCode: {
+            413: function() {
+              alert("Files size should be less than 15MB")
+            }
+          },
+        });
+
+      restaurant.images = [...current_images];
+
+      await $.ajax({
+        url: "/api/editRestaurant",
+        type: "PUT",
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "restaurant": restaurant }),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+
+      await fetchRestaurants();
+      endLoadingAnimation($(this));
+      $("#restaurant-modal").modal('hide');
+    } catch {
+      endLoadingAnimation($(this));
+    }
+  });
+
+  // ----- TOURS ----- 
 
   $("#tour-modal").on("hidden.bs.modal", function() {
     $(".ql-toolbar").remove();
@@ -387,6 +508,8 @@ $(document).ready(async function() {
       endLoadingAnimation($(this));
     }
   });
+
+  // ----- EVENTS ----- 
 
   $("#event-modal").on("hidden.bs.modal", function() {
     $(".ql-toolbar").remove();

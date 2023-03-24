@@ -1,4 +1,4 @@
-import { openEditEventModal, openEditSightModal, openEditTourModal } from './modal.js';
+import { openEditEventModal, openEditRestaurantModal, openEditSightModal, openEditTourModal } from './modal.js';
 
 const getRecords = (data) => {
   if (data.length === 0) return "No records";
@@ -57,6 +57,32 @@ export const fetchTours = async () => {
     );
   });
 }
+
+export const fetchRestaurants = async () => {
+  const data = await $.getJSON("/api/fetchRestaurants");
+
+  $("#restaurants-records").text(getRecords(data));
+  $("#restaurants-table tbody").empty();
+
+  data.map((restaurant) => {
+    restaurant.tags = restaurant.tags.join(", ");
+
+    $("#restaurants-table").append(
+      `<tr>
+          <td>${restaurant._id}</td>
+          <td>${restaurant.name}</td>
+          <td>${restaurant.tags}</td>
+          <td><a href=${restaurant.external_link} target="_blank">${restaurant.external_link}</a></td>
+          <td id=${restaurant._id}>
+            <div class="group">
+              <button class="btn-icon action-edit-restaurant" data-bs-toggle="modal" data-bs-target="#restaurant-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+              <button class="btn-icon action-delete-restaurant"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
+            </div>
+          </td>
+        </tr>`
+    );
+  });
+};
 
 const convert2LocalDate = (iso_date) => {
   const date = new Date(iso_date);
@@ -127,6 +153,23 @@ $(document).ready(async function() {
 
   $("#tours-table").on('click', ".action-edit-tour", async function() {
     await openEditTourModal($(this).parent().parent().attr("id"));
+  });
+
+  await fetchRestaurants();
+
+  $("#restaurants-table").on('click', ".action-delete-restaurant", async function() {
+    if (confirm("Are you sure you want to delete the entry?")) {
+      await $.ajax({
+        url: "/api/deleteRestaurant/" + $(this).parent().parent().attr("id"),
+        type: "DELETE",
+      });
+
+      fetchRestaurants();
+    }
+  });
+
+  $("#restaurants-table").on('click', ".action-edit-restaurant", async function() {
+    await openEditRestaurantModal($(this).parent().parent().attr("id"));
   });
 
   await fetchEvents();
