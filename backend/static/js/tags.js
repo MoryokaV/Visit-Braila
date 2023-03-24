@@ -15,7 +15,7 @@ const getDotColor = (used_for) => {
 const fetchTags = async () => {
   $("#tags-table tbody").empty();
 
-  tags = await $.getJSON("/api/fetchTags");
+  tags = await $.getJSON("/api/fetchTags/all");
 
   tags.map((tag, index) => {
     $("#tags-table tbody").append(

@@ -504,6 +504,9 @@ def editEvent():
 
 @app.route("/api/fetchTags/<used_for>")
 def fetchTags(used_for):
+    if used_for == "all":
+        return json.dumps(list(db.tags.find()), default=str)
+
     return json.dumps(list(db.tags.find({"used_for": used_for})), default=str)
 
 @app.route("/api/insertTag", methods=["POST"])
@@ -518,7 +521,7 @@ def insertTag():
 @app.route("/api/deleteTag/<name>", methods=["DELETE"])
 @login_required
 def deleteTag(name):
-    tags = json.loads(fetchTags())
+    tags = json.loads(fetchTags("all"))
 
     # Remove this tag from all occurrences 
     used_for = ""
