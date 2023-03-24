@@ -8,7 +8,8 @@ import {
   longitudeRegExpTitle,
   endLoadingAnimation,
   addImages,
-  removeImage
+  removeImage,
+  initializeTags,
 } from './utils.js';
 
 let quill = undefined;
@@ -24,16 +25,6 @@ let sight = {
   external_link: "",
 };
 
-const appendActiveTags = () => {
-  $("#active-tags").empty();
-  $("#preview-tags").empty();
-
-  sight.tags.map((tag, index) => {
-    $("#active-tags").append(`<span class="badge bg-primary">${tag}</span>`);
-    $("#preview-tags").append(`<p>${tag}</p>${index != sight.tags.length - 1 ? ", " : " "}`)
-  });
-}
-
 $(document).ready(async function() {
   // NAME
   $("#sight-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
@@ -42,44 +33,7 @@ $(document).ready(async function() {
   });
 
   // TAGS
-  const tags = await $.getJSON("/api/fetchTags");
-  tags.map((tag) => $("#tags").append(`<option value="${tag.name}">${tag.name}</option>`));
-
-  $("#tags").change(function() {
-    if (!sight.tags.includes($(this).val())) {
-      $("#tag-btn")
-        .removeClass("text-danger")
-        .text("Add")
-        .off("click")
-        .click(function() {
-          if (sight.tags.length === 3) {
-            alert("You cannot use more than 3 tags!");
-            return;
-          }
-
-          sight.tags.push($("#tags").val());
-
-          appendActiveTags();
-
-          $(this).off("click");
-          $("#tags").val("-");
-        });
-    } else {
-      $("#tag-btn")
-        .addClass("text-danger")
-        .text("Remove")
-        .off("click")
-        .click(function() {
-          const index = sight.tags.indexOf($("#tags").val());
-          sight.tags.splice(index, 1);
-
-          appendActiveTags();
-
-          $(this).removeClass("text-danger").text("Add").off("click");
-          $("#tags").val("-");
-        });
-    }
-  });
+  await initializeTags("sights", sight.tags);
 
   // DESCRIPTION
   quill = new Quill("#sight-description", {

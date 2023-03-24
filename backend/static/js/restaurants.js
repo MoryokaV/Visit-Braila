@@ -1,4 +1,4 @@
-import { nameRegExp, latitudeRegExp, longitudeRegExp, nameRegExpTitle, latitudeRegExpTitle, longitudeRegExpTitle, addImages, startLoadingAnimation, endLoadingAnimation, removeImage } from './utils.js';
+import { nameRegExp, latitudeRegExp, longitudeRegExp, nameRegExpTitle, latitudeRegExpTitle, longitudeRegExpTitle, addImages, startLoadingAnimation, endLoadingAnimation, removeImage, initializeTags } from './utils.js';
 
 let quill = undefined;
 let formData = new FormData();
@@ -19,6 +19,9 @@ $(document).ready(async function() {
   $("#restaurant-name").on('input', function() {
     $("#preview-name").text($(this).val());
   });
+
+  // TAGS
+  await initializeTags("restaurants", restaurant.tags);
 
   // DESCRIPTION
   quill = new Quill("#restaurant-description", {

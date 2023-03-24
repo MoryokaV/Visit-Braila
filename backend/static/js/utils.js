@@ -136,6 +136,64 @@ export const removeImage = (elem, preview, current_images, formData, primary_ele
   elem.parent().remove();
 }
 
+// TAGS
+
+export const initializeTags = async (collection, activeTags) => {
+  const tags = await $.getJSON(`/api/fetchTags/${collection}`);
+  tags.map((tag) => $("#tags").append(`<option value="${tag.name}">${tag.name}</option>`));
+
+  $("#tags").change(function() {
+    if (!activeTags.includes($(this).val())) {
+      $("#tag-btn")
+        .removeClass("text-danger")
+        .text("Add")
+        .off("click")
+        .click(function() {
+          if (activeTags.length === 3) {
+            alert("You cannot use more than 3 tags!");
+            return;
+          }
+
+          activeTags.push($("#tags").val());
+
+          appendActiveTags(activeTags, true);
+
+          $(this).off("click");
+          $("#tags").val("-");
+        });
+    } else {
+      $("#tag-btn")
+        .addClass("text-danger")
+        .text("Remove")
+        .off("click")
+        .click(function() {
+          const index = activeTags.indexOf($("#tags").val());
+          activeTags.splice(index, 1);
+
+          appendActiveTags(activeTags, true);
+
+          $(this).removeClass("text-danger").text("Add").off("click");
+          $("#tags").val("-");
+        });
+    }
+  });
+}
+
+const appendActiveTags = (activeTags, preview) => {
+  $("#active-tags").empty();
+  if (preview) {
+    $("#preview-tags").empty();
+  }
+
+  activeTags.map((tag, index) => {
+    $("#active-tags").append(`<span class="badge bg-primary">${tag}</span>`);
+
+    if (preview) {
+      $("#preview-tags").append(`<p>${tag}</p>${index != activeTags.length - 1 ? ", " : " "}`)
+    }
+  });
+}
+
 $(document).ready(function() {
   getStorageInfo();
   getCurrentUserFullname();

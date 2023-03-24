@@ -502,9 +502,9 @@ def editEvent():
 
 # --- TAGS ---
 
-@app.route("/api/fetchTags")
-def fetchTags():
-    return json.dumps(list(db.tags.find()), default=str)
+@app.route("/api/fetchTags/<used_for>")
+def fetchTags(used_for):
+    return json.dumps(list(db.tags.find({"used_for": used_for})), default=str)
 
 @app.route("/api/insertTag", methods=["POST"])
 @login_required
