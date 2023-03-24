@@ -138,13 +138,13 @@ export const removeImage = (elem, preview, current_images, formData, primary_ele
 
 // TAGS
 
-export const initializeTags = async (collection, activeTags) => {
+export const initializeTags = async (collection, activeTags, preview, modal) => {
   const tags = await $.getJSON(`/api/fetchTags/${collection}`);
-  tags.map((tag) => $("#tags").append(`<option value="${tag.name}">${tag.name}</option>`));
+  tags.map((tag) => $(`${modal} #tags`).append(`<option value="${tag.name}">${tag.name}</option>`));
 
-  $("#tags").change(function() {
+  $(`${modal} #tags`).change(function() {
     if (!activeTags.includes($(this).val())) {
-      $("#tag-btn")
+      $(`${modal} #tag-btn`)
         .removeClass("text-danger")
         .text("Add")
         .off("click")
@@ -154,39 +154,39 @@ export const initializeTags = async (collection, activeTags) => {
             return;
           }
 
-          activeTags.push($("#tags").val());
+          activeTags.push($(`${modal} #tags`).val());
 
-          appendActiveTags(activeTags, true);
+          appendActiveTags(activeTags, preview, modal);
 
           $(this).off("click");
-          $("#tags").val("-");
+          $(`${modal} #tags`).val("-");
         });
     } else {
-      $("#tag-btn")
+      $(`${modal} #tag-btn`)
         .addClass("text-danger")
         .text("Remove")
         .off("click")
         .click(function() {
-          const index = activeTags.indexOf($("#tags").val());
+          const index = activeTags.indexOf($(`${modal} #tags`).val());
           activeTags.splice(index, 1);
 
-          appendActiveTags(activeTags, true);
+          appendActiveTags(activeTags, preview, modal);
 
           $(this).removeClass("text-danger").text("Add").off("click");
-          $("#tags").val("-");
+          $(`${modal} #tags`).val("-");
         });
     }
   });
 }
 
-const appendActiveTags = (activeTags, preview) => {
-  $("#active-tags").empty();
+export const appendActiveTags = (activeTags, preview, modal) => {
+  $(`${modal} #active-tags`).empty();
   if (preview) {
     $("#preview-tags").empty();
   }
 
   activeTags.map((tag, index) => {
-    $("#active-tags").append(`<span class="badge bg-primary">${tag}</span>`);
+    $(`${modal} #active-tags`).append(`<span class="badge bg-primary">${tag}</span>`);
 
     if (preview) {
       $("#preview-tags").append(`<p>${tag}</p>${index != activeTags.length - 1 ? ", " : " "}`)

@@ -21,7 +21,7 @@ $(document).ready(async function() {
   });
 
   // TAGS
-  await initializeTags("restaurants", restaurant.tags);
+  await initializeTags("restaurants", restaurant.tags, true, "");
 
   // DESCRIPTION
   quill = new Quill("#restaurant-description", {

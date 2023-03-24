@@ -33,7 +33,7 @@ $(document).ready(async function() {
   });
 
   // TAGS
-  await initializeTags("sights", sight.tags);
+  await initializeTags("sights", sight.tags, true, "");
 
   // DESCRIPTION
   quill = new Quill("#sight-description", {

@@ -14,7 +14,9 @@ import {
   longitudeRegExpTitle,
   addImages,
   appendImageElement,
-  removeImage
+  removeImage,
+  initializeTags,
+  appendActiveTags
 } from './utils.js';
 
 let sight = {};
@@ -24,11 +26,6 @@ let current_images = [];
 let formData = undefined;
 let images_to_delete = [];
 let quill = undefined;
-
-const appendActiveTags = () => {
-  $("#sight-modal #active-tags").empty()
-  sight.tags.map((tag) => $("#sight-modal #active-tags").append(`<span class="badge bg-primary">${tag}</span>`));
-}
 
 const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link form-control text-primary" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
 
@@ -90,11 +87,10 @@ export const openEditSightModal = async (id) => {
   $("#sight-name").val(sight.name);
 
   // TAGS
-  appendActiveTags();
+  appendActiveTags(sight.tags, false, "#sight-modal");
 
   $('#sight-modal #tags option:gt(0)').remove()
-  const tags = await $.getJSON("/api/fetchTags");
-  tags.map((tag) => $("#sight-modal #tags").append(`<option value="${tag.name}">${tag.name}</option>`));
+  initializeTags("sights", sight.tags, false, "#sight-modal")
 
   // DESCRIPTION
   quill = new Quill("#sight-description", {
@@ -198,43 +194,6 @@ $(document).ready(async function() {
 
   // SIGHT NAME
   $("#sight-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
-
-  // SIGHT TAGS
-  $("#sight-modal #tags").change(function() {
-    if (!sight.tags.includes($(this).val())) {
-      $("#sight-modal #tag-btn")
-        .removeClass("text-danger")
-        .text("Add")
-        .off("click")
-        .click(function() {
-          if (sight.tags.length === 3) {
-            alert("You cannot use more than 3 tags!");
-            return;
-          }
-
-          sight.tags.push($("#sight-modal #tags").val());
-
-          appendActiveTags();
-
-          $(this).off("click");
-          $("#sight-modal #tags").val("-");
-        });
-    } else {
-      $("#sight-modal #tag-btn")
-        .addClass("text-danger")
-        .text("Remove")
-        .off("click")
-        .click(function() {
-          const index = sight.tags.indexOf($("#sight-modal #tags").val());
-          sight.tags.splice(index, 1);
-
-          appendActiveTags();
-
-          $(this).removeClass("text-danger").text("Add").off("click");
-          $("#sight-modal #tags").val("-");
-        });
-    }
-  });
 
   // SIGHT IMAGES 
   $('#sight-images').change(function() {
