@@ -404,6 +404,12 @@ td.small-cell {
     margin-bottom: 1.4rem
 }
 
+#preview-stars {
+    margin-left: 8px;
+    vertical-align: top;
+    color: #fcba03;
+}
+
 /* #### MODAL #### */
 
 .modal.fade .modal-dialog {
