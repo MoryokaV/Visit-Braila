@@ -57,6 +57,11 @@ $(document).ready(async function() {
   $("#insert-restaurant-form").submit(async function(e) {
     e.preventDefault();
 
+    if (restaurant.tags.length === 0) {
+      alert("Use at least one tag!");
+      return false;
+    }
+
     startLoadingAnimation($(this));
 
     restaurant.name = $("#restaurant-name").val();

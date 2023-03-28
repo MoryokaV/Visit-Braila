@@ -508,6 +508,11 @@ $(document).ready(async function() {
   $("#restaurant-modal form").submit(async function(e) {
     e.preventDefault();
 
+    if (restaurant.tags.length === 0) {
+      alert("Use at least one tag!");
+      return false;
+    }
+
     startLoadingAnimation($(this));
 
     let _id = restaurant._id;
@@ -596,6 +601,11 @@ $(document).ready(async function() {
   // HOTEL SUBMIT
   $("#hotel-modal form").submit(async function(e) {
     e.preventDefault();
+
+    if (hotel.tags.length === 0) {
+      alert("Use at least one tag!");
+      return false;
+    }
 
     startLoadingAnimation($(this));
 

@@ -100,6 +100,11 @@ $(document).ready(async function() {
   $("#insert-hotel-form").submit(async function(e) {
     e.preventDefault();
 
+    if (hotel.tags.length === 0) {
+      alert("Use at least one tag!");
+      return false;
+    }
+
     startLoadingAnimation($(this));
 
     hotel.name = $("#hotel-name").val();
