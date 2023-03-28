@@ -31,7 +31,7 @@ let hotel = {
 };
 
 const getPreviewStarsElem = () => {
-  return `<span id="preview-stars">${"★".repeat(hotel.stars)}</span>`;
+  return `<span id="preview-stars" class="stars">${"★".repeat(hotel.stars)}</span>`;
 }
 
 $(document).ready(async function() {
@@ -59,7 +59,6 @@ $(document).ready(async function() {
 
     $("#preview-stars").text("★".repeat(parseInt($(this).val())));
   });
-
 
   // PHONE
   $("#hotel-phone").attr("pattern", phoneRegExp).attr("title", phoneRegExpTitle);

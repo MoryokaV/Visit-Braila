@@ -154,6 +154,28 @@
 
           <div class="card shadow-sm dashboard-card">
             <h5 class="card-header d-flex justify-content-between align-items-baseline">
+              Accommodation 
+              <p id="hotels-records"></p>
+            </h5>
+            <div class="card-body table-card-body">
+              <table id="hotels-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Stars</th>
+                    <th>Tags</th>
+                    <th>External link</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card shadow-sm dashboard-card">
+            <h5 class="card-header d-flex justify-content-between align-items-baseline">
               Events
               <p id="events-records"></p>
             </h5>
@@ -402,6 +424,93 @@
             <section class="col-12">
               <label class="form-label" for="restaurant-external-link">External link</label>
               <input type="url" id="restaurant-external-link" class="form-control" name="external-link" required />
+              <div class="form-text">Note: it must be a website URL</div>
+            </section>
+            <section class="col-12">
+              <button type="submit" class="btn btn-primary"><span>Save</span></button>
+            </section>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOTEL EDIT MODAL -->
+    <div class="modal fade" id="hotel-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit entry</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form class="modal-body row g-3">
+            <section class="col-12">
+              <label for="hotel-name" class="form-label">Name</label>
+              <input type="text" id="hotel-name" class="form-control" name="name" maxlength="60" required>
+            </section> 
+            <section class="col-sm-6">
+              <label for="hotel-stars" class="form-label">Stars</label>
+              <input type="number" id="hotel-stars" class="form-control" name ="stars" min="1" max="5" value="1" required>
+            </section>
+            <section class="col-sm-6">
+              <label for="hotel-phone" class="form-label">Phone number</label>
+              <input type="tel" id="hotel-phone" class="form-control" name="phone" required>
+            </section>
+            <section class="col-12 d-flex flex-wrap gap-3">
+              <label for="tags" class="col-form-label">Tags</label>
+              <div class="col-sm-3">
+                <select id="tags" name="tags" class="form-select">
+                  <option value="-" selected disabled hidden>-</option>
+                </select>
+              </div>
+              <a role="button" class="btn btn-text text-primary" id="tag-btn">Add</a>
+              <div id="active-tags" class="d-flex align-items-center flex-wrap gap-2"></div>
+            </section>
+            <section class="col-12">
+              <label for="hotel-description" class="form-label">Description</label>
+              <div id="hotel-description"></div>
+            </section>
+            <section class="col-12 d-flex gap-3">
+              <label for="hotel-images" style="cursor: pointer">
+                Images
+                <input
+                  type="file"
+                  class="hidden-input"
+                  id="hotel-images"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                />
+              </label>
+              <ul class="img-container"></ul>
+            </section>
+            <section class="col-12">
+              <div class="row gx-3 gy-0">
+                <label for="hotel-primary-image" class="col-auto col-form-label">Primary image index</label>
+                <div class="col">
+                  <input 
+                    class="form-control"
+                    id="hotel-primary-image" 
+                    name="primary-image" 
+                    type="number" 
+                    min="1" 
+                    max="1"
+                    value="1" 
+                    required
+                  />
+                </div>
+              </div>
+            </section>
+            <section class="col-sm-6">
+              <label class="form-label" for="hotel-latitude">Latitude</label>
+              <input type="text" class="form-control" id="hotel-latitude" name="latitude" required />
+            </section>
+            <section class="col-sm-6">
+              <label class="form-label" for="hotel-longitude">Longitude</label>
+              <input type="text" class="form-control" id="hotel-longitude" name="longitude" required />
+            </section>
+            <section class="col-12">
+              <label class="form-label" for="hotel-external-link">External link</label>
+              <input type="url" id="hotel-external-link" class="form-control" name="external-link" required />
               <div class="form-text">Note: it must be a website URL</div>
             </section>
             <section class="col-12">

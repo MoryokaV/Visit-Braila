@@ -51,6 +51,10 @@ ion-icon {
     gap: 0.75rem;
 }
 
+.stars {
+    color: #fcba03 !important;
+}
+
 /* TAG DOT */
 
 .dot {
@@ -407,7 +411,6 @@ td.small-cell {
 #preview-stars {
     margin-left: 8px;
     vertical-align: top;
-    color: #fcba03;
 }
 
 /* #### MODAL #### */

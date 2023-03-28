@@ -411,7 +411,7 @@ def editHotel():
     hotel['longitude'] = float(hotel['longitude'])
     hotel['primary_image_blurhash'] = getBlurhash(hotel['images'][hotel['primary_image'] - 1])
 
-    db.hotels.update_one({"_id": ObjectId(data['_id'])}, {"$set": hotels})
+    db.hotels.update_one({"_id": ObjectId(data['_id'])}, {"$set": hotel})
 
     return make_response("Entry has been updated", 200)
 

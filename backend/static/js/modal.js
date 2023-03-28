@@ -1,4 +1,4 @@
-import { fetchEvents, fetchRestaurants, fetchSights, fetchTours } from './dashboard.js';
+import { fetchEvents, fetchHotels, fetchRestaurants, fetchSights, fetchTours } from './dashboard.js';
 import {
   startLoadingAnimation,
   endLoadingAnimation,
@@ -16,12 +16,15 @@ import {
   appendImageElement,
   removeImage,
   initializeTags,
-  appendActiveTags
+  appendActiveTags,
+  phoneRegExp,
+  phoneRegExpTitle,
 } from './utils.js';
 
 let sight = {};
 let tour = {};
 let restaurant = {};
+let hotel = {};
 let event = {};
 let current_images = [];
 let formData = undefined;
@@ -179,6 +182,47 @@ export const openEditRestaurantModal = async (id) => {
   $("#restaurant-external-link").val(restaurant.external_link)
 }
 
+export const openEditHotelModal = async (id) => {
+  hotel = await $.getJSON("/api/findHotel/" + id);
+  current_images = [...hotel.images];
+  formData = new FormData();
+  images_to_delete = [];
+
+  // NAME
+  $("#hotel-name").val(hotel.name);
+
+  // STARS
+  $("#hotel-stars").val(hotel.stars);
+
+  // PHONE
+  $("#hotel-phone").val(hotel.phone);
+
+  // TAGS
+  appendActiveTags(hotel.tags, false, "#hotel-modal");
+
+  $('#hotel-modal #tags option:gt(0)').remove()
+  initializeTags("hotels", hotel.tags, false, "#hotel-modal")
+
+  // DESCRIPTION
+  quill = new Quill("#hotel-description", {
+    theme: "snow",
+  });
+  $("#hotel-description .ql-editor").html(hotel.description)
+
+  // IMAGES
+  hotel.images.map((image) => appendImageElement(image, true));
+
+  $("#hotel-primary-image").attr("max", hotel.images.length);
+  $("#hotel-primary-image").val(hotel.primary_image);
+
+  // COORDINATES
+  $("#hotel-modal #hotel-latitude").val(hotel.latitude);
+  $("#hotel-modal #hotel-longitude").val(hotel.longitude);
+
+  // EXTERNAL LINK
+  $("#hotel-external-link").val(hotel.external_link)
+}
+
 export const openEditEventModal = async (id) => {
   event = await $.getJSON("/api/findEvent/" + id);
   current_images = [...event.images];
@@ -243,12 +287,12 @@ $(document).ready(async function() {
   });
 
   $("#sight-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), false, current_images, formData, $("#sight-primary-image"), $("#sight-images"));
-
     //mark for deletion
     if (sight.images.includes(current_images[$(this).parent().index()])) {
       images_to_delete.push(current_images[$(this).parent().index()]);
     }
+
+    removeImage($(this), false, current_images, formData, $("#sight-primary-image"), $("#sight-images"));
   });
 
   // SIGHT COORDINATES
@@ -299,87 +343,6 @@ $(document).ready(async function() {
       await fetchSights();
       endLoadingAnimation($(this));
       $("#sight-modal").modal('hide');
-    } catch {
-      endLoadingAnimation($(this));
-    }
-  });
-
-  // ----- RESTAURANTS ----- 
-
-  $("#restaurant-modal").on("hidden.bs.modal", function() {
-    $(".ql-toolbar").remove();
-    $(".img-container").empty();
-  })
-
-  // RESTAURANT NAME
-  $("#restaurant-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
-
-  // RESTAURANT IMAGES 
-  $('#restaurant-images').change(function() {
-    $(this).prop("required", false);
-
-    addImages($(this).prop('files'), "/static/media/restaurants/", false, current_images, formData, $("#restaurant-primary-image"));
-
-    $(this).val(null);
-  });
-
-  $("#restaurant-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), false, current_images, formData, $("#restaurant-primary-image"), $("#restaurant-images"));
-
-    //mark for deletion
-    if (restaurant.images.includes(current_images[$(this).parent().index()])) {
-      images_to_delete.push(current_images[$(this).parent().index()]);
-    }
-  });
-
-  // RESTAURANT COORDINATES
-  $("#restaurant-latitude").attr("pattern", latitudeRegExp).attr("title", latitudeRegExpTitle);
-  $("#restaurant-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
-
-  // RESTAURANT SUBMIT
-  $("#restaurant-modal form").submit(async function(e) {
-    e.preventDefault();
-
-    startLoadingAnimation($(this));
-
-    let _id = restaurant._id;
-    delete restaurant._id;
-    restaurant.name = $("#restaurant-name").val();
-    restaurant.description = quill.root.innerHTML;
-    restaurant.primary_image = parseInt($("#restaurant-primary-image").val());
-    restaurant.latitude = parseFloat($("#restaurant-latitude").val());
-    restaurant.longitude = parseFloat($("#restaurant-longitude").val());
-    restaurant.external_link = $("#restaurant-external-link").val();
-
-    try {
-      if (formData.getAll("files[]").length > 0)
-        await $.ajax({
-          type: "POST",
-          url: "/api/uploadImages/restaurants",
-          contentType: false,
-          data: formData,
-          cache: false,
-          processData: false,
-          statusCode: {
-            413: function() {
-              alert("Files size should be less than 15MB")
-            }
-          },
-        });
-
-      restaurant.images = [...current_images];
-
-      await $.ajax({
-        url: "/api/editRestaurant",
-        type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "restaurant": restaurant }),
-        processData: false,
-        contentType: "application/json; charset=UTF-8",
-      });
-
-      await fetchRestaurants();
-      endLoadingAnimation($(this));
-      $("#restaurant-modal").modal('hide');
     } catch {
       endLoadingAnimation($(this));
     }
@@ -453,12 +416,12 @@ $(document).ready(async function() {
   });
 
   $("#tour-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), false, current_images, formData, $("#tour-primary-image"), $("#tour-images"));
-
     //mark for deletion
     if (tour.images.includes(current_images[$(this).parent().index()])) {
       images_to_delete.push(current_images[$(this).parent().index()]);
     }
+
+    removeImage($(this), false, current_images, formData, $("#tour-primary-image"), $("#tour-images"));
   });
 
   // TOUR SUBMIT 
@@ -509,6 +472,177 @@ $(document).ready(async function() {
     }
   });
 
+  // ----- RESTAURANTS ----- 
+
+  $("#restaurant-modal").on("hidden.bs.modal", function() {
+    $(".ql-toolbar").remove();
+    $(".img-container").empty();
+  })
+
+  // RESTAURANT NAME
+  $("#restaurant-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
+
+  // RESTAURANT IMAGES 
+  $('#restaurant-images').change(function() {
+    $(this).prop("required", false);
+
+    addImages($(this).prop('files'), "/static/media/restaurants/", false, current_images, formData, $("#restaurant-primary-image"));
+
+    $(this).val(null);
+  });
+
+  $("#restaurant-modal .img-container").on("click", ".remove-img-btn", function() {
+    //mark for deletion
+    if (restaurant.images.includes(current_images[$(this).parent().index()])) {
+      images_to_delete.push(current_images[$(this).parent().index()]);
+    }
+
+    removeImage($(this), false, current_images, formData, $("#restaurant-primary-image"), $("#restaurant-images"));
+  });
+
+  // RESTAURANT COORDINATES
+  $("#restaurant-latitude").attr("pattern", latitudeRegExp).attr("title", latitudeRegExpTitle);
+  $("#restaurant-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
+
+  // RESTAURANT SUBMIT
+  $("#restaurant-modal form").submit(async function(e) {
+    e.preventDefault();
+
+    startLoadingAnimation($(this));
+
+    let _id = restaurant._id;
+    delete restaurant._id;
+    restaurant.name = $("#restaurant-name").val();
+    restaurant.description = quill.root.innerHTML;
+    restaurant.primary_image = parseInt($("#restaurant-primary-image").val());
+    restaurant.latitude = parseFloat($("#restaurant-latitude").val());
+    restaurant.longitude = parseFloat($("#restaurant-longitude").val());
+    restaurant.external_link = $("#restaurant-external-link").val();
+
+    try {
+      if (formData.getAll("files[]").length > 0)
+        await $.ajax({
+          type: "POST",
+          url: "/api/uploadImages/restaurants",
+          contentType: false,
+          data: formData,
+          cache: false,
+          processData: false,
+          statusCode: {
+            413: function() {
+              alert("Files size should be less than 15MB")
+            }
+          },
+        });
+
+      restaurant.images = [...current_images];
+
+      await $.ajax({
+        url: "/api/editRestaurant",
+        type: "PUT",
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "restaurant": restaurant }),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+
+      await fetchRestaurants();
+      endLoadingAnimation($(this));
+      $("#restaurant-modal").modal('hide');
+    } catch {
+      endLoadingAnimation($(this));
+    }
+  });
+
+  // ----- HOTELS ----- 
+
+  $("#hotel-modal").on("hidden.bs.modal", function() {
+    $(".ql-toolbar").remove();
+    $(".img-container").empty();
+  })
+
+  // HOTEL NAME
+  $("#hotel-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
+
+  // STARS
+  $("#hotel-stars").change(function() {
+    hotel.stars = parseInt($(this).val());
+  });
+
+  // PHONE
+  $("#hotel-phone").attr("pattern", phoneRegExp).attr("title", phoneRegExpTitle);
+
+  // HOTEL IMAGES 
+  $('#hotel-images').change(function() {
+    $(this).prop("required", false);
+
+    addImages($(this).prop('files'), "/static/media/hotels/", false, current_images, formData, $("#hotel-primary-image"));
+
+    $(this).val(null);
+  });
+
+  $("#hotel-modal .img-container").on("click", ".remove-img-btn", function() {
+    //mark for deletion
+    if (hotel.images.includes(current_images[$(this).parent().index()])) {
+      images_to_delete.push(current_images[$(this).parent().index()]);
+    }
+
+    removeImage($(this), false, current_images, formData, $("#hotel-primary-image"), $("#hotel-images"));
+  });
+
+  // HOTEL COORDINATES
+  $("#hotel-latitude").attr("pattern", latitudeRegExp).attr("title", latitudeRegExpTitle);
+  $("#hotel-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
+
+  // HOTEL SUBMIT
+  $("#hotel-modal form").submit(async function(e) {
+    e.preventDefault();
+
+    startLoadingAnimation($(this));
+
+    let _id = hotel._id;
+    delete hotel._id;
+    hotel.name = $("#hotel-name").val();
+    hotel.phone = $("#hotel-phone").val();
+    hotel.description = quill.root.innerHTML;
+    hotel.primary_image = parseInt($("#hotel-primary-image").val());
+    hotel.latitude = parseFloat($("#hotel-latitude").val());
+    hotel.longitude = parseFloat($("#hotel-longitude").val());
+    hotel.external_link = $("#hotel-external-link").val();
+
+    try {
+      if (formData.getAll("files[]").length > 0)
+        await $.ajax({
+          type: "POST",
+          url: "/api/uploadImages/hotels",
+          contentType: false,
+          data: formData,
+          cache: false,
+          processData: false,
+          statusCode: {
+            413: function() {
+              alert("Files size should be less than 15MB")
+            }
+          },
+        });
+
+      hotel.images = [...current_images];
+
+      await $.ajax({
+        url: "/api/editHotel",
+        type: "PUT",
+        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "hotel": hotel }),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+
+      await fetchHotels();
+      endLoadingAnimation($(this));
+      $("#hotel-modal").modal('hide');
+    } catch {
+      endLoadingAnimation($(this));
+    }
+  });
+
   // ----- EVENTS ----- 
 
   $("#event-modal").on("hidden.bs.modal", function() {
@@ -541,13 +675,18 @@ $(document).ready(async function() {
   $('#event-images').change(function() {
     $(this).prop("required", false);
 
-    addImages($(this).prop('files'), "/static/media/events/", false, event.images, formData, $("#event-primary-image"));
+    addImages($(this).prop('files'), "/static/media/events/", false, current_images, formData, $("#event-primary-image"));
 
     $(this).val(null);
   });
 
   $("#event-modal .img-container").on("click", ".remove-img-btn", function() {
-    removeImage($(this), false, event.images, formData, $("#event-primary-image"), $("#event-images"));
+    //mark for deletion
+    if (event.images.includes(current_images[$(this).parent().index()])) {
+      images_to_delete.push(current_images[$(this).parent().index()]);
+    }
+
+    removeImage($(this), false, current_images, formData, $("#event-primary-image"), $("#event-images"));
   });
 
   //EVENT SUBMIT

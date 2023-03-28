@@ -1,4 +1,4 @@
-import { openEditEventModal, openEditRestaurantModal, openEditSightModal, openEditTourModal } from './modal.js';
+import { openEditEventModal, openEditHotelModal, openEditRestaurantModal, openEditSightModal, openEditTourModal } from './modal.js';
 
 const getRecords = (data) => {
   if (data.length === 0) return "No records";
@@ -83,6 +83,33 @@ export const fetchRestaurants = async () => {
     );
   });
 };
+
+export const fetchHotels = async () => {
+  const data = await $.getJSON("/api/fetchHotels");
+
+  $("#hotels-records").text(getRecords(data));
+  $("#hotels-table tbody").empty();
+
+  data.map((hotel) => {
+    hotel.tags = hotel.tags.join(", ");
+
+    $("#hotels-table").append(
+      `<tr>
+        <td>${hotel._id}</td>
+        <td>${hotel.name}</td>
+        <td class="stars">${"★".repeat(hotel.stars)}</td>
+        <td>${hotel.tags}</td>
+        <td><a href=${hotel.external_link} target="_blank">${hotel.external_link}</a></td>
+        <td id=${hotel._id}>
+          <div class="group">
+            <button class="btn-icon action-edit-hotel" data-bs-toggle="modal" data-bs-target="#hotel-modal"><ion-icon class="edit-icon" name="create-outline"></ion-icon></button>
+            <button class="btn-icon action-delete-hotel"><ion-icon class="edit-icon" name="remove-circle-outline"></ion-icon></button>
+          </div>
+        </td>
+      </tr>`
+    )
+  });
+}
 
 const convert2LocalDate = (iso_date) => {
   const date = new Date(iso_date);
@@ -170,6 +197,23 @@ $(document).ready(async function() {
 
   $("#restaurants-table").on('click', ".action-edit-restaurant", async function() {
     await openEditRestaurantModal($(this).parent().parent().attr("id"));
+  });
+
+  await fetchHotels();
+
+  $("#hotels-table").on('click', ".action-delete-hotel", async function() {
+    if (confirm("Are you sure you want to delete the entry?")) {
+      await $.ajax({
+        url: "/api/deleteHotel/" + $(this).parent().parent().attr("id"),
+        type: "DELETE",
+      });
+
+      fetchHotels();
+    }
+  });
+
+  $("#hotels-table").on('click', ".action-edit-hotel", async function() {
+    await openEditHotelModal($(this).parent().parent().attr("id"));
   });
 
   await fetchEvents();
