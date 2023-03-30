@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/controllers/event_controller.dart';
+import 'package:visit_braila/controllers/hotel_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/event_model.dart';
+import 'package:visit_braila/models/hotel_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
@@ -119,6 +121,23 @@ class DynamicLinksService {
         }
 
         redirect('/tour', tour);
+        break;
+      case 'hotel':
+        String? id = uri.queryParameters['id'];
+
+        if (id == null) {
+          handleError(null);
+          return;
+        }
+
+        Hotel? hotel = await HotelController().findHotel(id);
+
+        if (hotel == null) {
+          handleError(null);
+          return;
+        }
+
+        redirect('/hotel', hotel);
         break;
       case 'event':
         String? id = uri.queryParameters['id'];

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/models/event_model.dart';
+import 'package:visit_braila/models/hotel_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/services/connection_service.dart';
@@ -10,12 +11,16 @@ import 'package:visit_braila/views/all_sights_view.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/event_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
+import 'package:visit_braila/views/hotel_view.dart';
 import 'package:visit_braila/views/nointernet_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
 import 'package:visit_braila/views/tour_view.dart';
 import 'package:visit_braila/widgets/bottom_navbar.dart';
 import 'dart:io' show Platform;
+
+const kTransitionDuration = Duration(milliseconds: 500);
+const kTransitionCurve = Interval(0, 0.5);
 
 class PageRouter {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -37,12 +42,12 @@ class PageRouter {
         final sight = settings.arguments as Sight;
 
         return PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
-          reverseTransitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: kTransitionDuration,
+          reverseTransitionDuration: kTransitionDuration,
           pageBuilder: (context, animation, _) {
             final curvedAnimation = CurvedAnimation(
               parent: animation,
-              curve: const Interval(0, 0.5),
+              curve: kTransitionCurve,
             );
 
             return FadeTransition(
@@ -58,12 +63,12 @@ class PageRouter {
         final tour = settings.arguments as Tour;
 
         return PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
-          reverseTransitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: kTransitionDuration,
+          reverseTransitionDuration: kTransitionDuration,
           pageBuilder: (context, animation, _) {
             final curvedAnimation = CurvedAnimation(
               parent: animation,
-              curve: const Interval(0, 0.5),
+              curve: kTransitionCurve,
             );
 
             return FadeTransition(
@@ -75,16 +80,37 @@ class PageRouter {
             );
           },
         );
+      case '/hotel':
+        final hotel = settings.arguments as Hotel;
+
+        return PageRouteBuilder(
+          transitionDuration: kTransitionDuration,
+          reverseTransitionDuration: kTransitionDuration,
+          pageBuilder: (context, animation, _) {
+            final curvedAnimation = CurvedAnimation(
+              parent: animation,
+              curve: kTransitionCurve,
+            );
+
+            return FadeTransition(
+              opacity: curvedAnimation,
+              child: HotelView(
+                hotel: hotel,
+                routeAnimation: animation,
+              ),
+            );
+          },
+        );
       case '/event':
         final event = settings.arguments as Event;
 
         return PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
-          reverseTransitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: kTransitionDuration,
+          reverseTransitionDuration: kTransitionDuration,
           pageBuilder: (context, animation, _) {
             final curvedAnimation = CurvedAnimation(
               parent: animation,
-              curve: const Interval(0, 0.5),
+              curve: kTransitionCurve,
             );
 
             return FadeTransition(

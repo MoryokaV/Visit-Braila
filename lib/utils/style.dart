@@ -7,6 +7,7 @@ const Color kPrimaryColor = Color(0xff228be6);
 const Color kSecondaryColor = Color(0xffff5a5f);
 const Color kDimmedForegroundColor = Color(0xffadb5bd);
 const Color kDateTimeForegroundColor = Color(0xff92a1b0);
+const Color kHotelStarColor = Color(0xfffcba03);
 Color kDisabledIconColor = Colors.grey[500]!;
 Color lightGrey = Colors.grey[300]!;
 

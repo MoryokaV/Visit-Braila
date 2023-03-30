@@ -1,37 +1,34 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:visit_braila/models/sight_model.dart';
+import 'package:visit_braila/models/hotel_model.dart';
+import 'package:flutter/material.dart';
 import 'package:visit_braila/services/dynamic_links_service.dart';
-import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/maps.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/widgets/actions_bar.dart';
 import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/html_description.dart';
-import 'dart:io' show Platform;
 
-class SightView extends StatelessWidget {
-  final Sight sight;
+class HotelView extends StatelessWidget {
+  final Hotel hotel;
   final Animation<double> routeAnimation;
 
-  const SightView({
+  const HotelView({
     super.key,
-    required this.sight,
+    required this.hotel,
     required this.routeAnimation,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: ActionsBar(
-        id: sight.id,
-        collection: "sights",
-        link: sight.externalLink,
-      ),
+      // bottomNavigationBar: ActionsBar(
+      //   id: hotel.id,
+      //   collection: "hotels",
+      //   link: hotel.externalLink,
+      // ),
       body: SafeArea(
         top: false,
         child: CustomScrollView(
@@ -46,12 +43,12 @@ class SightView extends StatelessWidget {
               expandedHeight: Responsive.safeBlockVertical * 38,
               flexibleSpace: FlexibleSpaceBar(
                 background: Hero(
-                  tag: sight.id,
+                  tag: hotel.id,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       CachedApiImage(
-                        imageUrl: sight.images[sight.primaryImage - 1],
+                        imageUrl: hotel.images[hotel.primaryImage - 1],
                         cacheWidth: Responsive.screenWidth,
                       ),
                       Positioned(
@@ -67,7 +64,7 @@ class SightView extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -104,7 +101,7 @@ class SightView extends StatelessWidget {
                             size: 18,
                             color: kBlackColor,
                           ),
-                          onPressed: () => openMap(sight.latitude, sight.longitude, sight.name, context),
+                          onPressed: () => openMap(hotel.latitude, hotel.longitude, hotel.name, context),
                         ),
                       ),
                       const SizedBox(
@@ -124,11 +121,11 @@ class SightView extends StatelessWidget {
                             ),
                             onPressed: () async {
                               final link = await DynamicLinksService.generateDynamicLink(
-                                id: sight.id,
-                                image: sight.images[sight.primaryImage - 1],
-                                name: sight.name,
-                                collection: "sight",
-                                alternativeUrl: sight.externalLink,
+                                id: hotel.id,
+                                image: hotel.images[hotel.primaryImage - 1],
+                                name: hotel.name,
+                                collection: "hotel",
+                                alternativeUrl: hotel.externalLink,
                               );
 
                               Share.share(link.toString());
@@ -152,42 +149,29 @@ class SightView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        sight.name,
-                        style: Theme.of(context).textTheme.displayLarge,
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        children: [
+                          Text(
+                            hotel.name,
+                            style: Theme.of(context).textTheme.displayLarge,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          for (int i = 1; i <= hotel.stars; i++)
+                            Icon(
+                              Platform.isIOS ? CupertinoIcons.star_fill : Icons.star,
+                              color: kHotelStarColor,
+                              size: 16,
+                            ),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Consumer<LocationService>(
-                        builder: (context, location, _) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/map-pin.svg",
-                                width: 22,
-                                color: kPrimaryColor,
-                              ),
-                              const SizedBox(
-                                width: 6,
-                              ),
-                              Text(
-                                "${location.getDistance(sight.latitude, sight.longitude)} depărtare",
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      if (sight.tags.isNotEmpty)
+                      if (hotel.tags.isNotEmpty)
                         Padding(
-                          padding: const EdgeInsets.only(top: 8),
+                          padding: const EdgeInsets.only(top: 10),
                           child: Text(
-                            sight.tags.join(", "),
+                            hotel.tags.join(", "),
                             style: const TextStyle(
                               fontSize: 14,
                             ),
@@ -197,58 +181,11 @@ class SightView extends StatelessWidget {
                         height: 18,
                       ),
                       HtmlDescription(
-                        data: sight.description,
+                        data: hotel.description,
                         shrink: true,
                       ),
                       const SizedBox(
                         height: 18,
-                      ),
-                      SizedBox(
-                        height: Responsive.safeBlockHorizontal * 35,
-                        child: ListView.separated(
-                          itemCount: sight.images.length > 4 ? 5 : sight.images.length,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(width: 10);
-                          },
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                "/gallery",
-                                arguments: {
-                                  "startIndex": index,
-                                  "sight": sight,
-                                },
-                              ),
-                              child: index != 4
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: CachedApiImage(
-                                        imageUrl: sight.images[index],
-                                        width: Responsive.safeBlockVertical * 25,
-                                        cacheWidth: Responsive.safeBlockVertical * 25,
-                                      ),
-                                    )
-                                  : Container(
-                                      width: Responsive.safeBlockVertical * 25,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: lightGrey,
-                                          width: 1.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "+${sight.images.length - 4}",
-                                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 24),
-                                        ),
-                                      ),
-                                    ),
-                            );
-                          },
-                        ),
                       ),
                     ],
                   ),
@@ -263,7 +200,7 @@ class SightView extends StatelessWidget {
                   },
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
