@@ -64,7 +64,7 @@ class SightController {
 
   Future<List<String>> fetchAllTags() async {
     try {
-      final response = await http.get(Uri.parse("$apiUrl/fetchTags"));
+      final response = await http.get(Uri.parse("$apiUrl/fetchTags/sights"));
 
       if (response.statusCode == 200) {
         List data = jsonDecode(response.body);

@@ -368,7 +368,6 @@ def insertHotel():
 
     hotel['latitude'] = float(hotel['latitude'])
     hotel['longitude'] = float(hotel['longitude'])
-    hotel['primary_image_blurhash'] = getBlurhash(hotel['images'][hotel['primary_image'] - 1])
 
     db.hotels.insert_one(hotel)
     
@@ -409,7 +408,6 @@ def editHotel():
     hotel = data['hotel']
     hotel['latitude'] = float(hotel['latitude'])
     hotel['longitude'] = float(hotel['longitude'])
-    hotel['primary_image_blurhash'] = getBlurhash(hotel['images'][hotel['primary_image'] - 1])
 
     db.hotels.update_one({"_id": ObjectId(data['_id'])}, {"$set": hotel})
 

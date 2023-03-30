@@ -5,6 +5,7 @@ import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/services/connection_service.dart';
+import 'package:visit_braila/views/all_hotels_view.dart';
 import 'package:visit_braila/views/all_sights_view.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/event_view.dart';
@@ -99,6 +100,8 @@ class PageRouter {
         return adaptivePageRoute(builder: (context) => const AllToursView());
       case '/allsights':
         return adaptivePageRoute(builder: (context) => const AllSightsView());
+      case '/allhotels':
+        return adaptivePageRoute(builder: (context) => const AllHotelsView());
       case '/gallery':
         final args = settings.arguments as Map<String, dynamic>;
 
