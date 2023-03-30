@@ -10,16 +10,21 @@ import 'package:visit_braila/widgets/like_animation.dart';
 class ActionsBar extends StatelessWidget {
   final String id;
   final String collection;
+  final String text;
   final String link;
+  final String? phone;
 
   ActionsBar({
     super.key,
     required this.id,
     required this.collection,
+    required this.text,
     required this.link,
+    this.phone,
   });
 
-  final likeAnimationKey = GlobalKey<LikeAnimationState>();
+  final likeAnimationLeftKey = GlobalKey<LikeAnimationState>();
+  final likeAnimationRightKey = GlobalKey<LikeAnimationState>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,35 @@ class ActionsBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (phone != null)
+              LikeAnimation(
+                key: likeAnimationLeftKey,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [globalShadow],
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                  ),
+                  child: IconButton(
+                    splashRadius: 1,
+                    onPressed: () {
+                      openTel(phone!);
+                      likeAnimationLeftKey.currentState!.animate();
+                    },
+                    icon: const Icon(
+                      CupertinoIcons.phone,
+                      color: kForegroundColor,
+                    ),
+                  ),
+                ),
+              ),
+            if (phone != null)
+              const SizedBox(
+                width: 6,
+              ),
             Expanded(
               child: ElevatedButton(
                 onPressed: () => openBrowserURL(link),
@@ -52,21 +86,23 @@ class ActionsBar extends StatelessWidget {
                   backgroundColor: kPrimaryColor,
                   foregroundColor: Colors.white,
                   textStyle: Theme.of(context).textTheme.labelLarge,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: phone == null
+                        ? const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          )
+                        : BorderRadius.zero,
                   ),
                 ),
-                child: Text(collection == "sights" ? "Vizitează acum" : "Fă turul"),
+                child: Text(text),
               ),
             ),
             const SizedBox(
               width: 6,
             ),
             LikeAnimation(
-              key: likeAnimationKey,
+              key: likeAnimationRightKey,
               child: Consumer<Wishlist>(
                 builder: (context, wishlist, _) {
                   return Container(
@@ -81,8 +117,16 @@ class ActionsBar extends StatelessWidget {
                     child: IconButton(
                       splashRadius: 1,
                       onPressed: () {
-                        collection == "sights" ? wishlist.toggleSightWishState(id) : wishlist.toggleTourWishState(id);
-                        likeAnimationKey.currentState!.animate();
+                        switch (collection) {
+                          case "sights":
+                            wishlist.toggleSightWishState(id);
+                            break;
+                          case "tours":
+                            wishlist.toggleTourWishState(id);
+                            break;
+                        }
+
+                        likeAnimationRightKey.currentState!.animate();
                       },
                       icon: Icon(
                         wishlist.items[collection]!.contains(id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,

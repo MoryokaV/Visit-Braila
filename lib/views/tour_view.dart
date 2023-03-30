@@ -64,6 +64,7 @@ class _TourViewState extends State<TourView> {
       bottomNavigationBar: ActionsBar(
         id: widget.tour.id,
         collection: "tours",
+        text: "Fă turul",
         link: widget.tour.externalLink,
       ),
       body: SafeArea(

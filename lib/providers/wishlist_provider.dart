@@ -6,6 +6,7 @@ class Wishlist extends ChangeNotifier {
   Map<String, Set<String>> items = {
     "sights": {},
     "tours": {},
+    "hotels": {},
   };
 
   Wishlist() {

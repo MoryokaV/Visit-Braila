@@ -24,11 +24,13 @@ class HotelView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: ActionsBar(
-      //   id: hotel.id,
-      //   collection: "hotels",
-      //   link: hotel.externalLink,
-      // ),
+      bottomNavigationBar: ActionsBar(
+        id: hotel.id,
+        collection: "hotels",
+        text: "Rezervă",
+        link: hotel.externalLink,
+        phone: hotel.phone,
+      ),
       body: SafeArea(
         top: false,
         child: CustomScrollView(

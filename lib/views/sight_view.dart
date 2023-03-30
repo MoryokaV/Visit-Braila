@@ -30,6 +30,7 @@ class SightView extends StatelessWidget {
       bottomNavigationBar: ActionsBar(
         id: sight.id,
         collection: "sights",
+        text: "Vizitează acum",
         link: sight.externalLink,
       ),
       body: SafeArea(
