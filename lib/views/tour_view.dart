@@ -224,7 +224,13 @@ class _TourViewState extends State<TourView> {
                                       "/gallery",
                                       arguments: {
                                         "startIndex": index,
-                                        "tour": widget.tour,
+                                        "images": widget.tour.images,
+                                        "title": widget.tour.name,
+                                        "id": widget.tour.id,
+                                        "collection": "tours",
+                                        "type": "tour",
+                                        "primaryImage": widget.tour.primaryImage,
+                                        "externalLink": widget.tour.externalLink,
                                       },
                                     ),
                                     child: index != 4
@@ -248,7 +254,8 @@ class _TourViewState extends State<TourView> {
                                             child: Center(
                                               child: Text(
                                                 "+${widget.tour.images.length - 4}",
-                                                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 24),
+                                                style:
+                                                    Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 24),
                                               ),
                                             ),
                                           ),

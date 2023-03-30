@@ -219,7 +219,13 @@ class SightView extends StatelessWidget {
                                 "/gallery",
                                 arguments: {
                                   "startIndex": index,
-                                  "sight": sight,
+                                  "images": sight.images,
+                                  "title": sight.name,
+                                  "id": sight.id,
+                                  "collection": "sights",
+                                  "type": "sight",
+                                  "primaryImage": sight.primaryImage,
+                                  "externalLink": sight.externalLink,
                                 },
                               ),
                               child: index != 4

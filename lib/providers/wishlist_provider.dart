@@ -39,10 +39,19 @@ class Wishlist extends ChangeNotifier {
     notifyListeners();
   }
 
+  void toggleHotelWishState(String id) {
+    items['hotels']!.contains(id) ? items['hotels']!.remove(id) : items['hotels']!.add(id);
+
+    LocalStorage.saveWishlist(jsonEncode(convertToList()));
+
+    notifyListeners();
+  }
+
   Map<String, List<String>> convertToList() {
     return {
       "sights": List<String>.from(items['sights']!),
       "tours": List<String>.from(items['tours']!),
+      "hotels": List<String>.from(items['hotels']!),
     };
   }
 
@@ -50,6 +59,7 @@ class Wishlist extends ChangeNotifier {
     return {
       "sights": Set<String>.from(json['sights']),
       "tours": Set<String>.from(json['tours']),
+      "hotels": Set<String>.from(json['hotels']),
     };
   }
 }

@@ -189,6 +189,59 @@ class HotelView extends StatelessWidget {
                       const SizedBox(
                         height: 18,
                       ),
+                      SizedBox(
+                        height: Responsive.safeBlockHorizontal * 35,
+                        child: ListView.separated(
+                          itemCount: hotel.images.length > 4 ? 5 : hotel.images.length,
+                          scrollDirection: Axis.horizontal,
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(width: 10);
+                          },
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                "/gallery",
+                                arguments: {
+                                  "startIndex": index,
+                                  "images": hotel.images,
+                                  "title": hotel.name,
+                                  "id": hotel.id,
+                                  "collection": "hotels",
+                                  "type": "hotel",
+                                  "primaryImage": hotel.primaryImage,
+                                  "externalLink": hotel.externalLink,
+                                },
+                              ),
+                              child: index != 4
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: CachedApiImage(
+                                        imageUrl: hotel.images[index],
+                                        width: Responsive.safeBlockVertical * 25,
+                                        cacheWidth: Responsive.safeBlockVertical * 25,
+                                      ),
+                                    )
+                                  : Container(
+                                      width: Responsive.safeBlockVertical * 25,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: lightGrey,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "+${hotel.images.length - 4}",
+                                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 24),
+                                        ),
+                                      ),
+                                    ),
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                   builder: (context, child) {

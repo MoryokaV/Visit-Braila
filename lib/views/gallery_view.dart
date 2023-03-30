@@ -4,9 +4,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:visit_braila/models/event_model.dart';
-import 'package:visit_braila/models/sight_model.dart';
-import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/dynamic_links_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
@@ -15,16 +12,24 @@ import 'package:visit_braila/widgets/like_animation.dart';
 
 class GalleryView extends StatefulWidget {
   final int startIndex;
-  final Sight? sight;
-  final Tour? tour;
-  final Event? event;
+  final List<String> images;
+  final String title;
+  final String id;
+  final String? collection;
+  final String type;
+  final int primaryImage;
+  final String externalLink;
 
   const GalleryView({
     super.key,
     required this.startIndex,
-    required this.sight,
-    required this.tour,
-    required this.event,
+    required this.images,
+    required this.title,
+    required this.id,
+    this.collection,
+    required this.type,
+    required this.primaryImage,
+    required this.externalLink,
   });
 
   @override
@@ -34,50 +39,12 @@ class GalleryView extends StatefulWidget {
 class _GalleryViewState extends State<GalleryView> {
   late int selectedIndex;
   late final PageController pageController;
-  late final Map<String, dynamic> data;
 
   @override
   void initState() {
     super.initState();
 
     selectedIndex = widget.startIndex;
-    collectData();
-  }
-
-  void collectData() {
-    if (widget.sight != null) {
-      data = {
-        "images": widget.sight!.images,
-        "title": widget.sight!.name,
-        "id": widget.sight!.id,
-        "collection": "sights",
-        "type": "sight",
-        "primaryImage": widget.sight!.primaryImage,
-        "externalLink": widget.sight!.externalLink,
-      };
-    } else if (widget.tour != null) {
-      data = {
-        "images": widget.tour!.images,
-        "title": widget.tour!.name,
-        "id": widget.tour!.id,
-        "collection": "tours",
-        "type": "tour",
-        "primaryImage": widget.tour!.primaryImage,
-        "externalLink": widget.tour!.externalLink,
-      };
-    } else if (widget.event != null) {
-      data = {
-        "images": widget.event!.images,
-        "title": widget.event!.name,
-        "id": widget.event!.id,
-        "collection": "",
-        "type": "event",
-        "primaryImage": widget.event!.primaryImage,
-        "externalLink": widget.event!.externalLink,
-      };
-    } else {
-      data = {};
-    }
   }
 
   final likeAnimationKey = GlobalKey<LikeAnimationState>();
@@ -94,7 +61,7 @@ class _GalleryViewState extends State<GalleryView> {
         automaticallyImplyLeading: false,
         elevation: 0,
         title: Text(
-          data['title'],
+          widget.title,
           style: Theme.of(context).textTheme.displaySmall!.copyWith(color: Colors.white),
         ),
         leading: IconButton(
@@ -106,18 +73,18 @@ class _GalleryViewState extends State<GalleryView> {
             splashRadius: 1,
             onPressed: () async {
               final link = await DynamicLinksService.generateDynamicLink(
-                id: data['id'],
-                image: data['images'][data['primaryImage'] - 1],
-                name: data['title'],
-                collection: data['type'],
-                alternativeUrl: data['externalLink'],
+                id: widget.id,
+                image: widget.images[widget.primaryImage - 1],
+                name: widget.title,
+                collection: widget.type,
+                alternativeUrl: widget.externalLink,
               );
 
               Share.share(link.toString());
             },
             icon: Icon(Icons.adaptive.share),
           ),
-          if (widget.sight != null || widget.tour != null)
+          if (widget.collection != null)
             LikeAnimation(
               key: likeAnimationKey,
               child: Consumer<Wishlist>(
@@ -125,16 +92,25 @@ class _GalleryViewState extends State<GalleryView> {
                   return IconButton(
                     splashRadius: 1,
                     onPressed: () {
-                      data['collection'] == "sights"
-                          ? wishlist.toggleSightWishState(data['id'])
-                          : wishlist.toggleTourWishState(data['id']);
+                      switch (widget.collection) {
+                        case "sights":
+                          wishlist.toggleSightWishState(widget.id);
+                          break;
+                        case "tours":
+                          wishlist.toggleTourWishState(widget.id);
+                          break;
+                        case "hotels":
+                          wishlist.toggleHotelWishState(widget.id);
+                          break;
+                      }
+
                       likeAnimationKey.currentState!.animate();
                     },
                     icon: Icon(
-                      wishlist.items[data['collection']]!.contains(data['id'])
+                      wishlist.items[widget.collection]!.contains(widget.id)
                           ? CupertinoIcons.heart_fill
                           : CupertinoIcons.heart,
-                      color: wishlist.items[data['collection']]!.contains(data['id'])
+                      color: wishlist.items[widget.collection]!.contains(widget.id)
                           ? Theme.of(context).colorScheme.secondary
                           : Colors.white,
                     ),
@@ -148,7 +124,7 @@ class _GalleryViewState extends State<GalleryView> {
         child: Stack(
           children: [
             PhotoViewGallery.builder(
-              itemCount: data['images'].length,
+              itemCount: widget.images.length,
               pageController: PageController(
                 initialPage: selectedIndex,
                 viewportFraction: 1 + (separator * 2 / Responsive.screenWidth),
@@ -158,7 +134,7 @@ class _GalleryViewState extends State<GalleryView> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: separator),
                     child: CachedApiImage(
-                      imageUrl: data['images'][index],
+                      imageUrl: widget.images[index],
                       fit: BoxFit.contain,
                       cacheWidth: Responsive.screenWidth * 1.8,
                     ),
@@ -174,7 +150,7 @@ class _GalleryViewState extends State<GalleryView> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  "${selectedIndex + 1}  —  ${data['images'].length}",
+                  "${selectedIndex + 1}  —  ${widget.images.length}",
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
                 ),
               ),

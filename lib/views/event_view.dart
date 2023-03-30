@@ -216,7 +216,12 @@ class EventView extends StatelessWidget {
                                 "/gallery",
                                 arguments: {
                                   "startIndex": index,
-                                  "event": event,
+                                  "images": event.images,
+                                  "title": event.name,
+                                  "id": event.id,
+                                  "type": "event",
+                                  "primaryImage": event.primaryImage,
+                                  "externalLink": event.externalLink,
                                 },
                               ),
                               child: index != 4

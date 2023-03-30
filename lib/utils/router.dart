@@ -134,9 +134,13 @@ class PageRouter {
         return adaptivePageRoute(
           builder: (context) => GalleryView(
             startIndex: args['startIndex'],
-            sight: args['sight'],
-            tour: args['tour'],
-            event: args['event'],
+            images: args['images'],
+            title: args['title'],
+            id: args['id'],
+            collection: args['collection'],
+            type: args['type'],
+            primaryImage: args['primaryImage'],
+            externalLink: args['externalLink'],
           ),
         );
       case '/nointernet':
