@@ -1,6 +1,7 @@
 import 'package:visit_braila/utils/url_constants.dart';
 
 class Hotel {
+  final String id;
   final String name;
   final int stars;
   final String phone;
@@ -13,6 +14,7 @@ class Hotel {
   final String externalLink;
 
   Hotel({
+    required this.id,
     required this.name,
     required this.stars,
     required this.phone,
@@ -27,6 +29,7 @@ class Hotel {
 
   factory Hotel.fromJSON(Map<String, dynamic> json) {
     return Hotel(
+      id: json['_id'],
       name: json['name'],
       stars: json['stars'],
       phone: json['phone'],

@@ -62,7 +62,7 @@ class SightController {
     }
   }
 
-  Future<List<String>> fetchAllTags() async {
+  Future<List<String>> fetchSightsTags() async {
     try {
       final response = await http.get(Uri.parse("$apiUrl/fetchTags/sights"));
 

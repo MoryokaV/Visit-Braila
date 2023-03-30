@@ -16,6 +16,7 @@ import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/like_animation.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 import 'package:visit_braila/widgets/search_list_field.dart';
+import 'package:visit_braila/widgets/tags_listview.dart';
 
 class AllSightsView extends StatefulWidget {
   const AllSightsView({super.key});
@@ -47,7 +48,7 @@ class _AllSightsViewState extends State<AllSightsView> {
   void fetchData() async {
     try {
       tags.add("Toate");
-      tags.addAll(await sightController.fetchAllTags());
+      tags.addAll(await sightController.fetchSightsTags());
 
       sights = await sightController.fetchSights();
       filteredData = sights;
@@ -179,39 +180,11 @@ class _AllSightsViewState extends State<AllSightsView> {
                           const SizedBox(
                             height: 15,
                           ),
-                          SizedBox(
-                            height: 40,
-                            child: ListView.separated(
-                              itemCount: tags.length,
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.symmetric(horizontal: 24),
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(
-                                  width: 10,
-                                );
-                              },
-                              itemBuilder: (context, index) {
-                                bool isSelected = selectedIndex == index;
-
-                                return ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    backgroundColor: isSelected ? kBlackColor : lightGrey,
-                                    foregroundColor: isSelected ? Colors.white : kForegroundColor,
-                                    textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: isSelected ? Colors.white : kForegroundColor,
-                                        ),
-                                    shape: const StadiumBorder(),
-                                  ),
-                                  onPressed: () => setTag(index),
-                                  child: Text(
-                                    tags[index],
-                                  ),
-                                );
-                              },
-                            ),
+                          TagsListView(
+                            tags: tags,
+                            selectedIndex: selectedIndex,
+                            onTagPressed: setTag,
+                            hPadding: 24,
                           ),
                           const SizedBox(
                             height: 30,
