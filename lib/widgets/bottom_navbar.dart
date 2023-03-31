@@ -43,7 +43,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           bottom: const TabBar(
             labelColor: kPrimaryColor,
             indicatorWeight: 2.5,
-            isScrollable: true,
+            // isScrollable: true,
             tabs: [
               Tab(
                 text: "Obiective",

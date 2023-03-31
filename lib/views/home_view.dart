@@ -316,7 +316,7 @@ class HomeView extends StatelessWidget {
                                               ),
                                               const SizedBox(height: 6),
                                               ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.pushNamed(context, "/allrestaurants"),
                                                 style: ElevatedButton.styleFrom(
                                                   padding: const EdgeInsets.symmetric(
                                                     horizontal: 20,
