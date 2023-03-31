@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:visit_braila/controllers/hotel_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
+import 'package:visit_braila/models/hotel_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
@@ -26,8 +28,12 @@ class _WishlistViewState extends State<WishlistView> {
   final TourController tourController = TourController();
   List<Tour> tours = [];
 
+  final HotelController hotelController = HotelController();
+  List<Hotel> hotels = [];
+
   bool isLoadingSights = true;
   bool isLoadingTours = true;
+  bool isLoadingHotels = true;
 
   void fetchSights() async {
     Wishlist wishlist = Provider.of<Wishlist>(context, listen: false);
@@ -71,12 +77,34 @@ class _WishlistViewState extends State<WishlistView> {
     }
   }
 
+  void fetchHotels() async {
+    Wishlist wishlist = Provider.of<Wishlist>(context, listen: false);
+    List<String> ids = wishlist.items['hotels']!.toList();
+
+    (await Future.wait(
+      ids.map((id) => hotelController.findHotel(id)),
+    ))
+        .asMap()
+        .forEach((index, hotel) {
+      if (hotel == null) {
+        wishlist.toggleTourWishState(ids.elementAt(index));
+      } else {
+        hotels.add(hotel);
+      }
+    });
+
+    if (mounted) {
+      setState(() => isLoadingHotels = false);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
     fetchSights();
     fetchTours();
+    fetchHotels();
   }
 
   @override
@@ -86,25 +114,8 @@ class _WishlistViewState extends State<WishlistView> {
         isLoadingSights
             ? const LoadingSpinner()
             : sights.isEmpty
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/sad-outline.svg",
-                        width: 50,
-                        color: kDisabledIconColor,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Nu ai niciun obiectiv favorit!",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: kDimmedForegroundColor,
-                            ),
-                      )
-                    ],
+                ? const EmptyWishlistCollectionWidget(
+                    text: "Nu ai niciun obiectiv favorit!",
                   )
                 : ListView.separated(
                     padding: const EdgeInsets.symmetric(
@@ -113,38 +124,25 @@ class _WishlistViewState extends State<WishlistView> {
                     ),
                     itemCount: sights.length,
                     separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 20,
-                      );
+                      return const SizedBox(height: 20);
                     },
                     itemBuilder: (context, index) {
-                      return SightCard(
-                        sight: sights[index],
+                      Sight sight = sights[index];
+
+                      return WishlistItemCard(
+                        id: sight.id,
+                        name: sight.name,
+                        image: sight.images[sight.primaryImage - 1],
+                        collection: "sights",
+                        pushTo: () => Navigator.pushNamed(context, "/sight", arguments: sight),
                       );
                     },
                   ),
         isLoadingTours
             ? const LoadingSpinner()
             : tours.isEmpty
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/sad-outline.svg",
-                        width: 50,
-                        color: kDisabledIconColor,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Nu ai niciun tur favorit!",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: kDimmedForegroundColor,
-                            ),
-                      )
-                    ],
+                ? const EmptyWishlistCollectionWidget(
+                    text: "Nu ai niciun tur favorit!",
                   )
                 : ListView.separated(
                     padding: const EdgeInsets.symmetric(
@@ -153,13 +151,44 @@ class _WishlistViewState extends State<WishlistView> {
                     ),
                     itemCount: tours.length,
                     separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 20,
-                      );
+                      return const SizedBox(height: 20);
                     },
                     itemBuilder: (context, index) {
-                      return TourCard(
-                        tour: tours[index],
+                      Tour tour = tours[index];
+
+                      return WishlistItemCard(
+                        id: tour.id,
+                        name: tour.name,
+                        image: tour.images[tour.primaryImage - 1],
+                        collection: "tours",
+                        pushTo: () => Navigator.pushNamed(context, "/tour", arguments: tour),
+                      );
+                    },
+                  ),
+        isLoadingHotels
+            ? const LoadingSpinner()
+            : hotels.isEmpty
+                ? const EmptyWishlistCollectionWidget(
+                    text: "Nu ai nicio unitate de cazare favorită!",
+                  )
+                : ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 30,
+                      horizontal: 15,
+                    ),
+                    itemCount: hotels.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 20);
+                    },
+                    itemBuilder: (context, index) {
+                      Hotel hotel = hotels[index];
+
+                      return WishlistItemCard(
+                        id: hotel.id,
+                        name: hotel.name,
+                        image: hotel.images[hotel.primaryImage - 1],
+                        collection: "hotels",
+                        pushTo: () => Navigator.pushNamed(context, "/hotel", arguments: hotel),
                       );
                     },
                   ),
@@ -168,90 +197,51 @@ class _WishlistViewState extends State<WishlistView> {
   }
 }
 
-class SightCard extends StatelessWidget {
-  final Sight sight;
+class EmptyWishlistCollectionWidget extends StatelessWidget {
+  final String text;
 
-  SightCard({
+  const EmptyWishlistCollectionWidget({
     super.key,
-    required this.sight,
+    required this.text,
   });
-
-  final likeAnimationKey = GlobalKey<LikeAnimationState>();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, "/sight", arguments: sight),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Hero(
-            tag: sight.id,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedApiImage(
-                imageUrl: sight.images[sight.primaryImage - 1],
-                width: 110,
-                height: 75,
-                cacheWidth: 110,
-                cacheHeight: 75,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          "assets/icons/sad-outline.svg",
+          width: 50,
+          color: kDisabledIconColor,
+        ),
+        const SizedBox(height: 10),
+        Text(
+          text,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: kDimmedForegroundColor,
               ),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Text(
-              sight.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: kBlackColor,
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: LikeAnimation(
-              key: likeAnimationKey,
-              child: Consumer<Wishlist>(
-                builder: (context, wishlist, _) {
-                  return IconButton(
-                    splashRadius: 1,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      wishlist.toggleSightWishState(sight.id);
-                      likeAnimationKey.currentState!.animate();
-                    },
-                    constraints: const BoxConstraints(),
-                    icon: Icon(
-                      wishlist.items['sights']!.contains(sight.id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                      size: 22,
-                      color: wishlist.items['sights']!.contains(sight.id)
-                          ? Theme.of(context).colorScheme.secondary
-                          : kDisabledIconColor,
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
 
-class TourCard extends StatelessWidget {
-  final Tour tour;
+class WishlistItemCard extends StatelessWidget {
+  final String id;
+  final String name;
+  final String image;
+  final String collection;
+  final void Function() pushTo;
 
-  TourCard({
+  WishlistItemCard({
     super.key,
-    required this.tour,
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.collection,
+    required this.pushTo,
   });
 
   final likeAnimationKey = GlobalKey<LikeAnimationState>();
@@ -259,17 +249,17 @@ class TourCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, "/tour", arguments: tour),
+      onTap: pushTo,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Hero(
-            tag: tour.id,
+            tag: id,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedApiImage(
-                imageUrl: tour.images[tour.primaryImage - 1],
+                imageUrl: image,
                 width: 110,
                 height: 75,
                 cacheWidth: 110,
@@ -282,7 +272,7 @@ class TourCard extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              tour.name,
+              name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -302,14 +292,25 @@ class TourCard extends StatelessWidget {
                     splashRadius: 1,
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      wishlist.toggleTourWishState(tour.id);
+                      switch (collection) {
+                        case "sights":
+                          wishlist.toggleSightWishState(id);
+                          break;
+                        case "tours":
+                          wishlist.toggleTourWishState(id);
+                          break;
+                        case "hotels":
+                          wishlist.toggleHotelWishState(id);
+                          break;
+                      }
+
                       likeAnimationKey.currentState!.animate();
                     },
                     constraints: const BoxConstraints(),
                     icon: Icon(
-                      wishlist.items['tours']!.contains(tour.id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                      wishlist.items[collection]!.contains(id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
                       size: 22,
-                      color: wishlist.items['tours']!.contains(tour.id)
+                      color: wishlist.items[collection]!.contains(id)
                           ? Theme.of(context).colorScheme.secondary
                           : kDisabledIconColor,
                     ),
