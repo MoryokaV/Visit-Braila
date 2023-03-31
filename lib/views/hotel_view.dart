@@ -151,34 +151,34 @@ class HotelView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        children: [
-                          Text(
-                            hotel.name,
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          for (int i = 1; i <= hotel.stars; i++)
-                            Icon(
-                              Platform.isIOS ? CupertinoIcons.star_fill : Icons.star,
-                              color: kHotelStarColor,
-                              size: 16,
-                            ),
-                        ],
+                      Text(
+                        hotel.name,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
-                      if (hotel.tags.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            hotel.tags.join(", "),
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Row(
+                          children: [
+                            for (int i = 1; i <= hotel.stars; i++)
+                              Icon(
+                                Platform.isIOS ? CupertinoIcons.star_fill : Icons.star,
+                                color: kHotelStarColor,
+                                size: 16,
+                              ),
+                            if (hotel.tags.isNotEmpty)
+                              const SizedBox(
+                                width: 8,
+                              ),
+                            if (hotel.tags.isNotEmpty)
+                              Text(
+                                hotel.tags.join(", "),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                          ],
                         ),
+                      ),
                       const SizedBox(
                         height: 18,
                       ),

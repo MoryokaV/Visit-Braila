@@ -207,23 +207,26 @@ class EmptyWishlistCollectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SvgPicture.asset(
-          "assets/icons/sad-outline.svg",
-          width: 50,
-          color: kDisabledIconColor,
-        ),
-        const SizedBox(height: 10),
-        Text(
-          text,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: kDimmedForegroundColor,
-              ),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            "assets/icons/sad-outline.svg",
+            width: 50,
+            color: kDisabledIconColor,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: kDimmedForegroundColor,
+                ),
+          )
+        ],
+      ),
     );
   }
 }

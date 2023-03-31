@@ -299,7 +299,7 @@ class HomeView extends StatelessWidget {
                                       ),
                                       Positioned.fill(
                                         child: Padding(
-                                          padding: const EdgeInsets.only(left: 10, top: 10),
+                                          padding: const EdgeInsets.all(10),
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             mainAxisAlignment: MainAxisAlignment.start,
@@ -351,7 +351,7 @@ class HomeView extends StatelessWidget {
                                       ),
                                       Positioned.fill(
                                         child: Padding(
-                                          padding: const EdgeInsets.only(right: 10, bottom: 10),
+                                          padding: const EdgeInsets.all(10),
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             mainAxisAlignment: MainAxisAlignment.end,
