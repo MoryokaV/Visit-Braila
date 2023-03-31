@@ -30,19 +30,11 @@ let hotel = {
   external_link: "",
 };
 
-const getPreviewStarsElem = () => {
-  return `<span id="preview-stars" class="stars">${"★".repeat(hotel.stars)}</span>`;
-}
-
 $(document).ready(async function() {
   // NAME
   $("#hotel-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
   $("#hotel-name").on('input', function() {
-    if ($(this).val() === "") {
-      $("#preview-name").html($(this).val());
-    } else {
-      $("#preview-name").html($(this).val() + getPreviewStarsElem());
-    }
+    $("#preview-name").html($(this).val());
   });
 
   // STARS
