@@ -43,7 +43,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           bottom: const TabBar(
             labelColor: kPrimaryColor,
             indicatorWeight: 2.5,
-            // isScrollable: true,
+            isScrollable: true,
             tabs: [
               Tab(
                 text: "Obiective",
@@ -51,9 +51,9 @@ class _BottomNavbarState extends State<BottomNavbar> {
               Tab(
                 text: "Tururi",
               ),
-              // Tab(
-              //   text: "Gastronomie",
-              // ),
+              Tab(
+                text: "Gastronomie",
+              ),
               Tab(
                 text: "Cazări",
               ),
@@ -84,7 +84,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         body: pages[pageIndex],
         appBar: getAppBar(context),

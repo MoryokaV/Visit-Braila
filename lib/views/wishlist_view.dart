@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/hotel_controller.dart';
+import 'package:visit_braila/controllers/restaurant_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/hotel_model.dart';
+import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
@@ -31,9 +33,13 @@ class _WishlistViewState extends State<WishlistView> {
   final HotelController hotelController = HotelController();
   List<Hotel> hotels = [];
 
+  final RestaurantController restaurantController = RestaurantController();
+  List<Restaurant> restaurants = [];
+
   bool isLoadingSights = true;
   bool isLoadingTours = true;
   bool isLoadingHotels = true;
+  bool isLoadingRestaurants = true;
 
   void fetchSights() async {
     Wishlist wishlist = Provider.of<Wishlist>(context, listen: false);
@@ -87,7 +93,7 @@ class _WishlistViewState extends State<WishlistView> {
         .asMap()
         .forEach((index, hotel) {
       if (hotel == null) {
-        wishlist.toggleTourWishState(ids.elementAt(index));
+        wishlist.toggleHotelWishState(ids.elementAt(index));
       } else {
         hotels.add(hotel);
       }
@@ -98,6 +104,27 @@ class _WishlistViewState extends State<WishlistView> {
     }
   }
 
+  void fetchRestaurants() async {
+    Wishlist wishlist = Provider.of<Wishlist>(context, listen: false);
+    List<String> ids = wishlist.items['restaurants']!.toList();
+
+    (await Future.wait(
+      ids.map((id) => restaurantController.findRestaurant(id)),
+    ))
+        .asMap()
+        .forEach((index, restaurant) {
+      if (restaurant == null) {
+        wishlist.toggleRestaurantWishState(ids.elementAt(index));
+      } else {
+        restaurants.add(restaurant);
+      }
+    });
+
+    if (mounted) {
+      setState(() => isLoadingRestaurants = false);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -105,6 +132,7 @@ class _WishlistViewState extends State<WishlistView> {
     fetchSights();
     fetchTours();
     fetchHotels();
+    fetchRestaurants();
   }
 
   @override
@@ -162,6 +190,33 @@ class _WishlistViewState extends State<WishlistView> {
                         image: tour.images[tour.primaryImage - 1],
                         collection: "tours",
                         pushTo: () => Navigator.pushNamed(context, "/tour", arguments: tour),
+                      );
+                    },
+                  ),
+        isLoadingRestaurants
+            ? const LoadingSpinner()
+            : restaurants.isEmpty
+                ? const EmptyWishlistCollectionWidget(
+                    text: "Nu ai nicio unitate gastronomică favorită!",
+                  )
+                : ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 30,
+                      horizontal: 15,
+                    ),
+                    itemCount: restaurants.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 20);
+                    },
+                    itemBuilder: (context, index) {
+                      Restaurant restaurant = restaurants[index];
+
+                      return WishlistItemCard(
+                        id: restaurant.id,
+                        name: restaurant.name,
+                        image: restaurant.images[restaurant.primaryImage - 1],
+                        collection: "restaurants",
+                        pushTo: () => Navigator.pushNamed(context, "/restaurant", arguments: restaurant),
                       );
                     },
                   ),
@@ -304,6 +359,9 @@ class WishlistItemCard extends StatelessWidget {
                           break;
                         case "hotels":
                           wishlist.toggleHotelWishState(id);
+                          break;
+                        case "restaurants":
+                          wishlist.toggleRestaurantWishState(id);
                           break;
                       }
 
