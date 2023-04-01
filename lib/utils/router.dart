@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
+import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/services/connection_service.dart';
@@ -15,6 +16,7 @@ import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/hotel_view.dart';
 import 'package:visit_braila/views/nointernet_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
+import 'package:visit_braila/views/restaurant_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
 import 'package:visit_braila/views/tour_view.dart';
 import 'package:visit_braila/widgets/bottom_navbar.dart';
@@ -97,6 +99,27 @@ class PageRouter {
               opacity: curvedAnimation,
               child: HotelView(
                 hotel: hotel,
+                routeAnimation: animation,
+              ),
+            );
+          },
+        );
+      case '/restaurant':
+        final restaurant = settings.arguments as Restaurant;
+
+        return PageRouteBuilder(
+          transitionDuration: kTransitionDuration,
+          reverseTransitionDuration: kTransitionDuration,
+          pageBuilder: (context, animation, _) {
+            final curvedAnimation = CurvedAnimation(
+              parent: animation,
+              curve: kTransitionCurve,
+            );
+
+            return FadeTransition(
+              opacity: curvedAnimation,
+              child: RestaurantView(
+                restaurant: restaurant,
                 routeAnimation: animation,
               ),
             );

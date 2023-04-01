@@ -137,10 +137,10 @@ class _AllRestaurantsViewState extends State<AllRestaurantsView> {
             text: TextSpan(
               children: [
                 const TextSpan(
-                  text: "Gustă ",
+                  text: "Caută ",
                 ),
                 TextSpan(
-                  text: "Bunătăți",
+                  text: "Localuri",
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                   ),
