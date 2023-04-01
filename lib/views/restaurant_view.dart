@@ -128,7 +128,7 @@ class RestaurantView extends StatelessWidget {
                                 id: restaurant.id,
                                 image: restaurant.images[restaurant.primaryImage - 1],
                                 name: restaurant.name,
-                                collection: "sight",
+                                collection: "restaurant",
                                 alternativeUrl: restaurant.externalLink,
                               );
 
