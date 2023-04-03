@@ -5,6 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
+import 'package:visit_braila/controllers/trending_controller.dart';
+import 'package:visit_braila/models/hotel_model.dart';
+import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/location_service.dart';
@@ -23,6 +26,7 @@ class HomeView extends StatelessWidget {
   final double appBarBreakpoint = 270;
 
   final SightController sightController = SightController();
+  final TrendingController trendingController = TrendingController();
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +123,8 @@ class HomeView extends StatelessWidget {
                               child: SizedBox(
                                 height: Responsive.safeBlockHorizontal * 70,
                                 width: double.infinity,
-                                child: FutureBuilder<List<Sight>>(
-                                  future: sightController.fetchTrending(),
+                                child: FutureBuilder<List<Object?>>(
+                                  future: trendingController.fetchTrending(),
                                   builder: (context, trending) {
                                     if (trending.hasData) {
                                       if (trending.data!.isEmpty) {
@@ -154,9 +158,47 @@ class HomeView extends StatelessWidget {
                                           return const SizedBox(width: 15);
                                         },
                                         itemBuilder: (context, index) {
-                                          return TrendingSightCard(
-                                            sight: trending.data![index],
-                                          );
+                                          switch (trending.data![index].runtimeType) {
+                                            case Sight:
+                                              Sight sight = trending.data![index] as Sight;
+
+                                              return TrendingItemCard(
+                                                collection: "sights",
+                                                name: sight.name,
+                                                image: sight.images[sight.primaryImage - 1],
+                                                id: sight.id,
+                                                latitude: sight.latitude,
+                                                longitude: sight.longitude,
+                                                pushTo: () => Navigator.pushNamed(context, "/sight", arguments: sight),
+                                              );
+                                            case Restaurant:
+                                              Restaurant restaurant = trending.data![index] as Restaurant;
+
+                                              return TrendingItemCard(
+                                                collection: "restaurants",
+                                                name: restaurant.name,
+                                                image: restaurant.images[restaurant.primaryImage - 1],
+                                                id: restaurant.id,
+                                                latitude: restaurant.latitude,
+                                                longitude: restaurant.longitude,
+                                                pushTo: () =>
+                                                    Navigator.pushNamed(context, "/restaurant", arguments: restaurant),
+                                              );
+                                            case Hotel:
+                                              Hotel hotel = trending.data![index] as Hotel;
+
+                                              return TrendingItemCard(
+                                                collection: "hotels",
+                                                name: hotel.name,
+                                                image: hotel.images[hotel.primaryImage - 1],
+                                                id: hotel.id,
+                                                latitude: hotel.latitude,
+                                                longitude: hotel.longitude,
+                                                pushTo: () => Navigator.pushNamed(context, "/hotel", arguments: hotel),
+                                              );
+                                            default:
+                                              return const SizedBox();
+                                          }
                                         },
                                       );
                                     } else if (trending.hasError && trending.error is HttpException) {
@@ -495,12 +537,24 @@ class SkeletonCard extends StatelessWidget {
   }
 }
 
-class TrendingSightCard extends StatelessWidget {
-  final Sight sight;
+class TrendingItemCard extends StatelessWidget {
+  final String collection;
+  final String name;
+  final String image;
+  final String id;
+  final double latitude;
+  final double longitude;
+  final void Function() pushTo;
 
-  TrendingSightCard({
+  TrendingItemCard({
     super.key,
-    required this.sight,
+    required this.collection,
+    required this.name,
+    required this.image,
+    required this.id,
+    required this.latitude,
+    required this.longitude,
+    required this.pushTo,
   });
 
   final likeAnimationKey = GlobalKey<LikeAnimationState>();
@@ -508,7 +562,7 @@ class TrendingSightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, "/sight", arguments: sight),
+      onTap: pushTo,
       child: Container(
         width: Responsive.safeBlockHorizontal * 60,
         padding: const EdgeInsets.all(6),
@@ -522,7 +576,7 @@ class TrendingSightCard extends StatelessWidget {
           children: [
             Expanded(
               child: Hero(
-                tag: sight.id,
+                tag: id,
                 child: Container(
                   decoration: BoxDecoration(
                     boxShadow: const [shadowSm],
@@ -531,7 +585,7 @@ class TrendingSightCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: CachedApiImage(
-                      imageUrl: sight.images[sight.primaryImage - 1],
+                      imageUrl: image,
                       width: double.infinity,
                       cacheWidth: Responsive.safeBlockHorizontal * 60,
                     ),
@@ -552,7 +606,7 @@ class TrendingSightCard extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          sight.name,
+                          name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -570,16 +624,27 @@ class TrendingSightCard extends StatelessWidget {
                               splashRadius: 1,
                               padding: EdgeInsets.zero,
                               onPressed: () {
-                                wishlist.toggleSightWishState(sight.id);
+                                switch (collection) {
+                                  case "sights":
+                                    wishlist.toggleSightWishState(id);
+                                    break;
+                                  case "tours":
+                                    wishlist.toggleTourWishState(id);
+                                    break;
+                                  case "hotels":
+                                    wishlist.toggleHotelWishState(id);
+                                    break;
+                                }
+
                                 likeAnimationKey.currentState!.animate();
                               },
                               constraints: const BoxConstraints(),
                               icon: Icon(
-                                wishlist.items['sights']!.contains(sight.id)
+                                wishlist.items[collection]!.contains(id)
                                     ? CupertinoIcons.heart_fill
                                     : CupertinoIcons.heart,
                                 size: 22,
-                                color: wishlist.items['sights']!.contains(sight.id)
+                                color: wishlist.items[collection]!.contains(id)
                                     ? Theme.of(context).colorScheme.secondary
                                     : kDisabledIconColor,
                               ),
@@ -607,7 +672,7 @@ class TrendingSightCard extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            location.getDistance(sight.latitude, sight.longitude),
+                            location.getDistance(latitude, longitude),
                             style: TextStyle(fontSize: 12, color: kForegroundColor.withOpacity(0.85)),
                           ),
                         ],
