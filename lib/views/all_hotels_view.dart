@@ -28,6 +28,7 @@ class _AllHotelsViewState extends State<AllHotelsView> {
   int selectedIndex = 0;
 
   bool isLoading = true;
+  bool disableHero = false;
 
   String currentQuery = "";
 
@@ -113,84 +114,98 @@ class _AllHotelsViewState extends State<AllHotelsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: kBackgroundColor,
-        elevation: 0,
-        titleSpacing: 0,
-        title: RichText(
-          text: TextSpan(
-            children: [
-              const TextSpan(
-                text: "Caută ",
-              ),
-              TextSpan(
-                text: "Cazare",
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+    return WillPopScope(
+      onWillPop: () async {
+        setState(() => disableHero = true);
+
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: kBackgroundColor,
+          elevation: 0,
+          titleSpacing: 0,
+          title: RichText(
+            text: TextSpan(
+              children: [
+                const TextSpan(
+                  text: "Caută ",
                 ),
-              )
-            ],
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 22,
-                ),
+                TextSpan(
+                  text: "Cazare",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                )
+              ],
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22,
+                  ),
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              setState(() => disableHero = true);
+
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.adaptive.arrow_back,
+              color: kForegroundColor,
+            ),
           ),
         ),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.adaptive.arrow_back,
-            color: kForegroundColor,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: isLoading
-            ? const LoadingSpinner()
-            : CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 14,
-                        right: 14,
-                        top: 10,
+        body: SafeArea(
+          child: isLoading
+              ? const LoadingSpinner()
+              : CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 14,
+                          right: 14,
+                          top: 10,
+                        ),
+                        child: Column(children: [
+                          SearchListField(
+                            onChanged: updateList,
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          TagsListView(
+                            tags: tags,
+                            selectedIndex: selectedIndex,
+                            onTagPressed: setTag,
+                            hPadding: 0,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ]),
                       ),
-                      child: Column(children: [
-                        SearchListField(
-                          onChanged: updateList,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TagsListView(
-                          tags: tags,
-                          selectedIndex: selectedIndex,
-                          onTagPressed: setTag,
-                          hPadding: 0,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ]),
                     ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.only(left: 14, right: 14, bottom: 20),
-                    sliver: SliverMasonryGrid.count(
-                      childCount: filteredData.length,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      itemBuilder: (context, index) {
-                        return HotelCard(hotel: filteredData[index]);
-                      },
+                    SliverPadding(
+                      padding: const EdgeInsets.only(left: 14, right: 14, bottom: 20),
+                      sliver: SliverMasonryGrid.count(
+                        childCount: filteredData.length,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
+                        itemBuilder: (context, index) {
+                          return HotelCard(
+                            hotel: filteredData[index],
+                            heroTag: disableHero ? index.toString() : filteredData[index].id,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -198,16 +213,18 @@ class _AllHotelsViewState extends State<AllHotelsView> {
 
 class HotelCard extends StatelessWidget {
   final Hotel hotel;
+  final String heroTag;
 
   const HotelCard({
     super.key,
     required this.hotel,
+    required this.heroTag,
   });
 
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: hotel.id,
+      tag: heroTag,
       child: Material(
         type: MaterialType.transparency,
         child: GestureDetector(
