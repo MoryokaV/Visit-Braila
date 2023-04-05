@@ -2,8 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:visit_braila/controllers/hotel_controller.dart';
+import 'package:visit_braila/controllers/restaurant_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
+import 'package:visit_braila/models/hotel_model.dart';
+import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
@@ -42,18 +46,27 @@ const List<String> prepositions = [
 class SearchAll extends SearchDelegate<String> {
   final SightController sightController = SightController();
   final TourController tourController = TourController();
+  final RestaurantController restaurantController = RestaurantController();
+  final HotelController hotelController = HotelController();
 
-  List<Tour> allTours = [];
   List<Sight> allSights = [];
+  List<Tour> allTours = [];
+  List<Restaurant> allRestaurants = [];
+  List<Hotel> allHotels = [];
   List data = [];
 
   Future<List> fetchData() async {
     try {
-      allTours = await tourController.fetchTours();
       allSights = await sightController.fetchSights();
+      allTours = await tourController.fetchTours();
+      allRestaurants = await restaurantController.fetchRestaurants();
+      allHotels = await hotelController.fetchHotels();
 
+      data.clear();
       data.addAll(allSights);
       data.addAll(allTours);
+      data.addAll(allRestaurants);
+      data.addAll(allHotels);
 
       return data;
     } on HttpException {
@@ -149,7 +162,7 @@ class SearchAll extends SearchDelegate<String> {
     Set filteredData = {};
 
     query.trim().toLowerCase().split(" ").forEach((word) {
-      if(word == ""){
+      if (word == "") {
         return;
       }
 
@@ -176,10 +189,6 @@ class SearchAll extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    allSights = [];
-    allTours = [];
-    data = [];
-
     return FutureBuilder<List>(
       future: fetchData(),
       builder: (context, snapshot) {
@@ -207,25 +216,35 @@ class SearchAll extends SearchDelegate<String> {
                   childCount: filteredData.length,
                   (context, index) {
                     var result = filteredData[index];
-                    bool isSight = allSights.contains(result);
 
-                    return ListTile(
-                      onTap: () =>
-                          Navigator.pushNamed(context, isSight ? "/sight" : "/tour", arguments: filteredData[index]),
-                      leading: SvgPicture.asset(
-                        isSight ? "assets/icons/building.svg" : "assets/icons/route.svg",
-                        height: 24,
-                        color: kPrimaryColor,
-                      ),
-                      title: RichText(
-                        text: TextSpan(
-                          children: highlightedText(result.name.toString()),
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    );
+                    switch (result.runtimeType) {
+                      case Sight:
+                        return resultListTile(
+                          pushTo: () => Navigator.pushNamed(context, "/sight", arguments: result),
+                          icon: "assets/icons/building.svg",
+                          name: result.name,
+                        );
+                      case Tour:
+                        return resultListTile(
+                          pushTo: () => Navigator.pushNamed(context, "/tour", arguments: result),
+                          icon: "assets/icons/route.svg",
+                          name: result.name,
+                        );
+                      case Restaurant:
+                        return resultListTile(
+                          pushTo: () => Navigator.pushNamed(context, "/restaurant", arguments: result),
+                          icon: "assets/icons/restaurant-outline.svg",
+                          name: result.name,
+                        );
+                      case Hotel:
+                        return resultListTile(
+                          pushTo: () => Navigator.pushNamed(context, "/hotel", arguments: result),
+                          icon: "assets/icons/bed-outline.svg",
+                          name: result.name,
+                        );
+                      default:
+                        return const SizedBox();
+                    }
                   },
                 ),
               ),
@@ -237,6 +256,29 @@ class SearchAll extends SearchDelegate<String> {
 
         return const LoadingSpinner();
       },
+    );
+  }
+
+  Widget resultListTile({
+    required void Function() pushTo,
+    required String icon,
+    required String name,
+  }) {
+    return ListTile(
+      onTap: pushTo,
+      leading: SvgPicture.asset(
+        icon,
+        height: 24,
+        color: kPrimaryColor,
+      ),
+      title: RichText(
+        text: TextSpan(
+          children: highlightedText(name.toString()),
+          style: const TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+      ),
     );
   }
 
