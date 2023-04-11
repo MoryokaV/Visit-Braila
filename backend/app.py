@@ -44,7 +44,7 @@ def root():
 def master_login_required(f):
     @wraps(f)
     def checkForMasterUser(*args, **kwargs):
-        if session['username'] == "master":
+        if session['username'] == "admin":
             return f(*args, **kwargs) 
         else:
             return redirect("/login")
@@ -76,9 +76,6 @@ def login():
         session['username'] = username
         session['fullname'] = user['fullname']
 
-        if username == "master":
-            return make_response(json.dumps({"url": "/master"}), 200)
-
         return make_response(json.dumps({"url": "/admin"}), 200)
     else:
         return make_response("Wrong user or password!", 401)
@@ -89,9 +86,9 @@ def logout():
         
     return redirect("/login")
 
-@app.route("/api/currentName")
+@app.route("/api/currentUser")
 def getCurrentUserFullname():
-    return make_response(json.dumps({"fullname": session['fullname']}), 200)    
+    return make_response(json.dumps({"fullname": session['fullname'], "username": session['username']}), 200)    
 
 # --- CMS ROUTES --- 
 
@@ -150,6 +147,7 @@ def about():
 
 @app.route("/api/insertUser", methods=["POST"])
 @login_required
+@master_login_required
 def insertUser():
     user = request.get_json()
 
@@ -168,13 +166,13 @@ def deleteUser(_id):
 
     return make_response("Successfully deleted document", 200)
 
-@app.route("/api/editMasterPassword", methods=["PUT"])
+@app.route("/api/editUserPassword/<_id>", methods=["PUT"])
 @login_required
 @master_login_required
-def editMasterPassword():
+def editUserPassword(_id):
     data = request.get_json()
 
-    db.login.update_one({"username": "master"}, {"$set": {"password": hashlib.sha256(data['new_password'].encode('utf-8')).hexdigest()}})
+    db.login.update_one({"_id": ObjectId(_id)}, {"$set": {"password": hashlib.sha256(data['new_password'].encode('utf-8')).hexdigest()}})
 
     return make_response("Entry has been updated", 200)
 

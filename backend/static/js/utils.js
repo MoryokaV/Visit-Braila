@@ -25,9 +25,18 @@ export const longitudeRegExpTitle = "Invalid longitude coordinates"
 
 // User fullname
 const getCurrentUserFullname = async () => {
-  const data = await $.getJSON("/api/currentName");
+  const data = await $.getJSON("/api/currentUser");
 
   $("#user-fullname").text(data.fullname);
+
+  if (data.username === "admin") {
+    $("aside > nav").append(
+      `<a href="/master" class="${window.location.pathname === "/master" ? "active" : ""} nav-item group">
+        <ion-icon name="people-outline"></ion-icon>
+        <p>Users</p>
+      </a>`
+    );
+  }
 }
 
 // Server storage info  

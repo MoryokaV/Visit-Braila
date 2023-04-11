@@ -16,15 +16,77 @@
     <link rel="stylesheet" href="/static/css/panel.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
   </head>
-  <body class="master">
+  <body>
+    <!-- HEADER -->
     <header>
-      <h1 class="title">Visit Brăila</h1>
+      <div class="group">
+        <button class="btn-icon menu-btn btn-header">
+          <ion-icon class="icon" name="menu-outline"></ion-icon>
+        </button>
+        <h1 class="title">Visit Brăila</h1>
+      </div>
       <a href="/logout" role="button" class="btn-icon btn-header"><ion-icon class="icon" name="log-out-outline"></ion-icon></a>
     </header>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <header> 
+        <ion-icon size="large" class="col-2" name="person-circle"></ion-icon>
+        <p id="user-fullname" class="col mb-0 fw-normal fs-5 text-truncate"></p>
+      </header>
+      <hr>
+      <nav>
+        <a href="/" class="nav-item group">
+          <ion-icon name="speedometer-outline"></ion-icon>
+          <p>Dashboard</p>
+        </a>
+        <a href="/admin/tags" class="nav-item group">
+          <ion-icon name="bookmarks-outline"></ion-icon>
+          <p>Tags</p>
+        </a>
+        <a href="/admin/sights" class="nav-item group">
+          <ion-icon name="business-outline"></ion-icon>
+          <p>Sights</p>
+        </a>
+        <a href="/admin/tours" class="nav-item group">
+          <ion-icon name="walk-outline"></ion-icon>
+          <p>Tours</p>
+        </a>
+        <a href="/admin/restaurants" class="nav-item group">
+          <ion-icon name="restaurant-outline"></ion-icon>
+          <p>Restaurants</p>
+        </a>
+        <a href="/admin/hotels" class="nav-item group">
+          <ion-icon name="bed-outline"></ion-icon>
+          <p>Accommodation</p>
+        </a>
+        <a href="/admin/events" class="nav-item group">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <p>Events</p>
+        </a> 
+        <a href="/admin/trending" class="nav-item group">
+          <ion-icon name="trending-up-outline"></ion-icon>
+          <p>Trending</p>
+        </a>
+        <a href="/admin/about" class="nav-item group">
+          <ion-icon name="book-outline"></ion-icon>
+          <p>About</p>
+        </a>
+      </nav>
+      <hr>
+      
+      <section class="storage-info">
+        <p>Server storage: <span id="space-used">0.0 GB</span> of <span id="space-total">0.0 GB</span> Used</p>
+        <div class="bar-outline">
+          <div class="bar-filled" id="storage-bar"></div>
+        </div>
+      </section>
+    </aside>
+
     <main class="d-flex">
       <div class="container-xl m-auto py-3">
         <div class="row justify-content-center gx-4 gy-3">
-          <div class="col-md-6 col-lg-4">
+          <div class="col-sm-6 col-lg-5 col-xl-4">
             <div class="card shadow-sm">
               <h5 class="card-header">Insert user</h5>
               <form id="insert-user-form" class="card-body row g-3">
@@ -49,7 +111,7 @@
               </form>
             </div>
           </div>
-          <div class="col-md-12 col-lg-6">
+          <div class="col-md-12 col-lg-7 col-xl-8">
             <div class="card shadow-sm">
               <h5 class="card-header d-flex justify-content-between align-items-baseline">
                 Users list
@@ -74,14 +136,14 @@
       </div>
     </main>  
 
-    <div class="modal fade" id="edit-master-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="edit-user-modal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Edit master account</h5>
+            <h5 class="modal-title">Edit user account</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <form id="edit-master-form" class="modal-body row g-3">
+          <form id="edit-user-form" class="modal-body row g-3">
             <section class="col-12">
               <label for="new-password" class="form-label">New password</label>
               <div class="input-group">
