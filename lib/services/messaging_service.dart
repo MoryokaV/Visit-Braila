@@ -19,6 +19,20 @@ class MessagingService {
       });
     }
 
+    await _firebaseMessaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: false,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (!(await checkNotificationPermission())) {
+      return;
+    }
+
     await _firebaseMessaging
         .subscribeToTopic("events")
         .timeout(const Duration(seconds: 3))
