@@ -35,6 +35,7 @@ class DynamicLinksService {
         packageName: "com.vmasoftware.visit_braila",
       ),
       iosParameters: IOSParameters(
+        appStoreId: "6448944001",
         bundleId: "com.vmasoftware.visitBraila",
         fallbackUrl: Uri.parse(alternativeUrl),
       ),
