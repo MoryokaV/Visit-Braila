@@ -38,7 +38,7 @@
 - MVC design pattern 
 - Preferred maps app navigation
 - Daily events newsletter
-- Persistent items wishlist
+- Persistent wishlist items
 - Smoothly animated widgets
 
 ### Requirements
@@ -94,7 +94,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
   
 - Mobile App
   - Dart
-  - Flutter Framework v3.7.3 stable
+  - Flutter Framework v3.7.12 stable
   - Local Storage API
   - Provider state management
   - Firebase
