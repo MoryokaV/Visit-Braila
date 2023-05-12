@@ -124,6 +124,9 @@ class ActionsBar extends StatelessWidget {
                           case "tours":
                             wishlist.toggleTourWishState(id);
                             break;
+                          case "restaurants":
+                            wishlist.toggleRestaurantWishState(id);
+                            break;
                           case "hotels":
                             wishlist.toggleHotelWishState(id);
                             break;

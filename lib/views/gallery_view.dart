@@ -99,6 +99,9 @@ class _GalleryViewState extends State<GalleryView> {
                         case "tours":
                           wishlist.toggleTourWishState(widget.id);
                           break;
+                        case "restaurants":
+                          wishlist.toggleRestaurantWishState(widget.id);
+                          break;
                         case "hotels":
                           wishlist.toggleHotelWishState(widget.id);
                           break;
