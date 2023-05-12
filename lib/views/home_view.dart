@@ -628,8 +628,8 @@ class TrendingItemCard extends StatelessWidget {
                                   case "sights":
                                     wishlist.toggleSightWishState(id);
                                     break;
-                                  case "tours":
-                                    wishlist.toggleTourWishState(id);
+                                  case "restaurants":
+                                    wishlist.toggleRestaurantWishState(id);
                                     break;
                                   case "hotels":
                                     wishlist.toggleHotelWishState(id);
