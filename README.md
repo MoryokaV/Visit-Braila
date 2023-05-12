@@ -10,7 +10,7 @@
 ### Screenshots
 ![app](https://user-images.githubusercontent.com/55505135/205710233-87fd398a-50b1-4e8e-b50f-cb5a6cae6073.png)
 
-[Demo video](https://youtu.be/HjvV7aP4mrg)
+### [Demo video](https://youtu.be/c07yV4QpVzo)
 
 ### Features
 📲 Cross-platform compatibility: Android & iOS  
