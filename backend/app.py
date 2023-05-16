@@ -202,23 +202,7 @@ def deleteSight(_id):
     images = json.loads(findSight(_id))['images']
     deleteImages(images, 'sights')
 
-    # delete corresponding trending item
-    trending = json.loads(fetchTrendingItems())
-    trending_item_id = ""
-    trending_item_index = 0
-
-    for item in trending:
-        if _id in item['sight_id']:    
-            trending_item_id = item['_id']
-            trending_item_index = item['index']
-            break
-    
-    if trending_item_id != "":
-        for item in trending:
-            if item['index'] > trending_item_index:
-                db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['index'] - 1}})
-              
-        db.trending.delete_one({"_id": ObjectId(trending_item_id)})
+    filterTrendingByItemId(_id)
 
     # delete sight
     db.sights.delete_one({"_id": ObjectId(_id)})
@@ -327,6 +311,8 @@ def deleteRestaurant(_id):
     images = json.loads(findRestaurant(_id))['images']
     deleteImages(images, 'restaurants')
 
+    filterTrendingByItemId(_id)
+
     # delete restaurant
     db.restaurants.delete_one({"_id": ObjectId(_id)})
 
@@ -381,6 +367,8 @@ def deleteHotel(_id):
     # delete local hotel images first
     images = json.loads(findHotel(_id))['images']
     deleteImages(images, 'hotels')
+
+    filterTrendingByItemId(_id)
 
     # delete hotel
     db.hotels.delete_one({"_id": ObjectId(_id)})
@@ -592,6 +580,25 @@ def updateTrendingItemIndex():
     db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
 
     return make_response("Entry has been updated", 200)
+
+def filterTrendingByItemId(_id):
+    # delete corresponding trending item
+    trending = json.loads(fetchTrendingItems())
+    trending_item_id = ""
+    trending_item_index = 0
+
+    for item in trending:
+        if _id in item['item_id']:    
+            trending_item_id = item['_id']
+            trending_item_index = item['index']
+            break
+    
+    if trending_item_id != "":
+        for item in trending:
+            if item['index'] > trending_item_index:
+                db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['index'] - 1}})
+              
+        db.trending.delete_one({"_id": ObjectId(trending_item_id)})
 
 # --- ABOUT DATA ---
 
