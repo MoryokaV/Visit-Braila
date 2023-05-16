@@ -45,7 +45,7 @@
 ```
 - Android 5.1 or above (API level 22)
 - iOS 12.0 or above
-- 65Mb free space storage
+- 65Mb free storage space
 - Internet connection
 - Google Play Services installed (Android users only)
 ```
