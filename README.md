@@ -22,6 +22,7 @@
 🧲 Dynamic Links  
 ⚠️ Proper error & connectivity handling  
 🧭 Real-time gps service  
+✨ Blurhash image placeholder  
 
 ### Dependencies
 - [firebase_core](https://pub.dev/packages/firebase_core), [firebase_dynamic_links](https://pub.dev/packages/firebase_dynamic_links), [firebase_messaging](https://pub.dev/packages/firebase_messaging): link between Firebase services and Flutter app
