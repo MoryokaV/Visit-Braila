@@ -82,7 +82,7 @@ $(document).ready(async function() {
     if ($(this).prop('checked') === true) {
       $(this).parent().parent().after(`
         <section class="col-12">
-          <label for="end-datetime" class="form-label">End date & time</label>
+          <label for="end-event-datetime" class="form-label">End date & time</label>
           <input id="end-event-datetime" type="datetime-local" class="form-control" name="end-datetime" required></input>
         </section>
       `);
