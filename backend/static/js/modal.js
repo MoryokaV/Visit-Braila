@@ -245,7 +245,7 @@ export const openEditEventModal = async (id) => {
     $("#end-event-datetime").parent().remove()
     $("#multiple-days").parent().parent().after(`
       <section class="col-12">
-        <label for="end-datetime" class="form-label">End date & time</label>
+        <label for="end-event-datetime" class="form-label">End date & time</label>
         <input id="end-event-datetime" class="form-control" type="datetime-local" name="end-datetime" required></input>
       </section>
     `);
@@ -668,7 +668,7 @@ $(document).ready(async function() {
     if ($(this).prop('checked') === true) {
       $(this).parent().parent().after(`
         <div class="col-12">
-          <label for="end-datetime" class="form-label">End date & time</label>
+          <label for="end-event-datetime" class="form-label">End date & time</label>
           <input id="end-event-datetime" class="form-control" type="datetime-local" name="end-datetime" required></input>
         </div>
       `);
