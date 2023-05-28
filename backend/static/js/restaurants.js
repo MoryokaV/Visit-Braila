@@ -26,6 +26,7 @@ $(document).ready(async function() {
   // DESCRIPTION
   quill = new Quill("#restaurant-description", {
     theme: "snow",
+    placeholder: "Type something here...",
   });
 
   quill.on('text-change', function() {
