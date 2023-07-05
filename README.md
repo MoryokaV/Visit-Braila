@@ -8,7 +8,7 @@
 ***Visit Brăila*** connects citizens and tourists with each other. Sights, tours, restaurants, hotels and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
 
 ### Screenshots
-![app](https://user-images.githubusercontent.com/55505135/205710233-87fd398a-50b1-4e8e-b50f-cb5a6cae6073.png)
+![app](https://github.com/MoryokaV/Visit-Braila/assets/55505135/9d4aa6f4-7a87-4ab2-bfd0-707775bb3932)
 
 ### [Demo video](https://youtu.be/c07yV4QpVzo)
 
@@ -55,7 +55,7 @@
 Admin panel used by app owners to manage database entries. This custom tool is a GUI which helps you update content safely with validation, encryption and no technical skills. The CMS allows managers to keep their apps up-to-date in realtime with no need for consultation.
 
 ### Screenshots
-![cms](https://user-images.githubusercontent.com/55505135/205488743-8b2f64e9-f597-4b5e-bf5e-0da82032bf8a.png)
+![cms](https://github.com/MoryokaV/Visit-Braila/assets/55505135/c92fe9af-ab74-40f4-b329-77ab19c78635)
 
 ### Features
 📝 Form validation using regexp  
