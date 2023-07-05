@@ -5,7 +5,7 @@
 *Your personal guide for discovering the small community of Brăila, România* 📍
 
 ## Mobile App
-***Visit Brăila*** connects citizens and tourists with each other. Sights, tours and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
+***Visit Brăila*** connects citizens and tourists with each other. Sights, tours, restaurants, hotels and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
 
 ### Screenshots
 ![app](https://user-images.githubusercontent.com/55505135/205710233-87fd398a-50b1-4e8e-b50f-cb5a6cae6073.png)
@@ -74,7 +74,8 @@ Admin panel used by app owners to manage database entries. This custom tool is a
 
 ### Cool stuff
 - Images get deleted automatically when not attached to a db document
-- SHA-256 login encryption  
+- SHA-256 login encryption
+- Multi-user support
 - Tags get removed from sights automatically when deleted
 - Trending - admin’s recommendations
 - UI is inspired from [Admin LTE template](https://adminlte.io/)  
