@@ -3,6 +3,7 @@ import 'package:visit_braila/utils/url_constants.dart';
 class Restaurant {
   final String id;
   final String name;
+  final String phone;
   final List<String> tags;
   final String description;
   final List<String> images;
@@ -15,6 +16,7 @@ class Restaurant {
   Restaurant({
     required this.id,
     required this.name,
+    required this.phone,
     required this.tags,
     required this.description,
     required this.images,
@@ -29,6 +31,7 @@ class Restaurant {
     return Restaurant(
       id: json['_id'],
       name: json['name'],
+      phone: json['phone'],
       tags: List<String>.from(json['tags'].map((tag) => tag)),
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),

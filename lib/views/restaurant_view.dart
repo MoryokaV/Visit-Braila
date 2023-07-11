@@ -32,6 +32,7 @@ class RestaurantView extends StatelessWidget {
         collection: "restaurants",
         text: "Află mai multe",
         link: restaurant.externalLink,
+        phone: restaurant.phone,
       ),
       body: SafeArea(
         top: false,
