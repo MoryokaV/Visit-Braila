@@ -304,6 +304,29 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 22),
+                            InkWell(
+                              onTap: () => openBrowserURL(privacyPolicyUrl),
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: kBackgroundColor,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text(
+                                      "Politica de confidențialitate",
+                                      style: TextStyle(
+                                        fontFamily: labelFont,
+                                      ),
+                                    ),
+                                    Icon(Icons.chevron_right),
+                                  ],
+                                ),
+                              ),
+                            ),
                             const SizedBox(height: 18),
                             Container(
                               decoration: BoxDecoration(
