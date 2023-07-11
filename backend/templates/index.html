@@ -364,10 +364,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form class="modal-body row g-3">
-            <section class="col-12">
+            <section class="col-sm-7">
               <label for="restaurant-name" class="form-label">Name</label>
               <input type="text" id="restaurant-name" class="form-control" name="name" maxlength="60" required>
             </section> 
+            <section class="col-sm-5">
+              <label class="form-label" for="restaurant-phone">Phone number</label>
+              <input type="tel" class="form-control" id="restaurant-phone" name="phone" required />
+            </section>
             <section class="col-12 d-flex flex-wrap gap-3">
               <label for="tags" class="col-form-label">Tags</label>
               <div class="col-sm-3">

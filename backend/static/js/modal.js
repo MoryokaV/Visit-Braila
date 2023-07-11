@@ -1,4 +1,4 @@
-import { fetchEvents, fetchHotels, fetchRestaurants, fetchSights, fetchTours } from './dashboard.js';
+import { fetchEvents, fetchHotels, fetchRestaurants, fetchSights, fetchTours } from "./dashboard.js";
 import {
   startLoadingAnimation,
   endLoadingAnimation,
@@ -19,7 +19,7 @@ import {
   appendActiveTags,
   phoneRegExp,
   phoneRegExpTitle,
-} from './utils.js';
+} from "./utils.js";
 
 let sight = {};
 let tour = {};
@@ -31,7 +31,8 @@ let formData = undefined;
 let images_to_delete = [];
 let quill = undefined;
 
-const linkInputElement = link => `<input value="${link}" type="text" size="10" class="stage-link form-control text-primary" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
+const linkInputElement = (link) =>
+  `<input value="${link}" type="text" size="10" class="stage-link form-control text-primary" placeholder="Sight id" pattern="${idRegExp}" title="${idRegExpTitle}" required />`;
 
 const appendStages = () => {
   $("#tour-modal #stages").empty();
@@ -43,12 +44,12 @@ const appendStages = () => {
         <ion-icon name="link-outline" class="stage-input-icon ${stage.sight_link !== "" ? "active" : ""}"></ion-icon>
       </div>
       ${stage.sight_link !== "" ? linkInputElement(stage.sight_link) : ``}
-      ${index === tour.stages.length - 1 ?
-        `<button type="button" class="btn btn-icon text-primary" id="add-stage"> 
+      ${
+        index === tour.stages.length - 1
+          ? `<button type="button" class="btn btn-icon text-primary" id="add-stage"> 
           <ion-icon name="add-outline"></ion-icon> 
         </button>`
-        :
-        `-`
+          : `-`
       }`
     );
 
@@ -56,21 +57,21 @@ const appendStages = () => {
   });
 
   $("#tour-modal #stages .stage input").attr("pattern", addressRegExp).attr("title", addressRegExpTitle);
-}
+};
 
 const getOffsettedDate = (timestamp) => {
   const date = new Date(timestamp);
   const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 1000 * 60);
 
   return localDate.toISOString().slice(0, -8);
-}
+};
 
 const convert2LocalDate = (iso_date) => {
   const date = new Date(iso_date);
   const localDate = new Date(date.getTime() - 2 * (date.getTimezoneOffset() * 1000 * 60));
 
   return localDate.toISOString().slice(0, -8);
-}
+};
 
 const getMinEndDate = () => {
   const start_date = new Date($("#event-datetime").val());
@@ -79,7 +80,7 @@ const getMinEndDate = () => {
   convertedDate.setHours(0, 0, 0, 0);
 
   return getOffsettedDate(convertedDate);
-}
+};
 
 export const openEditSightModal = async (id) => {
   sight = await $.getJSON("/api/findSight/" + id);
@@ -93,14 +94,14 @@ export const openEditSightModal = async (id) => {
   // TAGS
   appendActiveTags(sight.tags, false, "#sight-modal");
 
-  $('#sight-modal #tags option:gt(0)').remove()
-  initializeTags("sights", sight.tags, false, "#sight-modal")
+  $("#sight-modal #tags option:gt(0)").remove();
+  initializeTags("sights", sight.tags, false, "#sight-modal");
 
   // DESCRIPTION
   quill = new Quill("#sight-description", {
     theme: "snow",
   });
-  $("#sight-description .ql-editor").html(sight.description)
+  $("#sight-description .ql-editor").html(sight.description);
 
   // IMAGES
   sight.images.map((image) => appendImageElement(image, true));
@@ -113,8 +114,8 @@ export const openEditSightModal = async (id) => {
   $("#sight-modal #sight-longitude").val(sight.longitude);
 
   // EXTERNAL LINK
-  $("#sight-external-link").val(sight.external_link)
-}
+  $("#sight-external-link").val(sight.external_link);
+};
 
 export const openEditTourModal = async (id) => {
   tour = await $.getJSON("/api/findTour/" + id);
@@ -143,9 +144,9 @@ export const openEditTourModal = async (id) => {
   // LENGTH
   $("#tour-modal #tour-length").val(tour.length);
 
-  // EXTERNAL LINK 
+  // EXTERNAL LINK
   $("#tour-external-link").val(tour.external_link);
-}
+};
 
 export const openEditRestaurantModal = async (id) => {
   restaurant = await $.getJSON("/api/findRestaurant/" + id);
@@ -156,17 +157,20 @@ export const openEditRestaurantModal = async (id) => {
   // NAME
   $("#restaurant-name").val(restaurant.name);
 
+  // PHONE
+  $("#restaurant-phone").val(restaurant.phone);
+
   // TAGS
   appendActiveTags(restaurant.tags, false, "#restaurant-modal");
 
-  $('#restaurant-modal #tags option:gt(0)').remove()
-  initializeTags("restaurants", restaurant.tags, false, "#restaurant-modal")
+  $("#restaurant-modal #tags option:gt(0)").remove();
+  initializeTags("restaurants", restaurant.tags, false, "#restaurant-modal");
 
   // DESCRIPTION
   quill = new Quill("#restaurant-description", {
     theme: "snow",
   });
-  $("#restaurant-description .ql-editor").html(restaurant.description)
+  $("#restaurant-description .ql-editor").html(restaurant.description);
 
   // IMAGES
   restaurant.images.map((image) => appendImageElement(image, true));
@@ -179,8 +183,8 @@ export const openEditRestaurantModal = async (id) => {
   $("#restaurant-modal #restaurant-longitude").val(restaurant.longitude);
 
   // EXTERNAL LINK
-  $("#restaurant-external-link").val(restaurant.external_link)
-}
+  $("#restaurant-external-link").val(restaurant.external_link);
+};
 
 export const openEditHotelModal = async (id) => {
   hotel = await $.getJSON("/api/findHotel/" + id);
@@ -200,14 +204,14 @@ export const openEditHotelModal = async (id) => {
   // TAGS
   appendActiveTags(hotel.tags, false, "#hotel-modal");
 
-  $('#hotel-modal #tags option:gt(0)').remove()
-  initializeTags("hotels", hotel.tags, false, "#hotel-modal")
+  $("#hotel-modal #tags option:gt(0)").remove();
+  initializeTags("hotels", hotel.tags, false, "#hotel-modal");
 
   // DESCRIPTION
   quill = new Quill("#hotel-description", {
     theme: "snow",
   });
-  $("#hotel-description .ql-editor").html(hotel.description)
+  $("#hotel-description .ql-editor").html(hotel.description);
 
   // IMAGES
   hotel.images.map((image) => appendImageElement(image, true));
@@ -220,8 +224,8 @@ export const openEditHotelModal = async (id) => {
   $("#hotel-modal #hotel-longitude").val(hotel.longitude);
 
   // EXTERNAL LINK
-  $("#hotel-external-link").val(hotel.external_link)
-}
+  $("#hotel-external-link").val(hotel.external_link);
+};
 
 export const openEditEventModal = async (id) => {
   event = await $.getJSON("/api/findEvent/" + id);
@@ -233,7 +237,7 @@ export const openEditEventModal = async (id) => {
   $("#event-name").val(event.name);
 
   // DATE & TIME
-  $("#event-datetime").focus(function() {
+  $("#event-datetime").focus(function () {
     $("#event-datetime").attr("min", getOffsettedDate(Date.now()));
   });
 
@@ -242,7 +246,7 @@ export const openEditEventModal = async (id) => {
   if (event.end_date_time !== null) {
     $("#multiple-days").prop("checked", true);
 
-    $("#end-event-datetime").parent().remove()
+    $("#end-event-datetime").parent().remove();
     $("#multiple-days").parent().parent().after(`
       <section class="col-12">
         <label for="end-event-datetime" class="form-label">End date & time</label>
@@ -264,29 +268,36 @@ export const openEditEventModal = async (id) => {
 
   $("#event-primary-image").attr("max", event.images.length);
   $("#event-primary-image").val(event.primary_image);
-}
+};
 
-$(document).ready(async function() {
-  // ----- SIGHTS ----- 
+$(document).ready(async function () {
+  // ----- SIGHTS -----
 
-  $("#sight-modal").on("hidden.bs.modal", function() {
+  $("#sight-modal").on("hidden.bs.modal", function () {
     $(".ql-toolbar").remove();
     $(".img-container").empty();
-  })
+  });
 
   // SIGHT NAME
   $("#sight-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
 
-  // SIGHT IMAGES 
-  $('#sight-images').change(function() {
+  // SIGHT IMAGES
+  $("#sight-images").change(function () {
     $(this).prop("required", false);
 
-    addImages($(this).prop('files'), "/static/media/sights/", false, current_images, formData, $("#sight-primary-image"));
+    addImages(
+      $(this).prop("files"),
+      "/static/media/sights/",
+      false,
+      current_images,
+      formData,
+      $("#sight-primary-image")
+    );
 
     $(this).val(null);
   });
 
-  $("#sight-modal .img-container").on("click", ".remove-img-btn", function() {
+  $("#sight-modal .img-container").on("click", ".remove-img-btn", function () {
     //mark for deletion
     if (sight.images.includes(current_images[$(this).parent().index()])) {
       images_to_delete.push(current_images[$(this).parent().index()]);
@@ -300,7 +311,7 @@ $(document).ready(async function() {
   $("#sight-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
 
   // SIGHT SUBMIT
-  $("#sight-modal form").submit(async function(e) {
+  $("#sight-modal form").submit(async function (e) {
     e.preventDefault();
 
     startLoadingAnimation($(this));
@@ -324,9 +335,9 @@ $(document).ready(async function() {
           cache: false,
           processData: false,
           statusCode: {
-            413: function() {
-              alert("Files size should be less than 15MB")
-            }
+            413: function () {
+              alert("Files size should be less than 15MB");
+            },
           },
         });
 
@@ -335,31 +346,31 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editSight",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "sight": sight }),
+        data: JSON.stringify({ images_to_delete: images_to_delete, _id: _id, sight: sight }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
 
       await fetchSights();
       endLoadingAnimation($(this));
-      $("#sight-modal").modal('hide');
+      $("#sight-modal").modal("hide");
     } catch {
       endLoadingAnimation($(this));
     }
   });
 
-  // ----- TOURS ----- 
+  // ----- TOURS -----
 
-  $("#tour-modal").on("hidden.bs.modal", function() {
+  $("#tour-modal").on("hidden.bs.modal", function () {
     $(".ql-toolbar").remove();
     $(".img-container").empty();
-  })
+  });
 
   // TOUR NAME
   $("#tour-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
 
   // TOUR STAGES
-  $("#stages").on('click', ".stage-input-icon", function() {
+  $("#stages").on("click", ".stage-input-icon", function () {
     if ($(this).hasClass("active")) {
       $(this).removeClass("active");
 
@@ -374,12 +385,12 @@ $(document).ready(async function() {
     }
   });
 
-  $("#tour-modal #stages").on('click', "#add-stage", function() {
+  $("#tour-modal #stages").on("click", "#add-stage", function () {
     tour.stages.push({ text: "", sight_link: "" });
     appendStages();
   });
 
-  $("#tour-modal #stages").on('input', ".stage input", function() {
+  $("#tour-modal #stages").on("input", ".stage input", function () {
     const index = $("#stages > div").index($(this).parent());
     const stage = $(this).val();
 
@@ -388,7 +399,7 @@ $(document).ready(async function() {
     tour.stages[index].text = stage;
   });
 
-  $("#tour-modal #stages").on('keydown', ".stage input", function(e) {
+  $("#tour-modal #stages").on("keydown", ".stage input", function (e) {
     const index = $("#stages > div").index($(this).parent());
 
     if ($(this).val() === "" && index !== 0 && index !== 1 && e.keyCode === 8) {
@@ -399,23 +410,23 @@ $(document).ready(async function() {
     }
   });
 
-  $("#stages").on('input', ".stage-link", function() {
+  $("#stages").on("input", ".stage-link", function () {
     const index = $("#stages > div").index($(this).prev("div"));
     const link = $(this).val();
 
     tour.stages[index].sight_link = link;
   });
 
-  // TOUR IMAGES 
-  $('#tour-images').change(function() {
+  // TOUR IMAGES
+  $("#tour-images").change(function () {
     $(this).prop("required", false);
 
-    addImages($(this).prop('files'), "/static/media/tours/", false, tour.images, formData, $("#tour-primary-image"));
+    addImages($(this).prop("files"), "/static/media/tours/", false, tour.images, formData, $("#tour-primary-image"));
 
     $(this).val(null);
   });
 
-  $("#tour-modal .img-container").on("click", ".remove-img-btn", function() {
+  $("#tour-modal .img-container").on("click", ".remove-img-btn", function () {
     //mark for deletion
     if (tour.images.includes(current_images[$(this).parent().index()])) {
       images_to_delete.push(current_images[$(this).parent().index()]);
@@ -424,8 +435,8 @@ $(document).ready(async function() {
     removeImage($(this), false, current_images, formData, $("#tour-primary-image"), $("#tour-images"));
   });
 
-  // TOUR SUBMIT 
-  $("#tour-modal form").submit(async function(e) {
+  // TOUR SUBMIT
+  $("#tour-modal form").submit(async function (e) {
     e.preventDefault();
 
     startLoadingAnimation($(this));
@@ -448,9 +459,9 @@ $(document).ready(async function() {
           cache: false,
           processData: false,
           statusCode: {
-            413: function() {
-              alert("Files size should be less than 15MB")
-            }
+            413: function () {
+              alert("Files size should be less than 15MB");
+            },
           },
         });
 
@@ -459,39 +470,49 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editTour",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "tour": tour }),
+        data: JSON.stringify({ images_to_delete: images_to_delete, _id: _id, tour: tour }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
 
       await fetchTours();
       endLoadingAnimation($(this));
-      $("#tour-modal").modal('hide');
+      $("#tour-modal").modal("hide");
     } catch {
       endLoadingAnimation($(this));
     }
   });
 
-  // ----- RESTAURANTS ----- 
+  // ----- RESTAURANTS -----
 
-  $("#restaurant-modal").on("hidden.bs.modal", function() {
+  $("#restaurant-modal").on("hidden.bs.modal", function () {
     $(".ql-toolbar").remove();
     $(".img-container").empty();
-  })
+  });
 
   // RESTAURANT NAME
   $("#restaurant-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
 
-  // RESTAURANT IMAGES 
-  $('#restaurant-images').change(function() {
+  // RESTAURANT PHONE
+  $("#restaurant-phone").attr("pattern", phoneRegExp).attr("title", phoneRegExpTitle);
+
+  // RESTAURANT IMAGES
+  $("#restaurant-images").change(function () {
     $(this).prop("required", false);
 
-    addImages($(this).prop('files'), "/static/media/restaurants/", false, current_images, formData, $("#restaurant-primary-image"));
+    addImages(
+      $(this).prop("files"),
+      "/static/media/restaurants/",
+      false,
+      current_images,
+      formData,
+      $("#restaurant-primary-image")
+    );
 
     $(this).val(null);
   });
 
-  $("#restaurant-modal .img-container").on("click", ".remove-img-btn", function() {
+  $("#restaurant-modal .img-container").on("click", ".remove-img-btn", function () {
     //mark for deletion
     if (restaurant.images.includes(current_images[$(this).parent().index()])) {
       images_to_delete.push(current_images[$(this).parent().index()]);
@@ -505,7 +526,7 @@ $(document).ready(async function() {
   $("#restaurant-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
 
   // RESTAURANT SUBMIT
-  $("#restaurant-modal form").submit(async function(e) {
+  $("#restaurant-modal form").submit(async function (e) {
     e.preventDefault();
 
     if (restaurant.tags.length === 0) {
@@ -518,6 +539,7 @@ $(document).ready(async function() {
     let _id = restaurant._id;
     delete restaurant._id;
     restaurant.name = $("#restaurant-name").val();
+    restaurant.phone = $("#restaurant-phone").val();
     restaurant.description = quill.root.innerHTML;
     restaurant.primary_image = parseInt($("#restaurant-primary-image").val());
     restaurant.latitude = parseFloat($("#restaurant-latitude").val());
@@ -534,9 +556,9 @@ $(document).ready(async function() {
           cache: false,
           processData: false,
           statusCode: {
-            413: function() {
-              alert("Files size should be less than 15MB")
-            }
+            413: function () {
+              alert("Files size should be less than 15MB");
+            },
           },
         });
 
@@ -545,47 +567,54 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editRestaurant",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "restaurant": restaurant }),
+        data: JSON.stringify({ images_to_delete: images_to_delete, _id: _id, restaurant: restaurant }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
 
       await fetchRestaurants();
       endLoadingAnimation($(this));
-      $("#restaurant-modal").modal('hide');
+      $("#restaurant-modal").modal("hide");
     } catch {
       endLoadingAnimation($(this));
     }
   });
 
-  // ----- HOTELS ----- 
+  // ----- HOTELS -----
 
-  $("#hotel-modal").on("hidden.bs.modal", function() {
+  $("#hotel-modal").on("hidden.bs.modal", function () {
     $(".ql-toolbar").remove();
     $(".img-container").empty();
-  })
+  });
 
   // HOTEL NAME
   $("#hotel-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
 
   // STARS
-  $("#hotel-stars").change(function() {
+  $("#hotel-stars").change(function () {
     hotel.stars = parseInt($(this).val());
   });
 
   // PHONE
   $("#hotel-phone").attr("pattern", phoneRegExp).attr("title", phoneRegExpTitle);
 
-  // HOTEL IMAGES 
-  $('#hotel-images').change(function() {
+  // HOTEL IMAGES
+  $("#hotel-images").change(function () {
     $(this).prop("required", false);
 
-    addImages($(this).prop('files'), "/static/media/hotels/", false, current_images, formData, $("#hotel-primary-image"));
+    addImages(
+      $(this).prop("files"),
+      "/static/media/hotels/",
+      false,
+      current_images,
+      formData,
+      $("#hotel-primary-image")
+    );
 
     $(this).val(null);
   });
 
-  $("#hotel-modal .img-container").on("click", ".remove-img-btn", function() {
+  $("#hotel-modal .img-container").on("click", ".remove-img-btn", function () {
     //mark for deletion
     if (hotel.images.includes(current_images[$(this).parent().index()])) {
       images_to_delete.push(current_images[$(this).parent().index()]);
@@ -599,7 +628,7 @@ $(document).ready(async function() {
   $("#hotel-longitude").attr("pattern", longitudeRegExp).attr("title", longitudeRegExpTitle);
 
   // HOTEL SUBMIT
-  $("#hotel-modal form").submit(async function(e) {
+  $("#hotel-modal form").submit(async function (e) {
     e.preventDefault();
 
     if (hotel.tags.length === 0) {
@@ -629,9 +658,9 @@ $(document).ready(async function() {
           cache: false,
           processData: false,
           statusCode: {
-            413: function() {
-              alert("Files size should be less than 15MB")
-            }
+            413: function () {
+              alert("Files size should be less than 15MB");
+            },
           },
         });
 
@@ -640,32 +669,32 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editHotel",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "hotel": hotel }),
+        data: JSON.stringify({ images_to_delete: images_to_delete, _id: _id, hotel: hotel }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
 
       await fetchHotels();
       endLoadingAnimation($(this));
-      $("#hotel-modal").modal('hide');
+      $("#hotel-modal").modal("hide");
     } catch {
       endLoadingAnimation($(this));
     }
   });
 
-  // ----- EVENTS ----- 
+  // ----- EVENTS -----
 
-  $("#event-modal").on("hidden.bs.modal", function() {
+  $("#event-modal").on("hidden.bs.modal", function () {
     $(".ql-toolbar").remove();
     $(".img-container").empty();
-  })
+  });
 
   // EVENT NAME
   $("#event-name").attr("pattern", nameRegExp).attr("title", nameRegExpTitle);
 
   // EVENT DATE
-  $("#multiple-days").on('change', function() {
-    if ($(this).prop('checked') === true) {
+  $("#multiple-days").on("change", function () {
+    if ($(this).prop("checked") === true) {
       $(this).parent().parent().after(`
         <div class="col-12">
           <label for="end-event-datetime" class="form-label">End date & time</label>
@@ -677,20 +706,27 @@ $(document).ready(async function() {
     }
   });
 
-  $("#event-modal").on('focus', '#end-event-datetime', function() {
+  $("#event-modal").on("focus", "#end-event-datetime", function () {
     $("#end-event-datetime").attr("min", getMinEndDate());
   });
 
-  // EVENT IMAGES 
-  $('#event-images').change(function() {
+  // EVENT IMAGES
+  $("#event-images").change(function () {
     $(this).prop("required", false);
 
-    addImages($(this).prop('files'), "/static/media/events/", false, current_images, formData, $("#event-primary-image"));
+    addImages(
+      $(this).prop("files"),
+      "/static/media/events/",
+      false,
+      current_images,
+      formData,
+      $("#event-primary-image")
+    );
 
     $(this).val(null);
   });
 
-  $("#event-modal .img-container").on("click", ".remove-img-btn", function() {
+  $("#event-modal .img-container").on("click", ".remove-img-btn", function () {
     //mark for deletion
     if (event.images.includes(current_images[$(this).parent().index()])) {
       images_to_delete.push(current_images[$(this).parent().index()]);
@@ -700,7 +736,7 @@ $(document).ready(async function() {
   });
 
   //EVENT SUBMIT
-  $("#event-modal form").submit(async function(e) {
+  $("#event-modal form").submit(async function (e) {
     e.preventDefault();
 
     startLoadingAnimation($(this));
@@ -709,7 +745,7 @@ $(document).ready(async function() {
     delete event._id;
     event.name = $("#event-name").val();
     event.date_time = new Date($("#event-datetime").val());
-    if ($("#multiple-days").prop('checked')) {
+    if ($("#multiple-days").prop("checked")) {
       event.end_date_time = new Date($("#end-event-datetime").val());
     } else {
       event.end_date_time = undefined;
@@ -740,9 +776,9 @@ $(document).ready(async function() {
         cache: false,
         processData: false,
         statusCode: {
-          413: function() {
-            alert("Files size should be less than 15MB")
-          }
+          413: function () {
+            alert("Files size should be less than 15MB");
+          },
         },
       });
 
@@ -751,14 +787,14 @@ $(document).ready(async function() {
       await $.ajax({
         url: "/api/editEvent",
         type: "PUT",
-        data: JSON.stringify({ "images_to_delete": images_to_delete, "_id": _id, "event": event }),
+        data: JSON.stringify({ images_to_delete: images_to_delete, _id: _id, event: event }),
         processData: false,
         contentType: "application/json; charset=UTF-8",
       });
 
       await fetchEvents();
       endLoadingAnimation($(this));
-      $("#event-modal").modal('hide');
+      $("#event-modal").modal("hide");
     } catch {
       endLoadingAnimation($(this));
     }
