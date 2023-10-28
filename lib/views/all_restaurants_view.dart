@@ -54,7 +54,9 @@ class _AllRestaurantsViewState extends State<AllRestaurantsView> {
       restaurants = await restaurantController.fetchRestaurants();
       filteredData = restaurants;
     } on HttpException {
-      showErrorDialog(context);
+      if (mounted) {
+        showErrorDialog(context);
+      }
     }
 
     if (mounted) {

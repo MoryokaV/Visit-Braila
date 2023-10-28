@@ -36,7 +36,9 @@ class _AllToursViewState extends State<AllToursView> {
       tours = await tourController.fetchTours();
       filteredData = tours;
     } on HttpException {
-      showErrorDialog(context);
+      if (mounted) {
+        showErrorDialog(context);
+      }
     }
 
     if (mounted) {

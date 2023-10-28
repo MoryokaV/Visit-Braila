@@ -47,7 +47,9 @@ class _AllHotelsViewState extends State<AllHotelsView> {
       hotels = await hotelController.fetchHotels();
       filteredData = hotels;
     } on HttpException {
-      showErrorDialog(context);
+      if (mounted) {
+        showErrorDialog(context);
+      }
     }
 
     if (mounted) {

@@ -17,7 +17,7 @@ class Responsive {
   static late double pixelRatio;
 
   void getMediaQueryData() {
-    _mediaQueryData = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+    _mediaQueryData = MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.single);
 
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;

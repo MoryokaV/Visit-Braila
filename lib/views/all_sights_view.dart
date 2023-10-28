@@ -53,7 +53,9 @@ class _AllSightsViewState extends State<AllSightsView> {
       sights = await sightController.fetchSights();
       filteredData = sights;
     } on HttpException {
-      showErrorDialog(context);
+      if (mounted) {
+        showErrorDialog(context);
+      }
     }
 
     if (mounted) {

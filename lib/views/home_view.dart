@@ -443,9 +443,9 @@ class HomeView extends StatelessWidget {
                       color: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       width: double.infinity,
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           SearchBar(),
                         ],
                       ),
