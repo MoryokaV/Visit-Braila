@@ -134,7 +134,7 @@ class HomeView extends StatelessWidget {
                                             SvgPicture.asset(
                                               "assets/icons/trending-up.svg",
                                               width: 50,
-                                              color: kPrimaryColor,
+                                              colorFilter: const ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
                                             ),
                                             const SizedBox(
                                               height: 10,
@@ -666,7 +666,7 @@ class TrendingItemCard extends StatelessWidget {
                           SvgPicture.asset(
                             "assets/icons/map-pin.svg",
                             width: 18,
-                            color: kDisabledIconColor,
+                            colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                           ),
                           const SizedBox(
                             width: 6,

@@ -169,7 +169,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 SvgPicture.asset(
                                   "assets/icons/user.svg",
                                   width: 20,
-                                  color: kDisabledIconColor,
+                                  colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),
                                 const Text(
                                   "Organizație: ",
@@ -194,7 +194,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 SvgPicture.asset(
                                   "assets/icons/phone.svg",
                                   width: 20,
-                                  color: kDisabledIconColor,
+                                  colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),
                                 const Text(
                                   "Telefon: ",
@@ -224,7 +224,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 SvgPicture.asset(
                                   "assets/icons/mail.svg",
                                   width: 20,
-                                  color: kDisabledIconColor,
+                                  colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),
                                 const Text(
                                   "Email: ",
@@ -254,7 +254,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 SvgPicture.asset(
                                   "assets/icons/link-outline.svg",
                                   width: 20,
-                                  color: kDisabledIconColor,
+                                  colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),
                                 const Text(
                                   "Website oficial: ",
@@ -284,7 +284,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 SvgPicture.asset(
                                   "assets/icons/link-outline.svg",
                                   width: 20,
-                                  color: kDisabledIconColor,
+                                  colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),
                                 const Text(
                                   "Facebook: ",
@@ -385,7 +385,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                             child: SvgPicture.asset(
                                               "assets/icons/logo-facebook.svg",
                                               width: 26,
-                                              color: kForegroundColor,
+                                              colorFilter: const ColorFilter.mode(kForegroundColor, BlendMode.srcIn),
                                             ),
                                           ),
                                           const SizedBox(
@@ -396,7 +396,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                             child: SvgPicture.asset(
                                               "assets/icons/logo-instagram.svg",
                                               width: 26,
-                                              color: kForegroundColor,
+                                              colorFilter: const ColorFilter.mode(kForegroundColor, BlendMode.srcIn),
                                             ),
                                           ),
                                           const SizedBox(
@@ -407,7 +407,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                             child: SvgPicture.asset(
                                               "assets/icons/logo-github.svg",
                                               width: 26,
-                                              color: kForegroundColor,
+                                              colorFilter: const ColorFilter.mode(kForegroundColor, BlendMode.srcIn),
                                             ),
                                           )
                                         ],

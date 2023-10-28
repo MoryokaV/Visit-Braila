@@ -175,7 +175,7 @@ class EventView extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             "assets/icons/clock.svg",
-                            color: kDisabledIconColor,
+                            colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                             width: 22,
                           ),
                           const SizedBox(

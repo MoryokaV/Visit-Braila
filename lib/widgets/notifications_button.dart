@@ -52,7 +52,7 @@ class _NotificationsButtonState extends State<NotificationsButton> with WidgetsB
         ? const SizedBox()
         : IconButton(
             onPressed: () {
-              AppSettings.openNotificationSettings();
+              AppSettings.openAppSettings(type: AppSettingsType.notification);
             },
             icon: Icon(
               notificationsEnabled ? Icons.notifications_active_rounded : Icons.notifications_off_rounded,

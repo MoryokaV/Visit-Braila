@@ -170,7 +170,7 @@ class RestaurantView extends StatelessWidget {
                               SvgPicture.asset(
                                 "assets/icons/map-pin.svg",
                                 width: 22,
-                                color: kPrimaryColor,
+                                colorFilter: const ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
                               ),
                               const SizedBox(
                                 width: 6,

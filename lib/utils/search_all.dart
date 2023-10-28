@@ -269,7 +269,7 @@ class SearchAll extends SearchDelegate<String> {
       leading: SvgPicture.asset(
         icon,
         height: 24,
-        color: kPrimaryColor,
+        colorFilter: const ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
       ),
       title: RichText(
         text: TextSpan(

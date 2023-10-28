@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
@@ -324,7 +324,7 @@ class SightCard extends StatelessWidget {
                             SvgPicture.asset(
                               "assets/icons/map-pin.svg",
                               width: 22,
-                              color: kDisabledIconColor,
+                              colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                             ),
                             const SizedBox(
                               width: 6,

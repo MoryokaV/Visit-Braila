@@ -270,7 +270,7 @@ class EmptyWishlistCollectionWidget extends StatelessWidget {
           SvgPicture.asset(
             "assets/icons/sad-outline.svg",
             width: 50,
-            color: kDisabledIconColor,
+            colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
           ),
           const SizedBox(height: 10),
           Text(

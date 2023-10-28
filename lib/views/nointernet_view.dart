@@ -30,7 +30,7 @@ class NoInternetView extends StatelessWidget {
                         "assets/icons/wifi-off.svg",
                         height: Responsive.safeBlockVertical * 15,
                         fit: BoxFit.contain,
-                        color: kDisabledIconColor,
+                        colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                       ),
                       const SizedBox(
                         height: 30,

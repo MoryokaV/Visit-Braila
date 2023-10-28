@@ -33,10 +33,10 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
       color: kPrimaryColor,
     ),
     'body': Style(
-      margin: EdgeInsets.zero,
-      padding: EdgeInsets.zero,
-      textAlign: TextAlign.justify,
-      whiteSpace: WhiteSpace.NORMAL,
+      margin: Margins.zero,
+      padding: HtmlPaddings.zero,
+      textAlign: TextAlign.start,
+      whiteSpace: WhiteSpace.normal,
     ),
     'h1': Style(
       fontSize: FontSize.xLarge,
@@ -48,7 +48,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
       fontSize: FontSize.large,
     ),
     'p': Style(
-      margin: const EdgeInsets.only(bottom: 6),
+      margin: Margins.only(bottom: 6),
       fontSize: FontSize.medium,
     ),
   };
@@ -59,7 +59,8 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
 
   void analyzeHtml() {
     var doc = HtmlParser.parseHTML(widget.data);
-    var body = doc.body!;
+    // var body = doc.body!;
+    var body = doc;
 
     if (body.children.length > 12 || body.text.length > 400) {
       longDescription = true;
@@ -89,11 +90,13 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                       height: readMore ? null : 200,
                       child: Stack(
                         children: [
-                          SelectableHtml(
-                            scrollPhysics: const NeverScrollableScrollPhysics(),
-                            data: widget.data,
-                            onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
-                            style: descriptionStyle,
+                          SelectionArea(
+                            child: Html(
+                              // scrollPhysics: const NeverScrollableScrollPhysics(),
+                              data: widget.data,
+                              onLinkTap: (url, attributes, element) => openBrowserURL(url!),
+                              style: descriptionStyle,
+                            ),
                           ),
                           if (!readMore)
                             Positioned(
@@ -135,7 +138,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                         ),
                         SvgPicture.asset(
                           readMore ? "assets/icons/chevron-up.svg" : "assets/icons/chevron-down.svg",
-                          color: kBlackColor,
+                          colorFilter: const ColorFilter.mode(kBlackColor, BlendMode.srcIn),
                           width: 20,
                         ),
                       ],
@@ -143,11 +146,13 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
                   ),
                 ],
               )
-            : SelectableHtml(
-                scrollPhysics: const NeverScrollableScrollPhysics(),
-                data: widget.data,
-                onLinkTap: (url, context, attributes, element) => openBrowserURL(url!),
-                style: descriptionStyle,
+            : SelectionArea(
+                child: Html(
+                  // scrollPhysics: const NeverScrollableScrollPhysics(),
+                  data: widget.data,
+                  onLinkTap: (url, attributes, element) => openBrowserURL(url!),
+                  style: descriptionStyle,
+                ),
               );
   }
 }

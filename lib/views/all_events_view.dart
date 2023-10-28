@@ -72,7 +72,7 @@ class _AllEventsViewState extends State<AllEventsView> {
                     SvgPicture.asset(
                       "assets/icons/calendar4-event.svg",
                       width: 50,
-                      color: kDisabledIconColor,
+                      colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                     ),
                     const SizedBox(
                       height: 16,
@@ -259,7 +259,7 @@ class EventCard extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                           "assets/icons/clock.svg",
-                          color: kDisabledIconColor,
+                          colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                           width: 20,
                         ),
                         const SizedBox(

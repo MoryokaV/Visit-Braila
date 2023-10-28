@@ -182,7 +182,7 @@ class _TourViewState extends State<TourView> {
                                 SvgPicture.asset(
                                   "assets/icons/route.svg",
                                   width: 24,
-                                  color: kPrimaryColor,
+                                  colorFilter: const ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
                                 ),
                                 const SizedBox(
                                   width: 6,
