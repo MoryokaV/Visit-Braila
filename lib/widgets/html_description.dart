@@ -39,18 +39,25 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
       whiteSpace: WhiteSpace.normal,
     ),
     'h1': Style(
-      fontSize: FontSize.xLarge,
+      margin: Margins.only(bottom: 6),
+      fontSize: FontSize(20.0),
     ),
     'h2': Style(
-      fontSize: FontSize.larger,
+      fontSize: FontSize(17.0),
     ),
     'h3': Style(
-      fontSize: FontSize.large,
+      margin: Margins.symmetric(vertical: 6),
+      fontSize: FontSize(15.5),
     ),
     'p': Style(
-      margin: Margins.only(bottom: 6),
       fontSize: FontSize.medium,
     ),
+    'p:last-child': Style(
+      margin: Margins.zero,
+    ),
+    'br': Style(
+      display: Display.none,
+    )
   };
 
   bool isEmptyDescription() {
