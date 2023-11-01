@@ -326,7 +326,7 @@ $(document).ready(async function () {
     sight.external_link = $("#sight-external-link").val();
 
     try {
-      if (formData.getAll("files[]").length > 0)
+      if (formData.getAll("files[]").length > 0) {
         await $.ajax({
           type: "POST",
           url: "/api/uploadImages/sights",
@@ -340,6 +340,7 @@ $(document).ready(async function () {
             },
           },
         });
+      }
 
       sight.images = [...current_images];
 
@@ -421,7 +422,7 @@ $(document).ready(async function () {
   $("#tour-images").change(function () {
     $(this).prop("required", false);
 
-    addImages($(this).prop("files"), "/static/media/tours/", false, tour.images, formData, $("#tour-primary-image"));
+    addImages($(this).prop("files"), "/static/media/tours/", false, current_images, formData, $("#tour-primary-image"));
 
     $(this).val(null);
   });
@@ -450,7 +451,7 @@ $(document).ready(async function () {
     tour.external_link = $("#tour-external-link").val();
 
     try {
-      if (formData.getAll("files[]").length > 0)
+      if (formData.getAll("files[]").length > 0) {
         await $.ajax({
           type: "POST",
           url: "/api/uploadImages/tours",
@@ -464,6 +465,7 @@ $(document).ready(async function () {
             },
           },
         });
+      }
 
       tour.images = [...current_images];
 
@@ -547,7 +549,7 @@ $(document).ready(async function () {
     restaurant.external_link = $("#restaurant-external-link").val();
 
     try {
-      if (formData.getAll("files[]").length > 0)
+      if (formData.getAll("files[]").length > 0) {
         await $.ajax({
           type: "POST",
           url: "/api/uploadImages/restaurants",
@@ -561,6 +563,7 @@ $(document).ready(async function () {
             },
           },
         });
+      }
 
       restaurant.images = [...current_images];
 
@@ -649,7 +652,7 @@ $(document).ready(async function () {
     hotel.external_link = $("#hotel-external-link").val();
 
     try {
-      if (formData.getAll("files[]").length > 0)
+      if (formData.getAll("files[]").length > 0) {
         await $.ajax({
           type: "POST",
           url: "/api/uploadImages/hotels",
@@ -663,6 +666,7 @@ $(document).ready(async function () {
             },
           },
         });
+      }
 
       hotel.images = [...current_images];
 
@@ -768,19 +772,21 @@ $(document).ready(async function () {
     }
 
     try {
-      await $.ajax({
-        type: "POST",
-        url: "/api/uploadImages/events",
-        contentType: false,
-        data: formData,
-        cache: false,
-        processData: false,
-        statusCode: {
-          413: function () {
-            alert("Files size should be less than 15MB");
+      if (formData.getAll("files[]").length > 0) {
+        await $.ajax({
+          type: "POST",
+          url: "/api/uploadImages/events",
+          contentType: false,
+          data: formData,
+          cache: false,
+          processData: false,
+          statusCode: {
+            413: function () {
+              alert("Files size should be less than 15MB");
+            },
           },
-        },
-      });
+        });
+      }
 
       event.images = [...current_images];
 
