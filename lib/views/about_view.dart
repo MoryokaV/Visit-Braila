@@ -341,7 +341,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                    "Autorul aplicației",
+                                    "Dezvoltatorul aplicației",
                                     style: TextStyle(
                                       fontFamily: labelFont,
                                       fontWeight: FontWeight.w500,

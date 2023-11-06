@@ -9,6 +9,9 @@ const obiectivUrl = "https://obiectivbr.ro";
 const authorFacebookUrl = "https://www.facebook.com/mario.vlaviano.75";
 const authorInstagramUrl = "https://www.instagram.com/mario.vlv";
 const authorGithubUrl = "https://github.com/moryokav";
+const brTranporIOSUrl = "https://apps.apple.com/ro/app/braila-transport-public/id1471991385";
+const brTranportAndroidUrl = "https://play.google.com/store/apps/details?id=com.modeshift.braila";
+const brBoatUrl = "https://stplcapbraila.ro/new/index.php/plimbari-pe-dunare/";
 
 Future<void> trustServer() async {
   ByteData data = await PlatformAssetBundle().load('assets/certs/isrgrootx1.pem');
