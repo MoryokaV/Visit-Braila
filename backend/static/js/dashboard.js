@@ -165,6 +165,19 @@ $(document).ready(async function() {
     await openEditSightModal($(this).parent().parent().attr("id"));
   });
 
+  const list = document.querySelector("#sights-table tbody");
+
+  new Sortable(list, {
+    animation: 150,
+    easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+    delay: 200,
+    delayOnTouchOnly: true,
+    draggable: "tr",
+    onEnd: async function(e){
+      console.log(e.oldIndex, e.newIndex);
+    }
+  })
+
   await fetchTours();
 
   $("#tours-table").on('click', ".action-delete-tour", async function() {

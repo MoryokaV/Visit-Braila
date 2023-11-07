@@ -131,13 +131,24 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Biblioteca Județeană \"Panait Istrati\" Brăila",
-                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  const TextSpan(text: "Despre "),
+                                  TextSpan(
+                                    text: "Visit Brăila",
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ],
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
+                              ),
                             ),
                             const SizedBox(height: 14),
                             HtmlDescription(
-                              data: data["paragraph1"]!,
+                              data: data["paragraph2"]!,
                               shrink: false,
                             ),
                             const Padding(
@@ -145,12 +156,12 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                               child: Divider(thickness: 1.1),
                             ),
                             Text(
-                              "Despre Visit Brăila",
+                              "Instituții partenere",
                               style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
                             ),
                             const SizedBox(height: 14),
                             HtmlDescription(
-                              data: data["paragraph2"]!,
+                              data: data["paragraph1"]!,
                               shrink: false,
                             ),
                             const Padding(
@@ -403,9 +414,9 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                             width: 8,
                                           ),
                                           GestureDetector(
-                                            onTap: () => openBrowserURL(authorGithubUrl),
+                                            onTap: () => openBrowserURL(authorLinkedInUrl),
                                             child: SvgPicture.asset(
-                                              "assets/icons/logo-github.svg",
+                                              "assets/icons/logo-linkedin.svg",
                                               width: 26,
                                               colorFilter: const ColorFilter.mode(kForegroundColor, BlendMode.srcIn),
                                             ),
