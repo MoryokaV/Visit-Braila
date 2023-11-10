@@ -21,9 +21,14 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
   Map<String, dynamic> data = {
     "paragraph1": "",
     "paragraph2": "",
-    "oraganization": "",
+    "oraganization1": "",
+    "oraganization2": "",
     "phone": "",
     "email": "",
+    "website1": "",
+    "website2": "",
+    "facebook1": "",
+    "facebook2": "",
     "cover_image": "",
     "cover_image_blurhash": "",
   };
@@ -189,7 +194,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Text(
-                                  data['organization']!,
+                                  "${data['organization1']!}, ${data['organization2']!}",
                                   style: const TextStyle(
                                     fontFamily: labelFont,
                                     fontWeight: FontWeight.w600,
@@ -276,7 +281,19 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 GestureDetector(
                                   onTap: () => openBrowserURL(data['website']!),
                                   child: Text(
-                                    data['website']!,
+                                    data['website1']!,
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: labelFont,
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () => openBrowserURL(data['website']!),
+                                  child: Text(
+                                    data['website2']!,
                                     style: TextStyle(
                                       decoration: TextDecoration.underline,
                                       color: Theme.of(context).primaryColor,
@@ -306,7 +323,19 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                 GestureDetector(
                                   onTap: () => openBrowserURL(data['facebook']!),
                                   child: Text(
-                                    data['facebook']!,
+                                    data['facebook1']!,
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: labelFont,
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () => openBrowserURL(data['facebook']!),
+                                  child: Text(
+                                    data['facebook2']!,
                                     style: TextStyle(
                                       decoration: TextDecoration.underline,
                                       color: Theme.of(context).primaryColor,

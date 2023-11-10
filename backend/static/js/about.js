@@ -59,31 +59,38 @@ $(document).ready(async function() {
   });
 
   // CONTACT
-  $("#organization").val(data.organization);
+  $("#organization1").val(data.organization1);
+  $("#organization2").val(data.organization2);
 
   $("#phone").attr("pattern", phoneRegExp).attr("title", phoneRegExpTitle);
   $("#phone").val(data.phone);
 
   $("#email").val(data.email);
 
-  $("#website").val(data.website);
-  $("#facebook").val(data.facebook);
+  $("#website1").val(data.website1);
+  $("#website2").val(data.website2);
+
+  $("#facebook1").val(data.facebook1);
+  $("#facebook2").val(data.facebook2);
 
   $("#contact-form").submit(async function(e) {
     e.preventDefault();
 
     startLoadingAnimation($(this));
 
-    const organization = $("#organization").val();
+    const organization1 = $("#organization1").val();
+    const organization2 = $("#organization2").val();
     const phone = $("#phone").val();
     const email = $("#email").val();
-    const website = $("#website").val();
-    const facebook = $("#facebook").val();
+    const website1 = $("#website1").val();
+    const website2 = $("#website2").val();
+    const facebook1 = $("#facebook1").val();
+    const facebook2 = $("#facebook2").val();
 
     await $.ajax({
       type: "PUT",
       url: "/api/updateContactDetails",
-      data: JSON.stringify({ "organization": organization, "phone": phone, "email": email, "website": website, "facebook": facebook }),
+      data: JSON.stringify({ "organization1": organization1, "organization2": organization2, "phone": phone, "email": email, "website1": website1, "website2": website2, "facebook1": facebook1, "facebook2": facebook2 }),
       processData: false,
       contentType: "application/json; charset=UTF-8",
     });
