@@ -165,16 +165,28 @@ $(document).ready(async function() {
     await openEditSightModal($(this).parent().parent().attr("id"));
   });
 
-  const list = document.querySelector("#sights-table tbody");
+  const sightsList = document.querySelector("#sights-table tbody");
 
-  new Sortable(list, {
+  new Sortable(sightsList, {
     animation: 150,
     easing: "cubic-bezier(0.65, 0, 0.35, 1)",
     delay: 200,
     delayOnTouchOnly: true,
     draggable: "tr",
     onEnd: async function(e){
-      console.log(e.oldIndex, e.newIndex);
+      let items = []
+
+      for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
+        items.push($("#sights-table tbody tr").eq(i).find("td:last-child").attr('id'));
+      }
+
+      await $.ajax({
+        type: "PUT",
+        url: "/api/updateSightIndex",
+        data: JSON.stringify({items: items, oldIndex: e.oldIndex, newIndex: e.newIndex}),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
     }
   })
 

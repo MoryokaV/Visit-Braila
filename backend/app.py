@@ -186,6 +186,7 @@ def insertSight():
     sight['latitude'] = float(sight['latitude'])
     sight['longitude'] = float(sight['longitude'])
     sight['primary_image_blurhash'] = getBlurhash(sight['images'][sight['primary_image'] - 1])
+    sight['index'] = len(list(db.sights.find()))
 
     db.sights.insert_one(sight)
     
@@ -193,16 +194,25 @@ def insertSight():
 
 @app.route("/api/fetchSights")
 def fetchSights():
-    return json.dumps(list(db.sights.find()), default=str)
+    return json.dumps(list(db.sights.find().sort("index", 1)), default=str)
 
 @app.route("/api/deleteSight/<_id>", methods=["DELETE"])
 @login_required
 def deleteSight(_id):
+    sight = json.loads(findSight(_id))
+
     # delete local sight images first
-    images = json.loads(findSight(_id))['images']
+    images = sight['images']
     deleteImages(images, 'sights')
 
+    # remove from trending if existent
     filterTrendingByItemId(_id)
+
+    # reorder
+    items = db.sights.find().sort('index', 1)
+    for item in items:
+        if item['index'] > sight['index']:
+            db.sights.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index" : item['index'] - 1}})
 
     # delete sight
     db.sights.delete_one({"_id": ObjectId(_id)})
@@ -233,6 +243,22 @@ def editSight():
     db.sights.update_one({"_id": ObjectId(data['_id'])}, {"$set": sight})
 
     return make_response("Entry has been updated", 200)
+
+@app.route("/api/updateSightIndex", methods=["PUT"])
+@login_required
+def updateSightIndex():
+    req = request.get_json()
+
+    oldIndex = req['oldIndex']
+    newIndex = req['newIndex']
+    items = list(req['items'])
+
+    j = 0
+    for i in range(min(oldIndex, newIndex), max(oldIndex, newIndex) + 1):
+        db.sights.update_one({"_id": ObjectId(items[j])}, {"$set": {"index": i}})
+        j += 1
+
+    return make_response("Entries have been updated", 200)
 
 # --- TOURS ---  
 
