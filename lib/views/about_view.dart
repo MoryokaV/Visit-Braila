@@ -310,7 +310,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                               spacing: 4,
                               children: [
                                 SvgPicture.asset(
-                                  "assets/icons/link-outline.svg",
+                                  "assets/icons/logo-facebook.svg",
                                   width: 20,
                                   colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),

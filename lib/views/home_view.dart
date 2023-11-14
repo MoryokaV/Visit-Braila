@@ -256,14 +256,14 @@ class HomeView extends StatelessWidget {
                                               ),
                                         ),
                                         const SizedBox(
-                                          height: 20,
+                                          height: 15,
                                         ),
                                         ElevatedButton(
                                           onPressed: () => Navigator.pushNamed(context, "/alltours"),
                                           style: ElevatedButton.styleFrom(
                                             padding: const EdgeInsets.symmetric(
-                                              horizontal: 28,
-                                              vertical: 14,
+                                              horizontal: 20,
+                                              vertical: 10,
                                             ),
                                             backgroundColor: Colors.white,
                                             foregroundColor: Colors.black,
@@ -302,14 +302,14 @@ class HomeView extends StatelessWidget {
                                               ),
                                         ),
                                         const SizedBox(
-                                          height: 20,
+                                          height: 15,
                                         ),
                                         ElevatedButton(
                                           onPressed: () => Navigator.pushNamed(context, "/allsights"),
                                           style: ElevatedButton.styleFrom(
                                             padding: const EdgeInsets.symmetric(
-                                              horizontal: 28,
-                                              vertical: 14,
+                                              horizontal: 20,
+                                              vertical: 10,
                                             ),
                                             backgroundColor: Colors.white,
                                             foregroundColor: Colors.black,
