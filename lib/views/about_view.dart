@@ -279,7 +279,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => openBrowserURL(data['website']!),
+                                  onTap: () => openBrowserURL(data['website1']!),
                                   child: Text(
                                     data['website1']!,
                                     style: TextStyle(
@@ -291,7 +291,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => openBrowserURL(data['website']!),
+                                  onTap: () => openBrowserURL(data['website2']!),
                                   child: Text(
                                     data['website2']!,
                                     style: TextStyle(
@@ -321,7 +321,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => openBrowserURL(data['facebook']!),
+                                  onTap: () => openBrowserURL(data['facebook1']!),
                                   child: Text(
                                     data['facebook1']!,
                                     style: TextStyle(
@@ -333,7 +333,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => openBrowserURL(data['facebook']!),
+                                  onTap: () => openBrowserURL(data['facebook2']!),
                                   child: Text(
                                     data['facebook2']!,
                                     style: TextStyle(
