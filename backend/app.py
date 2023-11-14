@@ -601,9 +601,16 @@ def deleteTrendingItem():
 @app.route("/api/updateTrendingItemIndex", methods=["PUT"])
 @login_required
 def updateTrendingItemIndex():
-    item = request.get_json()
+    req = request.get_json()
 
-    db.trending.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index": item['newIndex']}})
+    oldIndex = req['oldIndex']
+    newIndex = req['newIndex']
+    items = list(req['items'])
+
+    j = 0
+    for i in range(min(oldIndex, newIndex), max(oldIndex, newIndex) + 1):
+        db.trending.update_one({"_id": ObjectId(items[j])}, {"$set": {"index" : i}})
+        j += 1
 
     return make_response("Entry has been updated", 200)
 

@@ -44,19 +44,25 @@ const appendElements = async () => {
     delay: 200,
     delayOnTouchOnly: true,
     onEnd: async function(e) {
+      let items = [] 
+
       for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
         $(".trending-container article").eq(i).find("footer").addClass("loading");
       }
 
       for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
-        await $.ajax({
-          type: "PUT",
-          url: "/api/updateTrendingItemIndex",
-          data: JSON.stringify({ _id: $(".trending-container article").eq(i).attr('id'), newIndex: i }),
-          processData: false,
-          contentType: "application/json; charset=UTF-8",
-        });
+        items.push($(".trending-container article").eq(i).attr('id'));
+      }
 
+      await $.ajax({
+        type: "PUT",
+        url: "/api/updateTrendingItemIndex",
+        data: JSON.stringify({ items: items, oldIndex: e.oldIndex, newIndex: e.newIndex }),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+
+      for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
         await new Promise(resolve => {
           setTimeout(() => {
             $(".trending-container article").eq(i).find("footer").removeClass("loading");
