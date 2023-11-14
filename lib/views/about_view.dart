@@ -188,7 +188,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                   colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),
                                 const Text(
-                                  "Organizație: ",
+                                  "Organizații: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
@@ -273,7 +273,7 @@ class _AboutViewState extends State<AboutView> with TickerProviderStateMixin {
                                   colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
                                 ),
                                 const Text(
-                                  "Website oficial: ",
+                                  "Pagini web oficiale: ",
                                   style: TextStyle(
                                     fontFamily: labelFont,
                                   ),
