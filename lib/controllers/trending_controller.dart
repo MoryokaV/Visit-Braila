@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:visit_braila/controllers/event_controller.dart';
 import 'package:visit_braila/controllers/hotel_controller.dart';
 import 'package:visit_braila/controllers/restaurant_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
@@ -10,6 +11,7 @@ class TrendingController {
   final SightController sightController = SightController();
   final RestaurantController restaurantController = RestaurantController();
   final HotelController hotelController = HotelController();
+  final EventController eventController = EventController();
 
   Future<List<Object?>> fetchTrending() async {
     try {
@@ -27,6 +29,8 @@ class TrendingController {
                 return restaurantController.findRestaurant(item['item_id']);
               case "hotel":
                 return hotelController.findHotel(item['item_id']);
+              case "event":
+                return eventController.findEvent(item['item_id']); 
               default:
                 return Future.value(null);
             }

@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/trending_controller.dart';
+import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
 import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
@@ -31,6 +34,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: SafeArea(
@@ -196,6 +201,12 @@ class HomeView extends StatelessWidget {
                                                 latitude: hotel.latitude,
                                                 longitude: hotel.longitude,
                                                 pushTo: () => Navigator.pushNamed(context, "/hotel", arguments: hotel),
+                                              );
+                                            case Event:
+                                              Event event = trending.data![index] as Event;
+
+                                              return TrendingEventCard(
+                                                event: event,
                                               );
                                             default:
                                               return const SizedBox();
@@ -800,11 +811,128 @@ class TrendingItemCard extends StatelessWidget {
                           ),
                           Text(
                             location.getDistance(latitude, longitude),
-                            style: TextStyle(fontSize: 12, color: kForegroundColor.withOpacity(0.85)),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: kForegroundColor.withOpacity(0.85),
+                            ),
                           ),
                         ],
                       );
                     },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TrendingEventCard extends StatelessWidget {
+  final Event event;
+
+  const TrendingEventCard({
+    super.key,
+    required this.event,
+  });
+
+  String getDateInterval() {
+    if (event.endDateTime == null) {
+      return DateFormat.yMMMd('ro-RO').format(event.dateTime);
+    }
+
+    if (event.dateTime.month == event.endDateTime!.month && event.dateTime.year == event.endDateTime!.year) {
+      return "${DateFormat.d('ro-RO').format(event.dateTime)} - ${DateFormat.d('ro-RO').format(event.endDateTime!)} ${DateFormat.MMM('ro-RO').format(event.endDateTime!)} ${DateFormat.y('ro-RO').format(event.endDateTime!)}";
+    }
+
+    return "${DateFormat.MMMd('ro-RO').format(event.dateTime)} -> ${DateFormat.MMMd('ro-RO').format(event.endDateTime!)}";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, "/event", arguments: event),
+      child: Container(
+        width: Responsive.safeBlockHorizontal * 60,
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          boxShadow: const [shadowSm],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Hero(
+                tag: event.id,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: const [shadowSm],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedApiImage(
+                      imageUrl: event.images[event.primaryImage - 1],
+                      width: double.infinity,
+                      cacheWidth: Responsive.safeBlockHorizontal * 60,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 4,
+                vertical: 6,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          event.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: kBlackColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
+                        color: kDisabledIconColor,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        getDateInterval(),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: kForegroundColor.withOpacity(0.85),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
