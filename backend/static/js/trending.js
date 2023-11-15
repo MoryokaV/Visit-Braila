@@ -84,6 +84,9 @@ const getNameImageItem = async (item) => {
   } else if (item.type === "hotel") {
     const { name, images, primary_image } = await $.getJSON("/api/findHotel/" + item.item_id);
     return { "name": name, "image": images[primary_image - 1] };
+  } else if (item.type === "event") {
+    const { name, images, primary_image }  = await $.getJSON("/api/findEvent/" + item.item_id);
+    return {"name": name, "image": images[primary_image - 1] };
   }
 }
 
@@ -132,6 +135,7 @@ $(document).ready(async function() {
     const sight = await $.getJSON("/api/findSight/" + item.item_id).catch(() => { });
     const restaurant = await $.getJSON("/api/findRestaurant/" + item.item_id).catch(() => { });
     const hotel = await $.getJSON("/api/findHotel/" + item.item_id).catch(() => { });
+    const event = await $.getJSON("/api/findEvent/" + item.item_id).catch(() => { });
 
     if (sight !== undefined) {
       item.type = "sight";
@@ -139,8 +143,10 @@ $(document).ready(async function() {
       item.type = "restaurant";
     } else if (hotel !== undefined) {
       item.type = "hotel";
+    } else if (event !== undefined) {
+      item.type = "event"
     } else {
-      alert("ERROR: Not a valid sight/restaurant/hotel id!");
+      alert("ERROR: Not a valid sight/restaurant/hotel/event id!");
     }
 
     if (sight !== undefined || restaurant !== undefined || hotel !== undefined) {
