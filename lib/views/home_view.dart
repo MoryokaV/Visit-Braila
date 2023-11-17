@@ -68,31 +68,36 @@ class HomeView extends StatelessWidget {
                                   cacheHeight: Responsive.safeBlockVertical * 35,
                                   cacheWidth: Responsive.screenWidth,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 18, top: 12),
-                                  child: RichText(
-                                    text: const TextSpan(
+                                const Positioned.fill(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 12,
+                                      horizontal: 14,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        TextSpan(
-                                          text: "Brăila",
+                                        Text(
+                                          "Brăila",
                                           style: TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                            fontFamily: bodyFont,
+                                            height: 1.4,
                                           ),
                                         ),
-                                        TextSpan(
-                                          text: " - un oraș istoric de pe malul Dunării",
+                                        Text(
+                                          "Un oraș istoric de pe malul Dunării",
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                            fontFamily: bodyFont,
+                                            height: 1.4,
                                           ),
                                         ),
                                       ],
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: bodyFont,
-                                        height: 1.4,
-                                      ),
                                     ),
                                   ),
                                 ),
@@ -278,7 +283,7 @@ class HomeView extends StatelessWidget {
                                             ),
                                             backgroundColor: Colors.white,
                                             foregroundColor: Colors.black,
-                                            textStyle: Theme.of(context).textTheme.labelLarge,
+                                            textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
                                           ),
                                           child: const Text("Tururi"),
                                         ),
@@ -324,7 +329,7 @@ class HomeView extends StatelessWidget {
                                             ),
                                             backgroundColor: Colors.white,
                                             foregroundColor: Colors.black,
-                                            textStyle: Theme.of(context).textTheme.labelLarge,
+                                            textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
                                           ),
                                           child: const Text("Atracții"),
                                         ),
