@@ -542,9 +542,14 @@ def fetchEvents():
 @app.route("/api/deleteEvent/<_id>", methods=["DELETE"])
 @login_required
 def deleteEvent(_id):
+    event = json.loads(findEvent(_id))
+
     # delete local event images first
-    images = json.loads(findEvent(_id))['images']
+    images = event['images']
     deleteImages(images, 'events')
+
+    # remove from trending if existent
+    filterTrendingByItemId(_id)
 
     db.events.delete_one({"_id": ObjectId(_id)})
 
@@ -656,6 +661,22 @@ def insertTrendingItem():
 
 @app.route("/api/fetchTrendingItems")
 def fetchTrendingItems():
+    trending = list(db.trending.find().sort("index", 1))
+    
+    # check for deleted event and remove
+    for i in range(len(trending)):
+        if trending[i]['type'] == 'event':
+            search = db.events.find_one({"_id": ObjectId(trending[i]['item_id'])})
+            print(search)
+
+            if search is None:
+                j = i + 1
+                db.trending.delete_one({"_id": ObjectId(trending[i]['_id'])})
+
+                while j < len(trending):
+                    db.trending.update_one({"index": j}, {"$set": {"index": j - 1}})
+                    j += 1
+
     return json.dumps(list(db.trending.find().sort("index", 1)), default=str)
 
 @app.route("/api/deleteTrendingItem", methods=["DELETE"])
@@ -865,14 +886,6 @@ def init_dir():
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/about"):
         os.makedirs(app.config["MEDIA_FOLDER"] + "/about")
 
-def addIndex():
-    items = list(db.hotels.find())
-
-    for i in range(len(items)):
-        db.hotels.update_one({"_id": ObjectId(items[i]['_id'])}, {"$set": {"index": i}})
-
-
 if __name__ == '__main__':
     init_dir()
-    addIndex()
     app.run(debug=True)

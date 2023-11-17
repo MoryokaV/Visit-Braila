@@ -149,7 +149,7 @@ $(document).ready(async function() {
       alert("ERROR: Not a valid sight/restaurant/hotel/event id!");
     }
 
-    if (sight !== undefined || restaurant !== undefined || hotel !== undefined) {
+    if (sight !== undefined || restaurant !== undefined || hotel !== undefined || event !== undefined) {
       await $.ajax({
         type: "POST",
         url: "/api/insertTrendingItem",
