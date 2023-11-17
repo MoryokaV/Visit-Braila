@@ -207,6 +207,31 @@ $(document).ready(async function() {
     await openEditTourModal($(this).parent().parent().attr("id"));
   });
 
+  const toursList = document.querySelector("#tours-table tbody");
+
+  new Sortable(toursList, {
+    animation: 150,
+    easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+    delay: 200,
+    delayOnTouchOnly: true,
+    draggable: "tr",
+    onEnd: async function(e){
+      let items = []
+
+      for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
+        items.push($("#tours-table tbody tr").eq(i).find("td:last-child").attr('id'));
+      }
+
+      await $.ajax({
+        type: "PUT",
+        url: "/api/updateTourIndex",
+        data: JSON.stringify({items: items, oldIndex: e.oldIndex, newIndex: e.newIndex}),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+    }
+  })
+
   await fetchRestaurants();
 
   $("#restaurants-table").on('click', ".action-delete-restaurant", async function() {

@@ -268,6 +268,7 @@ def insertTour():
     tour = request.get_json()
 
     tour['length'] = float(tour['length'])
+    tour['index'] = len(list(db.tours.find()))
     
     db.tours.insert_one(tour)
 
@@ -275,13 +276,14 @@ def insertTour():
 
 @app.route("/api/fetchTours")
 def fetchTours():
-    return json.dumps(list(db.tours.find()), default=str)
+    return json.dumps(list(db.tours.find().sort("index", 1)), default=str)
 
 @app.route("/api/deleteTour/<_id>", methods=["DELETE"])
 @login_required
 def deleteTour(_id):
+    tour = json.loads(findTour(_id))
     # delete local tour images first
-    images = json.loads(findTour(_id))['images']
+    images = tour['images']
     deleteImages(images, 'tours')
 
     db.tours.delete_one({"_id": ObjectId(_id)})
@@ -310,6 +312,22 @@ def editTour():
     db.tours.update_one({"_id": ObjectId(data['_id'])}, {"$set": tour})
 
     return make_response("Entry has been updated", 200)
+
+@app.route("/api/updateTourIndex", methods=["PUT"])
+@login_required
+def updateTourIndex():
+    req = request.get_json()
+
+    oldIndex = req['oldIndex']
+    newIndex = req['newIndex']
+    items = list(req['items'])
+
+    j = 0
+    for i in range(min(oldIndex, newIndex), max(oldIndex, newIndex) + 1):
+        db.tours.update_one({"_id": ObjectId(items[j])}, {"$set": {"index": i}})
+        j += 1
+
+    return make_response("Entries have been updated", 200)
 
 # --- RESTAURANTS ---  
 
