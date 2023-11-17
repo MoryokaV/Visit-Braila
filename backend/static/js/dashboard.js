@@ -249,6 +249,31 @@ $(document).ready(async function() {
     await openEditRestaurantModal($(this).parent().parent().attr("id"));
   });
 
+  const restaurantsList = document.querySelector("#restaurants-table tbody");
+
+  new Sortable(restaurantsList, {
+    animation: 150,
+    easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+    delay: 200,
+    delayOnTouchOnly: true,
+    draggable: "tr",
+    onEnd: async function(e){
+      let items = []
+
+      for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
+        items.push($("#restaurants-table tbody tr").eq(i).find("td:last-child").attr('id'));
+      }
+
+      await $.ajax({
+        type: "PUT",
+        url: "/api/updateRestaurantIndex",
+        data: JSON.stringify({items: items, oldIndex: e.oldIndex, newIndex: e.newIndex}),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+    }
+  })
+
   await fetchHotels();
 
   $("#hotels-table").on('click', ".action-delete-hotel", async function() {
@@ -265,6 +290,31 @@ $(document).ready(async function() {
   $("#hotels-table").on('click', ".action-edit-hotel", async function() {
     await openEditHotelModal($(this).parent().parent().attr("id"));
   });
+
+  const hotelsList = document.querySelector("#hotels-table tbody");
+
+  new Sortable(hotelsList, {
+    animation: 150,
+    easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+    delay: 200,
+    delayOnTouchOnly: true,
+    draggable: "tr",
+    onEnd: async function(e){
+      let items = []
+
+      for (let i = Math.min(e.oldIndex, e.newIndex); i <= Math.max(e.oldIndex, e.newIndex); i++) {
+        items.push($("#hotels-table tbody tr").eq(i).find("td:last-child").attr('id'));
+      }
+
+      await $.ajax({
+        type: "PUT",
+        url: "/api/updateHotelIndex",
+        data: JSON.stringify({items: items, oldIndex: e.oldIndex, newIndex: e.newIndex}),
+        processData: false,
+        contentType: "application/json; charset=UTF-8",
+      });
+    }
+  })
 
   await fetchEvents();
 

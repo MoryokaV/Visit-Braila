@@ -282,9 +282,16 @@ def fetchTours():
 @login_required
 def deleteTour(_id):
     tour = json.loads(findTour(_id))
+
     # delete local tour images first
     images = tour['images']
     deleteImages(images, 'tours')
+
+    # reorder
+    items = db.tours.find().sort('index', 1)
+    for item in items:
+        if item['index'] > tour['index']:
+            db.tours.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index" : item['index'] - 1}})
 
     db.tours.delete_one({"_id": ObjectId(_id)})
 
@@ -339,6 +346,7 @@ def insertRestaurant():
     restaurant['latitude'] = float(restaurant['latitude'])
     restaurant['longitude'] = float(restaurant['longitude'])
     restaurant['primary_image_blurhash'] = getBlurhash(restaurant['images'][restaurant['primary_image'] - 1])
+    restaurant['index'] = len(list(db.restaurants.find()))
 
     db.restaurants.insert_one(restaurant)
     
@@ -346,16 +354,25 @@ def insertRestaurant():
 
 @app.route("/api/fetchRestaurants")
 def fetchRestaurants():
-    return json.dumps(list(db.restaurants.find()), default=str)
+    return json.dumps(list(db.restaurants.find().sort("index", 1)), default=str)
 
 @app.route("/api/deleteRestaurant/<_id>", methods=["DELETE"])
 @login_required
 def deleteRestaurant(_id):
+    restaurant = json.loads(findRestaurant(_id)) 
+
     # delete local restaurant images first
-    images = json.loads(findRestaurant(_id))['images']
+    images = restaurant['images']
     deleteImages(images, 'restaurants')
 
+    # remove from trending if existent
     filterTrendingByItemId(_id)
+
+    # reorder
+    items = db.restaurants.find().sort('index', 1)
+    for item in items:
+        if item['index'] > restaurant['index']:
+            db.restaurants.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index" : item['index'] - 1}})
 
     # delete restaurant
     db.restaurants.delete_one({"_id": ObjectId(_id)})
@@ -387,6 +404,22 @@ def editRestaurant():
 
     return make_response("Entry has been updated", 200)
 
+@app.route("/api/updateRestaurantIndex", methods=["PUT"])
+@login_required
+def updateRestaurantIndex():
+    req = request.get_json()
+
+    oldIndex = req['oldIndex']
+    newIndex = req['newIndex']
+    items = list(req['items'])
+
+    j = 0
+    for i in range(min(oldIndex, newIndex), max(oldIndex, newIndex) + 1):
+        db.restaurants.update_one({"_id": ObjectId(items[j])}, {"$set": {"index": i}})
+        j += 1
+
+    return make_response("Entries have been updated", 200)
+
 # --- HOTELS ---  
 
 @app.route("/api/insertHotel", methods=["POST"])
@@ -396,6 +429,7 @@ def insertHotel():
 
     hotel['latitude'] = float(hotel['latitude'])
     hotel['longitude'] = float(hotel['longitude'])
+    hotel['index'] = len(list(db.hotels.find()))
 
     db.hotels.insert_one(hotel)
     
@@ -403,16 +437,25 @@ def insertHotel():
 
 @app.route("/api/fetchHotels")
 def fetchHotels():
-    return json.dumps(list(db.hotels.find()), default=str)
+    return json.dumps(list(db.hotels.find().sort("index", 1)), default=str)
 
 @app.route("/api/deleteHotel/<_id>", methods=["DELETE"])
 @login_required
 def deleteHotel(_id):
+    hotel = json.loads(findHotel(_id))
+
     # delete local hotel images first
-    images = json.loads(findHotel(_id))['images']
+    images = hotel['images']
     deleteImages(images, 'hotels')
 
+    # remove from trending if existent
     filterTrendingByItemId(_id)
+
+    # reorder
+    items = db.restaurants.find().sort('index', 1)
+    for item in items:
+        if item['index'] > hotel['index']:
+            db.hotels.update_one({"_id": ObjectId(item['_id'])}, {"$set": {"index" : item['index'] - 1}})
 
     # delete hotel
     db.hotels.delete_one({"_id": ObjectId(_id)})
@@ -442,6 +485,22 @@ def editHotel():
     db.hotels.update_one({"_id": ObjectId(data['_id'])}, {"$set": hotel})
 
     return make_response("Entry has been updated", 200)
+
+@app.route("/api/updateHotelIndex", methods=["PUT"])
+@login_required
+def updateHotelIndex():
+    req = request.get_json()
+
+    oldIndex = req['oldIndex']
+    newIndex = req['newIndex']
+    items = list(req['items'])
+
+    j = 0
+    for i in range(min(oldIndex, newIndex), max(oldIndex, newIndex) + 1):
+        db.hotels.update_one({"_id": ObjectId(items[j])}, {"$set": {"index": i}})
+        j += 1
+
+    return make_response("Entries have been updated", 200)
 
 # --- EVENTS ---  
 
@@ -806,6 +865,14 @@ def init_dir():
     if not os.path.exists(app.config["MEDIA_FOLDER"] + "/about"):
         os.makedirs(app.config["MEDIA_FOLDER"] + "/about")
 
+def addIndex():
+    items = list(db.hotels.find())
+
+    for i in range(len(items)):
+        db.hotels.update_one({"_id": ObjectId(items[i]['_id'])}, {"$set": {"index": i}})
+
+
 if __name__ == '__main__':
     init_dir()
+    addIndex()
     app.run(debug=True)
