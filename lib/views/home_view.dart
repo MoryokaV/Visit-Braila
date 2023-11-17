@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
                               alignment: Alignment.topLeft,
                               children: [
                                 CachedAssetImage(
-                                  "assets/images/braila_night.jpg",
+                                  "assets/images/fantana.jpg",
                                   cacheHeight: Responsive.safeBlockVertical * 35,
                                   cacheWidth: Responsive.screenWidth,
                                 ),
