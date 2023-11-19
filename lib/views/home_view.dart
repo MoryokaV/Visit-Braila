@@ -96,6 +96,7 @@ class HomeView extends StatelessWidget {
                                             fontFamily: bodyFont,
                                             height: 1.4,
                                           ),
+                                          textAlign: TextAlign.center,
                                         ),
                                       ],
                                     ),
