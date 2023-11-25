@@ -104,11 +104,11 @@ def install():
     platform = user_agent['family']
 
     if platform == 'iOS' or platform == 'Mac OS X':
-        return redirect(APP_STORE_URL)
+        return redirect(APP_STORE_URL, code=301)
     elif platform == 'Android' or platform == 'Windows' or platform == 'Linux':
-        return redirect(GOOGLE_PLAY_URL)
+        return redirect(GOOGLE_PLAY_URL, code=301)
 
-    return redirect(GOOGLE_PLAY_URL)
+    return redirect(GOOGLE_PLAY_URL, code=301)
 
 # --- CMS ROUTES --- 
 
