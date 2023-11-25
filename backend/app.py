@@ -14,6 +14,7 @@ from dateutil import parser
 from dateutil.relativedelta import relativedelta
 from fcm import sendNewEventNotification
 import blurhash
+from ua_parser import user_agent_parser
 
 app = Flask(__name__)
 app.config["MEDIA_FOLDER"] = os.path.join(app.root_path, "static/media")
@@ -89,6 +90,25 @@ def logout():
 @app.route("/api/currentUser")
 def getCurrentUserFullname():
     return make_response(json.dumps({"fullname": session['fullname'], "username": session['username']}), 200)    
+
+# --- INSTALL ----
+
+GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.vmasoftware.visit_braila"
+APP_STORE_URL = "https://apps.apple.com/ro/app/visit-br%C4%83ila/id6448944001"
+
+@app.route("/install")
+def install():
+    user_agent_string = request.headers.get('User-Agent')
+    user_agent = user_agent_parser.ParseOS(user_agent_string)
+
+    platform = user_agent['family']
+
+    if platform == 'iOS' or platform == 'Mac OS X':
+        return redirect(APP_STORE_URL)
+    elif platform == 'Android' or platform == 'Windows' or platform == 'Linux':
+        return redirect(GOOGLE_PLAY_URL)
+
+    return redirect(GOOGLE_PLAY_URL)
 
 # --- CMS ROUTES --- 
 
