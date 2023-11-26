@@ -13,7 +13,7 @@
 ### Screenshots
 ![app](https://github.com/MoryokaV/Visit-Braila/assets/55505135/9d4aa6f4-7a87-4ab2-bfd0-707775bb3932)
 
-### [Demo video](https://youtu.be/c07yV4QpVzo)
+### [Demo video](https://youtu.be/LvU2oPzW-3w)
 
 ### Features
 📲 Cross-platform compatibility: Android & iOS  
