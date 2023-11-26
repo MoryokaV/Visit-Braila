@@ -4,6 +4,9 @@
 
 *Your personal guide for discovering the small community of Brăila, România* 📍
 
+<a href="https://apps.apple.com/ro/app/visit-br%C4%83ila/id6448944001" target="_blank"><img height="70px" src="https://github.com/MoryokaV/Visit-Braila/assets/55505135/9637e193-29cd-4fc7-8be3-61f12574a56f"/></a> 
+<a href="https://play.google.com/store/apps/details?id=com.vmasoftware.visit_braila" target="_blank"><img height="70px" src="https://github.com/MoryokaV/Visit-Braila/assets/55505135/f1d2ea6e-34dd-45ca-b924-fed597a644e2"/></a>
+
 ## Mobile App
 ***Visit Brăila*** connects citizens and tourists with each other. Sights, tours, restaurants, hotels and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
 
