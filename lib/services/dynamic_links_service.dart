@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/controllers/event_controller.dart';
@@ -14,7 +15,6 @@ import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/utils/navigation_util.dart';
 
 const String uriPrefix = "https://visitbraila.page.link";
-const String customDomain = "https://visitbraila.ro";
 final FirebaseDynamicLinks _firebaseDynamicLinks = FirebaseDynamicLinks.instance;
 
 class DynamicLinksService {
@@ -28,7 +28,7 @@ class DynamicLinksService {
     required String alternativeUrl,
   }) async {
     final dynamicLinkParams = DynamicLinkParameters(
-      link: Uri.parse("$customDomain/$collection?id=$id"),
+      link: Uri.parse("$uriPrefix/$collection?id=$id"),
       uriPrefix: uriPrefix,
       androidParameters: AndroidParameters(
         fallbackUrl: Uri.parse(alternativeUrl),
@@ -79,6 +79,10 @@ class DynamicLinksService {
   }
 
   static Future<void> startUrl() async {
+    if (Platform.isIOS) {
+      return;
+    }
+
     final PendingDynamicLinkData? initialLink = await _firebaseDynamicLinks.getInitialLink();
 
     if (initialLink == null) {

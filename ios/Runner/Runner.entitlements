@@ -6,7 +6,6 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:visitbraila.ro</string>
 		<string>applinks:visitbraila.page.link</string>
 	</array>
 </dict>
