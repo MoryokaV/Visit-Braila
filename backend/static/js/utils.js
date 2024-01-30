@@ -1,6 +1,6 @@
 export const getFilename = path => path.substring(path.lastIndexOf('/') + 1);
-const diacritice = "ĂăÂâÎîȘșȚț";
-const diacritice_mari = "ĂÂÎȘȚ";
+const diacritice = "ĂăÂâÎîȘșȚțé";
+const diacritice_mari = "ĂÂÎȘȚé";
 
 // Loading animation
 export const startLoadingAnimation = container => container.find(`button[type="submit"]`).addClass("loading-btn");
