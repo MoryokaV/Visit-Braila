@@ -4,6 +4,7 @@ import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/views/about_view.dart';
 import 'package:visit_braila/views/all_events_view.dart';
 import 'package:visit_braila/views/home_view.dart';
+import 'package:visit_braila/views/learn_view.dart';
 import 'package:visit_braila/views/wishlist_view.dart';
 import 'package:visit_braila/widgets/notifications_button.dart';
 
@@ -20,14 +21,13 @@ class _BottomNavbarState extends State<BottomNavbar> {
   List<Widget> pages = [
     HomeView(),
     const WishlistView(),
+    const LearnView(),
     const AllEventsView(),
     const AboutView(),
   ];
 
   AppBar? getAppBar(BuildContext context) {
     switch (pageIndex) {
-      case 0:
-        return null;
       case 1:
         return AppBar(
           automaticallyImplyLeading: false,
@@ -67,6 +67,19 @@ class _BottomNavbarState extends State<BottomNavbar> {
           backgroundColor: kBackgroundColor,
           elevation: 0,
           title: Text(
+            "Educație",
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 24,
+                ),
+          ),
+        );
+      case 3:
+        return AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: kBackgroundColor,
+          elevation: 0,
+          title: Text(
             "Evenimente",
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   fontWeight: FontWeight.w600,
@@ -85,7 +98,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         body: pages[pageIndex],
         appBar: getAppBar(context),
@@ -107,6 +120,10 @@ class _BottomNavbarState extends State<BottomNavbar> {
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.heart),
               label: "Favorite",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.book),
+              label: "Învață",
             ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.bell),
