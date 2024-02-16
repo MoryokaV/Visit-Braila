@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:visit_braila/models/quiz_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 
@@ -38,15 +39,15 @@ class LearnView extends StatelessWidget {
                   ),
                   color: Colors.white,
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 14,
                     vertical: 18,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Testează-ți cunoștințele",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -54,8 +55,8 @@ class LearnView extends StatelessWidget {
                           fontSize: 24,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Text(
+                      const SizedBox(height: 20),
+                      const Text(
                         "CATEGORII",
                         style: TextStyle(
                           letterSpacing: 1.5,
@@ -65,36 +66,55 @@ class LearnView extends StatelessWidget {
                           color: kDateTimeForegroundColor,
                         ),
                       ),
-                      SizedBox(height: 14),
-                      QuizzCategoryCard(
-                        title: "Cultură generală",
-                        icon: "assets/icons/mortarboard.svg",
-                        iconBgColor: Color(0xff4dabf7),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 14),
+                        child: QuizzCategoryCard(
+                          title: "Cultură generală",
+                          icon: "assets/icons/mortarboard.svg",
+                          iconBgColor: Color(0xff4dabf7),
+                          length: 100,
+                        ),
                       ),
-                      SizedBox(height: 10),
-                      QuizzCategoryCard(
-                        title: "Istorie",
-                        icon: "assets/icons/history.svg",
-                        iconBgColor: Color(0xffff8787),
-                      ),
-                      SizedBox(height: 10),
-                      QuizzCategoryCard(
-                        title: "Personalități",
-                        icon: "assets/icons/people.svg",
-                        iconBgColor: Color(0xffa9e34b),
-                      ),
-                      SizedBox(height: 10),
-                      QuizzCategoryCard(
-                        title: "Geografie",
-                        icon: "assets/icons/geography.svg",
-                        iconBgColor: Color(0xffffc078),
-                      ),
-                      SizedBox(height: 10),
-                      QuizzCategoryCard(
-                        title: "Religie",
-                        icon: "assets/icons/cross.svg",
-                        iconBgColor: Color(0xffced4da),
-                      ),
+                      for (Quiz quiz in quizes)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 14),
+                          child: QuizzCategoryCard(
+                            title: quiz.title,
+                            icon: quiz.icon,
+                            iconBgColor: quiz.iconBgColor,
+                            length: quiz.questions.length,
+                          ),
+                        ),
+                      // SizedBox(height: 14),
+                      // QuizzCategoryCard(
+                      //   title: "Cultură generală",
+                      //   icon: "assets/icons/mortarboard.svg",
+                      //   iconBgColor: Color(0xff4dabf7),
+                      // ),
+                      // SizedBox(height: 10),
+                      // QuizzCategoryCard(
+                      //   title: "Istorie",
+                      //   icon: "assets/icons/history.svg",
+                      //   iconBgColor: Color(0xffff8787),
+                      // ),
+                      // SizedBox(height: 10),
+                      // QuizzCategoryCard(
+                      //   title: "Personalități",
+                      //   icon: "assets/icons/people.svg",
+                      //   iconBgColor: Color(0xffa9e34b),
+                      // ),
+                      // SizedBox(height: 10),
+                      // QuizzCategoryCard(
+                      //   title: "Geografie",
+                      //   icon: "assets/icons/geography.svg",
+                      //   iconBgColor: Color(0xffffc078),
+                      // ),
+                      // SizedBox(height: 10),
+                      // QuizzCategoryCard(
+                      //   title: "Religie",
+                      //   icon: "assets/icons/cross.svg",
+                      //   iconBgColor: Color(0xffced4da),
+                      // ),
                     ],
                   ),
                 ),
@@ -111,11 +131,13 @@ class QuizzCategoryCard extends StatelessWidget {
   final String title;
   final String icon;
   final Color iconBgColor;
+  final int length;
 
   const QuizzCategoryCard({
     required this.title,
     required this.icon,
     required this.iconBgColor,
+    required this.length,
     super.key,
   });
 
@@ -162,9 +184,9 @@ class QuizzCategoryCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const Text(
-                  "13 din 94 întrebări",
-                  style: TextStyle(
+                Text(
+                  "0 din $length întrebări",
+                  style: const TextStyle(
                     fontSize: 14,
                   ),
                 ),
