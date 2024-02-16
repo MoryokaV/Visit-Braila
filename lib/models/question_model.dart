@@ -6,6 +6,6 @@ class Question {
   Question({
     required this.text,
     required this.correctAnswear,
-    required this.answears,
+    this.answears,
   });
 }

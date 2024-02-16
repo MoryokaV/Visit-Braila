@@ -5,7 +5,7 @@ class Quiz {
   final String id;
   final String title;
   final String icon;
-  final Color iconBgColor;
+  final Color color;
   final Answear answearType;
   final List<Question> questions;
 
@@ -13,7 +13,7 @@ class Quiz {
     required this.id,
     required this.title,
     required this.icon,
-    required this.iconBgColor,
+    required this.color,
     required this.answearType,
     required this.questions,
   });
@@ -24,11 +24,41 @@ List<Quiz> quizes = [
     id: "quiz1",
     title: "Istorie",
     icon: "assets/icons/history.svg",
-    iconBgColor: const Color(0xffff8787),
+    color: const Color(0xffff6b6b),
     answearType: Answear.multipleChoice,
     questions: [
       Question(
-        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'",
+        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
+        correctAnswear: 1,
+        answears: [
+          "1984",
+          "1999",
+          "2001",
+          "1960",
+        ],
+      ),
+      Question(
+        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
+        correctAnswear: 1,
+        answears: [
+          "1984",
+          "1999",
+          "2001",
+          "1960",
+        ],
+      ),
+      Question(
+        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
+        correctAnswear: 1,
+        answears: [
+          "1984",
+          "1999",
+          "2001",
+          "1960",
+        ],
+      ),
+      Question(
+        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
         correctAnswear: 1,
         answears: [
           "1984",
@@ -43,25 +73,57 @@ List<Quiz> quizes = [
     id: "quiz2",
     title: "Personalități",
     icon: "assets/icons/people.svg",
-    iconBgColor: const Color(0xffa9e34b),
+    color: const Color(0xffffa94d),
     answearType: Answear.multipleChoice,
-    questions: [],
+    questions: [
+      Question(
+        text: "Care a fost una dintre meseriile lui D.P.Perpessicius?",
+        correctAnswear: 2,
+        answears: [
+          "Agricultor",
+          "Critic literar",
+          "Arhitect",
+        ],
+      ),
+    ],
   ),
   Quiz(
     id: "quiz3",
     title: "Geografie",
     icon: "assets/icons/geography.svg",
-    iconBgColor: const Color(0xffffc078),
+    color: const Color(0xff12b886),
     answearType: Answear.multipleChoice,
-    questions: [],
+    questions: [
+      Question(
+        text: "Unde se afla Muzeul de istorie Carol I?",
+        correctAnswear: 4,
+        answears: [
+          "Bulevardul Dorobantilor",
+          "Piata Poligon",
+          "Calea Calarasilor",
+          "Piata Traian",
+        ],
+      ),
+    ],
   ),
   Quiz(
     id: "quiz4",
     title: "Religie",
     icon: "assets/icons/cross.svg",
-    iconBgColor: const Color(0xffced4da),
+    color: const Color(0xffadb5bd),
     answearType: Answear.multipleChoice,
-    questions: [],
+    questions: [
+      Question(
+        text: "Care este hramul bisericii grecesti?",
+        correctAnswear: 1,
+        answears: [
+          "Buna Vestire",
+          "Sfantul Ioan",
+          "Boboteaza",
+          "Sfantul Gheorghe",
+        ],
+      ),
+    ],
   ),
 ];
 

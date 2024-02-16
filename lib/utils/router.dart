@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
+import 'package:visit_braila/models/quiz_model.dart';
 import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
@@ -16,6 +17,7 @@ import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/hotel_view.dart';
 import 'package:visit_braila/views/nointernet_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
+import 'package:visit_braila/views/quiz_view.dart';
 import 'package:visit_braila/views/restaurant_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
 import 'package:visit_braila/views/tour_view.dart';
@@ -169,6 +171,10 @@ class PageRouter {
             externalLink: args['externalLink'],
           ),
         );
+      case '/quiz':
+        final quiz = settings.arguments as Quiz?;
+
+        return adaptivePageRoute(builder: (context) => QuizView(quiz: quiz));
       case '/nointernet':
         return PageRouteBuilder(
           pageBuilder: (context, _, __) {

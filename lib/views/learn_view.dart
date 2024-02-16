@@ -66,8 +66,9 @@ class LearnView extends StatelessWidget {
                           color: kDateTimeForegroundColor,
                         ),
                       ),
+                      const SizedBox(height: 14),
                       const Padding(
-                        padding: EdgeInsets.only(top: 14),
+                        padding: EdgeInsets.only(bottom: 14),
                         child: QuizzCategoryCard(
                           title: "Cultură generală",
                           icon: "assets/icons/mortarboard.svg",
@@ -77,44 +78,23 @@ class LearnView extends StatelessWidget {
                       ),
                       for (Quiz quiz in quizes)
                         Padding(
-                          padding: const EdgeInsets.only(top: 14),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: QuizzCategoryCard(
+                            quiz: quiz,
                             title: quiz.title,
                             icon: quiz.icon,
-                            iconBgColor: quiz.iconBgColor,
+                            iconBgColor: quiz.color,
                             length: quiz.questions.length,
                           ),
                         ),
-                      // SizedBox(height: 14),
-                      // QuizzCategoryCard(
-                      //   title: "Cultură generală",
-                      //   icon: "assets/icons/mortarboard.svg",
-                      //   iconBgColor: Color(0xff4dabf7),
-                      // ),
-                      // SizedBox(height: 10),
-                      // QuizzCategoryCard(
-                      //   title: "Istorie",
-                      //   icon: "assets/icons/history.svg",
-                      //   iconBgColor: Color(0xffff8787),
-                      // ),
-                      // SizedBox(height: 10),
-                      // QuizzCategoryCard(
-                      //   title: "Personalități",
-                      //   icon: "assets/icons/people.svg",
-                      //   iconBgColor: Color(0xffa9e34b),
-                      // ),
-                      // SizedBox(height: 10),
-                      // QuizzCategoryCard(
-                      //   title: "Geografie",
-                      //   icon: "assets/icons/geography.svg",
-                      //   iconBgColor: Color(0xffffc078),
-                      // ),
-                      // SizedBox(height: 10),
-                      // QuizzCategoryCard(
-                      //   title: "Religie",
-                      //   icon: "assets/icons/cross.svg",
-                      //   iconBgColor: Color(0xffced4da),
-                      // ),
+                      const Text(
+                        "Memorie vizuală",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Inter",
+                          fontSize: 24,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -128,12 +108,14 @@ class LearnView extends StatelessWidget {
 }
 
 class QuizzCategoryCard extends StatelessWidget {
+  final Quiz? quiz;
   final String title;
   final String icon;
   final Color iconBgColor;
   final int length;
 
   const QuizzCategoryCard({
+    this.quiz,
     required this.title,
     required this.icon,
     required this.iconBgColor,
@@ -144,7 +126,7 @@ class QuizzCategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: null,
+      onTap: () => Navigator.pushNamed(context, "/quiz", arguments: quiz),
       child: Container(
         width: Responsive.screenWidth,
         height: Responsive.safeBlockVertical * 11,
@@ -164,7 +146,7 @@ class QuizzCategoryCard extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                color: iconBgColor,
+                color: iconBgColor.withOpacity(0.75),
               ),
               child: SvgPicture.asset(
                 icon,
