@@ -67,13 +67,13 @@ class LearnView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 14),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 14),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
                         child: QuizzCategoryCard(
                           title: "Cultură generală",
                           icon: "assets/icons/mortarboard.svg",
-                          iconBgColor: Color(0xff4dabf7),
-                          length: 100,
+                          iconBgColor: const Color(0xff4dabf7),
+                          length: quizes.map((q) => q.questions.length).toList().reduce((v, e) => v + e),
                         ),
                       ),
                       for (Quiz quiz in quizes)

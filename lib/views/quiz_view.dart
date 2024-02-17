@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:visit_braila/models/question_model.dart';
 import 'package:visit_braila/models/quiz_model.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
@@ -23,7 +24,35 @@ class QuizViewState extends State<QuizView> {
   bool failed = false;
   bool completed = false;
 
+  late Quiz quiz;
+
   final List<String> letters = ["A", "B", "C", "D"];
+
+  @override
+  void initState() {
+    if (widget.quiz == null) {
+      List<Question> questions = [];
+
+      for (Quiz q in quizes) {
+        q.questions.forEach(questions.add);
+      }
+
+      questions.shuffle();
+
+      quiz = Quiz(
+        id: "quiz0",
+        title: "Cultură generală",
+        icon: "assets/icons/mortarboard.svg",
+        color: const Color(0xff4dabf7),
+        questions: questions,
+      );
+    } else {
+      quiz = widget.quiz!;
+      quiz.questions.shuffle();
+    }
+
+    super.initState();
+  }
 
   Widget mainContent(BuildContext context) {
     if (failed) {
@@ -63,16 +92,16 @@ class QuizViewState extends State<QuizView> {
                     children: [
                       Positioned.fill(
                         child: CircularProgressIndicator(
-                          value: questionIndex / widget.quiz!.questions.length,
-                          color: widget.quiz!.color,
-                          backgroundColor: widget.quiz!.color.withAlpha(50),
+                          value: questionIndex / quiz.questions.length,
+                          color: quiz.color,
+                          backgroundColor: quiz.color.withAlpha(50),
                           strokeWidth: 8,
                           strokeCap: StrokeCap.round,
                         ),
                       ),
                       Center(
                         child: Text(
-                          "$questionIndex/${widget.quiz!.questions.length}",
+                          "$questionIndex/${quiz.questions.length}",
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
@@ -86,7 +115,7 @@ class QuizViewState extends State<QuizView> {
                 const SizedBox(width: 20),
                 Flexible(
                   child: Text(
-                    "Ai răspuns la $questionIndex din ${widget.quiz!.questions.length} întrebări",
+                    "Ai răspuns la $questionIndex din ${quiz.questions.length} întrebări",
                     softWrap: true,
                   ),
                 ),
@@ -119,7 +148,7 @@ class QuizViewState extends State<QuizView> {
             ),
             const SizedBox(height: 20),
             Text(
-              "Ai terminat întreg modulul de ${widget.quiz!.title.toLowerCase()}",
+              "Ai terminat întreg modulul de ${quiz.title.toLowerCase()}",
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 18,
@@ -135,16 +164,16 @@ class QuizViewState extends State<QuizView> {
                     children: [
                       Positioned.fill(
                         child: CircularProgressIndicator(
-                          value: questionIndex / widget.quiz!.questions.length,
-                          color: widget.quiz!.color,
-                          backgroundColor: widget.quiz!.color.withAlpha(50),
+                          value: questionIndex / quiz.questions.length,
+                          color: quiz.color,
+                          backgroundColor: quiz.color.withAlpha(50),
                           strokeWidth: 8,
                           strokeCap: StrokeCap.round,
                         ),
                       ),
                       Center(
                         child: Text(
-                          "$questionIndex/${widget.quiz!.questions.length}",
+                          "$questionIndex/${quiz.questions.length}",
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
@@ -170,7 +199,7 @@ class QuizViewState extends State<QuizView> {
       );
     }
 
-    if (widget.quiz!.answearType == Answear.trueFalse) {
+    if (quiz.questions[questionIndex].answearType == Answear.trueFalse) {
       return SliverFillRemaining(
         hasScrollBody: false,
         child: Column(
@@ -182,10 +211,10 @@ class QuizViewState extends State<QuizView> {
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: widget.quiz!.color.withAlpha(140),
+                  color: quiz.color.withAlpha(140),
                 ),
                 child: SvgPicture.asset(
-                  widget.quiz!.icon,
+                  quiz.icon,
                   width: 50,
                   colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
@@ -198,7 +227,7 @@ class QuizViewState extends State<QuizView> {
             ),
             const SizedBox(height: 30),
             Text(
-              "ÎNTREBAREA ${questionIndex + 1} DIN ${widget.quiz!.questions.length}",
+              "ÎNTREBAREA ${questionIndex + 1} DIN ${quiz.questions.length}",
               style: const TextStyle(
                 letterSpacing: 1.5,
                 fontWeight: FontWeight.bold,
@@ -209,7 +238,7 @@ class QuizViewState extends State<QuizView> {
             ),
             const SizedBox(height: 18),
             Text(
-              widget.quiz!.questions[questionIndex].text,
+              quiz.questions[questionIndex].text,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -222,8 +251,8 @@ class QuizViewState extends State<QuizView> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (widget.quiz!.questions[questionIndex].correctAnswear == 0) {
-                        if (questionIndex + 1 == widget.quiz!.questions.length) {
+                      if (quiz.questions[questionIndex].correctAnswear == 0) {
+                        if (questionIndex + 1 == quiz.questions.length) {
                           setState(() {
                             completed = true;
                           });
@@ -251,12 +280,12 @@ class QuizViewState extends State<QuizView> {
                     child: const Text("Fals"),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 15),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (widget.quiz!.questions[questionIndex].correctAnswear == 1) {
-                        if (questionIndex + 1 == widget.quiz!.questions.length) {
+                      if (quiz.questions[questionIndex].correctAnswear == 1) {
+                        if (questionIndex + 1 == quiz.questions.length) {
                           setState(() {
                             completed = true;
                           });
@@ -303,10 +332,10 @@ class QuizViewState extends State<QuizView> {
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: widget.quiz!.color.withAlpha(140),
+                color: quiz.color.withAlpha(140),
               ),
               child: SvgPicture.asset(
-                widget.quiz!.icon,
+                quiz.icon,
                 width: 50,
                 colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
               ),
@@ -314,7 +343,7 @@ class QuizViewState extends State<QuizView> {
           ),
           const SizedBox(height: 30),
           Text(
-            "ÎNTREBAREA ${questionIndex + 1} DIN ${widget.quiz!.questions.length}",
+            "ÎNTREBAREA ${questionIndex + 1} DIN ${quiz.questions.length}",
             style: const TextStyle(
               letterSpacing: 1.5,
               fontWeight: FontWeight.bold,
@@ -325,19 +354,19 @@ class QuizViewState extends State<QuizView> {
           ),
           const SizedBox(height: 18),
           Text(
-            widget.quiz!.questions[questionIndex].text,
+            quiz.questions[questionIndex].text,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
           const SizedBox(height: 30),
-          for (int i = 0; i < widget.quiz!.questions[questionIndex].answears!.length; i++)
+          for (int i = 0; i < quiz.questions[questionIndex].answears!.length; i++)
             ChoiceCard(
               answearLetter: letters[i],
-              answearText: widget.quiz!.questions[questionIndex].answears![i],
+              answearText: quiz.questions[questionIndex].answears![i],
               selected: selectedAnswear == i ? true : false,
-              backgroundColor: widget.quiz!.color,
+              backgroundColor: quiz.color,
               onTap: () {
                 setState(() => selectedAnswear = i);
               },
@@ -349,8 +378,8 @@ class QuizViewState extends State<QuizView> {
             child: ElevatedButton(
               onPressed: () {
                 if (selectedAnswear != null) {
-                  if (widget.quiz!.questions[questionIndex].correctAnswear == (selectedAnswear! + 1)) {
-                    if (questionIndex + 1 == widget.quiz!.questions.length) {
+                  if (quiz.questions[questionIndex].correctAnswear == (selectedAnswear! + 1)) {
+                    if (questionIndex + 1 == quiz.questions.length) {
                       setState(() {
                         completed = true;
                       });
@@ -371,7 +400,7 @@ class QuizViewState extends State<QuizView> {
                   vertical: 12,
                 ),
                 elevation: 0,
-                backgroundColor: widget.quiz!.color,
+                backgroundColor: quiz.color,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -390,7 +419,7 @@ class QuizViewState extends State<QuizView> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: widget.quiz!.color,
+        backgroundColor: quiz.color,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -413,7 +442,7 @@ class QuizViewState extends State<QuizView> {
                     const SizedBox(width: 16),
                     Flexible(
                       child: LinearProgressIndicator(
-                        value: questionIndex / widget.quiz!.questions.length,
+                        value: questionIndex / quiz.questions.length,
                         minHeight: 8,
                         color: Colors.white,
                         backgroundColor: Colors.white.withAlpha(100),

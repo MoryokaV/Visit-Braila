@@ -6,7 +6,6 @@ class Quiz {
   final String title;
   final String icon;
   final Color color;
-  final Answear answearType;
   final List<Question> questions;
 
   Quiz({
@@ -14,7 +13,6 @@ class Quiz {
     required this.title,
     required this.icon,
     required this.color,
-    required this.answearType,
     required this.questions,
   });
 }
@@ -25,40 +23,10 @@ List<Quiz> quizes = [
     title: "Istorie",
     icon: "assets/icons/history.svg",
     color: const Color(0xffff6b6b),
-    answearType: Answear.multipleChoice,
     questions: [
       Question(
         text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
-        correctAnswear: 1,
-        answears: [
-          "1984",
-          "1999",
-          "2001",
-          "1960",
-        ],
-      ),
-      Question(
-        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
-        correctAnswear: 1,
-        answears: [
-          "1984",
-          "1999",
-          "2001",
-          "1960",
-        ],
-      ),
-      Question(
-        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
-        correctAnswear: 1,
-        answears: [
-          "1984",
-          "1999",
-          "2001",
-          "1960",
-        ],
-      ),
-      Question(
-        text: "În ce an a luat ființă Expoziția memorială permanenta 'Panait Istrati'?",
+        answearType: Answear.multipleChoice,
         correctAnswear: 1,
         answears: [
           "1984",
@@ -74,10 +42,10 @@ List<Quiz> quizes = [
     title: "Personalități",
     icon: "assets/icons/people.svg",
     color: const Color(0xffffa94d),
-    answearType: Answear.multipleChoice,
     questions: [
       Question(
         text: "Care a fost una dintre meseriile lui D.P.Perpessicius?",
+        answearType: Answear.multipleChoice,
         correctAnswear: 2,
         answears: [
           "Agricultor",
@@ -92,10 +60,10 @@ List<Quiz> quizes = [
     title: "Geografie",
     icon: "assets/icons/geography.svg",
     color: const Color(0xff12b886),
-    answearType: Answear.multipleChoice,
     questions: [
       Question(
         text: "Unde se afla Muzeul de istorie Carol I?",
+        answearType: Answear.multipleChoice,
         correctAnswear: 4,
         answears: [
           "Bulevardul Dorobantilor",
@@ -104,6 +72,11 @@ List<Quiz> quizes = [
           "Piata Traian",
         ],
       ),
+      Question(
+        text: "Braila nu are iesire la Dunare",
+        answearType: Answear.trueFalse,
+        correctAnswear: 0,
+      ),
     ],
   ),
   Quiz(
@@ -111,17 +84,12 @@ List<Quiz> quizes = [
     title: "Religie",
     icon: "assets/icons/cross.svg",
     color: const Color(0xffadb5bd),
-    answearType: Answear.trueFalse,
     questions: [
       Question(
         text: "Biserica Greacă are hramul 'buna vestire'?",
+        answearType: Answear.trueFalse,
         correctAnswear: 1,
       ),
     ],
   ),
 ];
-
-enum Answear {
-  multipleChoice,
-  trueFalse,
-}
