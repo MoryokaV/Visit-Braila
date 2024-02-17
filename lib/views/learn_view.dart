@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:visit_braila/models/quiz_model.dart';
+import 'package:visit_braila/providers/quiz_provider.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 
@@ -74,6 +76,7 @@ class LearnView extends StatelessWidget {
                           icon: "assets/icons/mortarboard.svg",
                           iconBgColor: const Color(0xff4dabf7),
                           length: quizes.map((q) => q.questions.length).toList().reduce((v, e) => v + e),
+                          id: "quiz0",
                         ),
                       ),
                       for (Quiz quiz in quizes)
@@ -81,6 +84,7 @@ class LearnView extends StatelessWidget {
                           padding: const EdgeInsets.only(bottom: 10),
                           child: QuizzCategoryCard(
                             quiz: quiz,
+                            id: quiz.id,
                             title: quiz.title,
                             icon: quiz.icon,
                             iconBgColor: quiz.color,
@@ -113,6 +117,7 @@ class QuizzCategoryCard extends StatelessWidget {
   final String icon;
   final Color iconBgColor;
   final int length;
+  final String id;
 
   const QuizzCategoryCard({
     this.quiz,
@@ -120,66 +125,70 @@ class QuizzCategoryCard extends StatelessWidget {
     required this.icon,
     required this.iconBgColor,
     required this.length,
+    required this.id,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, "/quiz", arguments: quiz),
-      child: Container(
-        width: Responsive.screenWidth,
-        height: Responsive.safeBlockVertical * 11,
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: kBackgroundColor,
-            width: 2,
+    return Consumer<QuizProvider>(
+      builder: (context, quizProvider, _) => GestureDetector(
+        onTap: quizProvider.quizes[id]! < length ? () => Navigator.pushNamed(context, "/quiz", arguments: quiz) : null,
+        child: Container(
+          width: Responsive.screenWidth,
+          height: Responsive.safeBlockVertical * 11,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: kBackgroundColor,
+              width: 2,
+            ),
           ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: Responsive.safeBlockVertical * 11 - 16,
-              height: double.infinity,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                color: iconBgColor.withOpacity(0.75),
-              ),
-              child: SvgPicture.asset(
-                icon,
-                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Inter",
-                    fontSize: 18,
-                  ),
+          child: Row(
+            children: [
+              Container(
+                width: Responsive.safeBlockVertical * 11 - 16,
+                height: double.infinity,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  color: iconBgColor.withOpacity(0.75),
                 ),
-                const Spacer(),
-                Text(
-                  "0 din $length întrebări",
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+                child: SvgPicture.asset(
+                  icon,
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
-              ],
-            ),
-            const Spacer(),
-            const Icon(
-              CupertinoIcons.chevron_right,
-              color: kPrimaryColor,
-            ),
-          ],
+              ),
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Inter",
+                      fontSize: 18,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    "${quizProvider.quizes[id]} din $length întrebări",
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Icon(
+                quizProvider.quizes[id]! < length ? CupertinoIcons.chevron_right : CupertinoIcons.checkmark_circle_fill,
+                color: kPrimaryColor,
+                size: 26,
+              ),
+            ],
+          ),
         ),
       ),
     );

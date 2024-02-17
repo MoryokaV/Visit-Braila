@@ -4,8 +4,8 @@ abstract class LocalStorage {
   static SharedPreferences? prefs;
 
   static Future<void> init() async {
-    if(prefs != null){
-      return; 
+    if (prefs != null) {
+      return;
     }
 
     prefs = await SharedPreferences.getInstance();
@@ -17,5 +17,13 @@ abstract class LocalStorage {
 
   static String? getWishlist() {
     return prefs!.getString("wishlist");
+  }
+
+  static void saveQuizProgress(String quiz) {
+    prefs!.setString("quiz", quiz);
+  }
+
+  static String? getQuizProgress() {
+    return prefs!.getString("quiz");
   }
 }

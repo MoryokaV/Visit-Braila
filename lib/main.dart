@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/firebase_options.dart';
+import 'package:visit_braila/providers/quiz_provider.dart';
 import 'package:visit_braila/providers/wishlist_provider.dart';
 import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/services/dynamic_links_service.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Wishlist()),
         ChangeNotifierProvider(create: (_) => ConnectionService()),
         ChangeNotifierProvider(create: (_) => LocationService()),
+        ChangeNotifierProvider(create: (_) => QuizProvider()),
       ],
       child: MaterialApp(
         title: 'Visit Brăila',

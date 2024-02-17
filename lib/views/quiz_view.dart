@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:visit_braila/models/question_model.dart';
 import 'package:visit_braila/models/quiz_model.dart';
+import 'package:visit_braila/providers/quiz_provider.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
 
@@ -255,6 +257,8 @@ class QuizViewState extends State<QuizView> {
                         if (questionIndex + 1 == quiz.questions.length) {
                           setState(() {
                             completed = true;
+                            Provider.of<QuizProvider>(context, listen: false)
+                                .saveQuizProgress(quiz.id, questionIndex + 1);
                           });
                         }
                         setState(() {
@@ -263,6 +267,7 @@ class QuizViewState extends State<QuizView> {
                       } else {
                         setState(() {
                           failed = true;
+                          Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex);
                         });
                       }
                     },
@@ -288,6 +293,8 @@ class QuizViewState extends State<QuizView> {
                         if (questionIndex + 1 == quiz.questions.length) {
                           setState(() {
                             completed = true;
+                            Provider.of<QuizProvider>(context, listen: false)
+                                .saveQuizProgress(quiz.id, questionIndex + 1);
                           });
                         }
                         setState(() {
@@ -296,6 +303,7 @@ class QuizViewState extends State<QuizView> {
                       } else {
                         setState(() {
                           failed = true;
+                          Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex);
                         });
                       }
                     },
@@ -382,6 +390,7 @@ class QuizViewState extends State<QuizView> {
                     if (questionIndex + 1 == quiz.questions.length) {
                       setState(() {
                         completed = true;
+                        Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex + 1);
                       });
                     }
                     setState(() {
@@ -391,6 +400,7 @@ class QuizViewState extends State<QuizView> {
                   } else {
                     setState(() {
                       failed = true;
+                      Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex);
                     });
                   }
                 }
@@ -450,37 +460,41 @@ class QuizViewState extends State<QuizView> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Container(
-                      height: 40,
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.orange,
-                        ),
-                        //TODO: highscore
-                        color: true ? Colors.orange.withAlpha(125) : Colors.orangeAccent,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/fire.svg",
-                            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                          ),
-                          const SizedBox(width: 5),
-                          //TODO: highscore
-                          const Text(
-                            "8",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Inter",
-                              fontWeight: FontWeight.bold,
+                    Consumer<QuizProvider>(
+                      builder: (context, quizProvider, _) {
+                        int highScore = quizProvider.quizes[quiz.id]!;
+
+                        return Container(
+                          height: 40,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.orange,
                             ),
+                            color: highScore >= questionIndex ? Colors.orange.withAlpha(125) : Colors.orangeAccent,
                           ),
-                        ],
-                      ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                "assets/icons/fire.svg",
+                                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                highScore >= questionIndex ? highScore.toString() : questionIndex.toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Inter",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
