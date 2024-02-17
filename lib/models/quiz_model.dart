@@ -111,17 +111,11 @@ List<Quiz> quizes = [
     title: "Religie",
     icon: "assets/icons/cross.svg",
     color: const Color(0xffadb5bd),
-    answearType: Answear.multipleChoice,
+    answearType: Answear.trueFalse,
     questions: [
       Question(
-        text: "Care este hramul bisericii grecesti?",
+        text: "Biserica Greacă are hramul 'buna vestire'?",
         correctAnswear: 1,
-        answears: [
-          "Buna Vestire",
-          "Sfantul Ioan",
-          "Boboteaza",
-          "Sfantul Gheorghe",
-        ],
       ),
     ],
   ),

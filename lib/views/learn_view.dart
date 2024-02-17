@@ -22,7 +22,7 @@ class LearnView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset(
-                "assets/icons/learn.svg",
+                "assets/illustrations/learn.svg",
                 width: Responsive.screenWidth,
                 height: Responsive.safeBlockVertical * 30,
                 fit: BoxFit.cover,

@@ -33,7 +33,7 @@ class QuizViewState extends State<QuizView> {
           children: [
             const SizedBox(height: 28),
             SvgPicture.asset(
-              "assets/icons/fail.svg",
+              "assets/illustrations/fail.svg",
               width: Responsive.screenWidth / 1.75,
             ),
             const SizedBox(height: 14),
@@ -47,7 +47,7 @@ class QuizViewState extends State<QuizView> {
             ),
             const SizedBox(height: 20),
             const Text(
-              "Întoarce-te la ecranul principal și continuă să răsfoiești și să studiezi atracțiile. Mai încearcă!",
+              "Întoarce-te la ecranul principal și continuă să răsfoiești și să studiezi obiectivele turistice. Mai încearcă!",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18,
@@ -105,7 +105,7 @@ class QuizViewState extends State<QuizView> {
           children: [
             const SizedBox(height: 28),
             SvgPicture.asset(
-              "assets/icons/completed.svg",
+              "assets/illustrations/completed.svg",
               width: Responsive.screenWidth / 2.25,
             ),
             const SizedBox(height: 14),
@@ -160,6 +160,128 @@ class QuizViewState extends State<QuizView> {
                   child: Text(
                     "Ai răspuns la toate întrebările testului",
                     softWrap: true,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 28),
+          ],
+        ),
+      );
+    }
+
+    if (widget.quiz!.answearType == Answear.trueFalse) {
+      return SliverFillRemaining(
+        hasScrollBody: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 28),
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: widget.quiz!.color.withAlpha(140),
+                ),
+                child: SvgPicture.asset(
+                  widget.quiz!.icon,
+                  width: 50,
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            SvgPicture.asset(
+              "assets/illustrations/book.svg",
+              width: Responsive.screenWidth / 1.5,
+            ),
+            const SizedBox(height: 30),
+            Text(
+              "ÎNTREBAREA ${questionIndex + 1} DIN ${widget.quiz!.questions.length}",
+              style: const TextStyle(
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Inter",
+                fontSize: 16,
+                color: kDateTimeForegroundColor,
+              ),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              widget.quiz!.questions[questionIndex].text,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            const Spacer(),
+            const SizedBox(height: 30),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (widget.quiz!.questions[questionIndex].correctAnswear == 0) {
+                        if (questionIndex + 1 == widget.quiz!.questions.length) {
+                          setState(() {
+                            completed = true;
+                          });
+                        }
+                        setState(() {
+                          questionIndex++;
+                        });
+                      } else {
+                        setState(() {
+                          failed = true;
+                        });
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 10,
+                      ),
+                      backgroundColor: Colors.red[400],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text("Fals"),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (widget.quiz!.questions[questionIndex].correctAnswear == 1) {
+                        if (questionIndex + 1 == widget.quiz!.questions.length) {
+                          setState(() {
+                            completed = true;
+                          });
+                        }
+                        setState(() {
+                          questionIndex++;
+                        });
+                      } else {
+                        setState(() {
+                          failed = true;
+                        });
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 10,
+                      ),
+                      backgroundColor: Colors.green[400],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text("Adevărat"),
                   ),
                 ),
               ],
