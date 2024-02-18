@@ -9,6 +9,7 @@ class QuizProvider extends ChangeNotifier {
     "quiz2": 0,
     "quiz3": 0,
     "quiz4": 0,
+    "img": 0,
   };
 
   QuizProvider() {
@@ -40,6 +41,7 @@ class QuizProvider extends ChangeNotifier {
       "quiz2": json['quiz2'] as int,
       "quiz3": json['quiz3'] as int,
       "quiz4": json['quiz4'] as int,
+      "img": json['img'] as int,
     };
   }
 }

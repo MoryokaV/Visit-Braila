@@ -6,6 +6,7 @@ import 'package:visit_braila/models/quiz_model.dart';
 import 'package:visit_braila/providers/quiz_provider.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
+import 'package:visit_braila/widgets/cached_image.dart';
 
 class LearnView extends StatelessWidget {
   const LearnView({super.key});
@@ -91,12 +92,74 @@ class LearnView extends StatelessWidget {
                             length: quiz.questions.length,
                           ),
                         ),
+                      const SizedBox(height: 14),
                       const Text(
                         "Memorie vizuală",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: "Inter",
                           fontSize: 24,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, "/imgquiz"),
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedAssetImage(
+                                "assets/images/walk.png",
+                                width: Responsive.screenWidth,
+                                height: Responsive.safeBlockVertical * 20,
+                                cacheHeight: Responsive.safeBlockVertical * 20,
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/icons/fire.svg",
+                                          width: 22,
+                                          colorFilter: const ColorFilter.mode(
+                                            Colors.white,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Consumer<QuizProvider>(
+                                          builder: (context, quizProvider, _) => Text(
+                                            "${quizProvider.quizes['img']}",
+                                            style: const TextStyle(
+                                              fontFamily: "Inter",
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Text(
+                                      "Recunoaște locurile",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ],
@@ -168,7 +231,6 @@ class QuizzCategoryCard extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontFamily: "Inter",
                       fontSize: 18,
                     ),
                   ),

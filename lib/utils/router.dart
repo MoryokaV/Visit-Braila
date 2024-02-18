@@ -15,6 +15,7 @@ import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/event_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/hotel_view.dart';
+import 'package:visit_braila/views/image_quiz_view.dart';
 import 'package:visit_braila/views/nointernet_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/views/quiz_view.dart';
@@ -175,6 +176,8 @@ class PageRouter {
         final quiz = settings.arguments as Quiz?;
 
         return adaptivePageRoute(builder: (context) => QuizView(quiz: quiz));
+      case '/imgquiz':
+        return adaptivePageRoute(builder: (context) => const ImageQuizView());
       case '/nointernet':
         return PageRouteBuilder(
           pageBuilder: (context, _, __) {
