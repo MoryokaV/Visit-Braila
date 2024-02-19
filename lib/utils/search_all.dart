@@ -27,6 +27,7 @@ const Map<String, String> diacriticsMapping = {
   "Ț": "T",
   "ț": "t",
 };
+
 const List<String> prepositions = [
   "de",
   "pe",

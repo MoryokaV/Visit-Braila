@@ -12,6 +12,35 @@ import 'package:visit_braila/widgets/cached_image.dart';
 import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 
+const Map<String, String> diacriticsMapping = {
+  "Ă": "A",
+  "ă": "a",
+  "Â": "A",
+  "â": "a",
+  "Î": "I",
+  "î": "i",
+  "Ș": "S",
+  "ș": "s",
+  "Ț": "T",
+  "ț": "t",
+};
+
+const List<String> prepositions = [
+  "de",
+  "pe",
+  "cu",
+  "despre",
+  "în",
+  "in",
+  "a",
+  "al",
+  "la",
+  "fără",
+  "sub",
+  "pentru",
+  "prin"
+];
+
 class ImageQuizView extends StatefulWidget {
   const ImageQuizView({super.key});
 
@@ -21,17 +50,28 @@ class ImageQuizView extends StatefulWidget {
 
 class _ImageQuizViewState extends State<ImageQuizView> {
   int questionIndex = 0;
+  int score = 0;
+  bool completed = false;
+  bool failed = false;
 
   final SightController sightController = SightController();
   List<Sight> sights = [];
 
   bool isLoading = true;
+  TextEditingController textEditingController = TextEditingController();
 
   @override
   void initState() {
     fetchData();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+
+    super.dispose();
   }
 
   void fetchData() async {
@@ -58,6 +98,54 @@ class _ImageQuizViewState extends State<ImageQuizView> {
     }
   }
 
+  void checkAnswear() {
+    String answear = sights[questionIndex].name;
+    String query = textEditingController.text;
+
+    answear =
+        answear.toLowerCase().replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '');
+    query =
+        query.trim().toLowerCase().replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '');
+
+    int matches = 0;
+
+    query.split(" ").forEach((word) {
+      if (word == "") {
+        return;
+      }
+
+      if (prepositions.contains(word)) {
+        return;
+      }
+
+      bool match = answear.split(" ").any((answearWord) => answearWord == word);
+      if (match) {
+        matches++;
+      }
+    });
+
+    if (matches > 0) {
+      score += matches;
+
+      if (questionIndex + 1 == sights.length) {
+        setState(() {
+          completed = true;
+          Provider.of<QuizProvider>(context, listen: false).saveQuizProgress('img', score);
+        });
+      } else {
+        setState(() {
+          textEditingController.text = "";
+          questionIndex++;
+        });
+      }
+    } else {
+      setState(() {
+        failed = true;
+        Provider.of<QuizProvider>(context, listen: false).saveQuizProgress('img', score);
+      });
+    }
+  }
+
   Widget bottomBar() {
     return Container(
       padding: EdgeInsets.only(
@@ -81,8 +169,10 @@ class _ImageQuizViewState extends State<ImageQuizView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Consumer<QuizProvider>(
-                  builder: (context, quizProvider, _) => Row(
+                Consumer<QuizProvider>(builder: (context, quizProvider, _) {
+                  int highScore = quizProvider.quizes["img"]!;
+
+                  return Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -90,23 +180,23 @@ class _ImageQuizViewState extends State<ImageQuizView> {
                         "assets/icons/fire.svg",
                         width: 18,
                         colorFilter: ColorFilter.mode(
-                          quizProvider.quizes['img']! >= questionIndex ? kForegroundColor : Colors.orange[700]!,
+                          highScore >= score ? kForegroundColor : Colors.orange[700]!,
                           BlendMode.srcIn,
                         ),
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        "${quizProvider.quizes['img']}",
+                        score.toString(),
                         style: TextStyle(
                           fontFamily: "Inter",
-                          color: quizProvider.quizes['img']! >= questionIndex ? kForegroundColor : Colors.orange[700]!,
+                          color: highScore >= score ? kForegroundColor : Colors.orange[700]!,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
                     ],
-                  ),
-                ),
+                  );
+                }),
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: questionIndex / sights.length,
@@ -120,7 +210,7 @@ class _ImageQuizViewState extends State<ImageQuizView> {
           ),
           SizedBox(width: Responsive.safeBlockHorizontal * 6),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: !failed && !completed ? checkAnswear : () => Navigator.pop(context),
             style: ElevatedButton.styleFrom(
               elevation: 0,
               padding: const EdgeInsets.symmetric(
@@ -128,15 +218,223 @@ class _ImageQuizViewState extends State<ImageQuizView> {
                 horizontal: 34,
               ),
             ),
-            child: const Text(
-              "Răspunde",
-              style: TextStyle(
+            child: Text(
+              !failed && !completed ? "Răspunde" : "Înapoi",
+              style: const TextStyle(
                 fontSize: 14,
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget mainContent() {
+    if (completed) {
+      return Column(
+        children: [
+          SvgPicture.asset(
+            "assets/illustrations/completed.svg",
+            width: Responsive.screenWidth / 2.25,
+          ),
+          const SizedBox(height: 14),
+          const Text(
+            "Felicitări!",
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              fontFamily: "Inter",
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            "Ai parcurs toate locurile din Brăila. Antrenează-te pentru a obține punctajul maxim.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          const SizedBox(height: 40),
+          Row(
+            children: [
+              SizedBox(
+                width: 100,
+                height: 100,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: CircularProgressIndicator(
+                        value: questionIndex / sights.length,
+                        color: kPrimaryColor,
+                        backgroundColor: kPrimaryColor.withAlpha(50),
+                        strokeWidth: 8,
+                        strokeCap: StrokeCap.round,
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "$questionIndex/${sights.length}",
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Inter",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 20),
+              const Flexible(
+                child: Text(
+                  "Ai răspuns corect la toate întrebările testului",
+                  softWrap: true,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+
+    if (failed) {
+      return Column(
+        children: [
+          SvgPicture.asset(
+            "assets/illustrations/fail.svg",
+            width: Responsive.screenWidth / 1.75,
+          ),
+          const SizedBox(height: 14),
+          const Text(
+            "Ai greșit!",
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              fontFamily: "Inter",
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            "Răspuns corect: ${sights[questionIndex].name}",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.green[600],
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Întoarce-te la ecranul principal și continuă să răsfoiești și să studiezi obiectivele turistice. Mai încearcă!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          const SizedBox(height: 40),
+          Row(
+            children: [
+              SizedBox(
+                width: 100,
+                height: 100,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: CircularProgressIndicator(
+                        value: questionIndex / sights.length,
+                        color: kPrimaryColor,
+                        backgroundColor: kPrimaryColor.withAlpha(50),
+                        strokeWidth: 8,
+                        strokeCap: StrokeCap.round,
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "$questionIndex/${sights.length}",
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Inter",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 20),
+              Flexible(
+                child: Text(
+                  "Ai acumulat $score puncte în $questionIndex din ${sights.length} întrebări",
+                  softWrap: true,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              splashRadius: 1,
+              icon: Icon(
+                Icons.adaptive.arrow_back,
+                size: 24,
+                color: kDateTimeForegroundColor,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              "ÎNTREBAREA ${questionIndex + 1} DIN ${sights.length}",
+              style: const TextStyle(
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Inter",
+                fontSize: 16,
+                color: kDateTimeForegroundColor,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 18),
+        const Text(
+          "Ghicește locul, clădirea sau strada!",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+        const SizedBox(height: 30),
+        TextField(
+          controller: textEditingController,
+          decoration: InputDecoration(
+            focusColor: kPrimaryColor,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 18,
+              vertical: 20,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            hintText: 'Introdu denumirea aici',
+          ),
+        ),
+        const SizedBox(height: 10),
+        if (questionIndex > 0)
+          Text(
+            "Răspunsul anterior: ${sights[questionIndex - 1].name}",
+            style: const TextStyle(
+              color: kDimmedForegroundColor,
+              fontSize: 14,
+            ),
+          )
+      ],
     );
   }
 
@@ -151,97 +449,53 @@ class _ImageQuizViewState extends State<ImageQuizView> {
           child: isLoading
               ? const LoadingSpinner()
               : SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Stack(
-                        children: [
-                          CachedApiImage(
-                            imageUrl: sights[questionIndex].images[sights[questionIndex].primaryImage - 1],
-                            width: Responsive.screenWidth,
-                            height: Responsive.safeBlockVertical * 45,
-                            cacheHeight: Responsive.safeBlockVertical * 45,
-                            blurhash: sights[questionIndex].primaryImageBlurhash,
-                          ),
-                          Positioned(
-                            bottom: 12,
-                            right: 12,
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black45,
-                              ),
-                              child: SvgPicture.asset(
-                                "assets/icons/zoom-in.svg",
-                                width: 24,
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
-                                  BlendMode.srcIn,
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          '/quizgallery',
+                          arguments: sights[questionIndex].images[sights[questionIndex].primaryImage - 1],
+                        ),
+                        child: Stack(
+                          children: [
+                            CachedApiImage(
+                              imageUrl: sights[questionIndex].images[sights[questionIndex].primaryImage - 1],
+                              width: Responsive.screenWidth,
+                              height: Responsive.safeBlockVertical * 45,
+                              cacheHeight: Responsive.safeBlockVertical * 45,
+                              blurhash: sights[questionIndex].primaryImageBlurhash,
+                            ),
+                            Positioned(
+                              bottom: 12,
+                              right: 12,
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black45,
+                                ),
+                                child: SvgPicture.asset(
+                                  "assets/icons/zoom-in.svg",
+                                  width: 24,
+                                  colorFilter: const ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 28,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  padding: EdgeInsets.zero,
-                                  constraints: const BoxConstraints(),
-                                  splashRadius: 1,
-                                  icon: const Icon(
-                                    CupertinoIcons.chevron_left,
-                                    size: 24,
-                                    color: kDateTimeForegroundColor,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  "ÎNTREBAREA ${questionIndex + 1} DIN ${sights.length}",
-                                  style: const TextStyle(
-                                    letterSpacing: 1.5,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Inter",
-                                    fontSize: 16,
-                                    color: kDateTimeForegroundColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 18),
-                            const Text(
-                              "Ghicește locul, clădirea sau strada!",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                            const SizedBox(height: 30),
-                            TextField(
-                              decoration: InputDecoration(
-                                focusColor: kPrimaryColor,
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 18,
-                                  vertical: 20,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                hintText: 'Introdu denumirea aici',
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: mainContent(),
                       ),
                     ],
                   ),

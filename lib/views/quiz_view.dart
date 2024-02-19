@@ -189,7 +189,7 @@ class QuizViewState extends State<QuizView> {
                 const SizedBox(width: 20),
                 const Flexible(
                   child: Text(
-                    "Ai răspuns la toate întrebările testului",
+                    "Ai răspuns corect la toate întrebările testului",
                     softWrap: true,
                   ),
                 ),

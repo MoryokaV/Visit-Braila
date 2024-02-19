@@ -47,6 +47,13 @@ class _GalleryViewState extends State<GalleryView> {
     selectedIndex = widget.startIndex;
   }
 
+  @override
+  void dispose() {
+    pageController.dispose();
+
+    super.dispose();
+  }
+
   final likeAnimationKey = GlobalKey<LikeAnimationState>();
   final double separator = 6;
 

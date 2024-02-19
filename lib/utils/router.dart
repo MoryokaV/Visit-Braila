@@ -13,6 +13,7 @@ import 'package:visit_braila/views/all_restaurants_view.dart';
 import 'package:visit_braila/views/all_sights_view.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/event_view.dart';
+import 'package:visit_braila/views/gallery_quiz_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/hotel_view.dart';
 import 'package:visit_braila/views/image_quiz_view.dart';
@@ -172,6 +173,10 @@ class PageRouter {
             externalLink: args['externalLink'],
           ),
         );
+      case '/quizgallery':
+        final imageUrl = settings.arguments as String;
+
+        return adaptivePageRoute(builder: (context) => GalleryQuizView(imageUrl: imageUrl));
       case '/quiz':
         final quiz = settings.arguments as Quiz?;
 
