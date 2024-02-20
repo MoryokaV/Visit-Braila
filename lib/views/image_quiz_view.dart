@@ -77,17 +77,44 @@ class _ImageQuizViewState extends State<ImageQuizView> {
 
   void fetchData() async {
     try {
-      sights = (await sightController.fetchSights()).where((sight) {
-        if (sight.tags.contains("Istorie") ||
-            sight.tags.contains("Religie") ||
-            sight.tags.contains("Arhitectură") ||
-            sight.tags.contains("Cultură")) {
-          return true;
-        }
+      List<Sight> data = await sightController.fetchSights();
 
-        return false;
-      }).toList();
-      sights.shuffle();
+      List<Sight> cultura = data
+          .where(
+            (sight) => sight.tags.contains("Cultură"),
+          )
+          .toList();
+      cultura.shuffle();
+
+      List<Sight> religie = data
+          .where(
+            (sight) => sight.tags.contains("Religie") && !cultura.contains(sight),
+          )
+          .toList();
+      religie.shuffle();
+
+      List<Sight> arhitectura = data
+          .where(
+            (sight) => sight.tags.contains("Arhitectură") && !cultura.contains(sight) && !religie.contains(sight),
+          )
+          .toList();
+      arhitectura.shuffle();
+
+      List<Sight> istorie = data
+          .where(
+            (sight) =>
+                sight.tags.contains("Istorie") &&
+                !cultura.contains(sight) &&
+                !religie.contains(sight) &&
+                !arhitectura.contains(sight),
+          )
+          .toList();
+      istorie.shuffle();
+
+      sights.addAll(cultura);
+      sights.addAll(religie);
+      sights.addAll(arhitectura);
+      sights.addAll(istorie);
     } on HttpException {
       if (mounted) {
         showErrorDialog(context);
