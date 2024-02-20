@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +39,8 @@ const List<String> prepositions = [
   "pentru",
   "prin"
 ];
+
+const List<String> symbols = [];
 
 class ImageQuizView extends StatefulWidget {
   const ImageQuizView({super.key});
@@ -102,10 +103,20 @@ class _ImageQuizViewState extends State<ImageQuizView> {
     String answear = sights[questionIndex].name;
     String query = textEditingController.text;
 
-    answear =
-        answear.toLowerCase().replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '');
-    query =
-        query.trim().toLowerCase().replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '');
+    answear = answear
+        .toLowerCase()
+        .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
+        .replaceAll('“', '')
+        .replaceAll('”', '')
+        .replaceAll('"', '');
+
+    query = query
+        .trim()
+        .toLowerCase()
+        .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
+        .replaceAll('“', '')
+        .replaceAll('”', '')
+        .replaceAll('"', '');
 
     int matches = 0;
 
@@ -465,7 +476,6 @@ class _ImageQuizViewState extends State<ImageQuizView> {
                               imageUrl: sights[questionIndex].images[sights[questionIndex].primaryImage - 1],
                               width: Responsive.screenWidth,
                               height: Responsive.safeBlockVertical * 45,
-                              cacheHeight: Responsive.safeBlockVertical * 45,
                               blurhash: sights[questionIndex].primaryImageBlurhash,
                             ),
                             Positioned(
