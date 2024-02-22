@@ -8,7 +8,7 @@
 <a href="https://play.google.com/store/apps/details?id=com.vmasoftware.visit_braila" target="_blank"><img height="70px" src="https://github.com/MoryokaV/Visit-Braila/assets/55505135/f1d2ea6e-34dd-45ca-b924-fed597a644e2"/></a>
 
 ## Mobile App
-***Visit Brăila*** connects citizens and tourists with each other. Sights, tours, restaurants, hotels and events have a common place to be promoted in. Beside tourists, this app is a great informational channel for history enthusiasts as our city is not valuing the fabulous architecture and historiography. Citizens stay in touch with the latest events running in their city by viewing them in app and getting a daily newsletter. With the contribution of the local authorities we can improve this city with the use of modern technology. 
+***Visit Brăila*** is a mobile application that will revolutionize the way young people learn about the culture of the area where they live. It is identified as an educational platform where both citizens, adults or children, as well as tourists can learn new things about the city of Brăila in an attractive and interactive way. Memorial houses, monuments, theaters, museums, churches, monasteries and cultural events are now available in a single, cross-platform (Android/iOS) mobile application. The app provides information about lesser-known places, introducing you to the culture of the area with a simple download from GooglePlay or the AppStore.  
 
 ### Screenshots
 ![app](https://github.com/MoryokaV/Visit-Braila/assets/55505135/9d4aa6f4-7a87-4ab2-bfd0-707775bb3932)
@@ -55,7 +55,7 @@
 ```
 
 ## CMS
-Admin panel used by app owners to manage database entries. This custom tool is a GUI which helps you update content safely with validation, encryption and no technical skills. The CMS allows managers to keep their apps up-to-date in realtime with no need for consultation.
+Admin panel used by app admins to manage database entries. This custom tool is a GUI which helps you update content safely with validation, encryption and no technical skills. The CMS allows managers to keep their apps up-to-date in realtime with no need for consultation.
 
 ### Screenshots
 ![cms](https://github.com/MoryokaV/Visit-Braila/assets/55505135/c92fe9af-ab74-40f4-b329-77ab19c78635)
