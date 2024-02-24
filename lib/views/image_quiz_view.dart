@@ -162,13 +162,18 @@ class _ImageQuizViewState extends State<ImageQuizView> {
       }
     });
 
+    QuizProvider quizProvider = Provider.of<QuizProvider>(context, listen: false);
+
     if (matches > 0) {
       score += matches;
 
       if (questionIndex + 1 == sights.length) {
         setState(() {
           completed = true;
-          Provider.of<QuizProvider>(context, listen: false).saveQuizProgress('img', score);
+
+          if (quizProvider.quizes['img']! < score) {
+            quizProvider.saveQuizProgress('img', score);
+          }
         });
       } else {
         setState(() {
@@ -179,7 +184,9 @@ class _ImageQuizViewState extends State<ImageQuizView> {
     } else {
       setState(() {
         failed = true;
-        Provider.of<QuizProvider>(context, listen: false).saveQuizProgress('img', score);
+        if (quizProvider.quizes['img']! < score) {
+          quizProvider.saveQuizProgress('img', score);
+        }
       });
     }
   }

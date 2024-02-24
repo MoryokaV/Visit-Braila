@@ -253,12 +253,16 @@ class QuizViewState extends State<QuizView> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      QuizProvider quizProvider = Provider.of<QuizProvider>(context, listen: false);
+
                       if (quiz.questions[questionIndex].correctAnswear == 0) {
                         if (questionIndex + 1 == quiz.questions.length) {
                           setState(() {
                             completed = true;
-                            Provider.of<QuizProvider>(context, listen: false)
-                                .saveQuizProgress(quiz.id, questionIndex + 1);
+
+                            if (quizProvider.quizes[quiz.id]! < questionIndex + 1) {
+                              quizProvider.saveQuizProgress(quiz.id, questionIndex + 1);
+                            }
                           });
                         }
                         setState(() {
@@ -267,7 +271,10 @@ class QuizViewState extends State<QuizView> {
                       } else {
                         setState(() {
                           failed = true;
-                          Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex);
+
+                          if (quizProvider.quizes[quiz.id]! < questionIndex) {
+                            quizProvider.saveQuizProgress(quiz.id, questionIndex);
+                          }
                         });
                       }
                     },
@@ -289,12 +296,15 @@ class QuizViewState extends State<QuizView> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      QuizProvider quizProvider = Provider.of<QuizProvider>(context, listen: false);
+
                       if (quiz.questions[questionIndex].correctAnswear == 1) {
                         if (questionIndex + 1 == quiz.questions.length) {
                           setState(() {
                             completed = true;
-                            Provider.of<QuizProvider>(context, listen: false)
-                                .saveQuizProgress(quiz.id, questionIndex + 1);
+                            if (quizProvider.quizes[quiz.id]! < questionIndex + 1) {
+                              quizProvider.saveQuizProgress(quiz.id, questionIndex + 1);
+                            }
                           });
                         }
                         setState(() {
@@ -303,7 +313,9 @@ class QuizViewState extends State<QuizView> {
                       } else {
                         setState(() {
                           failed = true;
-                          Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex);
+                          if (quizProvider.quizes[quiz.id]! < questionIndex) {
+                            quizProvider.saveQuizProgress(quiz.id, questionIndex);
+                          }
                         });
                       }
                     },
@@ -385,12 +397,16 @@ class QuizViewState extends State<QuizView> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
+                QuizProvider quizProvider = Provider.of<QuizProvider>(context, listen: false);
+
                 if (selectedAnswear != null) {
                   if (quiz.questions[questionIndex].correctAnswear == (selectedAnswear! + 1)) {
                     if (questionIndex + 1 == quiz.questions.length) {
                       setState(() {
                         completed = true;
-                        Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex + 1);
+                        if (quizProvider.quizes[quiz.id]! < questionIndex + 1) {
+                          quizProvider.saveQuizProgress(quiz.id, questionIndex + 1);
+                        }
                       });
                     }
                     setState(() {
@@ -400,7 +416,9 @@ class QuizViewState extends State<QuizView> {
                   } else {
                     setState(() {
                       failed = true;
-                      Provider.of<QuizProvider>(context, listen: false).saveQuizProgress(quiz.id, questionIndex);
+                      if (quizProvider.quizes[quiz.id]! < questionIndex ) {
+                        quizProvider.saveQuizProgress(quiz.id, questionIndex);
+                      }
                     });
                   }
                 }
