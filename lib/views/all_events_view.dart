@@ -28,7 +28,7 @@ class _AllEventsViewState extends State<AllEventsView> {
   String? getSeparatorText(DateTime date) {
     if (date.year > DateTime.now().year) {
       return "-- ${date.year.toString()}";
-    } else if (date.day.compareTo(DateTime.now().day) == 0) {
+    } else if (date.day.compareTo(DateTime.now().day) == 0 && date.month.compareTo(DateTime.now().month) == 0 && date.year.compareTo(DateTime.now().year) == 0) {
       return "-- Astăzi";
     } else if (date.month == DateTime.now().month && date.day - DateTime.now().day < 0) {
       return null;
