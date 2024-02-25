@@ -231,6 +231,29 @@ List<Quiz> quizes = [
           "Universitatea 'Dunărea de Jos'",
         ],
       ),
+      Question(
+        text:
+            "Care obiectiv turistic al Brailei este asociat cu epoca medievală și a fost construit pentru apărarea orașului împotriva invaziilor turcești?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 1,
+        answears: [
+          "Biserica Sfântul Nicolae",
+          "Biserica Sfântul Ioan",
+          "Muzeul de istorie Carol I",
+        ],
+      ),
+      Question(
+        text:
+            "Care a fost rolul principal al Brailei în secolul al XIX-lea, care a contribuit semnificativ la dezvoltarea sa economică și culturală?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 2,
+        answears: [
+          "Centru industrial",
+          "Port fluvial important",
+          "Centru de comerț cu târgurile otomane",
+          "Capitală regională",
+        ],
+      ),
     ],
   ),
   Quiz(
@@ -373,27 +396,89 @@ List<Quiz> quizes = [
         ],
       ),
       Question(
-        text:
-            "Ana Aslan este cunoscută pentru dezvoltarea unei terapii utilizate în tratamentul cărui aspect al îmbătrânirii?",
+        text: "Maria Filotti are un teatru consturit in memoria sa in centrul orasului?",
+        answearType: Answear.trueFalse,
+        correctAnswear: 1,
+      ),
+      Question(
+        text: "În ce an s-a născut Maria Filotti?",
         answearType: Answear.multipleChoice,
-        correctAnswear: 4,
+        correctAnswear: 1,
         answears: [
-          "Riduri",
-          "Pierderea memoriei",
-          "Oboseala cronică",
-          "Alergiile",
+          "1885",
+          "1883",
+          "1890",
+        ],
+      ),
+      Question(
+        text: "Care este una dintre cele mai cunoscute roluri interpretate de Maria Filotti în teatru?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 3,
+        answears: [
+          "Doamna Scrooge",
+          "Doamna Olga",
+          "Doamna Bovary",
+        ],
+      ),
+      Question(
+        text: "Care a fost numele real al lui Hariclea Darclée?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 1,
+        answears: [
+          "Elena Hariclea",
+          "Minaev Elena",
+          "Maria Hariclea",
+        ],
+      ),
+      Question(
+        text: "Care a fost rolul cel mai celebru interpretat de Hariclea Darclée?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 1,
+        answears: [
+          "Tosca",
+          "Carmen",
+          "Traviata",
+        ],
+      ),
+      Question(
+        text: "În ce an s-a născut Panait Istrati?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 1,
+        answears: [
+          "1884",
+          "1875",
+          "1890",
         ],
       ),
       Question(
         text:
-            "Ana Aslan este cunoscută pentru dezvoltarea unei terapii utilizate în tratamentul cărui aspect al îmbătrânirii?",
+            "Care este titlul celei mai cunoscute opere a lui Panait Istrati, care a avut un mare impact în literatura română și europeană?",
         answearType: Answear.multipleChoice,
-        correctAnswear: 4,
+        correctAnswear: 1,
         answears: [
-          "Riduri",
-          "Pierderea memoriei",
-          "Oboseala cronică",
-          "Alergiile",
+          "Codin",
+          "Moara cu noroc",
+          "Adela",
+        ],
+      ),
+      Question(
+        text: "Cine a fost mentorul și prietenul lui Panait Istrati, un alt scriitor celebru din aceeași perioadă?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 2,
+        answears: [
+          "Ion Luca Caragiale",
+          "Mihail Sadoveanu",
+          "Constantin Dobrogeanu-Gherea",
+        ],
+      ),
+      Question(
+        text: "Care este originea numelui 'Thüringer' al casei?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 2,
+        answears: [
+          "Este numele unui arhitect celebru care a proiectat casa",
+          "Este numele proprietarului original al casei",
+          "Este numele regiunii din Germania de unde proveneau proprietarii inițiali",
         ],
       ),
     ],
@@ -602,6 +687,26 @@ List<Quiz> quizes = [
           "Universitatea 'Alexandru Ioan Cuza'",
           "Universitatea 'Ovidius'",
           "Universitatea 'Dunărea de Jos'",
+        ],
+      ),
+      Question(
+        text: "Unde se afla casa unde s-a nascut Panait Istrati?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 2,
+        answears: [
+          "Strada M.Eminescu",
+          "Strada Plevnei",
+          "Calea Dorobantilor 52",
+        ],
+      ),
+      Question(
+        text: "Care este originea numelui 'Thüringer' al casei?",
+        answearType: Answear.multipleChoice,
+        correctAnswear: 2,
+        answears: [
+          "Este numele unui arhitect celebru care a proiectat casa",
+          "Este numele proprietarului original al casei",
+          "Este numele regiunii din Germania de unde proveneau proprietarii inițiali",
         ],
       ),
     ],
