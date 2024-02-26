@@ -181,11 +181,11 @@ List<Quiz> quizes = [
       Question(
         text: "Biserica 'Sfintii Arhangheli Mihail si Gavril'...",
         answearType: Answear.multipleChoice,
-        correctAnswear: 1,
+        correctAnswear: 3,
         answears: [
-          "a servit drept casa de rugaciune in perioada ocupatiei otomane",
           "face parte din patrimoniul UNESCO",
           "are o vechime de 100 de ani",
+          "a servit drept casa de rugaciune in perioada ocupatiei otomane",
         ],
       ),
       Question(
@@ -651,10 +651,10 @@ List<Quiz> quizes = [
       Question(
         text: "Biserica 'Sfintii Arhangheli Mihail si Gavril'...",
         answearType: Answear.multipleChoice,
-        correctAnswear: 1,
+        correctAnswear: 2,
         answears: [
-          "a servit drept casa de rugaciune in perioada ocupatiei otomane",
           "face parte din patrimoniul UNESCO",
+          "a servit drept casa de rugaciune in perioada ocupatiei otomane",
           "are o vechime de 100 de ani",
         ],
       ),
