@@ -11,7 +11,8 @@
 ***Visit Brăila*** is a mobile application that will revolutionize the way young people learn about the culture of the area where they live. It is identified as an educational platform where both citizens, adults or children, as well as tourists can learn new things about the city of Brăila in an attractive and interactive way. Memorial houses, monuments, theaters, museums, churches, monasteries and cultural events are now available in a single, cross-platform (Android/iOS) mobile application. The app provides information about lesser-known places, introducing you to the culture of the area with a simple download from GooglePlay or the AppStore.  
 
 ### Screenshots
-![app](https://github.com/MoryokaV/Visit-Braila/assets/55505135/9d4aa6f4-7a87-4ab2-bfd0-707775bb3932)
+![app1](https://github.com/MoryokaV/Visit-Braila/assets/55505135/9d4aa6f4-7a87-4ab2-bfd0-707775bb3932)
+![app2](https://github.com/MoryokaV/Visit-Braila/assets/55505135/74f2273f-ed78-4415-9a60-efc58c37c1c2)
 
 ### [Demo video](https://youtu.be/LvU2oPzW-3w)
 
