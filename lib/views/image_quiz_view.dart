@@ -34,10 +34,13 @@ const List<String> prepositions = [
   "a",
   "al",
   "la",
+  "lui",
   "fără",
   "sub",
   "pentru",
-  "prin"
+  "prin",
+  "care",
+  "din"
 ];
 
 const List<String> symbols = [];
@@ -147,16 +150,12 @@ class _ImageQuizViewState extends State<ImageQuizView> {
 
     int matches = 0;
 
-    query.split(" ").forEach((word) {
-      if (word == "") {
-        return;
-      }
-
+    answear.split(" ").forEach((word) {
       if (prepositions.contains(word)) {
         return;
       }
 
-      bool match = answear.split(" ").any((answearWord) => answearWord == word);
+      bool match = query.split(" ").any((queryWord) => queryWord == word);
       if (match) {
         matches++;
       }
