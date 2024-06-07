@@ -38,20 +38,12 @@ class GalleryView extends StatefulWidget {
 
 class _GalleryViewState extends State<GalleryView> {
   late int selectedIndex;
-  late final PageController pageController;
 
   @override
   void initState() {
     super.initState();
 
     selectedIndex = widget.startIndex;
-  }
-
-  @override
-  void dispose() {
-    pageController.dispose();
-
-    super.dispose();
   }
 
   final likeAnimationKey = GlobalKey<LikeAnimationState>();
