@@ -19,42 +19,6 @@ router.put("/updateAbout", async (req: Request, res: Response) => {
   return res.status(200).send("Entry has been updated");
 });
 
-interface ParagraphRequestBody {
-  paragraph1: string;
-  paragraph2: string;
-}
-
-router.put(
-  "/updateAboutParagraphs",
-  requiresAuth,
-  async (req: Request, res: Response) => {
-    const data = req.body as ParagraphRequestBody;
-
-    await aboutCollection.updateOne({ name: "about" }, { $set: data });
-
-    return res.status(200).send("Entry has been updated");
-  },
-);
-
-interface ContactDetailsRequestBody {
-  organiation1: string;
-  organiation2: string;
-  phone: string;
-  email: string;
-  website1: string;
-  website2: string;
-  facebook1: string;
-  facebook2: string;
-}
-
-router.put("/updateContactDetails", requiresAuth, async (req: Request, res: Response) => {
-  const data = req.body as ContactDetailsRequestBody;
-
-  await aboutCollection.updateOne({ name: "about" }, { $set: data });
-
-  return res.status(200).send("Entry has been updated");
-});
-
 router.put("/updateCoverImage", requiresAuth, async (req: Request, res: Response) => {
   const newImg = req.body as { path: string };
   const newImgBlurhash = await getBlurhashString(newImg.path);

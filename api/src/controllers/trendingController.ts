@@ -9,6 +9,7 @@ const router: Router = Router();
 router.get("/fetchTrendingItems", async (req: Request, res: Response) => {
   const trending = await trendingCollection.find().sort("index", 1).toArray();
 
+  // check for deleted events and remove
   await Promise.all(
     trending.map(async t_item => {
       const search = await eventsCollection.findOne({

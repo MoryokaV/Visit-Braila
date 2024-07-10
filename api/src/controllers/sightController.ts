@@ -9,7 +9,7 @@ import { filterTrendingByItemId } from "../utils/trending";
 const router: Router = Router();
 
 router.get("/fetchSights", async (_, res: Response) => {
-  const sights = await sightsCollection.find().toArray();
+  const sights = await sightsCollection.find().sort("index", 1).toArray();
 
   return res.status(200).send(sights);
 });
@@ -64,17 +64,29 @@ router.put("/editSight", requiresAuth, async (req: Request, res: Response) => {
 
 router.delete("/deleteSight/:_id", requiresAuth, async (req: Request, res: Response) => {
   const { _id } = req.params;
+  const sight = await sightsCollection.findOne({ _id: new ObjectId(_id) });
 
-  const images: Array<string> | undefined = (
-    await sightsCollection.findOne({ _id: new ObjectId(_id) })
-  )?.images;
+  const images: Array<string> | undefined = sight?.images;
 
   if (images) {
     deleteImages(images, "sights");
   }
 
-  //remove from trending
+  // remove from trending
   filterTrendingByItemId(_id);
+
+  // reorder
+  const items = await sightsCollection.find().sort("index", 1).toArray();
+  await Promise.all(
+    items.map(async item => {
+      if (item.index > sight!.index) {
+        return sightsCollection.updateOne(
+          { _id: new ObjectId(item._id) },
+          { $set: { index: item.index - 1 } },
+        );
+      }
+    }),
+  );
 
   await sightsCollection.deleteOne({ _id: new ObjectId(_id) });
 

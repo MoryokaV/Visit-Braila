@@ -8,7 +8,7 @@ import { requiresAuth } from "../middleware/auth";
 const router: Router = Router();
 
 router.get("/fetchTours", async (req: Request, res: Response) => {
-  const tours = await toursCollection.find().toArray();
+  const tours = await toursCollection.find().sort("index", 1).toArray();
 
   return res.status(200).send(tours);
 });

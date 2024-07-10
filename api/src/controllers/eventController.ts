@@ -12,7 +12,7 @@ import { filterTrendingByItemId } from "../utils/trending";
 const router: Router = Router();
 
 router.get("/fetchEvents", async (req: Request, res: Response) => {
-  const events = await eventsCollection.find().toArray();
+  const events = await eventsCollection.find().sort("date_time", 1).toArray();
 
   return res.status(200).send(events);
 });

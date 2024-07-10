@@ -9,7 +9,7 @@ import { filterTrendingByItemId } from "../utils/trending";
 const router: Router = Router();
 
 router.get("/fetchHotels", async (req: Request, res: Response) => {
-  const hotels = await hotelsCollection.find().toArray();
+  const hotels = await hotelsCollection.find().sort("index", 1).toArray();
 
   return res.status(200).send(hotels);
 });
