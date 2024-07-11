@@ -4,21 +4,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as bootstrap from "bootstrap";
 import "./assets/css/styles.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import App from "./App.tsx";
-import ErrorPage from "./pages/404.tsx";
-import Login from "./pages/Login.tsx";
-import { AuthProvider } from "./hooks/useAuth.tsx";
-import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
-import Dashboard from "./pages/Dashboard.tsx";
-import TagsPage from "./pages/Tags.tsx";
-import SightPage from "./pages/Sight.tsx";
-import TourPage from "./pages/Tour.tsx";
-import RestaurantPage from "./pages/Restaurant.tsx";
-import HotelPage from "./pages/Hotel.tsx";
-import EventPage from "./pages/Event.tsx";
-import TrendingPage from "./pages/Trending.tsx";
-import AboutPage from "./pages/About.tsx";
-import UsersPage from "./pages/Users.tsx";
+import Dashboard from "./pages/Dashboard";
+import App from "./App";
+import ErrorPage from "./pages/404";
+import Login from "./pages/Login";
+import { AuthProvider } from "./hooks/useAuth";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import SightPage from "./pages/Sight";
+import TourPage from "./pages/Tour";
+import RestaurantPage from "./pages/Restaurant";
+import HotelPage from "./pages/Hotel";
+import TagsPage from "./pages/Tags";
+import EventPage from "./pages/Event";
+import TrendingPage from "./pages/Trending";
+import AboutPage from "./pages/About";
+import MasterPage from "./pages/Master";
+import UsersPage from "./pages/Users";
 
 window.bootstrap = bootstrap;
 
@@ -77,6 +78,10 @@ const router = createBrowserRouter(
               element: <UsersPage />,
             },
           ],
+        },
+        {
+          path: "master",
+          element: <MasterPage />,
         },
         {
           path: "/login",

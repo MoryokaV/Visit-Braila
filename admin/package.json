@@ -15,7 +15,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.2",
     "react-icons": "^5.0.1",
-    "react-quill": "^2.0.0",
+    "react-quill": "github:lassespilling/react-quill-2024#package",
     "react-router-dom": "^6.22.3",
     "sortablejs": "^1.15.2"
   },

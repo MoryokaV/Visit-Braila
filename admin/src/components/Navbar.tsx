@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = ({ onMenuBtnClick }) => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
 
   const logoutBtnHandler = () => {
     fetch("/api/logout", {
@@ -26,7 +26,7 @@ const Navbar: React.FC<Props> = ({ onMenuBtnClick }) => {
         >
           <IoMenuOutline size="1.5rem" />
         </button>
-        <h1 className={styles.title}>CITY BREAK &nbsp;&ndash;&nbsp; {user?.city_name}</h1>
+        <h1 className={styles.title}>Visit Brăila</h1>
       </div>
       <button
         onClick={logoutBtnHandler}
