@@ -1,0 +1,67 @@
+.background {
+  min-height: 100vh;
+  height: -webkit-fill-available;
+
+  color: #343a40;
+
+  background-color: rgb(250, 250, 250);
+  background-image: url("../images/braila.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  box-shadow: inset 0 0 20rem rgba(0, 0, 0, 1);
+  padding: 2rem 1rem 2rem 1rem;
+
+  display: flex;
+  align-items: center;
+
+  text-align: center;
+}
+
+.background::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  height: 100%;
+  min-width: 100vw;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+  max-width: 50rem;
+  width: 100%;
+  border-radius: 8px;
+  margin: auto;
+}
+
+.sideImg {
+  background-image: url("../images/ceas.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px 0 0 8px;
+}
+
+.formLogin {
+  padding: 2rem 0;
+  margin: 0 auto;
+  width: 70%;
+}
+
+.formLogin section:focus-within {
+  z-index: 2;
+}
+
+.trackingWide {
+  letter-spacing: 1.2px;
+}

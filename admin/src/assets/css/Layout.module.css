@@ -1,0 +1,73 @@
+.panel {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: auto 1fr;
+
+  height: 100vh;
+  height: -webkit-fill-available;
+  width: 100vw;
+  overflow: hidden;
+
+  color: var(--text-color);
+}
+
+.panel_nosidebar {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+
+  height: 100vh;
+  height: -webkit-fill-available;
+  width: 100vw;
+  overflow: hidden;
+
+  color: var(--text-color);
+}
+
+.panel_nosidebar > header {
+  grid-column: 1;
+}
+
+.panel_nosidebar > main {
+  background-color: rgb(244, 246, 249);
+  overflow: auto;
+  height: 100%;
+}
+
+.panel > main {
+  background-color: rgb(244, 246, 249);
+  overflow: auto;
+  height: 100%;
+}
+
+/* MEDIA QUERIES */
+
+/* BELOW 960px - phones & tables */
+@media (max-width: 60em) {
+  .panel > aside {
+    position: absolute;
+    height: 100%;
+    width: var(--sidebar-width);
+    box-shadow: none;
+    transform: translateX(-100%);
+    transition: 0.3s ease-in-out;
+    max-width: 80%;
+  }
+
+  .panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .panel > header {
+    grid-column: 1;
+  }
+}
+
+/* Landscape phone */
+@media (max-height: 36em) {
+  .panel > aside {
+    display: block;
+    overflow: auto;
+  }
+}

@@ -1,0 +1,37 @@
+.topbar {
+  grid-column: 2;
+  color: var(--text-color-dimmed);
+  background-color: var(--accent-color-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+.title {
+  font-weight: 200;
+  letter-spacing: -0.5px;
+  font-size: 1.75rem;
+  line-height: 1;
+  margin: 0;
+  color: var(--text-color-dimmed);
+}
+
+.btnHeader {
+  color: var(--text-color-dimmed);
+}
+
+.btnHeader:hover {
+  color: #fff;
+}
+
+.btnMenu {
+  display: none;
+}
+
+/* BELOW 960px - phones & tables */
+@media (max-width: 60em) {
+  .btnMenu {
+    display: block;
+  }
+}
