@@ -1,18 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  IoAddCircleOutline,
-  IoCloseOutline,
-  IoCloudUploadOutline,
-  IoHeartOutline,
-  IoImageOutline,
-} from "react-icons/io5";
-import { useAuth } from "../hooks/useAuth";
+import { IoAddCircleOutline, IoCloseOutline, IoHeartOutline } from "react-icons/io5";
 import { Trending } from "../models/TrendingModel";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { FormType } from "../models/FormType";
-import { getFilename } from "../utils/images";
 import Sortable from "sortablejs";
-import Card from "../components/Card";
 
 type RefItemType = {
   name: string;
@@ -20,7 +9,6 @@ type RefItemType = {
 };
 
 export default function TrendingPage() {
-  const { user } = useAuth();
   const [trendingItems, setTrendingItems] = useState<Array<Trending>>([]);
   const [refItems, setRefItems] = useState<Array<RefItemType>>([]);
   const [showForm, setShowForm] = useState(false);
@@ -42,7 +30,7 @@ export default function TrendingPage() {
       onEnd: async function (e) {
         setLoadingItems(true);
 
-        let items: Array<string> = [];
+        const items: Array<string> = [];
         for (
           let i = Math.min(e.oldIndex!, e.newIndex!);
           i <= Math.max(e.oldIndex!, e.newIndex!);
@@ -82,8 +70,8 @@ export default function TrendingPage() {
   };
 
   const fetchTrending = async () => {
-    const trending = await fetch(`/api/fetchTrendingItems?city_id=${user?.city_id}`).then(
-      response => response.json(),
+    const trending = await fetch(`/api/fetchTrendingItems`).then(response =>
+      response.json(),
     );
 
     await Promise.all(trending.map((item: Trending) => getNameImageItem(item))).then(
@@ -249,176 +237,7 @@ export default function TrendingPage() {
             </button>
           </section>
         </form>
-
-        <div className="col-10 col-xl-6 mt-4">
-          <Card title="Home screen header">
-            <UpdateHeaderForm city_id={user?.city_id!} city_name={user?.city_name!} />
-          </Card>
-        </div>
       </div>
     </div>
   );
 }
-
-type AboutHeader = {
-  header_title: string;
-  header_image: string;
-};
-
-const UpdateHeaderForm = ({
-  city_id,
-  city_name,
-}: {
-  city_id: string;
-  city_name: string;
-}) => {
-  const [loading, setLoading] = useState(true);
-  const [header, setHeader] = useState<AboutHeader>({
-    header_title: "",
-    header_image: "",
-  });
-
-  const {
-    register,
-    formState: { isSubmitting },
-    handleSubmit,
-    setValue,
-    watch,
-    resetField,
-  } = useForm<FormType<AboutHeader>>();
-
-  const files = watch("files", []);
-  const title = watch("header_title", header.header_title);
-  const image = watch("header_image", header.header_image);
-
-  useEffect(() => {
-    fetchHeaderData();
-
-    register("files");
-    register("header_image");
-  }, []);
-
-  const fetchHeaderData = async () => {
-    const data = await fetch("/api/fetchAboutData?city_id=" + city_id).then(response =>
-      response.json(),
-    );
-
-    setHeader(data);
-    setLoading(false);
-    setValue("header_image", data.header_image);
-  };
-
-  const addImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (image || files.length > 0) {
-      alert("You must have only one header image!");
-      e.target.value = "";
-      return;
-    }
-
-    const file = e.target.files![0];
-    const filename = "/static/media/about/" + city_id + "/" + file.name;
-
-    setValue("files", [file]);
-    setValue("header_image", filename);
-
-    e.target.value = "";
-  };
-
-  const onSubmit: SubmitHandler<FormType<AboutHeader>> = async data => {
-    if (data.files) {
-      const formData = new FormData();
-      formData.append("files[]", data.files[0]);
-
-      if (data.files.length !== 0) {
-        await fetch("/api/uploadImages/about", {
-          method: "POST",
-          body: formData,
-        }).then(response => {
-          if (response.status === 413) {
-            alert("Files size should be less than 15MB");
-            throw new Error();
-          }
-        });
-      }
-    }
-
-    const { files, ...updatedHeader } = data;
-
-    await fetch("/api/updateHeader", {
-      method: "PUT",
-      body: JSON.stringify(updatedHeader),
-      headers: { "Content-Type": "application/json; charset=UTF-8" },
-    });
-
-    resetField("files");
-    setHeader(updatedHeader);
-  };
-
-  return (
-    !loading && (
-      <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
-        <section className="col-12">
-          <label htmlFor="header-title" className="form-label">
-            Title
-            <span className="form-text text-sm">(start with lowercase)</span>
-          </label>
-          <input
-            className="form-control"
-            id="header-title"
-            required
-            defaultValue={header.header_title}
-            {...register("header_title")}
-          />
-          <div className="form-text">{`Preview ${city_name}: ${title}`}</div>
-        </section>
-        <section className="col-12">
-          <div className="d-flex gap-3">
-            <label htmlFor="header-image" style={{ cursor: "pointer" }}>
-              Image
-              <input
-                type="file"
-                className="hidden-input"
-                id="header-image"
-                accept="image/*"
-                required={!image}
-                onChange={addImage}
-              />
-            </label>
-            <ul className="img-container">
-              {image && (
-                <li className="highlight-onhover">
-                  <a
-                    href={files.length === 0 ? header.header_image : undefined}
-                    target="_blank"
-                    className="group"
-                  >
-                    {files.length === 0 ? <IoImageOutline /> : <IoCloudUploadOutline />}
-                    {getFilename(image)}
-                  </a>
-                  <button
-                    type="button"
-                    className="btn btn-icon remove-img-btn"
-                    onClick={() => {
-                      setValue("files", []);
-                      setValue("header_image", "");
-                    }}
-                  >
-                    <IoCloseOutline />
-                  </button>
-                </li>
-              )}
-            </ul>
-          </div>
-        </section>
-        <section className="col-12">
-          <button
-            type="submit"
-            className={`btn btn-primary ${isSubmitting && "loading-btn"}`}
-          >
-            <span>Save</span>
-          </button>
-        </section>
-      </form>
-    )
-  );
-};
