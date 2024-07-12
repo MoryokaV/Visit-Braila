@@ -6,7 +6,11 @@ import { TagsField } from "./Fields/TagsField";
 import { DescriptionField } from "./Fields/DescriptionField";
 import { ImagesField } from "./Fields/ImagesField";
 import { PrimaryImageField } from "./Fields/PrimaryImageField";
-import { latitudeValidation, longitudeValidation } from "../../data/RegExpData";
+import {
+  latitudeValidation,
+  longitudeValidation,
+  phoneValidation,
+} from "../../data/RegExpData";
 import { Restaurant } from "../../models/RestaurantModel";
 
 interface Props {
@@ -76,7 +80,7 @@ export const EditRestaurantForm: React.FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
-      <section className="col-12">
+      <section className="col-sm-7">
         <InputField
           id="name"
           label="Name"
@@ -85,6 +89,18 @@ export const EditRestaurantForm: React.FC<Props> = ({
           required
           maxLength={60}
           defaultValue={restaurant.name}
+        />
+      </section>
+      <section className="col-sm-5">
+        <InputField
+          id="phone"
+          label="Phone number"
+          register={register}
+          type="text"
+          required
+          maxLength={60}
+          defaultValue={restaurant.phone}
+          {...phoneValidation}
         />
       </section>
       <TagsField

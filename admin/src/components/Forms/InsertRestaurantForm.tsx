@@ -6,7 +6,11 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
-import { latitudeValidation, longitudeValidation } from "../../data/RegExpData";
+import {
+  latitudeValidation,
+  longitudeValidation,
+  phoneValidation,
+} from "../../data/RegExpData";
 import { TagsField } from "./Fields/TagsField";
 import { InputField } from "./Fields/InputField";
 import { PrimaryImageField } from "./Fields/PrimaryImageField";
@@ -65,7 +69,7 @@ export const InsertRestaurantForm: React.FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
-      <section className="col-12">
+      <section className="col-sm-7">
         <InputField
           id="name"
           label="Name"
@@ -73,6 +77,17 @@ export const InsertRestaurantForm: React.FC<Props> = ({
           type="text"
           required
           maxLength={60}
+        />
+      </section>
+      <section className="col-sm-5">
+        <InputField
+          id="phone"
+          label="Phone number"
+          register={register}
+          type="text"
+          required
+          maxLength={60}
+          {...phoneValidation}
         />
       </section>
       <TagsField
