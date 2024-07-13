@@ -7,8 +7,8 @@ export type About = {
   name: string;
   cover_image: string;
   cover_image_blurhash: string;
-  organiation2: string;
-  organiation1: string;
+  organization2: string;
+  organization1: string;
   website2: string;
   website1: string;
   facebook2: string;

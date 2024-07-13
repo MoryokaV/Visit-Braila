@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
-import { useAuth } from "../hooks/useAuth";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { About } from "../models/AboutModel";
 import { IoCloseOutline, IoCloudUploadOutline, IoImageOutline } from "react-icons/io5";
-import { getFilename } from "../utils/images";
 import Card from "../components/Card";
+import { getFilename } from "../utils/images";
+import { phoneValidation } from "../data/RegExpData";
 
 export default function AboutPage() {
-  const { user } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [about, setAbout] = useState<About>();
 
   useEffect(() => {
-    fetch("/api/fetchAboutData?city_id=" + user?.city_id)
+    fetch("/api/fetchAboutData")
       .then(response => response.json())
       .then(data => {
         setAbout(data);
@@ -32,13 +31,16 @@ export default function AboutPage() {
             <LoadingSpinner />
           ) : (
             <>
-              <HelpCard heading1={about!.heading1} paragraph1={about!.paragraph1} />
+              <HelpCard paragraph1={about!.paragraph1} paragraph2={about!.paragraph2} />
               <ContanctCard
-                organization={about!.organization}
+                organization1={about!.organization1}
+                organization2={about!.organization2}
                 phone={about!.phone}
                 email={about!.email}
-                website={about!.website}
-                facebook={about!.facebook}
+                website1={about!.website1}
+                website2={about!.website2}
+                facebook1={about!.facebook1}
+                facebook2={about!.facebook2}
               />
               <CoverImageCard defaultValue={about!.cover_image} />
             </>
@@ -50,11 +52,11 @@ export default function AboutPage() {
 }
 
 interface HelpCardProps {
-  heading1: string;
   paragraph1: string;
+  paragraph2: string;
 }
 
-const HelpCard: React.FC<HelpCardProps> = ({ heading1, paragraph1 }) => {
+const HelpCard: React.FC<HelpCardProps> = ({ paragraph1, paragraph2 }) => {
   const theme = "snow";
   const placeholder = "Type something here...";
 
@@ -66,13 +68,12 @@ const HelpCard: React.FC<HelpCardProps> = ({ heading1, paragraph1 }) => {
   } = useForm();
 
   useEffect(() => {
-    register("description");
-    setValue("description", paragraph1);
-  }, [register, setValue]);
+    register("paragraph1");
+    setValue("paragraph1", paragraph1);
 
-  const onEditorStateChanged = (editorState: string) => {
-    setValue("description", editorState);
-  };
+    register("paragraph2");
+    setValue("paragraph2", paragraph2);
+  }, [register, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     await fetch("/api/updateAbout", {
@@ -88,24 +89,29 @@ const HelpCard: React.FC<HelpCardProps> = ({ heading1, paragraph1 }) => {
         <form id="paragraphs-form" className="row g-3" onSubmit={handleSubmit(onSubmit)}>
           <section className="col-12">
             <label htmlFor="paragraph-1-heading" className="form-label">
-              Who are you?
+              Despre Visit Brăila
             </label>
-            <input
-              className="form-control"
-              id="headin1"
-              defaultValue={heading1}
-              required
-              {...register("heading1")}
+
+            <ReactQuill
+              defaultValue={paragraph2}
+              theme={theme}
+              placeholder={placeholder}
+              onChange={(editorState: string) => {
+                setValue("paragraph2", editorState);
+              }}
             />
+            <div id="paragraph-2-content"></div>
           </section>
           <section className="col-12">
-            <label className="form-label">About you</label>
+            <label className="form-label">Instituții partenere</label>
 
             <ReactQuill
               defaultValue={paragraph1}
               theme={theme}
               placeholder={placeholder}
-              onChange={onEditorStateChanged}
+              onChange={(editorState: string) => {
+                setValue("paragraph1", editorState);
+              }}
             />
             <div id="paragraph-1-content"></div>
           </section>
@@ -124,19 +130,25 @@ const HelpCard: React.FC<HelpCardProps> = ({ heading1, paragraph1 }) => {
 };
 
 interface ContanctCardProps {
-  organization: string;
+  organization1: string;
+  organization2: string;
   phone: string;
   email: string;
-  website: string;
-  facebook: string;
+  website1: string;
+  website2: string;
+  facebook1: string;
+  facebook2: string;
 }
 
 const ContanctCard: React.FC<ContanctCardProps> = ({
-  organization,
+  organization1,
+  organization2,
   phone,
   email,
-  website,
-  facebook,
+  website1,
+  website2,
+  facebook1,
+  facebook2,
 }) => {
   const {
     register,
@@ -161,14 +173,24 @@ const ContanctCard: React.FC<ContanctCardProps> = ({
               <label htmlFor="organization" className="col-sm-3 form-label">
                 Organization
               </label>
-              <div className="col-sm-9">
+              <div className="col">
                 <input
                   type="text"
                   id="organization"
                   className="form-control"
-                  defaultValue={organization}
+                  defaultValue={organization1}
                   required
-                  {...register("organization")}
+                  {...register("organization1")}
+                />
+              </div>
+              <div className="col">
+                <input
+                  type="text"
+                  id="organization"
+                  className="form-control"
+                  defaultValue={organization2}
+                  required
+                  {...register("organization2")}
                 />
               </div>
             </div>
@@ -185,6 +207,7 @@ const ContanctCard: React.FC<ContanctCardProps> = ({
                   className="form-control"
                   defaultValue={phone}
                   required
+                  {...phoneValidation}
                   {...register("phone")}
                 />
               </div>
@@ -212,14 +235,24 @@ const ContanctCard: React.FC<ContanctCardProps> = ({
               <label htmlFor="website" className="col-sm-3 form-label">
                 Official website
               </label>
-              <div className="col-sm-9">
+              <div className="col">
                 <input
                   type="url"
                   id="website"
                   className="form-control"
-                  defaultValue={website}
+                  defaultValue={website1}
                   required
-                  {...register("website")}
+                  {...register("website1")}
+                />
+              </div>
+              <div className="col">
+                <input
+                  type="url"
+                  id="website"
+                  className="form-control"
+                  defaultValue={website2}
+                  required
+                  {...register("website2")}
                 />
               </div>
             </div>
@@ -229,14 +262,24 @@ const ContanctCard: React.FC<ContanctCardProps> = ({
               <label htmlFor="facebook" className="col-sm-3 form-label">
                 Facebook
               </label>
-              <div className="col-sm-9">
+              <div className="col">
                 <input
                   type="url"
                   id="facebook"
                   className="form-control"
-                  defaultValue={facebook}
+                  defaultValue={facebook1}
                   required
-                  {...register("facebook")}
+                  {...register("facebook1")}
+                />
+              </div>
+              <div className="col">
+                <input
+                  type="url"
+                  id="facebook"
+                  className="form-control"
+                  defaultValue={facebook2}
+                  required
+                  {...register("facebook2")}
                 />
               </div>
             </div>
@@ -260,8 +303,6 @@ interface CoverImageCardProps {
 }
 
 const CoverImageCard: React.FC<CoverImageCardProps> = ({ defaultValue }) => {
-  const { user } = useAuth();
-
   const {
     register,
     setValue,
@@ -288,7 +329,7 @@ const CoverImageCard: React.FC<CoverImageCardProps> = ({ defaultValue }) => {
     }
 
     const file = e.target.files![0];
-    const filename = "/static/media/about/" + user?.city_id + "/" + file.name;
+    const filename = "/static/media/about/" + file.name;
 
     setValue("files", [file]);
     setValue("cover_image", filename);
