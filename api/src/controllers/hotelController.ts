@@ -93,4 +93,19 @@ router.delete("/deleteHotel/:_id", requiresAuth, async (req: Request, res: Respo
   return res.status(200).send("Successfully deleted document");
 });
 
+router.put("/updateHotelIndex", requiresAuth, async (req: Request, res: Response) => {
+  const { oldIndex, newIndex, items } = req.body as {
+    oldIndex: number;
+    newIndex: number;
+    items: string[];
+  };
+
+  let j = 0;
+
+  for (let i = Math.min(oldIndex, newIndex); i <= Math.max(oldIndex, newIndex); i++) {
+    hotelsCollection.updateOne({ _id: new ObjectId(items[j]) }, { $set: { index: i } });
+    j += 1;
+  }
+});
+
 export default router;

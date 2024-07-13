@@ -4,6 +4,7 @@ import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { Sight } from "../../models/SightModel";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { EditSightForm } from "../Forms/EditSightForm";
+import Sortable from "sortablejs";
 
 interface Props {
   setModalContent: React.Dispatch<React.SetStateAction<JSX.Element>>;
@@ -21,6 +22,37 @@ export const SightsTable: React.FC<Props> = ({ setModalContent, closeModal }) =>
         setSights(data);
         setLoading(false);
       });
+
+    const list = document.querySelector<HTMLElement>("#sights-table tbody")!;
+
+    new Sortable(list, {
+      animation: 150,
+      easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+      delay: 200,
+      delayOnTouchOnly: true,
+      draggable: "tr",
+      onEnd: async function (e) {
+        const items: Array<string> = [];
+
+        for (
+          let i = Math.min(e.oldIndex!, e.newIndex!);
+          i <= Math.max(e.oldIndex!, e.newIndex!);
+          i++
+        ) {
+          items.push(document.querySelectorAll("#sights-table tbody tr")![i].id);
+        }
+
+        await fetch("/api/updateSightIndex", {
+          method: "PUT",
+          body: JSON.stringify({
+            oldIndex: e.oldIndex,
+            newIndex: e.newIndex,
+            items: items,
+          }),
+          headers: { "Content-Type": "application/json; charset=UTF-8" },
+        });
+      },
+    });
   }, []);
 
   const deleteSight = (id: string) => {
@@ -39,7 +71,7 @@ export const SightsTable: React.FC<Props> = ({ setModalContent, closeModal }) =>
 
   return (
     <TableCard title="Sights" records={sights.length}>
-      <table className={`${isLoading && "h-100"}`}>
+      <table id="sights-table" className={`${isLoading && "h-100"}`}>
         <thead>
           <tr>
             <th>ID</th>
@@ -60,7 +92,7 @@ export const SightsTable: React.FC<Props> = ({ setModalContent, closeModal }) =>
             <>
               {sights.map((sight, index) => {
                 return (
-                  <tr key={index}>
+                  <tr id={sight._id} key={index}>
                     <td>{sight._id}</td>
                     <td>{sight.name}</td>
                     <td>{sight.tags.join(", ")}</td>

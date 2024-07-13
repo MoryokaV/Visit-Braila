@@ -4,6 +4,7 @@ import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { Tour } from "../../models/TourModel";
 import { EditTourForm } from "../Forms/EditTourForm";
+import Sortable from "sortablejs";
 
 interface Props {
   setModalContent: React.Dispatch<React.SetStateAction<JSX.Element>>;
@@ -21,6 +22,37 @@ export const ToursTable: React.FC<Props> = ({ setModalContent, closeModal }) => 
         setTours(data);
         setLoading(false);
       });
+
+    const list = document.querySelector<HTMLElement>("#tours-table tbody")!;
+
+    new Sortable(list, {
+      animation: 150,
+      easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+      delay: 200,
+      delayOnTouchOnly: true,
+      draggable: "tr",
+      onEnd: async function (e) {
+        const items: Array<string> = [];
+
+        for (
+          let i = Math.min(e.oldIndex!, e.newIndex!);
+          i <= Math.max(e.oldIndex!, e.newIndex!);
+          i++
+        ) {
+          items.push(document.querySelectorAll("#tours-table tbody tr")![i].id);
+        }
+
+        await fetch("/api/updateTourIndex", {
+          method: "PUT",
+          body: JSON.stringify({
+            oldIndex: e.oldIndex,
+            newIndex: e.newIndex,
+            items: items,
+          }),
+          headers: { "Content-Type": "application/json; charset=UTF-8" },
+        });
+      },
+    });
   }, []);
 
   const deleteTour = (id: string) => {
@@ -39,7 +71,7 @@ export const ToursTable: React.FC<Props> = ({ setModalContent, closeModal }) => 
 
   return (
     <TableCard title="Tours" records={tours.length}>
-      <table className={`${isLoading && "h-100"}`}>
+      <table id="tours-table" className={`${isLoading && "h-100"}`}>
         <thead>
           <tr>
             <th>ID</th>
@@ -60,7 +92,7 @@ export const ToursTable: React.FC<Props> = ({ setModalContent, closeModal }) => 
             <>
               {tours.map((tour, index) => {
                 return (
-                  <tr key={index}>
+                  <tr id={tour._id} key={index}>
                     <td>{tour._id}</td>
                     <td>{tour.name}</td>
                     <td>{tour.stages.map(stage => stage.text).join(" - ")}</td>

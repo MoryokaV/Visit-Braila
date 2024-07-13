@@ -4,6 +4,7 @@ import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { Hotel } from "../../models/HotelModel";
 import { EditHotelForm } from "../Forms/EditHotelForm";
+import Sortable from "sortablejs";
 
 interface Props {
   setModalContent: React.Dispatch<React.SetStateAction<JSX.Element>>;
@@ -21,6 +22,37 @@ export const HotelsTable: React.FC<Props> = ({ setModalContent, closeModal }) =>
         setHotels(data);
         setLoading(false);
       });
+
+    const list = document.querySelector<HTMLElement>("#hotels-table tbody")!;
+
+    new Sortable(list, {
+      animation: 150,
+      easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+      delay: 200,
+      delayOnTouchOnly: true,
+      draggable: "tr",
+      onEnd: async function (e) {
+        const items: Array<string> = [];
+
+        for (
+          let i = Math.min(e.oldIndex!, e.newIndex!);
+          i <= Math.max(e.oldIndex!, e.newIndex!);
+          i++
+        ) {
+          items.push(document.querySelectorAll("#hotels-table tbody tr")![i].id);
+        }
+
+        await fetch("/api/updateHotelIndex", {
+          method: "PUT",
+          body: JSON.stringify({
+            oldIndex: e.oldIndex,
+            newIndex: e.newIndex,
+            items: items,
+          }),
+          headers: { "Content-Type": "application/json; charset=UTF-8" },
+        });
+      },
+    });
   }, []);
 
   const deleteHotel = (id: string) => {
@@ -39,7 +71,7 @@ export const HotelsTable: React.FC<Props> = ({ setModalContent, closeModal }) =>
 
   return (
     <TableCard title="Accommodation" records={hotels.length}>
-      <table className={`${isLoading && "h-100"}`}>
+      <table id="hotels-table" className={`${isLoading && "h-100"}`}>
         <thead>
           <tr>
             <th>ID</th>
@@ -61,7 +93,7 @@ export const HotelsTable: React.FC<Props> = ({ setModalContent, closeModal }) =>
             <>
               {hotels.map((hotel, index) => {
                 return (
-                  <tr key={index}>
+                  <tr id={hotel._id} key={index}>
                     <td>{hotel._id}</td>
                     <td>{hotel.name}</td>
                     <td className="stars">{"★".repeat(hotel.stars)}</td>

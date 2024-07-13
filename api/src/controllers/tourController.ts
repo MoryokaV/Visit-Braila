@@ -82,4 +82,19 @@ router.delete("/deleteTour/:_id", requiresAuth, async (req: Request, res: Respon
   return res.status(200).send("Successfully deleted document");
 });
 
+router.put("/updateTourIndex", requiresAuth, async (req: Request, res: Response) => {
+  const { oldIndex, newIndex, items } = req.body as {
+    oldIndex: number;
+    newIndex: number;
+    items: string[];
+  };
+
+  let j = 0;
+
+  for (let i = Math.min(oldIndex, newIndex); i <= Math.max(oldIndex, newIndex); i++) {
+    toursCollection.updateOne({ _id: new ObjectId(items[j]) }, { $set: { index: i } });
+    j += 1;
+  }
+});
+
 export default router;
