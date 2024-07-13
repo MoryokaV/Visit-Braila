@@ -64,10 +64,9 @@ router.put("/editHotel", requiresAuth, async (req: Request, res: Response) => {
 
 router.delete("/deleteHotel/:_id", requiresAuth, async (req: Request, res: Response) => {
   const { _id } = req.params;
+  const hotel = await hotelsCollection.findOne({ _id: new ObjectId(_id) });
 
-  const images: Array<string> | undefined = (
-    await hotelsCollection.findOne({ _id: new ObjectId(_id) })
-  )?.images;
+  const images: Array<string> | undefined = hotel?.images;
 
   if (images) {
     deleteImages(images, "hotels");
@@ -75,6 +74,19 @@ router.delete("/deleteHotel/:_id", requiresAuth, async (req: Request, res: Respo
 
   //remove from trending
   filterTrendingByItemId(_id);
+
+  // reorder
+  const items = await hotelsCollection.find().sort("index", 1).toArray();
+  await Promise.all(
+    items.map(async item => {
+      if (item.index > hotel!.index) {
+        return hotelsCollection.updateOne(
+          { _id: new ObjectId(item._id) },
+          { $set: { index: item.index - 1 } },
+        );
+      }
+    }),
+  );
 
   await hotelsCollection.deleteOne({ _id: new ObjectId(_id) });
 

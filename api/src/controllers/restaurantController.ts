@@ -69,10 +69,9 @@ router.delete(
   requiresAuth,
   async (req: Request, res: Response) => {
     const { _id } = req.params;
+    const restaurant = await restaurantsCollection.findOne({ _id: new ObjectId(_id) });
 
-    const images: Array<string> | undefined = (
-      await restaurantsCollection.findOne({ _id: new ObjectId(_id) })
-    )?.images;
+    const images: Array<string> | undefined = restaurant?.images;
 
     if (images) {
       deleteImages(images, "restaurants");
@@ -80,6 +79,19 @@ router.delete(
 
     //remove from trending
     filterTrendingByItemId(_id);
+
+    // reorder
+    const items = await restaurantsCollection.find().sort("index", 1).toArray();
+    await Promise.all(
+      items.map(async item => {
+        if (item.index > restaurant!.index) {
+          return restaurantsCollection.updateOne(
+            { _id: new ObjectId(item._id) },
+            { $set: { index: item.index - 1 } },
+          );
+        }
+      }),
+    );
 
     await restaurantsCollection.deleteOne({ _id: new ObjectId(_id) });
 

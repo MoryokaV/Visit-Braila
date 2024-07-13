@@ -56,14 +56,26 @@ router.put("/editTour", requiresAuth, async (req: Request, res: Response) => {
 
 router.delete("/deleteTour/:_id", requiresAuth, async (req: Request, res: Response) => {
   const { _id } = req.params;
+  const tour = await toursCollection.findOne({ _id: new ObjectId(_id) });
 
-  const images: Array<string> | undefined = (
-    await toursCollection.findOne({ _id: new ObjectId(_id) })
-  )?.images;
+  const images: Array<string> | undefined = tour?.images;
 
   if (images) {
     deleteImages(images, "tours");
   }
+
+  // reorder
+  const items = await toursCollection.find().sort("index", 1).toArray();
+  await Promise.all(
+    items.map(async item => {
+      if (item.index > tour!.index) {
+        return toursCollection.updateOne(
+          { _id: new ObjectId(item._id) },
+          { $set: { index: item.index - 1 } },
+        );
+      }
+    }),
+  );
 
   await toursCollection.deleteOne({ _id: new ObjectId(_id) });
 
