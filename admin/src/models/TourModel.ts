@@ -10,7 +10,7 @@ export type Tour = {
   index: number;
 };
 
-type Stage = {
+export type Stage = {
   text: string;
   sight_link: string;
 };

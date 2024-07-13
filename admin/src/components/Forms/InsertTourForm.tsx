@@ -11,7 +11,7 @@ import { PrimaryImageField } from "./Fields/PrimaryImageField";
 import { ImagesField } from "./Fields/ImagesField";
 import { FormType } from "../../models/FormType";
 import { createImagesFormData } from "../../utils/images";
-import { Tour } from "../../models/TourModel";
+import { Stage, Tour } from "../../models/TourModel";
 import { LengthField } from "./Fields/LengthField";
 import { StagesField } from "./Fields/StagesField";
 
