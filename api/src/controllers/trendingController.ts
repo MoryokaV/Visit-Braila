@@ -9,29 +9,27 @@ const router: Router = Router();
 router.get("/fetchTrendingItems", async (req: Request, res: Response) => {
   const trending = await trendingCollection.find().sort("index", 1).toArray();
 
-  /*
   // check for deleted events and remove
   await Promise.all(
     trending.map(async t_item => {
-      const search = await eventsCollection.findOne({
-        _id: new ObjectId(t_item.item_id),
-      });
+      if (t_item.type === "event") {
+        const search = await eventsCollection.findOne({
+          _id: new ObjectId(t_item.item_id),
+        });
 
-      console.log(search);
+        if (!search) {
+          let j = t_item.index + 1;
 
-      if (!search) {
-        let j = t_item.index + 1;
+          while (j < trending.length) {
+            await trendingCollection.updateOne({ index: j }, { $set: { index: j - 1 } });
+            j += 1;
+          }
 
-        while (j < trending.length) {
-          await trendingCollection.updateOne({ index: j }, { $set: { index: j - 1 } });
-          j += 1;
+          return trendingCollection.deleteOne({ _id: new ObjectId(t_item._id) });
         }
-
-        return trendingCollection.deleteOne({ _id: new ObjectId(t_item._id) });
       }
     }),
   );
-  */
 
   return res.status(200).send(trending);
 });
