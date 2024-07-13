@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import TableCard from "../TableCard";
 import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { useAuth } from "../../hooks/useAuth";
 import { Restaurant } from "../../models/RestaurantModel";
 import { EditRestaurantForm } from "../Forms/EditRestaurantForm";
 
@@ -12,12 +11,11 @@ interface Props {
 }
 
 export const RestaurantsTable: React.FC<Props> = ({ setModalContent, closeModal }) => {
-  const { user } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [restaurants, setRestaurants] = useState<Array<Restaurant>>([]);
 
   useEffect(() => {
-    fetch("/api/fetchRestaurants?city_id=" + user?.city_id)
+    fetch("/api/fetchRestaurants")
       .then(response => response.json())
       .then(data => {
         setRestaurants(data);

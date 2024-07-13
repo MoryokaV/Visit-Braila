@@ -3,7 +3,6 @@ import TableCard from "../TableCard";
 import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { Sight } from "../../models/SightModel";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { useAuth } from "../../hooks/useAuth";
 import { EditSightForm } from "../Forms/EditSightForm";
 
 interface Props {
@@ -12,12 +11,11 @@ interface Props {
 }
 
 export const SightsTable: React.FC<Props> = ({ setModalContent, closeModal }) => {
-  const { user } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [sights, setSights] = useState<Array<Sight>>([]);
 
   useEffect(() => {
-    fetch("/api/fetchSights?city_id=" + user?.city_id)
+    fetch("/api/fetchSights")
       .then(response => response.json())
       .then(data => {
         setSights(data);

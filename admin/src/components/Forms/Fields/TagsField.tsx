@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { Tag } from "../../../models/TagModel";
-import { useAuth } from "../../../hooks/useAuth";
 
 interface Props {
   register: UseFormRegister<any>;
@@ -19,7 +18,6 @@ export const TagsField: React.FC<Props> = ({
   collection,
   activeTags = [],
 }) => {
-  const { user } = useAuth();
   const selectRef = useRef<HTMLSelectElement>(null);
 
   const [tags, setTags] = useState<Array<Tag>>([]);
@@ -28,7 +26,7 @@ export const TagsField: React.FC<Props> = ({
   const [buttonHandler, setButtonHandler] = useState<ButtonHandlerType>(undefined);
 
   useEffect(() => {
-    fetch(`/api/fetchTags/${collection}?city_id=${user?.city_id}`)
+    fetch(`/api/fetchTags/${collection}`)
       .then(response => response.json())
       .then(data => setTags(data));
 

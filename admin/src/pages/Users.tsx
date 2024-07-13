@@ -17,7 +17,7 @@ export default function UsersPage() {
   const { user } = useAuth();
   const [users, setUsers] = useState<Array<User>>([]);
 
-  if (!user || !user.admin) {
+  if (!user || user.username !== "admin") {
     return <Navigate to="/login" />;
   }
 
@@ -78,7 +78,7 @@ export default function UsersPage() {
                           >
                             <IoCreateOutline className="edit-icon" />
                           </button>
-                          {!user.admin && (
+                          {user.username !== "admin" && (
                             <button
                               className="btn-icon"
                               onClick={() => deleteUser(user._id)}

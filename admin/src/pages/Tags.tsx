@@ -5,12 +5,10 @@ import { Tag } from "../models/TagModel";
 import { InputField } from "../components/Forms/Fields/InputField";
 import { tagValidation } from "../data/RegExpData";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { useAuth } from "../hooks/useAuth";
 import { IoCloseOutline } from "react-icons/io5";
 import TableCard from "../components/TableCard";
 
 export default function TagsPage() {
-  const { user } = useAuth();
   const [tags, setTags] = useState<Array<Tag>>([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -28,7 +26,7 @@ export default function TagsPage() {
   const fetchTags = async () => {
     setLoading(true);
 
-    await fetch("/api/fetchTags/all?city_id=" + user?.city_id)
+    await fetch("/api/fetchTags/all")
       .then(response => response.json())
       .then(data => {
         setTags(data);

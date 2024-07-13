@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import TableCard from "../TableCard";
 import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { useAuth } from "../../hooks/useAuth";
 import { Hotel } from "../../models/HotelModel";
 import { EditHotelForm } from "../Forms/EditHotelForm";
 
@@ -12,12 +11,11 @@ interface Props {
 }
 
 export const HotelsTable: React.FC<Props> = ({ setModalContent, closeModal }) => {
-  const { user } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [hotels, setHotels] = useState<Array<Hotel>>([]);
 
   useEffect(() => {
-    fetch("/api/fetchHotels?city_id=" + user?.city_id)
+    fetch("/api/fetchHotels")
       .then(response => response.json())
       .then(data => {
         setHotels(data);

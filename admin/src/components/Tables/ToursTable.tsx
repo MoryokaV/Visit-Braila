@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import TableCard from "../TableCard";
 import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { useAuth } from "../../hooks/useAuth";
 import { Tour } from "../../models/TourModel";
 import { EditTourForm } from "../Forms/EditTourForm";
 
@@ -12,12 +11,11 @@ interface Props {
 }
 
 export const ToursTable: React.FC<Props> = ({ setModalContent, closeModal }) => {
-  const { user } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [tours, setTours] = useState<Array<Tour>>([]);
 
   useEffect(() => {
-    fetch("/api/fetchTours?city_id=" + user?.city_id)
+    fetch("/api/fetchTours")
       .then(response => response.json())
       .then(data => {
         setTours(data);

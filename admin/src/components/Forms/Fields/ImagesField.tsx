@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { IoCloseOutline, IoCloudUploadOutline, IoImageOutline } from "react-icons/io5";
 import { getFilename } from "../../../utils/images";
-import { useAuth } from "../../../hooks/useAuth";
 
 interface Props {
   register: UseFormRegister<any>;
@@ -19,8 +18,6 @@ export const ImagesField: React.FC<Props> = ({
   files = [],
   collection,
 }) => {
-  const { user } = useAuth();
-
   useEffect(() => {
     register("images");
     setValue("images", images);
@@ -31,7 +28,7 @@ export const ImagesField: React.FC<Props> = ({
 
   const addImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = Array.from(e.target.files!).filter(file => {
-      if (images.includes(`/static/media/${collection}/${user?.city_id}/${file.name}`)) {
+      if (images.includes(`/static/media/${collection}/${file.name}`)) {
         alert(`'${file.name}' is already present in list!`);
         return false;
       }
@@ -42,7 +39,7 @@ export const ImagesField: React.FC<Props> = ({
     files.push(...newFiles);
 
     newFiles.map(newFile => {
-      images.push(`/static/media/${collection}/${user?.city_id}/${newFile.name}`);
+      images.push(`/static/media/${collection}/${newFile.name}`);
     });
 
     setValue("files", files);

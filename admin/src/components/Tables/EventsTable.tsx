@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import TableCard from "../TableCard";
 import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { useAuth } from "../../hooks/useAuth";
 import { Event } from "../../models/EventModel";
 import { EditEventForm } from "../Forms/EditEventForm";
 
@@ -12,12 +11,11 @@ interface Props {
 }
 
 export const EventsTable: React.FC<Props> = ({ setModalContent, closeModal }) => {
-  const { user } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [events, setEvents] = useState<Array<Event>>([]);
 
   useEffect(() => {
-    fetch("/api/fetchEvents?city_id=" + user?.city_id)
+    fetch("/api/fetchEvents")
       .then(response => response.json())
       .then(data => {
         setEvents(data);
