@@ -52,7 +52,7 @@ export default function UsersPage() {
             </Card>
           </div>
           <div className="col-md-12 col-lg-7 col-xl-8">
-            <TableCard title="Users" records={0}>
+            <TableCard title="Users" records={users.length}>
               <table>
                 <thead>
                   <tr>
