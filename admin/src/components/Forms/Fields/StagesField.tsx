@@ -2,6 +2,7 @@ import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { IoAddOutline, IoLinkOutline } from "react-icons/io5";
 import { Fragment, useEffect, useState } from "react";
 import { idValidation } from "../../../data/RegExpData";
+import { Stage } from "../../../models/TourModel";
 
 interface Props {
   register: UseFormRegister<any>;

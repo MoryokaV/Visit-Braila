@@ -114,7 +114,7 @@ export const EditRestaurantForm: React.FC<Props> = ({
         <DescriptionField
           register={register}
           setValue={setValue}
-          value={restaurant.description}
+          defaultValue={restaurant.description}
         />
       </section>
       <ImagesField

@@ -120,7 +120,7 @@ export const EditHotelForm: React.FC<Props> = ({ hotel, updateTable, closeModal 
         <DescriptionField
           register={register}
           setValue={setValue}
-          value={hotel.description}
+          defaultValue={hotel.description}
         />
       </section>
       <ImagesField

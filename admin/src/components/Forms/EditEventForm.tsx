@@ -133,7 +133,7 @@ export const EditEventForm: React.FC<Props> = ({ event, updateTable, closeModal 
         <DescriptionField
           register={register}
           setValue={setValue}
-          value={event.description}
+          defaultValue={event.description}
         />
       </section>
       <ImagesField

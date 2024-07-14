@@ -85,7 +85,7 @@ export const EditTourForm: React.FC<Props> = ({ tour, updateTable, closeModal })
         <DescriptionField
           register={register}
           setValue={setValue}
-          value={tour.description}
+          defaultValue={tour.description}
         />
       </section>
       <ImagesField

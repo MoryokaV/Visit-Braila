@@ -91,7 +91,7 @@ export const EditSightForm: React.FC<Props> = ({ sight, updateTable, closeModal 
         <DescriptionField
           register={register}
           setValue={setValue}
-          value={sight.description}
+          defaultValue={sight.description}
         />
       </section>
       <ImagesField
