@@ -14,6 +14,7 @@ import { createImagesFormData } from "../../utils/images";
 import { Stage, Tour } from "../../models/TourModel";
 import { LengthField } from "./Fields/LengthField";
 import { StagesField } from "./Fields/StagesField";
+import { useState } from "react";
 
 interface Props {
   register: UseFormRegister<any>;
@@ -38,6 +39,8 @@ export const InsertTourForm: React.FC<Props> = ({
   stages,
   description,
 }) => {
+  const [key, setKey] = useState(0);
+
   const onSubmit: SubmitHandler<FormType<Tour>> = async data => {
     const formData = new FormData();
     const { files, ...tour } = data;
@@ -61,10 +64,11 @@ export const InsertTourForm: React.FC<Props> = ({
     });
 
     resetForm();
+    setKey(key + 1);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="row g-3" key={key}>
       <section className="col-12">
         <InputField
           id="name"

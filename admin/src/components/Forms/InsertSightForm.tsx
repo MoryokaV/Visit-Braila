@@ -14,6 +14,7 @@ import { PrimaryImageField } from "./Fields/PrimaryImageField";
 import { ImagesField } from "./Fields/ImagesField";
 import { FormType } from "../../models/FormType";
 import { createImagesFormData } from "../../utils/images";
+import { useState } from "react";
 
 interface Props {
   register: UseFormRegister<any>;
@@ -38,6 +39,8 @@ export const InsertSightForm: React.FC<Props> = ({
   activeTags,
   description,
 }) => {
+  const [key, setKey] = useState(0);
+
   const onSubmit: SubmitHandler<FormType<Sight>> = async data => {
     const formData = new FormData();
     const { files, ...sight } = data;
@@ -61,10 +64,11 @@ export const InsertSightForm: React.FC<Props> = ({
     });
 
     resetForm();
+    setKey(key + 1);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="row g-3" key={key}>
       <section className="col-12">
         <InputField
           id="name"

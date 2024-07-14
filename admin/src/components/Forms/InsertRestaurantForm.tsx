@@ -18,6 +18,7 @@ import { ImagesField } from "./Fields/ImagesField";
 import { FormType } from "../../models/FormType";
 import { createImagesFormData } from "../../utils/images";
 import { Restaurant } from "../../models/RestaurantModel";
+import { useState } from "react";
 
 interface Props {
   register: UseFormRegister<any>;
@@ -42,6 +43,8 @@ export const InsertRestaurantForm: React.FC<Props> = ({
   activeTags,
   description,
 }) => {
+  const [key, setKey] = useState(0);
+
   const onSubmit: SubmitHandler<FormType<Restaurant>> = async data => {
     const formData = new FormData();
     const { files, ...restaurant } = data;
@@ -65,10 +68,11 @@ export const InsertRestaurantForm: React.FC<Props> = ({
     });
 
     resetForm();
+    setKey(key + 1);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="row g-3" key={key}>
       <section className="col-sm-7">
         <InputField
           id="name"
