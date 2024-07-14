@@ -9,6 +9,7 @@ import apiRouter from "./routes/apiRoutes";
 import loginRouter from "./routes/loginRoutes";
 import { connectToDatabase } from "./db";
 import * as ServerStorage from "./utils/storage";
+import path from "path";
 
 dotenv.config();
 
@@ -48,6 +49,8 @@ app.use(session(sessionConfig));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
+
+app.use("/static", express.static(path.join(__dirname, "..", "/static")));
 
 app.use("/api", apiRouter);
 app.use("/api", loginRouter);

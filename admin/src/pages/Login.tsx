@@ -45,7 +45,7 @@ export default function Login() {
           <div className="col-sm-6">
             <form className={styles.formLogin} onSubmit={handleSubmit}>
               <img className="mb-2 img-fluid" src={icon} width="128" height="128" />
-              <h2 className="mb-4 fw-medium">CITY BREAK</h2>
+              <h2 className="mb-4 fw-medium">Visit Brăila</h2>
               <section className="form-floating">
                 <input
                   type="text"
