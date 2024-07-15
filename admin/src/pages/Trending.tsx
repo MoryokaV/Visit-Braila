@@ -106,6 +106,9 @@ export default function TrendingPage() {
     const hotel = await fetch("/api/findHotel/" + newItem.item_id)
       .then(response => response.json())
       .catch(() => {});
+    const event = await fetch("/api/findEvent/" + newItem.item_id)
+      .then(response => response.json())
+      .catch(() => {});
 
     if (sight !== undefined) {
       newItem.type = "sight";
@@ -113,6 +116,8 @@ export default function TrendingPage() {
       newItem.type = "restaurant";
     } else if (hotel !== undefined) {
       newItem.type = "hotel";
+    } else if (event !== undefined) {
+      newItem.type = "event";
     } else {
       alert("ERROR: Not a valid sight/restaurant/hotel id!");
     }
