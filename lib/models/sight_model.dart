@@ -34,8 +34,8 @@ class Sight {
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       primaryImage: json['primary_image'],
       primaryImageBlurhash: json['primary_image_blurhash'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      latitude: json['latitude'].toDouble(),
+      longitude: json['longitude'].toDouble(),
       externalLink: json['external_link'],
     );
   }

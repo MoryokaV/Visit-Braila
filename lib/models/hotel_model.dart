@@ -37,8 +37,8 @@ class Hotel {
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       primaryImage: json['primary_image'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      latitude: json['latitude'].toDouble(),
+      longitude: json['longitude'].toDouble(),
       externalLink: json['external_link'],
     );
   }

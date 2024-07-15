@@ -30,7 +30,7 @@ class Tour {
       description: json['description'],
       images: List<String>.from(json['images'].map((image) => "$baseUrl$image")),
       primaryImage: json['primary_image'],
-      length: json['length'],
+      length: json['length'].toDouble(),
       externalLink: json['external_link'],
     );
   }
