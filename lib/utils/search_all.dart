@@ -40,7 +40,10 @@ const List<String> prepositions = [
   "fără",
   "sub",
   "pentru",
-  "prin"
+  "prin",
+  "si",
+  "și",
+  "peste",
 ];
 
 class SearchAll extends SearchDelegate<String> {
