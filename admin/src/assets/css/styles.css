@@ -258,6 +258,7 @@ td {
 
 tbody tr {
   border-bottom: 0.5px solid var(--border-color);
+  user-select: text;
 }
 
 tbody tr:hover {
