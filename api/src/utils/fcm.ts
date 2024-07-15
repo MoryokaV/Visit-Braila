@@ -76,7 +76,7 @@ export const sendDailyNotification = async () => {
     topic: "events",
   };
 
-  admin.messaging().send(message);
+  await admin.messaging().send(message);
 };
 
 export const sendNewEventNotification = (name: string, _id: string) => {
