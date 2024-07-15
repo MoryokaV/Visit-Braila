@@ -61,7 +61,7 @@ class _HtmlDescriptionState extends State<HtmlDescription> {
   };
 
   bool isEmptyDescription() {
-    return widget.data == "<p><br></p>";
+    return widget.data == "<p><br></p>" || widget.data.isEmpty;
   }
 
   void analyzeHtml() {
