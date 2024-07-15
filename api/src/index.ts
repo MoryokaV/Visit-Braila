@@ -52,6 +52,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/static", express.static(path.join(__dirname, "..", "/static")));
+app.use(express.static("templates"));
 
 app.use("/api", apiRouter);
 app.use("/api", loginRouter);
@@ -59,6 +60,9 @@ app.use("/api", loginRouter);
 app.get("/", (_, res: Response) => res.redirect("/admin"));
 
 app.get("/install", appInstallRedirect);
+app.get("/privacy", (_, res: Response) => {
+  res.sendFile(path.join(__dirname, "..", "templates", "privacy.html"));
+});
 
 connectToDatabase(client).then(() => {
   ServerStorage.initMediaDirs();
