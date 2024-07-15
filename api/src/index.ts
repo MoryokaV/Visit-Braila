@@ -8,6 +8,7 @@ import cors from "cors";
 import apiRouter from "./routes/apiRoutes";
 import loginRouter from "./routes/loginRoutes";
 import { connectToDatabase } from "./db";
+import { appInstallRedirect } from "./utils/installRedirect";
 import * as ServerStorage from "./utils/storage";
 import path from "path";
 
@@ -55,9 +56,9 @@ app.use("/static", express.static(path.join(__dirname, "..", "/static")));
 app.use("/api", apiRouter);
 app.use("/api", loginRouter);
 
-app.get("/", (_, res: Response) => {
-  return res.redirect("/admin");
-});
+app.get("/", (_, res: Response) => res.redirect("/admin"));
+
+app.get("/install", appInstallRedirect);
 
 connectToDatabase(client).then(() => {
   ServerStorage.initMediaDirs();
