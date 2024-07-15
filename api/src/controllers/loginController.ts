@@ -21,7 +21,7 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
     req.session.logged_in = true;
     req.session.username = user.username;
     req.session.fullname = user.fullname;
-    
+
     return res.status(200).json({
       user: {
         fullname: req.session.fullname,
@@ -43,7 +43,7 @@ export const logout: RequestHandler = (
     if (error) {
       next(error);
     } else {
-      return res.status(200).redirect("/login");
+      return res.status(200).redirect("/admin/login");
     }
   });
 };
