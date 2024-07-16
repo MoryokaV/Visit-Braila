@@ -1,11 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/views/about_view.dart';
 import 'package:visit_braila/views/all_events_view.dart';
 import 'package:visit_braila/views/home_view.dart';
 import 'package:visit_braila/views/wishlist_view.dart';
 import 'package:visit_braila/widgets/notifications_button.dart';
+
+class BottomNavbarProvider with ChangeNotifier {
+  int pageIndex = 0;
+
+  void switchToPage(int index) {
+    pageIndex = index;
+    notifyListeners();
+  }
+}
 
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({Key? key}) : super(key: key);
@@ -15,8 +25,6 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-  int pageIndex = 0;
-
   List<Widget> pages = [
     HomeView(),
     const WishlistView(),
@@ -24,7 +32,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
     const AboutView(),
   ];
 
-  AppBar? getAppBar(BuildContext context) {
+  AppBar? getAppBar(BuildContext context, int pageIndex) {
     switch (pageIndex) {
       case 0:
         return null;
@@ -86,39 +94,43 @@ class _BottomNavbarState extends State<BottomNavbar> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
-        body: pages[pageIndex],
-        appBar: getAppBar(context),
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 10,
-          selectedFontSize: 14,
-          unselectedLabelStyle: const TextStyle(fontFamily: labelFont),
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontFamily: labelFont,
-          ),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: pageIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.search),
-              label: "Explorează",
+      child: Consumer<BottomNavbarProvider>(
+        builder: (BuildContext context, BottomNavbarProvider navProvider, _) {
+          return Scaffold(
+            body: pages[navProvider.pageIndex],
+            appBar: getAppBar(context, navProvider.pageIndex),
+            bottomNavigationBar: BottomNavigationBar(
+              elevation: 10,
+              selectedFontSize: 14,
+              unselectedLabelStyle: const TextStyle(fontFamily: labelFont),
+              selectedLabelStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: labelFont,
+              ),
+              type: BottomNavigationBarType.fixed,
+              currentIndex: navProvider.pageIndex,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.search),
+                  label: "Explorează",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.heart),
+                  label: "Favorite",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.bell),
+                  label: "Evenimente",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.info_circle),
+                  label: "Despre",
+                ),
+              ],
+              onTap: (newIndex) => navProvider.switchToPage(newIndex),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.heart),
-              label: "Favorite",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.bell),
-              label: "Evenimente",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.info_circle),
-              label: "Despre",
-            ),
-          ],
-          onTap: (newIndex) => setState(() => pageIndex = newIndex),
-        ),
+          );
+        },
       ),
     );
   }

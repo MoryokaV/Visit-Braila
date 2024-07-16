@@ -13,6 +13,7 @@ import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/router.dart';
 import 'package:visit_braila/utils/url_constants.dart';
+import 'package:visit_braila/widgets/bottom_navbar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Wishlist()),
         ChangeNotifierProvider(create: (_) => ConnectionService()),
         ChangeNotifierProvider(create: (_) => LocationService()),
+        ChangeNotifierProvider(create: (_) => BottomNavbarProvider()),
       ],
       child: MaterialApp(
         title: 'Visit Brăila',
