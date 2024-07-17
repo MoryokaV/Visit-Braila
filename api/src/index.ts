@@ -19,7 +19,6 @@ const app: Express = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.VB_MONGODB_URL || "";
 const SESSION_SECRET = process.env.SESSION_SECRET || "";
-const NODE_ENV = process.env.NODE_ENV || "development";
 
 const client: MongoClient = new MongoClient(MONGO_URL);
 
@@ -40,11 +39,7 @@ const sessionConfig = {
   },
 };
 
-if (NODE_ENV === "production") {
-  app.set("trust proxy", 1);
-  sessionConfig.cookie.secure = true;
-}
-
+app.set("trust proxy", 1);
 app.use(session(sessionConfig));
 
 app.use(morgan("dev"));
