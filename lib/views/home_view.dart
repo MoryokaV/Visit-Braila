@@ -515,6 +515,16 @@ class HomeView extends StatelessWidget {
                                                 ),
                                                 child: const Text("Ia bilet"),
                                               ),
+                                              const Spacer(),
+                                              Text(
+                                                "Alte aplicații",
+                                                style: TextStyle(
+                                                  color: Colors.white.withOpacity(0.75),
+                                                  fontSize: 13,
+                                                  fontFamily: labelFont,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
