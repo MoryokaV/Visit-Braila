@@ -268,7 +268,7 @@ class EventCard extends StatelessWidget {
                           width: 6,
                         ),
                         Text(
-                          DateFormat.Hm('ro-RO').format(event.dateTime),
+                          DateFormat.Hm('ro-RO').format(DateTime.parse(event.dateTime.toString()).toLocal()),
                           style: const TextStyle(
                             color: kDateTimeForegroundColor,
                             fontFamily: labelFont,

@@ -182,7 +182,7 @@ class EventView extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            DateFormat.Hm('ro-RO').format(event.dateTime),
+                            DateFormat.Hm('ro-RO').format(DateTime.parse(event.dateTime.toString()).toLocal()),
                             style: const TextStyle(
                               color: kDateTimeForegroundColor,
                               fontFamily: labelFont,
