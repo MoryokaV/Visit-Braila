@@ -64,7 +64,7 @@ export const EventsTable: React.FC<Props> = ({ setModalContent, closeModal }) =>
                 }).format(new Date(event.date_time));
 
                 let end_date_time = undefined;
-                if (event.end_date_time !== null) {
+                if (event.end_date_time) {
                   end_date_time = new Intl.DateTimeFormat("ro-RO", {
                     dateStyle: "short",
                     timeStyle: "short",
