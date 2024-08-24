@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const EditEventForm: React.FC<Props> = ({ event, updateTable, closeModal }) => {
-  const [multipleDays, setMultipleDays] = useState(event.end_date_time !== null);
+  const [multipleDays, setMultipleDays] = useState(event.end_date_time != null);
   const {
     register,
     handleSubmit,
