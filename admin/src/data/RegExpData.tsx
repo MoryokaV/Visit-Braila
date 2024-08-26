@@ -1,4 +1,4 @@
-const diacritice = "ĂăÂâÎîȘșȚé";
+const diacritice = "ĂăÂâÎîȘșȚțé";
 const diacritice_mari = "ĂÂÎȘȚÉ";
 
 // Form Validation
