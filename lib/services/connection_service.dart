@@ -16,7 +16,9 @@ class ConnectionService extends ChangeNotifier {
     }
 
     Connectivity().onConnectivityChanged.listen((status) {
-      isOnline = checkConnectivity(status);
+      print(status); //TODO: Check breaking changes on Android platform
+      // isOnline = checkConnectivity(status);
+      isOnline = true;
 
       if (!isOnline && !popup) {
         NavigationUtil.navigateTo('/nointernet');
@@ -27,7 +29,7 @@ class ConnectionService extends ChangeNotifier {
   }
 
   static Future<void> init() async {
-    initialConnectionStatus = checkConnectivity(await Connectivity().checkConnectivity());
+    // initialConnectionStatus = checkConnectivity(await Connectivity().checkConnectivity());
   }
 
   static bool checkConnectivity(ConnectivityResult connectivity) {

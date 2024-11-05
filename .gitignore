@@ -10,16 +10,6 @@
 .svn/
 migrate_working_dir/
 
-#Python/Flask
-backend/flask_session/
-backend/static/media/sights/
-backend/static/media/tours/
-backend/static/media/restaurants/
-backend/static/media/hotels/
-backend/static/media/events/
-backend/static/media/about/
-backend/serviceAccountKey.json
-
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id

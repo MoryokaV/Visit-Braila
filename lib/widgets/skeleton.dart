@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class Skeleton extends StatelessWidget {
   const Skeleton({
-    Key? key,
+    super.key,
     this.height,
     this.width,
-  }) : super(key: key);
+  });
 
   final double? height, width;
 

@@ -18,7 +18,7 @@ class BottomNavbarProvider with ChangeNotifier {
 }
 
 class BottomNavbar extends StatefulWidget {
-  const BottomNavbar({Key? key}) : super(key: key);
+  const BottomNavbar({super.key});
 
   @override
   State<BottomNavbar> createState() => _BottomNavbarState();

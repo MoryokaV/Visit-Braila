@@ -116,11 +116,10 @@ class _AllHotelsViewState extends State<AllHotelsView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (_, __) {
         setState(() => disableHero = true);
-
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(

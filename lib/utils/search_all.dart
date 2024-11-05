@@ -221,25 +221,25 @@ class SearchAll extends SearchDelegate<String> {
                     var result = filteredData[index];
 
                     switch (result.runtimeType) {
-                      case Sight:
+                      case const (Sight):
                         return resultListTile(
                           pushTo: () => Navigator.pushNamed(context, "/sight", arguments: result),
                           icon: "assets/icons/building.svg",
                           name: result.name,
                         );
-                      case Tour:
+                      case const (Tour):
                         return resultListTile(
                           pushTo: () => Navigator.pushNamed(context, "/tour", arguments: result),
                           icon: "assets/icons/route.svg",
                           name: result.name,
                         );
-                      case Restaurant:
+                      case const (Restaurant):
                         return resultListTile(
                           pushTo: () => Navigator.pushNamed(context, "/restaurant", arguments: result),
                           icon: "assets/icons/restaurant-outline.svg",
                           name: result.name,
                         );
-                      case Hotel:
+                      case const (Hotel):
                         return resultListTile(
                           pushTo: () => Navigator.pushNamed(context, "/hotel", arguments: result),
                           icon: "assets/icons/bed-outline.svg",

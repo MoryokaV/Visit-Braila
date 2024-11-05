@@ -122,11 +122,10 @@ class _AllSightsViewState extends State<AllSightsView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (_, __) {
         setState(() => disableHero = true);
-
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(

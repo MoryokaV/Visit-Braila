@@ -100,7 +100,7 @@ Admin panel used by app owners to manage database entries. This custom tool is a
   
 - Mobile App
   - Dart
-  - Flutter Framework v3.13.9 stable
+  - Flutter Framework v3.24.4 stable
   - Local Storage API
   - Provider state management
   - Firebase

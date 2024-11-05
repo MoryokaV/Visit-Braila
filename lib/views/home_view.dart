@@ -24,7 +24,7 @@ import 'package:visit_braila/utils/style.dart';
 import 'package:visit_braila/utils/responsive.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({Key? key}) : super(key: key);
+  HomeView({super.key});
 
   final ScrollController _scrollController = ScrollController();
   final double appBarBreakpoint = 270;
@@ -171,7 +171,7 @@ class HomeView extends StatelessWidget {
                                         },
                                         itemBuilder: (context, index) {
                                           switch (trending.data![index].runtimeType) {
-                                            case Sight:
+                                            case const (Sight):
                                               Sight sight = trending.data![index] as Sight;
 
                                               return TrendingItemCard(
@@ -183,7 +183,7 @@ class HomeView extends StatelessWidget {
                                                 longitude: sight.longitude,
                                                 pushTo: () => Navigator.pushNamed(context, "/sight", arguments: sight),
                                               );
-                                            case Restaurant:
+                                            case const (Restaurant):
                                               Restaurant restaurant = trending.data![index] as Restaurant;
 
                                               return TrendingItemCard(
@@ -196,7 +196,7 @@ class HomeView extends StatelessWidget {
                                                 pushTo: () =>
                                                     Navigator.pushNamed(context, "/restaurant", arguments: restaurant),
                                               );
-                                            case Hotel:
+                                            case const (Hotel):
                                               Hotel hotel = trending.data![index] as Hotel;
 
                                               return TrendingItemCard(
@@ -208,7 +208,7 @@ class HomeView extends StatelessWidget {
                                                 longitude: hotel.longitude,
                                                 pushTo: () => Navigator.pushNamed(context, "/hotel", arguments: hotel),
                                               );
-                                            case Event:
+                                            case const (Event):
                                               Event event = trending.data![index] as Event;
 
                                               return TrendingEventCard(
