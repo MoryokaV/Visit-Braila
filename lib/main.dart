@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: PageRouter.generateRoute,
         onUnknownRoute: PageRouter.unknownRoute,
         theme: ThemeData(
+          useMaterial3: false,
           scaffoldBackgroundColor: kBackgroundColor,
           primaryColor: kPrimaryColor,
           colorScheme: ColorScheme.fromSwatch().copyWith(secondary: kSecondaryColor),

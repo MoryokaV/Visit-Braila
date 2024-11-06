@@ -8,6 +8,7 @@ import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/views/all_hotels_view.dart';
+import 'package:visit_braila/views/all_parks_view.dart';
 import 'package:visit_braila/views/all_restaurants_view.dart';
 import 'package:visit_braila/views/all_sights_view.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
@@ -154,6 +155,8 @@ class PageRouter {
         return adaptivePageRoute(builder: (context) => const AllHotelsView());
       case '/allrestaurants':
         return adaptivePageRoute(builder: (context) => const AllRestaurantsView());
+      case '/allparks':
+        return adaptivePageRoute(builder: (context) => const AllParksView());
       case '/gallery':
         final args = settings.arguments as Map<String, dynamic>;
 
