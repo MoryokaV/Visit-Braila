@@ -5,6 +5,7 @@ import fs from "fs";
 import {
   eventsCollection,
   hotelsCollection,
+  parksCollection,
   restaurantsCollection,
   sightsCollection,
   toursCollection,
@@ -121,6 +122,8 @@ export const deleteImages = (images: Array<string>, collection: string): void =>
       occurrences = (await hotelsCollection.find({ images: image }).toArray()).length;
     } else if (collection === "events") {
       occurrences = (await eventsCollection.find({ images: image }).toArray()).length;
+    } else if (collection === "parks") {
+      occurrences = (await parksCollection.find({ images: image }).toArray()).length;
     }
 
     if (occurrences === 1) {

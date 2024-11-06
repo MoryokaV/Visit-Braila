@@ -39,6 +39,7 @@ export const initMediaDirs = () => {
     fs.mkdirSync(path.join(mediaPath, "hotels"));
     fs.mkdirSync(path.join(mediaPath, "events"));
     fs.mkdirSync(path.join(mediaPath, "about"));
+    fs.mkdirSync(path.join(mediaPath, "parks"));
   } catch (_) {
     //pass
   }

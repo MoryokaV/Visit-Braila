@@ -11,6 +11,7 @@ import eventController from "../controllers/eventController";
 import trendingController from "../controllers/trendingController";
 import aboutController from "../controllers/aboutController";
 import userController from "../controllers/userController";
+import parkController from "../controllers/parkController";
 
 const apiRouter: Router = Router();
 
@@ -31,5 +32,6 @@ apiRouter.use(eventController);
 apiRouter.use(trendingController);
 apiRouter.use(aboutController);
 apiRouter.use(userController);
+apiRouter.use(parkController);
 
 export default apiRouter;
