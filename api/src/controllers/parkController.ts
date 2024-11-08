@@ -13,7 +13,7 @@ router.get("/fetchParks", async (_, res: Response) => {
   return res.status(200).send(parks);
 });
 
-router.post("/insertParks", requiresAuth, async (req: Request, res: Response) => {
+router.post("/insertPark", requiresAuth, async (req: Request, res: Response) => {
   const park = req.body as Park;
   park.primary_image_blurhash = await getBlurhashString(
     park.images[park.primary_image - 1],

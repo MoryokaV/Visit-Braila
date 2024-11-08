@@ -19,6 +19,7 @@ import EventPage from "./pages/Event.tsx";
 import TrendingPage from "./pages/Trending.tsx";
 import AboutPage from "./pages/About.tsx";
 import UsersPage from "./pages/Users.tsx";
+import ParkPage from "./pages/Park.tsx";
 
 window.bootstrap = bootstrap;
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter(
             {
               path: "hotel",
               element: <HotelPage />,
+            },
+            {
+              path: "park",
+              element: <ParkPage />,
             },
             {
               path: "event",

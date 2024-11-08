@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { BsTree } from "react-icons/bs";
 import {
   IoBedOutline,
   IoBookOutline,
@@ -48,6 +49,11 @@ export const SidebarData: Array<SidebarItem> = [
     name: "Accommodation",
     path: "/hotel",
     icon: <IoBedOutline />,
+  },
+  {
+    name: "Park",
+    path: "/park",
+    icon: <BsTree />,
   },
   {
     name: "Events",
