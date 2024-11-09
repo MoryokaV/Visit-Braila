@@ -1,16 +1,17 @@
+import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:visit_braila/controllers/park_controller.dart';
 import 'package:visit_braila/models/park_model.dart';
 import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/maps.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/style.dart';
-import 'package:visit_braila/utils/url_constants.dart';
 import 'package:visit_braila/widgets/cached_image.dart';
+import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 
 class AllParksView extends StatefulWidget {
@@ -21,32 +22,30 @@ class AllParksView extends StatefulWidget {
 }
 
 class _AllParksViewState extends State<AllParksView> {
-  bool isLoading = false;
-  List<Park> parks = [
-    Park(
-        id: "",
-        name: "Parcul monument",
-        images: [
-          "$baseUrl/static/media/sights/PARCUL%20MONUMENT%201.jpeg",
-          "$baseUrl/static/media/sights/PARCUL%20MONUMENT%202.jpg",
-          "$baseUrl/static/media/sights/PARCUL%20MONUMENT%209.jpg",
-        ],
-        primaryImage: 1,
-        primaryImageBlurhash: "L9Am^zt84VoxNEt7WTWT8}t7%fWC",
-        latitude: 1231231,
-        longitude: 123123132),
-    Park(
-        id: "",
-        name: "Grădina publică",
-        images: [
-          "$baseUrl/static/media/sights/gradina%20publica%2012.jpg",
-          "$baseUrl/static/media/sights/gradina%20publica%2011.jpg",
-        ],
-        primaryImage: 2,
-        primaryImageBlurhash: "L9Am^zt84VoxNEt7WTWT8}t7%fWC",
-        latitude: 123,
-        longitude: 122),
-  ];
+  bool isLoading = true;
+  final ParkController parkController = ParkController();
+  List<Park> parks = [];
+
+  void fetchData() async {
+    try {
+      parks = await parkController.fetchParks();
+    } on HttpException {
+      if (mounted) {
+        showErrorDialog(context);
+      }
+    }
+
+    if (mounted) {
+      setState(() => isLoading = false);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -227,15 +226,20 @@ class _ParkCardState extends State<ParkCard> {
                                           SvgPicture.asset(
                                             "assets/icons/map-pin.svg",
                                             width: 22,
-                                            colorFilter:
-                                                ColorFilter.mode(kBackgroundColor.withOpacity(0.85), BlendMode.srcIn),
+                                            colorFilter: ColorFilter.mode(
+                                              kBackgroundColor.withOpacity(0.85),
+                                              BlendMode.srcIn,
+                                            ),
                                           ),
                                           const SizedBox(
                                             width: 6,
                                           ),
                                           Text(
                                             location.getDistance(widget.park.latitude, widget.park.longitude),
-                                            style: TextStyle(fontSize: 14, color: kBackgroundColor.withOpacity(0.85)),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: kBackgroundColor.withOpacity(0.85),
+                                            ),
                                           ),
                                         ],
                                       );
@@ -253,8 +257,12 @@ class _ParkCardState extends State<ParkCard> {
                                     size: 18,
                                     color: kBackgroundColor.withOpacity(0.85),
                                   ),
-                                  onPressed: () =>
-                                      openMap(widget.park.latitude, widget.park.longitude, widget.park.name, context),
+                                  onPressed: () => openMap(
+                                    widget.park.latitude,
+                                    widget.park.longitude,
+                                    widget.park.name,
+                                    context,
+                                  ),
                                 ),
                               ),
                             ],
