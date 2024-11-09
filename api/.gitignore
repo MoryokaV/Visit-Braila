@@ -7,10 +7,7 @@ dist/
 
 src/serviceAccountKey.json
 
-static/media/sights/
-static/media/tours/
-static/media/restaurants/
-static/media/hotels/
-static/media/events/
-static/media/about/
+static/media/*/
+!static/media/assets/
+!static/media/assets/**
 
