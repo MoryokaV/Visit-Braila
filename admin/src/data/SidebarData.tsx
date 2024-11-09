@@ -6,6 +6,7 @@ import {
   IoBookmarksOutline,
   IoBusinessOutline,
   IoCalendarOutline,
+  IoFitnessOutline,
   IoPeopleOutline,
   IoRestaurantOutline,
   IoSpeedometerOutline,
@@ -49,6 +50,11 @@ export const SidebarData: Array<SidebarItem> = [
     name: "Accommodation",
     path: "/hotel",
     icon: <IoBedOutline />,
+  },
+  {
+    name: "Fitness & Wellness",
+    path: "/fitness",
+    icon: <IoFitnessOutline />,
   },
   {
     name: "Park",

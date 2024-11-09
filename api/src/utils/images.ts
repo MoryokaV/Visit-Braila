@@ -124,6 +124,8 @@ export const deleteImages = (images: Array<string>, collection: string): void =>
       occurrences = (await eventsCollection.find({ images: image }).toArray()).length;
     } else if (collection === "parks") {
       occurrences = (await parksCollection.find({ images: image }).toArray()).length;
+    } else if (collection === "fitness") {
+      occurrences = (await parksCollection.find({ images: image }).toArray()).length;
     }
 
     if (occurrences === 1) {

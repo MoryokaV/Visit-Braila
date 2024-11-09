@@ -7,7 +7,7 @@ import { requiresAuth } from "../middleware/auth";
 
 const router: Router = Router();
 
-router.get("/fetchTours", async (req: Request, res: Response) => {
+router.get("/fetchTours", async (_, res: Response) => {
   const tours = await toursCollection.find().sort("index", 1).toArray();
 
   return res.status(200).send(tours);
@@ -82,7 +82,7 @@ router.delete("/deleteTour/:_id", requiresAuth, async (req: Request, res: Respon
   return res.status(200).send("Successfully deleted document");
 });
 
-router.put("/updateTourIndex", requiresAuth, async (req: Request, res: Response) => {
+router.put("/updateTourIndex", requiresAuth, async (req: Request, _) => {
   const { oldIndex, newIndex, items } = req.body as {
     oldIndex: number;
     newIndex: number;

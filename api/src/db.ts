@@ -9,6 +9,7 @@ import { TrendingItem } from "./models/trendingModel";
 import { Event } from "./models/eventModel";
 import { About } from "./models/aboutModel";
 import { Park } from "./models/parkModel";
+import { Fitness } from "./models/fitnessModel";
 
 export let db: Db;
 export let usersCollection: Collection<User>;
@@ -21,6 +22,7 @@ export let trendingCollection: Collection<TrendingItem>;
 export let eventsCollection: Collection<Event>;
 export let aboutCollection: Collection<About>;
 export let parksCollection: Collection<Park>;
+export let fitnessCollection: Collection<Fitness>;
 
 export const connectToDatabase = async (client: MongoClient) => {
   await client
@@ -38,6 +40,7 @@ export const connectToDatabase = async (client: MongoClient) => {
       trendingCollection = db.collection("trending");
       aboutCollection = db.collection("about");
       parksCollection = db.collection("parks");
+      fitnessCollection = db.collection("fitness");
     })
     .catch(e => {
       console.log(`[database]: An error occurred while connecting to database: ${e}`);

@@ -12,6 +12,7 @@ import trendingController from "../controllers/trendingController";
 import aboutController from "../controllers/aboutController";
 import userController from "../controllers/userController";
 import parkController from "../controllers/parkController";
+import fitnessController from "../controllers/fitnessController";
 
 const apiRouter: Router = Router();
 
@@ -33,5 +34,6 @@ apiRouter.use(trendingController);
 apiRouter.use(aboutController);
 apiRouter.use(userController);
 apiRouter.use(parkController);
+apiRouter.use(fitnessController);
 
 export default apiRouter;

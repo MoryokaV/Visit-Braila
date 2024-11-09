@@ -8,7 +8,7 @@ import { filterTrendingByItemId } from "../utils/trending";
 
 const router: Router = Router();
 
-router.get("/fetchRestaurants", async (req: Request, res: Response) => {
+router.get("/fetchRestaurants", async (_, res: Response) => {
   const restaurants = await restaurantsCollection.find().sort("index", 1).toArray();
 
   return res.status(200).send(restaurants);
@@ -99,26 +99,22 @@ router.delete(
   },
 );
 
-router.put(
-  "/updateRestaurantIndex",
-  requiresAuth,
-  async (req: Request, res: Response) => {
-    const { oldIndex, newIndex, items } = req.body as {
-      oldIndex: number;
-      newIndex: number;
-      items: string[];
-    };
+router.put("/updateRestaurantIndex", requiresAuth, async (req: Request, _) => {
+  const { oldIndex, newIndex, items } = req.body as {
+    oldIndex: number;
+    newIndex: number;
+    items: string[];
+  };
 
-    let j = 0;
+  let j = 0;
 
-    for (let i = Math.min(oldIndex, newIndex); i <= Math.max(oldIndex, newIndex); i++) {
-      restaurantsCollection.updateOne(
-        { _id: new ObjectId(items[j]) },
-        { $set: { index: i } },
-      );
-      j += 1;
-    }
-  },
-);
+  for (let i = Math.min(oldIndex, newIndex); i <= Math.max(oldIndex, newIndex); i++) {
+    restaurantsCollection.updateOne(
+      { _id: new ObjectId(items[j]) },
+      { $set: { index: i } },
+    );
+    j += 1;
+  }
+});
 
 export default router;

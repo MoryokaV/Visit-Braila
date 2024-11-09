@@ -93,7 +93,7 @@ router.delete("/deleteSight/:_id", requiresAuth, async (req: Request, res: Respo
   return res.status(200).send("Successfully deleted document");
 });
 
-router.put("/updateSightIndex", requiresAuth, async (req: Request, res: Response) => {
+router.put("/updateSightIndex", requiresAuth, async (req: Request, _) => {
   const { oldIndex, newIndex, items } = req.body as {
     oldIndex: number;
     newIndex: number;
