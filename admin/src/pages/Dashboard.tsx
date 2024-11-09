@@ -36,9 +36,7 @@ export default function Dashboard() {
           <div className="col-6 pe-2">
             <ParksTable setModalContent={setModalContent} closeModal={closeModal} />
           </div>
-          <div className="col-6 ps-2">
-            <ParksTable setModalContent={setModalContent} closeModal={closeModal} />
-          </div>
+          <div className="col-6 ps-2"></div>
         </div>
       </div>
       <Modal modalRef={modalRef}>{modalContent}</Modal>

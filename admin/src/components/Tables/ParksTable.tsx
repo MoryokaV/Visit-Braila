@@ -4,6 +4,7 @@ import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { Park } from "../../models/ParkModel";
 import { LoadingSpinner } from "../LoadingSpinner";
 import Sortable from "sortablejs";
+import { EditParkForm } from "../Forms/EditParkForm";
 
 interface Props {
   setModalContent: React.Dispatch<React.SetStateAction<JSX.Element>>;
@@ -99,14 +100,13 @@ export const ParksTable: React.FC<Props> = ({ setModalContent, closeModal }) => 
                           data-bs-toggle="modal"
                           data-bs-target="#modal"
                           onClick={() =>
-                            // setModalContent(
-                            //   <EditSightForm
-                            //     sight={sight}
-                            //     updateTable={updateTable}
-                            //     closeModal={closeModal}
-                            //   />,
-                            // )
-                            console.log("sdf")
+                            setModalContent(
+                              <EditParkForm
+                                park={park}
+                                updateTable={updateTable}
+                                closeModal={closeModal}
+                              />,
+                            )
                           }
                         >
                           <IoCreateOutline className="edit-icon" />
