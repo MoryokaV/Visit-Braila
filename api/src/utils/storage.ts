@@ -33,14 +33,15 @@ export const initMediaDirs = () => {
   const mediaPath = path.join(__dirname, "..", "..", "static", "media");
 
   try {
-    fs.mkdirSync(path.join(mediaPath, "sights"));
-    fs.mkdirSync(path.join(mediaPath, "tours"));
-    fs.mkdirSync(path.join(mediaPath, "restaurants"));
-    fs.mkdirSync(path.join(mediaPath, "hotels"));
-    fs.mkdirSync(path.join(mediaPath, "events"));
-    fs.mkdirSync(path.join(mediaPath, "about"));
-    fs.mkdirSync(path.join(mediaPath, "parks"));
-  } catch (_) {
+    fs.mkdirSync(path.join(mediaPath, "sights"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "tours"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "restaurants"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "hotels"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "events"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "about"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "parks"), { recursive: true });
+  } catch (e) {
+    console.log(e);
     //pass
   }
 };
