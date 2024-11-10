@@ -64,6 +64,7 @@ class SearchAll extends SearchDelegate<String> {
 
   Future<List> fetchData() async {
     try {
+      print('fetch');
       allSights = await sightController.fetchSights();
       allTours = await tourController.fetchTours();
       allRestaurants = await restaurantController.fetchRestaurants();
@@ -199,7 +200,7 @@ class SearchAll extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder<List>(
-      future: fetchData(),
+      future: data.isEmpty ? fetchData() : Future.value(data),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List filteredData = getResults(snapshot.data!);
