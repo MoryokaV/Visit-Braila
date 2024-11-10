@@ -48,129 +48,28 @@ class PageRouter {
       case '/sight':
         final sight = settings.arguments as Sight;
 
-        return PageRouteBuilder(
-          transitionDuration: kTransitionDuration,
-          reverseTransitionDuration: kTransitionDuration,
-          pageBuilder: (context, animation, _) {
-            final curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: kTransitionCurve,
-            );
-
-            return FadeTransition(
-              opacity: curvedAnimation,
-              child: SightView(
-                sight: sight,
-                routeAnimation: animation,
-              ),
-            );
-          },
-        );
+        return createFadeInRouteTransition((animation) => SightView(sight: sight, routeAnimation: animation));
       case '/tour':
         final tour = settings.arguments as Tour;
 
-        return PageRouteBuilder(
-          transitionDuration: kTransitionDuration,
-          reverseTransitionDuration: kTransitionDuration,
-          pageBuilder: (context, animation, _) {
-            final curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: kTransitionCurve,
-            );
-
-            return FadeTransition(
-              opacity: curvedAnimation,
-              child: TourView(
-                tour: tour,
-                routeAnimation: animation,
-              ),
-            );
-          },
-        );
+        return createFadeInRouteTransition((animation) => TourView(tour: tour, routeAnimation: animation));
       case '/hotel':
         final hotel = settings.arguments as Hotel;
 
-        return PageRouteBuilder(
-          transitionDuration: kTransitionDuration,
-          reverseTransitionDuration: kTransitionDuration,
-          pageBuilder: (context, animation, _) {
-            final curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: kTransitionCurve,
-            );
-
-            return FadeTransition(
-              opacity: curvedAnimation,
-              child: HotelView(
-                hotel: hotel,
-                routeAnimation: animation,
-              ),
-            );
-          },
-        );
+        return createFadeInRouteTransition((animation) => HotelView(hotel: hotel, routeAnimation: animation));
       case '/restaurant':
         final restaurant = settings.arguments as Restaurant;
 
-        return PageRouteBuilder(
-          transitionDuration: kTransitionDuration,
-          reverseTransitionDuration: kTransitionDuration,
-          pageBuilder: (context, animation, _) {
-            final curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: kTransitionCurve,
-            );
-
-            return FadeTransition(
-              opacity: curvedAnimation,
-              child: RestaurantView(
-                restaurant: restaurant,
-                routeAnimation: animation,
-              ),
-            );
-          },
-        );
+        return createFadeInRouteTransition(
+            (animation) => RestaurantView(restaurant: restaurant, routeAnimation: animation));
       case '/event':
         final event = settings.arguments as Event;
 
-        return PageRouteBuilder(
-          transitionDuration: kTransitionDuration,
-          reverseTransitionDuration: kTransitionDuration,
-          pageBuilder: (context, animation, _) {
-            final curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: kTransitionCurve,
-            );
-
-            return FadeTransition(
-              opacity: curvedAnimation,
-              child: EventView(
-                event: event,
-                routeAnimation: animation,
-              ),
-            );
-          },
-        );
+        return createFadeInRouteTransition((animation) => EventView(event: event, routeAnimation: animation));
       case '/fitness':
         final fitness = settings.arguments as Fitness;
 
-        return PageRouteBuilder(
-          transitionDuration: kTransitionDuration,
-          reverseTransitionDuration: kTransitionDuration,
-          pageBuilder: (context, animation, _) {
-            final curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: kTransitionCurve,
-            );
-
-            return FadeTransition(
-              opacity: curvedAnimation,
-              child: FitnessView(
-                fitness: fitness,
-                routeAnimation: animation,
-              ),
-            );
-          },
-        );
+        return createFadeInRouteTransition((animation) => FitnessView(fitness: fitness, routeAnimation: animation));
       case '/alltours':
         return adaptivePageRoute(builder: (context) => const AllToursView());
       case '/allsights':
@@ -207,6 +106,24 @@ class PageRouter {
       default:
         return null;
     }
+  }
+
+  static PageRouteBuilder createFadeInRouteTransition(Widget Function(Animation<double> animation) builder) {
+    return PageRouteBuilder(
+      transitionDuration: kTransitionDuration,
+      reverseTransitionDuration: kTransitionDuration,
+      pageBuilder: (context, animation, _) {
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: kTransitionCurve,
+        );
+
+        return FadeTransition(
+          opacity: curvedAnimation,
+          child: builder(animation),
+        );
+      },
+    );
   }
 
   static Route<dynamic> unknownRoute(RouteSettings settings) {
