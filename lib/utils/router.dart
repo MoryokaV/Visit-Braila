@@ -2,17 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/models/event_model.dart';
+import 'package:visit_braila/models/fitness_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
 import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/services/connection_service.dart';
+import 'package:visit_braila/views/all_fitness_view.dart';
 import 'package:visit_braila/views/all_hotels_view.dart';
 import 'package:visit_braila/views/all_parks_view.dart';
 import 'package:visit_braila/views/all_restaurants_view.dart';
 import 'package:visit_braila/views/all_sights_view.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
 import 'package:visit_braila/views/event_view.dart';
+import 'package:visit_braila/views/fitness_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/hotel_view.dart';
 import 'package:visit_braila/views/nointernet_view.dart';
@@ -147,6 +150,27 @@ class PageRouter {
             );
           },
         );
+      case '/fitness':
+        final fitness = settings.arguments as Fitness;
+
+        return PageRouteBuilder(
+          transitionDuration: kTransitionDuration,
+          reverseTransitionDuration: kTransitionDuration,
+          pageBuilder: (context, animation, _) {
+            final curvedAnimation = CurvedAnimation(
+              parent: animation,
+              curve: kTransitionCurve,
+            );
+
+            return FadeTransition(
+              opacity: curvedAnimation,
+              child: FitnessView(
+                fitness: fitness,
+                routeAnimation: animation,
+              ),
+            );
+          },
+        );
       case '/alltours':
         return adaptivePageRoute(builder: (context) => const AllToursView());
       case '/allsights':
@@ -155,6 +179,8 @@ class PageRouter {
         return adaptivePageRoute(builder: (context) => const AllHotelsView());
       case '/allrestaurants':
         return adaptivePageRoute(builder: (context) => const AllRestaurantsView());
+      case '/allfitness':
+        return adaptivePageRoute(builder: (context) => const AllFitnessView());
       case '/allparks':
         return adaptivePageRoute(builder: (context) => const AllParksView());
       case '/gallery':

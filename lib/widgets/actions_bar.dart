@@ -9,7 +9,7 @@ import 'package:visit_braila/widgets/like_animation.dart';
 
 class ActionsBar extends StatelessWidget {
   final String id;
-  final String collection;
+  final String? collection;
   final String text;
   final String link;
   final String? phone;
@@ -17,7 +17,7 @@ class ActionsBar extends StatelessWidget {
   ActionsBar({
     super.key,
     required this.id,
-    required this.collection,
+    this.collection,
     required this.text,
     required this.link,
     this.phone,
@@ -87,12 +87,12 @@ class ActionsBar extends StatelessWidget {
                   foregroundColor: Colors.white,
                   textStyle: Theme.of(context).textTheme.labelLarge,
                   shape: RoundedRectangleBorder(
-                    borderRadius: phone == null
-                        ? const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          )
-                        : BorderRadius.zero,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(phone == null ? 10 : 0),
+                      bottomLeft: Radius.circular(phone == null ? 10 : 0),
+                      topRight: Radius.circular(collection == null ? 10 : 0),
+                      bottomRight: Radius.circular(collection == null ? 10 : 0),
+                    ),
                   ),
                 ),
                 child: Text(text),
@@ -101,50 +101,51 @@ class ActionsBar extends StatelessWidget {
             const SizedBox(
               width: 6,
             ),
-            LikeAnimation(
-              key: likeAnimationRightKey,
-              child: Consumer<Wishlist>(
-                builder: (context, wishlist, _) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [globalShadow],
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
+            if (collection != null)
+              LikeAnimation(
+                key: likeAnimationRightKey,
+                child: Consumer<Wishlist>(
+                  builder: (context, wishlist, _) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [globalShadow],
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
                       ),
-                    ),
-                    child: IconButton(
-                      splashRadius: 1,
-                      onPressed: () {
-                        switch (collection) {
-                          case "sights":
-                            wishlist.toggleSightWishState(id);
-                            break;
-                          case "tours":
-                            wishlist.toggleTourWishState(id);
-                            break;
-                          case "restaurants":
-                            wishlist.toggleRestaurantWishState(id);
-                            break;
-                          case "hotels":
-                            wishlist.toggleHotelWishState(id);
-                            break;
-                        }
+                      child: IconButton(
+                        splashRadius: 1,
+                        onPressed: () {
+                          switch (collection) {
+                            case "sights":
+                              wishlist.toggleSightWishState(id);
+                              break;
+                            case "tours":
+                              wishlist.toggleTourWishState(id);
+                              break;
+                            case "restaurants":
+                              wishlist.toggleRestaurantWishState(id);
+                              break;
+                            case "hotels":
+                              wishlist.toggleHotelWishState(id);
+                              break;
+                          }
 
-                        likeAnimationRightKey.currentState!.animate();
-                      },
-                      icon: Icon(
-                        wishlist.items[collection]!.contains(id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                        color: wishlist.items[collection]!.contains(id)
-                            ? Theme.of(context).colorScheme.secondary
-                            : kForegroundColor,
+                          likeAnimationRightKey.currentState!.animate();
+                        },
+                        icon: Icon(
+                          wishlist.items[collection]!.contains(id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                          color: wishlist.items[collection]!.contains(id)
+                              ? Theme.of(context).colorScheme.secondary
+                              : kForegroundColor,
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
           ],
         ),
       ),

@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:visit_braila/controllers/fitness_controller.dart';
 import 'package:visit_braila/controllers/hotel_controller.dart';
 import 'package:visit_braila/controllers/restaurant_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
+import 'package:visit_braila/models/fitness_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
 import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
@@ -51,11 +53,13 @@ class SearchAll extends SearchDelegate<String> {
   final TourController tourController = TourController();
   final RestaurantController restaurantController = RestaurantController();
   final HotelController hotelController = HotelController();
+  final FitnessController fitnessController = FitnessController();
 
   List<Sight> allSights = [];
   List<Tour> allTours = [];
   List<Restaurant> allRestaurants = [];
   List<Hotel> allHotels = [];
+  List<Fitness> allFitness = [];
   List data = [];
 
   Future<List> fetchData() async {
@@ -64,12 +68,14 @@ class SearchAll extends SearchDelegate<String> {
       allTours = await tourController.fetchTours();
       allRestaurants = await restaurantController.fetchRestaurants();
       allHotels = await hotelController.fetchHotels();
+      allFitness = await fitnessController.fetchFitness();
 
       data.clear();
       data.addAll(allSights);
       data.addAll(allTours);
       data.addAll(allRestaurants);
       data.addAll(allHotels);
+      data.addAll(allFitness);
 
       return data;
     } on HttpException {
@@ -243,6 +249,12 @@ class SearchAll extends SearchDelegate<String> {
                         return resultListTile(
                           pushTo: () => Navigator.pushNamed(context, "/hotel", arguments: result),
                           icon: "assets/icons/bed-outline.svg",
+                          name: result.name,
+                        );
+                      case const (Fitness):
+                        return resultListTile(
+                          pushTo: () => Navigator.pushNamed(context, "/fitness", arguments: result),
+                          icon: "assets/icons/fitness-outline.svg",
                           name: result.name,
                         );
                       default:

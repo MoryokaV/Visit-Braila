@@ -1,13 +1,17 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:visit_braila/controllers/event_controller.dart';
+import 'package:visit_braila/controllers/fitness_controller.dart';
 import 'package:visit_braila/controllers/hotel_controller.dart';
 import 'package:visit_braila/controllers/restaurant_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/event_model.dart';
+import 'package:visit_braila/models/fitness_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
 import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
@@ -179,6 +183,23 @@ class DynamicLinksService {
         }
 
         redirect('/event', event);
+        break;
+      case 'fitness':
+        String? id = uri.queryParameters['id'];
+
+        if (id == null) {
+          handleError(null);
+          return;
+        }
+
+        Fitness? fitness = await FitnessController().findFitness(id);
+
+        if (fitness == null) {
+          handleError(null);
+          return;
+        }
+
+        redirect('/fitness', fitness);
         break;
       default:
         handleError(null);

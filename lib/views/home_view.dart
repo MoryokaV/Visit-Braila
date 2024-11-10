@@ -632,13 +632,7 @@ class HomeView extends StatelessWidget {
                                               ),
                                               const SizedBox(height: 6),
                                               ElevatedButton(
-                                                onPressed: () {
-                                                  if (Platform.isIOS) {
-                                                    openBrowserURL(brTranporIOSUrl);
-                                                  } else {
-                                                    openBrowserURL(brTranportAndroidUrl);
-                                                  }
-                                                },
+                                                onPressed: () => Navigator.pushNamed(context, "/allfitness"),
                                                 style: ElevatedButton.styleFrom(
                                                   padding: const EdgeInsets.symmetric(
                                                     horizontal: 20,
