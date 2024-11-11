@@ -8,6 +8,12 @@ export type Park = {
   primary_image_blurhash: string;
   latitude: number;
   longitude: number;
-  external_link: string;
+  type: ParkType;
   index: number;
 };
+
+enum ParkType {
+  relaxare = "relaxare",
+  joaca = "joaca",
+  fitness = "fitness",
+}

@@ -35,10 +35,10 @@ export default function Dashboard() {
           <HotelsTable setModalContent={setModalContent} closeModal={closeModal} />
           <EventsTable setModalContent={setModalContent} closeModal={closeModal} />
           <div className="col-6 pe-2">
-            <ParksTable setModalContent={setModalContent} closeModal={closeModal} />
+            <FitnessTable setModalContent={setModalContent} closeModal={closeModal} />
           </div>
           <div className="col-6 ps-2">
-            <FitnessTable setModalContent={setModalContent} closeModal={closeModal} />
+            <ParksTable setModalContent={setModalContent} closeModal={closeModal} />
           </div>
         </div>
       </div>

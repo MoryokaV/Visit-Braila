@@ -8,6 +8,7 @@ class Park {
   final String primaryImageBlurhash;
   final double latitude;
   final double longitude;
+  final ParkType type;
 
   const Park({
     required this.id,
@@ -17,6 +18,7 @@ class Park {
     required this.primaryImageBlurhash,
     required this.latitude,
     required this.longitude,
+    required this.type,
   });
 
   factory Park.fromJSON(Map<String, dynamic> json) {
@@ -28,6 +30,13 @@ class Park {
       primaryImageBlurhash: json['primary_image_blurhash'],
       latitude: json['latitude'].toDouble(),
       longitude: json['longitude'].toDouble(),
+      type: ParkType.values.byName(json['type']),
     );
   }
+}
+
+enum ParkType {
+  relaxare,
+  joaca,
+  fitness,
 }

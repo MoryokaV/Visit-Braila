@@ -40,7 +40,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
         return AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: kBackgroundColor,
-          elevation: 4,
+          elevation: 2,
           title: Text(
             "Favorite",
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(

@@ -68,21 +68,22 @@ class _GalleryViewState extends State<GalleryView> {
           icon: Icon(Icons.adaptive.arrow_back),
         ),
         actions: [
-          IconButton(
-            splashRadius: 1,
-            onPressed: () async {
-              final link = await DynamicLinksService.generateDynamicLink(
-                id: widget.id,
-                image: widget.images[widget.primaryImage - 1],
-                name: widget.title,
-                collection: widget.type,
-                alternativeUrl: widget.externalLink,
-              );
+          if (widget.type != "park")
+            IconButton(
+              splashRadius: 1,
+              onPressed: () async {
+                final link = await DynamicLinksService.generateDynamicLink(
+                  id: widget.id,
+                  image: widget.images[widget.primaryImage - 1],
+                  name: widget.title,
+                  collection: widget.type,
+                  alternativeUrl: widget.externalLink,
+                );
 
-              Share.share(link.toString());
-            },
-            icon: Icon(Icons.adaptive.share),
-          ),
+                Share.share(link.toString());
+              },
+              icon: Icon(Icons.adaptive.share),
+            ),
           if (widget.collection != null)
             LikeAnimation(
               key: likeAnimationKey,

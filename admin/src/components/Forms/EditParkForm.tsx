@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputField } from "./Fields/InputField";
 import { FormType } from "../../models/FormType";
-import { Park } from "../../models/ParkModel";
+import { Park, ParkType } from "../../models/ParkModel";
 import { createImagesFormData, getImagesToDelete } from "../../utils/images";
 import { ImagesField } from "./Fields/ImagesField";
 import { PrimaryImageField } from "./Fields/PrimaryImageField";
@@ -114,6 +114,47 @@ export const EditParkForm: React.FC<Props> = ({ park, updateTable, closeModal })
           max={images && images.length}
           defaultValue={park.primary_image}
         />
+      </section>
+      <section className="col-12 d-flex gap-3 align-items-center flex-wrap">
+        <span>Type </span>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="relaxare"
+            id="type-relaxare"
+            {...register("type")}
+            defaultChecked={park.type == ParkType.relaxare}
+          />
+          <label className="form-check-label" htmlFor="type-public"></label>
+          relaxare
+        </div>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="joaca"
+            id="type-joaca"
+            {...register("type")}
+            defaultChecked={park.type == ParkType.joaca}
+          />
+          <label className="form-check-label" htmlFor="type-privat">
+            joacă
+          </label>
+        </div>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="fitness"
+            id="type-fitness"
+            {...register("type")}
+            defaultChecked={park.type == ParkType.fitness}
+          />
+          <label className="form-check-label" htmlFor="type-privat">
+            fitness
+          </label>
+        </div>
       </section>
       <section className="col-12">
         <button

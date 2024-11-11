@@ -76,6 +76,7 @@ export const ParksTable: React.FC<Props> = ({ setModalContent, closeModal }) => 
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Type</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -93,6 +94,7 @@ export const ParksTable: React.FC<Props> = ({ setModalContent, closeModal }) => 
                   <tr id={park._id} key={index}>
                     <td>{park._id}</td>
                     <td>{park.name}</td>
+                    <td>{park.type.charAt(0).toUpperCase() + park.type.slice(1)}</td>
                     <td>
                       <div className="group">
                         <button
