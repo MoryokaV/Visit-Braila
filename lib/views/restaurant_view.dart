@@ -79,7 +79,7 @@ class RestaurantView extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 18,
-                    backgroundColor: Colors.white.withOpacity(0.8),
+                    backgroundColor: Colors.white.withValues(alpha: 0.8),
                     child: IconButton(
                       color: kForegroundColor,
                       padding: EdgeInsets.zero,
@@ -98,7 +98,7 @@ class RestaurantView extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 18,
-                        backgroundColor: Colors.white.withOpacity(0.8),
+                        backgroundColor: Colors.white.withValues(alpha: 0.8),
                         child: IconButton(
                           color: kForegroundColor,
                           icon: const Icon(
@@ -116,7 +116,7 @@ class RestaurantView extends StatelessWidget {
                         translation: Platform.isIOS ? const Offset(0, 0) : const Offset(0, 0),
                         child: CircleAvatar(
                           radius: 18,
-                          backgroundColor: Colors.white.withOpacity(0.8),
+                          backgroundColor: Colors.white.withValues(alpha: 0.8),
                           child: IconButton(
                             color: kForegroundColor,
                             icon: Icon(

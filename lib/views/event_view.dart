@@ -83,7 +83,7 @@ class EventView extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 18,
-                    backgroundColor: Colors.white.withOpacity(0.8),
+                    backgroundColor: Colors.white.withValues(alpha: 0.8),
                     child: IconButton(
                       color: kForegroundColor,
                       padding: EdgeInsets.zero,
@@ -102,7 +102,7 @@ class EventView extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 18,
-                        backgroundColor: Colors.white.withOpacity(0.8),
+                        backgroundColor: Colors.white.withValues(alpha: 0.8),
                         child: IconButton(
                           color: kForegroundColor,
                           icon: Icon(

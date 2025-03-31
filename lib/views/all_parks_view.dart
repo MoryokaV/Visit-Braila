@@ -189,6 +189,7 @@ class _ParkCardState extends State<ParkCard> {
         height: Responsive.safeBlockVertical * 55,
         width: double.infinity,
         margin: const EdgeInsets.only(bottom: 20),
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           boxShadow: const [bottomShadowMd],
           borderRadius: BorderRadius.circular(12),
@@ -225,7 +226,7 @@ class _ParkCardState extends State<ParkCard> {
                       filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
                       child: Container(
                         width: double.infinity,
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         padding: const EdgeInsets.symmetric(
                           vertical: 12,
                           horizontal: 16,
@@ -243,7 +244,7 @@ class _ParkCardState extends State<ParkCard> {
                                   height: 3,
                                   margin: EdgeInsets.symmetric(horizontal: 4),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(currentImageIndex == dotIndex ? 0.9 : 0.4),
+                                    color: Colors.white.withValues(alpha: currentImageIndex == dotIndex ? 0.9 : 0.4),
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(100),
                                     ),
@@ -286,7 +287,7 @@ class _ParkCardState extends State<ParkCard> {
                                                 "assets/icons/map-pin.svg",
                                                 width: 22,
                                                 colorFilter: ColorFilter.mode(
-                                                  kBackgroundColor.withOpacity(0.85),
+                                                  kBackgroundColor.withValues(alpha: 0.85),
                                                   BlendMode.srcIn,
                                                 ),
                                               ),
@@ -297,7 +298,7 @@ class _ParkCardState extends State<ParkCard> {
                                                 location.getDistance(widget.park.latitude, widget.park.longitude),
                                                 style: TextStyle(
                                                   fontSize: 14,
-                                                  color: kBackgroundColor.withOpacity(0.85),
+                                                  color: kBackgroundColor.withValues(alpha: 0.85),
                                                 ),
                                               ),
                                             ],
@@ -312,13 +313,13 @@ class _ParkCardState extends State<ParkCard> {
                                 ),
                                 CircleAvatar(
                                   radius: 18,
-                                  backgroundColor: Colors.white.withOpacity(0.2),
+                                  backgroundColor: Colors.white.withValues(alpha: 0.2),
                                   child: IconButton(
                                     color: kForegroundColor,
                                     icon: Icon(
                                       CupertinoIcons.location_fill,
                                       size: 18,
-                                      color: kBackgroundColor.withOpacity(0.85),
+                                      color: kBackgroundColor.withValues(alpha: 0.85),
                                     ),
                                     onPressed: () => openMap(
                                       widget.park.latitude,

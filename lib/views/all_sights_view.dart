@@ -264,7 +264,7 @@ class SightCard extends StatelessWidget {
                               filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                               child: Container(
                                 width: double.infinity,
-                                color: Colors.black.withOpacity(0.25),
+                                color: Colors.black.withValues(alpha: 0.25),
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8,
                                   horizontal: 16,
@@ -330,7 +330,7 @@ class SightCard extends StatelessWidget {
                             ),
                             Text(
                               location.getDistance(sight.latitude, sight.longitude),
-                              style: TextStyle(fontSize: 14, color: kForegroundColor.withOpacity(0.85)),
+                              style: TextStyle(fontSize: 14, color: kForegroundColor.withValues(alpha: 0.85)),
                             ),
                           ],
                         );

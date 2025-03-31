@@ -64,7 +64,6 @@ class SearchAll extends SearchDelegate<String> {
 
   Future<List> fetchData() async {
     try {
-      print('fetch');
       allSights = await sightController.fetchSights();
       allTours = await tourController.fetchTours();
       allRestaurants = await restaurantController.fetchRestaurants();

@@ -243,7 +243,7 @@ class HotelCard extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     alignment: Alignment.bottomLeft,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.25),
+                      color: Colors.black.withValues(alpha: 0.25),
                     ),
                     child: Text(
                       hotel.name,

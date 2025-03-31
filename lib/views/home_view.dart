@@ -519,7 +519,7 @@ class HomeView extends StatelessWidget {
                                               Text(
                                                 "Alte aplicații",
                                                 style: TextStyle(
-                                                  color: Colors.white.withOpacity(0.75),
+                                                  color: Colors.white.withValues(alpha: 0.75),
                                                   fontSize: 13,
                                                   fontFamily: labelFont,
                                                   fontWeight: FontWeight.w600,
@@ -949,7 +949,7 @@ class TrendingItemCard extends StatelessWidget {
                             location.getDistance(latitude, longitude),
                             style: TextStyle(
                               fontSize: 12,
-                              color: kForegroundColor.withOpacity(0.85),
+                              color: kForegroundColor.withValues(alpha: 0.85),
                             ),
                           ),
                         ],
@@ -1065,7 +1065,7 @@ class TrendingEventCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 12,
-                          color: kForegroundColor.withOpacity(0.85),
+                          color: kForegroundColor.withValues(alpha: 0.85),
                         ),
                       ),
                     ],
