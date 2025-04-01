@@ -39,8 +39,10 @@ export default function TagsPage() {
       return "dot-green";
     } else if (used_for === "restaurants") {
       return "dot-purple";
-    } else {
+    } else if (used_for === "hotels") {
       return "dot-yellow";
+    } else if (used_for === "madeinbraila") {
+      return "dot-blue";
     }
   };
 
@@ -137,6 +139,22 @@ export default function TagsPage() {
                         htmlFor="hotels-radio"
                       >
                         Hotels
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        id="madeinbraila-radio"
+                        value="madeinbraila"
+                        {...register("used_for")}
+                        required
+                      />
+                      <label
+                        className="form-check-label dot dot-blue"
+                        htmlFor="madeinbraila-radio"
+                      >
+                        Made in Brăila
                       </label>
                     </div>
                   </div>

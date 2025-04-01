@@ -139,6 +139,10 @@ body,
   background-color: #fcc419;
 }
 
+.dot-blue::after {
+  background-color: #228be6;
+}
+
 /* LOADING SPINNER */
 
 .loading-btn {

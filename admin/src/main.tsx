@@ -21,6 +21,7 @@ import AboutPage from "./pages/About.tsx";
 import UsersPage from "./pages/Users.tsx";
 import ParkPage from "./pages/Park.tsx";
 import FitnessPage from "./pages/Fitness.tsx";
+import MadeInBrailaPage from "./pages/MadeInBraila.tsx";
 
 window.bootstrap = bootstrap;
 
@@ -61,6 +62,14 @@ const router = createBrowserRouter(
             {
               path: "hotel",
               element: <HotelPage />,
+            },
+            {
+              path: "madeinbraila",
+              element: <MadeInBrailaPage />,
+            },
+            {
+              path: "personalities",
+              element: <MadeInBrailaPage />,
             },
             {
               path: "fitness",

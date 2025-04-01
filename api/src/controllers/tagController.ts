@@ -6,11 +6,13 @@ import { Restaurant } from "../models/restaurantModel";
 import { Hotel } from "../models/hotelModel";
 import {
   hotelsCollection,
+  madeInBrailaCollection,
   restaurantsCollection,
   sightsCollection,
   tagsCollection,
 } from "../db";
 import { requiresAuth } from "../middleware/auth";
+import { MadeInBraila } from "../models/madeInBrailaModel";
 
 const router: Router = Router();
 
@@ -90,6 +92,22 @@ router.delete("/deleteTag/:_id", requiresAuth, async (req: Request, res: Respons
         return hotelsCollection.updateOne(
           { _id: new ObjectId(hotel._id) },
           { $set: hotel },
+        );
+      }),
+    );
+  } else if (tag.used_for === "madeinbraila") {
+    const data = await madeInBrailaCollection.find({}).toArray();
+
+    await Promise.all(
+      data.map(async (item: MadeInBraila) => {
+        const index = item.tags.indexOf(tag.name);
+        if (index !== -1) {
+          item.tags.splice(index, 1);
+        }
+
+        return madeInBrailaCollection.updateOne(
+          { _id: new ObjectId(item._id) },
+          { $set: item },
         );
       }),
     );

@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/fitness_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
+import 'package:visit_braila/models/madeinbraila_model.dart';
 import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/views/all_fitness_view.dart';
 import 'package:visit_braila/views/all_hotels_view.dart';
+import 'package:visit_braila/views/all_madeinbraila_view.dart';
 import 'package:visit_braila/views/all_parks_view.dart';
 import 'package:visit_braila/views/all_restaurants_view.dart';
 import 'package:visit_braila/views/all_sights_view.dart';
@@ -18,6 +20,7 @@ import 'package:visit_braila/views/event_view.dart';
 import 'package:visit_braila/views/fitness_view.dart';
 import 'package:visit_braila/views/gallery_view.dart';
 import 'package:visit_braila/views/hotel_view.dart';
+import 'package:visit_braila/views/madeinbraila_view.dart';
 import 'package:visit_braila/views/nointernet_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
 import 'package:visit_braila/views/restaurant_view.dart';
@@ -70,6 +73,11 @@ class PageRouter {
         final fitness = settings.arguments as Fitness;
 
         return createFadeInRouteTransition((animation) => FitnessView(fitness: fitness, routeAnimation: animation));
+      case '/madeinbraila':
+        final madeInBraila = settings.arguments as MadeInBraila;
+
+        return createFadeInRouteTransition(
+            (animation) => MadeInBrailaView(madeInBraila: madeInBraila, routeAnimation: animation));
       case '/alltours':
         return adaptivePageRoute(builder: (context) => const AllToursView());
       case '/allsights':
@@ -82,6 +90,8 @@ class PageRouter {
         return adaptivePageRoute(builder: (context) => const AllFitnessView());
       case '/allparks':
         return adaptivePageRoute(builder: (context) => const AllParksView());
+      case '/allmadeinbraila':
+        return adaptivePageRoute(builder: (context) => const AllMadeInBrailaView());
       case '/gallery':
         final args = settings.arguments as Map<String, dynamic>;
 

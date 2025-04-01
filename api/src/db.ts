@@ -10,6 +10,8 @@ import { Event } from "./models/eventModel";
 import { About } from "./models/aboutModel";
 import { Park } from "./models/parkModel";
 import { Fitness } from "./models/fitnessModel";
+import { MadeInBraila } from "./models/madeInBrailaModel";
+import { Personality } from "./models/personalityModel";
 
 export let db: Db;
 export let usersCollection: Collection<User>;
@@ -23,6 +25,8 @@ export let eventsCollection: Collection<Event>;
 export let aboutCollection: Collection<About>;
 export let parksCollection: Collection<Park>;
 export let fitnessCollection: Collection<Fitness>;
+export let madeInBrailaCollection: Collection<MadeInBraila>;
+export let personalitiesCollection: Collection<Personality>;
 
 export const connectToDatabase = async (client: MongoClient) => {
   await client
@@ -41,6 +45,8 @@ export const connectToDatabase = async (client: MongoClient) => {
       aboutCollection = db.collection("about");
       parksCollection = db.collection("parks");
       fitnessCollection = db.collection("fitness");
+      madeInBrailaCollection = db.collection("madeinbraila");
+      personalitiesCollection = db.collection("personalities");
     })
     .catch(e => {
       console.log(`[database]: An error occurred while connecting to database: ${e}`);

@@ -4,8 +4,11 @@ import { encode } from "blurhash";
 import fs from "fs";
 import {
   eventsCollection,
+  fitnessCollection,
   hotelsCollection,
+  madeInBrailaCollection,
   parksCollection,
+  personalitiesCollection,
   restaurantsCollection,
   sightsCollection,
   toursCollection,
@@ -125,7 +128,13 @@ export const deleteImages = (images: Array<string>, collection: string): void =>
     } else if (collection === "parks") {
       occurrences = (await parksCollection.find({ images: image }).toArray()).length;
     } else if (collection === "fitness") {
-      occurrences = (await parksCollection.find({ images: image }).toArray()).length;
+      occurrences = (await fitnessCollection.find({ images: image }).toArray()).length;
+    } else if (collection === "madeinbraila") {
+      occurrences = (await madeInBrailaCollection.find({ images: image }).toArray())
+        .length;
+    } else if (collection === "personalities") {
+      occurrences = (await personalitiesCollection.find({ images: image }).toArray())
+        .length;
     }
 
     if (occurrences === 1) {

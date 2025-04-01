@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:visit_braila/models/restaurant_model.dart';
+import 'package:visit_braila/models/madeinbraila_model.dart';
 import 'package:visit_braila/utils/url_constants.dart';
 
-class RestaurantController {
-  Future<List<Restaurant>> fetchRestaurants() async {
+class MadeInBrailaController {
+  Future<List<MadeInBraila>> fetchMadeInBraila() async {
     try {
-      final response = await http.get(Uri.parse("$apiUrl/fetchRestaurants"));
+      final response = await http.get(Uri.parse("$apiUrl/fetchMadeInBraila"));
 
       if (response.statusCode == 200) {
         List data = jsonDecode(response.body);
 
-        return data.map((restaurantJSON) => Restaurant.fromJSON(restaurantJSON)).toList();
+        return data.map((madeInBrailaJSON) => MadeInBraila.fromJSON(madeInBrailaJSON)).toList();
       } else {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
@@ -21,12 +21,12 @@ class RestaurantController {
     }
   }
 
-  Future<Restaurant?> findRestaurant(String id) async {
+  Future<MadeInBraila?> findMadeInBraila(String id) async {
     try {
-      final response = await http.get(Uri.parse("$apiUrl/findRestaurant/$id"));
+      final response = await http.get(Uri.parse("$apiUrl/findMadeInBraila/$id"));
 
       if (response.statusCode == 200) {
-        return Restaurant.fromJSON(jsonDecode(response.body));
+        return MadeInBraila.fromJSON(jsonDecode(response.body));
       } else {
         throw HttpException("INTERNAL SERVER ERROR: ${response.statusCode}");
       }
@@ -35,9 +35,9 @@ class RestaurantController {
     }
   }
 
-  Future<List<String>> fetchRestaurantsTags() async {
+  Future<List<String>> fetchMadeInBrailaTags() async {
     try {
-      final response = await http.get(Uri.parse("$apiUrl/fetchTags/restaurants"));
+      final response = await http.get(Uri.parse("$apiUrl/fetchTags/madeinbraila"));
 
       if (response.statusCode == 200) {
         List data = jsonDecode(response.body);

@@ -41,6 +41,8 @@ export const initMediaDirs = () => {
     fs.mkdirSync(path.join(mediaPath, "about"), { recursive: true });
     fs.mkdirSync(path.join(mediaPath, "parks"), { recursive: true });
     fs.mkdirSync(path.join(mediaPath, "fitness"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "madeinbraila"), { recursive: true });
+    fs.mkdirSync(path.join(mediaPath, "personalities"), { recursive: true });
   } catch (e) {
     console.log(e);
     //pass

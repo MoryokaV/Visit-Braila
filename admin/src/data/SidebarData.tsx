@@ -7,6 +7,8 @@ import {
   IoBusinessOutline,
   IoCalendarOutline,
   IoFitnessOutline,
+  IoHammer,
+  IoPeople,
   IoPeopleOutline,
   IoRestaurantOutline,
   IoSpeedometerOutline,
@@ -50,6 +52,16 @@ export const SidebarData: Array<SidebarItem> = [
     name: "Accommodation",
     path: "/hotel",
     icon: <IoBedOutline />,
+  },
+  {
+    name: "Fabrica în Brăila",
+    path: "/madeinbraila",
+    icon: <IoHammer />,
+  },
+  {
+    name: "Personalities",
+    path: "/personalities",
+    icon: <IoPeople />,
   },
   {
     name: "Fitness & Wellness",

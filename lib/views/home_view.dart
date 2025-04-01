@@ -451,6 +451,172 @@ class HomeView extends StatelessWidget {
                               ),
                             ),
                             Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: CachedAssetImage(
+                                      "assets/images/fabrica.png",
+                                      height: Responsive.safeBlockVertical * 30,
+                                      width: double.infinity,
+                                      cacheHeight: Responsive.safeBlockVertical * 30,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(24),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Fabricat în Brăila",
+                                          style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                color: Colors.white,
+                                              ),
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () => Navigator.pushNamed(context, "/allmadeinbraila"),
+                                          style: ElevatedButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 10,
+                                            ),
+                                            backgroundColor: Colors.white,
+                                            foregroundColor: Colors.black,
+                                            textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                          ),
+                                          child: const Text("Afaceri locale"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: 14,
+                                right: 4,
+                              ),
+                              child: Text(
+                                "Relaxare și plimbare",
+                                style: Theme.of(context).textTheme.displayMedium,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: Row(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(6),
+                                          bottomLeft: Radius.circular(6),
+                                        ),
+                                        child: CachedAssetImage(
+                                          "assets/images/gym.jpeg",
+                                          height: Responsive.safeBlockVertical * 30,
+                                          width: (Responsive.screenWidth - 36) / 2,
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  "Wellness & Fitness",
+                                                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      ),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 6),
+                                              ElevatedButton(
+                                                onPressed: () => Navigator.pushNamed(context, "/allfitness"),
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 20,
+                                                    vertical: 10,
+                                                  ),
+                                                  backgroundColor: Colors.white,
+                                                  foregroundColor: Colors.black,
+                                                  textStyle:
+                                                      Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                                ),
+                                                child: const Text("Caută"),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(6),
+                                          bottomRight: Radius.circular(6),
+                                        ),
+                                        child: CachedAssetImage(
+                                          "assets/images/park.jpg",
+                                          height: Responsive.safeBlockVertical * 30,
+                                          width: (Responsive.screenWidth - 36) / 2,
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  "Parcuri de joacă",
+                                                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      ),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 6),
+                                              ElevatedButton(
+                                                onPressed: () => Navigator.pushNamed(context, "/allparks"),
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 20,
+                                                    vertical: 10,
+                                                  ),
+                                                  backgroundColor: Colors.white,
+                                                  foregroundColor: Colors.black,
+                                                  textStyle:
+                                                      Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                                ),
+                                                child: const Text("Parcuri"),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
                               padding: const EdgeInsets.only(
                                 bottom: 14,
                                 right: 4,
@@ -576,126 +742,6 @@ class HomeView extends StatelessWidget {
                                                       Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
                                                 ),
                                                 child: const Text("Rezervă"),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: 14,
-                                right: 4,
-                              ),
-                              child: Text(
-                                "Relaxare și plimbare",
-                                style: Theme.of(context).textTheme.displayMedium,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 14),
-                              child: Row(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(6),
-                                          bottomLeft: Radius.circular(6),
-                                        ),
-                                        child: CachedAssetImage(
-                                          "assets/images/gym.jpeg",
-                                          height: Responsive.safeBlockVertical * 30,
-                                          width: (Responsive.screenWidth - 36) / 2,
-                                        ),
-                                      ),
-                                      Positioned.fill(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text(
-                                                  "Wellness & Fitness",
-                                                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                      ),
-                                                ),
-                                              ),
-                                              const SizedBox(height: 6),
-                                              ElevatedButton(
-                                                onPressed: () => Navigator.pushNamed(context, "/allfitness"),
-                                                style: ElevatedButton.styleFrom(
-                                                  padding: const EdgeInsets.symmetric(
-                                                    horizontal: 20,
-                                                    vertical: 10,
-                                                  ),
-                                                  backgroundColor: Colors.white,
-                                                  foregroundColor: Colors.black,
-                                                  textStyle:
-                                                      Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
-                                                ),
-                                                child: const Text("Caută"),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(6),
-                                          bottomRight: Radius.circular(6),
-                                        ),
-                                        child: CachedAssetImage(
-                                          "assets/images/park.jpg",
-                                          height: Responsive.safeBlockVertical * 30,
-                                          width: (Responsive.screenWidth - 36) / 2,
-                                        ),
-                                      ),
-                                      Positioned.fill(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text(
-                                                  "Parcuri de joacă",
-                                                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                      ),
-                                                ),
-                                              ),
-                                              const SizedBox(height: 6),
-                                              ElevatedButton(
-                                                onPressed: () => Navigator.pushNamed(context, "/allparks"),
-                                                style: ElevatedButton.styleFrom(
-                                                  padding: const EdgeInsets.symmetric(
-                                                    horizontal: 20,
-                                                    vertical: 10,
-                                                  ),
-                                                  backgroundColor: Colors.white,
-                                                  foregroundColor: Colors.black,
-                                                  textStyle:
-                                                      Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
-                                                ),
-                                                child: const Text("Parcuri"),
                                               ),
                                             ],
                                           ),

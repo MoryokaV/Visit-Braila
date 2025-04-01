@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:visit_braila/controllers/event_controller.dart';
 import 'package:visit_braila/controllers/fitness_controller.dart';
 import 'package:visit_braila/controllers/hotel_controller.dart';
+import 'package:visit_braila/controllers/madeinbraila_controller.dart';
 import 'package:visit_braila/controllers/restaurant_controller.dart';
 import 'package:visit_braila/controllers/sight_controller.dart';
 import 'package:visit_braila/controllers/tour_controller.dart';
 import 'package:visit_braila/models/event_model.dart';
 import 'package:visit_braila/models/fitness_model.dart';
 import 'package:visit_braila/models/hotel_model.dart';
+import 'package:visit_braila/models/madeinbraila_model.dart';
 import 'package:visit_braila/models/restaurant_model.dart';
 import 'package:visit_braila/models/sight_model.dart';
 import 'package:visit_braila/models/tour_model.dart';
@@ -200,6 +202,23 @@ class DynamicLinksService {
         }
 
         redirect('/fitness', fitness);
+        break;
+      case 'madeinbraila':
+        String? id = uri.queryParameters['id'];
+
+        if (id == null) {
+          handleError(null);
+          return;
+        }
+
+        MadeInBraila? madeInBraila = await MadeInBrailaController().findMadeInBraila(id);
+
+        if (madeInBraila == null) {
+          handleError(null);
+          return;
+        }
+
+        redirect('/madeinbraila', madeInBraila);
         break;
       default:
         handleError(null);

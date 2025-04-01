@@ -13,6 +13,7 @@ import aboutController from "../controllers/aboutController";
 import userController from "../controllers/userController";
 import parkController from "../controllers/parkController";
 import fitnessController from "../controllers/fitnessController";
+import madeInBrailaController from "../controllers/madeInBrailaController";
 
 const apiRouter: Router = Router();
 
@@ -35,5 +36,6 @@ apiRouter.use(aboutController);
 apiRouter.use(userController);
 apiRouter.use(parkController);
 apiRouter.use(fitnessController);
+apiRouter.use(madeInBrailaController);
 
 export default apiRouter;
