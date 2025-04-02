@@ -129,10 +129,10 @@ class _AllMadeInBrailaViewState extends State<AllMadeInBrailaView> {
           text: TextSpan(
             children: [
               const TextSpan(
-                text: "Caută ",
+                text: "Fabrica în ",
               ),
               TextSpan(
-                text: "Localuri",
+                text: "Brăila",
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 ),

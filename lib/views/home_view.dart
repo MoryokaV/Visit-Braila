@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,10 +43,6 @@ class HomeView extends StatelessWidget {
         top: false,
         child: Column(
           children: [
-            Container(
-              height: Responsive.safePaddingTop,
-              color: Colors.black,
-            ),
             Expanded(
               child: Stack(
                 children: [
@@ -68,10 +65,10 @@ class HomeView extends StatelessWidget {
                                   cacheHeight: Responsive.safeBlockVertical * 35,
                                   cacheWidth: Responsive.screenWidth,
                                 ),
-                                const Positioned.fill(
+                                Positioned.fill(
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
-                                      vertical: 12,
+                                      vertical: Responsive.safePaddingTop + 4,
                                       horizontal: 14,
                                     ),
                                     child: Column(
@@ -760,9 +757,22 @@ class HomeView extends StatelessWidget {
                   AnimatedBuilder(
                     animation: _scrollController,
                     child: Container(
-                      color: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
                       width: double.infinity,
+                      padding: EdgeInsets.only(
+                        bottom: 15,
+                        top: Responsive.safePaddingTop + 10,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black.withValues(alpha: 1),
+                            Colors.black.withValues(alpha: 0.7),
+                            Colors.black.withValues(alpha: 0),
+                          ],
+                        ),
+                      ),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
