@@ -25,7 +25,7 @@ const BoxShadow shadowSm = BoxShadow(
 
 const BoxShadow bottomShadowMd = BoxShadow(
   color: Colors.black38,
-  offset: Offset(0, 6),
+  offset: Offset(0, 4),
   blurRadius: 8,
   spreadRadius: 0,
 );

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/madeinbraila_controller.dart';
@@ -129,7 +130,7 @@ class _AllMadeInBrailaViewState extends State<AllMadeInBrailaView> {
           text: TextSpan(
             children: [
               const TextSpan(
-                text: "Fabrica în ",
+                text: "Fabricat în ",
               ),
               TextSpan(
                 text: "Brăila",
@@ -215,112 +216,99 @@ class MadeInBrailaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, "/madeinbraila", arguments: madeInBraila),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Hero(
-            tag: madeInBraila.id,
-            child: Container(
-              height: Responsive.safeBlockVertical * 35,
-              width: double.infinity,
-              margin: const EdgeInsets.only(bottom: 20),
-              decoration: BoxDecoration(
-                boxShadow: const [bottomShadowMd],
-                borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.zero,
+        margin: const EdgeInsets.only(bottom: 20),
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          boxShadow: [bottomShadowMd],
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 15,
               ),
-              child: Material(
-                type: MaterialType.transparency,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Stack(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CachedApiImage(
-                        imageUrl: madeInBraila.images[madeInBraila.primaryImage - 1],
-                        cacheHeight: Responsive.safeBlockVertical * 35,
-                        height: double.infinity,
-                        width: double.infinity,
-                        blurhash: madeInBraila.primaryImageBlurhash,
-                      ),
-                      if (madeInBraila.tags.isNotEmpty)
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: ClipRRect(
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                              child: Container(
-                                width: double.infinity,
-                                color: Colors.black.withValues(alpha: 0.25),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 16,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        madeInBraila.tags.join(", "),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                      Text(
+                        madeInBraila.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: kBlackColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 17,
                         ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        madeInBraila.tags.join(", "),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontFamily: labelFont,
+                        ),
+                      ),
                     ],
                   ),
-                ),
+                  CircleAvatar(
+                    backgroundColor: kBlackColor,
+                    foregroundColor: Colors.white,
+                    child: Icon(
+                      Icons.chevron_right,
+                    ),
+                  )
+                ],
               ),
             ),
-          ),
-          Text(
-            madeInBraila.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: kBlackColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 17,
-            ),
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          Consumer<LocationService>(
-            builder: (context, location, _) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            Hero(
+              tag: madeInBraila.id,
+              child: Stack(
                 children: [
-                  SvgPicture.asset(
-                    "assets/icons/map-pin.svg",
-                    width: 22,
-                    colorFilter: ColorFilter.mode(kDisabledIconColor, BlendMode.srcIn),
+                  CachedApiImage(
+                    imageUrl: madeInBraila.images[madeInBraila.primaryImage - 1],
+                    cacheHeight: Responsive.safeBlockVertical * 35,
+                    height: Responsive.safeBlockVertical * 35,
+                    width: double.infinity,
+                    blurhash: madeInBraila.primaryImageBlurhash,
                   ),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Text(
-                    location.getDistance(madeInBraila.latitude, madeInBraila.longitude),
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: kForegroundColor.withValues(alpha: 0.85),
+                  Positioned(
+                    top: 0,
+                    child: Container(
+                      height: 30,
+                      width: Responsive.screenWidth,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Colors.white.withAlpha(0),
+                            Colors.white.withAlpha(255),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
-              );
-            },
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-        ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
