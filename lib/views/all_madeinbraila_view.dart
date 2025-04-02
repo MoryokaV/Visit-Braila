@@ -1,11 +1,6 @@
 import 'dart:io';
-import 'dart:ui';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:visit_braila/controllers/madeinbraila_controller.dart';
 import 'package:visit_braila/models/madeinbraila_model.dart';
-import 'package:visit_braila/services/location_service.dart';
 import 'package:visit_braila/utils/responsive.dart';
 import 'package:visit_braila/utils/search_all.dart';
 import 'package:visit_braila/utils/style.dart';
