@@ -47,30 +47,46 @@ class RestaurantView extends StatelessWidget {
               backgroundColor: Colors.white,
               expandedHeight: Responsive.safeBlockVertical * 38,
               flexibleSpace: FlexibleSpaceBar(
-                background: Hero(
-                  tag: restaurant.id,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedApiImage(
-                        imageUrl: restaurant.images[restaurant.primaryImage - 1],
-                        cacheWidth: Responsive.screenWidth,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        child: Container(
-                          height: 30,
-                          width: Responsive.screenWidth,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: fadeEffect,
+                background: GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "/gallery",
+                    arguments: {
+                      "startIndex": restaurant.primaryImage - 1,
+                      "images": restaurant.images,
+                      "title": restaurant.name,
+                      "id": restaurant.id,
+                      "collection": "restaurants",
+                      "type": "restaurant",
+                      "primaryImage": restaurant.primaryImage,
+                      "externalLink": restaurant.externalLink,
+                    },
+                  ),
+                  child: Hero(
+                    tag: restaurant.id,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedApiImage(
+                          imageUrl: restaurant.images[restaurant.primaryImage - 1],
+                          cacheWidth: Responsive.screenWidth,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            height: 30,
+                            width: Responsive.screenWidth,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: fadeEffect,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

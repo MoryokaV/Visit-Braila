@@ -51,30 +51,45 @@ class EventView extends StatelessWidget {
               backgroundColor: Colors.white,
               expandedHeight: Responsive.safeBlockVertical * 38,
               flexibleSpace: FlexibleSpaceBar(
-                background: Hero(
-                  tag: event.id,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedApiImage(
-                        imageUrl: event.images[event.primaryImage - 1],
-                        cacheWidth: Responsive.screenWidth,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        child: Container(
-                          height: 30,
-                          width: Responsive.screenWidth,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: fadeEffect,
+                background: GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "/gallery",
+                    arguments: {
+                      "startIndex": event.primaryImage - 1,
+                      "images": event.images,
+                      "title": event.name,
+                      "id": event.id,
+                      "type": "event",
+                      "primaryImage": event.primaryImage,
+                      "externalLink": event.externalLink,
+                    },
+                  ),
+                  child: Hero(
+                    tag: event.id,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedApiImage(
+                          imageUrl: event.images[event.primaryImage - 1],
+                          cacheWidth: Responsive.screenWidth,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            height: 30,
+                            width: Responsive.screenWidth,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: fadeEffect,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

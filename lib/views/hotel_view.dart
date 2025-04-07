@@ -44,30 +44,46 @@ class HotelView extends StatelessWidget {
               backgroundColor: Colors.white,
               expandedHeight: Responsive.safeBlockVertical * 38,
               flexibleSpace: FlexibleSpaceBar(
-                background: Hero(
-                  tag: hotel.id,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedApiImage(
-                        imageUrl: hotel.images[hotel.primaryImage - 1],
-                        cacheWidth: Responsive.screenWidth,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        child: Container(
-                          height: 30,
-                          width: Responsive.screenWidth,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: fadeEffect,
+                background: GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "/gallery",
+                    arguments: {
+                      "startIndex": hotel.primaryImage - 1,
+                      "images": hotel.images,
+                      "title": hotel.name,
+                      "id": hotel.id,
+                      "collection": "hotels",
+                      "type": "hotel",
+                      "primaryImage": hotel.primaryImage,
+                      "externalLink": hotel.externalLink,
+                    },
+                  ),
+                  child: Hero(
+                    tag: hotel.id,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedApiImage(
+                          imageUrl: hotel.images[hotel.primaryImage - 1],
+                          cacheWidth: Responsive.screenWidth,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            height: 30,
+                            width: Responsive.screenWidth,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: fadeEffect,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -46,30 +46,46 @@ class SightView extends StatelessWidget {
               backgroundColor: Colors.white,
               expandedHeight: Responsive.safeBlockVertical * 38,
               flexibleSpace: FlexibleSpaceBar(
-                background: Hero(
-                  tag: sight.id,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedApiImage(
-                        imageUrl: sight.images[sight.primaryImage - 1],
-                        cacheWidth: Responsive.screenWidth,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        child: Container(
-                          height: 30,
-                          width: Responsive.screenWidth,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: fadeEffect,
+                background: GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "/gallery",
+                    arguments: {
+                      "startIndex": sight.primaryImage - 1,
+                      "images": sight.images,
+                      "title": sight.name,
+                      "id": sight.id,
+                      "collection": "sights",
+                      "type": "sight",
+                      "primaryImage": sight.primaryImage,
+                      "externalLink": sight.externalLink,
+                    },
+                  ),
+                  child: Hero(
+                    tag: sight.id,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedApiImage(
+                          imageUrl: sight.images[sight.primaryImage - 1],
+                          cacheWidth: Responsive.screenWidth,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            height: 30,
+                            width: Responsive.screenWidth,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: fadeEffect,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

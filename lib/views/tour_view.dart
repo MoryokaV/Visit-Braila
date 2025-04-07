@@ -80,30 +80,46 @@ class _TourViewState extends State<TourView> {
               backgroundColor: Colors.white,
               expandedHeight: Responsive.safeBlockVertical * 38,
               flexibleSpace: FlexibleSpaceBar(
-                background: Hero(
-                  tag: widget.tour.id,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedApiImage(
-                        imageUrl: widget.tour.images[widget.tour.primaryImage - 1],
-                        cacheWidth: Responsive.screenWidth,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        child: Container(
-                          height: 30,
-                          width: Responsive.screenWidth,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: fadeEffect,
+                background: GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "/gallery",
+                    arguments: {
+                      "startIndex": widget.tour.primaryImage - 1,
+                      "images": widget.tour.images,
+                      "title": widget.tour.name,
+                      "id": widget.tour.id,
+                      "collection": "tours",
+                      "type": "tour",
+                      "primaryImage": widget.tour.primaryImage,
+                      "externalLink": widget.tour.externalLink,
+                    },
+                  ),
+                  child: Hero(
+                    tag: widget.tour.id,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedApiImage(
+                          imageUrl: widget.tour.images[widget.tour.primaryImage - 1],
+                          cacheWidth: Responsive.screenWidth,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            height: 30,
+                            width: Responsive.screenWidth,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: fadeEffect,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
