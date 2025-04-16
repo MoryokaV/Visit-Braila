@@ -9,6 +9,7 @@ import "react-quill/dist/quill.snow.css";
 import { ParksTable } from "../components/Tables/ParksTable";
 import { FitnessTable } from "../components/Tables/FitnessTable";
 import { MadeInBrailaTable } from "../components/Tables/MadeInBrailaTable";
+import { PersonalitiesTable } from "../components/Tables/PersonalitiesTable";
 
 export default function Dashboard() {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -36,6 +37,7 @@ export default function Dashboard() {
           <HotelsTable setModalContent={setModalContent} closeModal={closeModal} />
           <EventsTable setModalContent={setModalContent} closeModal={closeModal} />
           <MadeInBrailaTable setModalContent={setModalContent} closeModal={closeModal} />
+          <PersonalitiesTable setModalContent={setModalContent} closeModal={closeModal} />
           <div className="col-6 pe-2">
             <FitnessTable setModalContent={setModalContent} closeModal={closeModal} />
           </div>

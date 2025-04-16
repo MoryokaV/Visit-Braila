@@ -9,6 +9,7 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:3000",
       "/static/media": "http://localhost:3000",
+      "/static/pdf": "http://localhost:3000",
     },
   },
 });

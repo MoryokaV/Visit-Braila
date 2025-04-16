@@ -14,16 +14,27 @@ import userController from "../controllers/userController";
 import parkController from "../controllers/parkController";
 import fitnessController from "../controllers/fitnessController";
 import madeInBrailaController from "../controllers/madeInBrailaController";
+import personalitiesController from "../controllers/personalitiesController";
+import { uploadPDF } from "../utils/pdf";
 
 const apiRouter: Router = Router();
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const imageStorage = multer.memoryStorage();
+const imageUpload = multer({ storage: imageStorage });
+
+const pdfStorage = multer.diskStorage({
+  destination: "static/pdf/",
+  filename: function (_, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const pdfUpload = multer({ storage: pdfStorage });
 
 apiRouter.get("/serverStorage", async (_, res: Response) =>
   res.status(200).send(await getServerStorage()),
 );
-apiRouter.post("/uploadImages/:folder", upload.array("files[]"), uploadImages);
+apiRouter.post("/uploadImages/:folder", imageUpload.array("files[]"), uploadImages);
+apiRouter.post("/uploadPDF", pdfUpload.single("pdfFile"), uploadPDF);
 
 apiRouter.use(sightController);
 apiRouter.use(tagController);
@@ -37,5 +48,6 @@ apiRouter.use(userController);
 apiRouter.use(parkController);
 apiRouter.use(fitnessController);
 apiRouter.use(madeInBrailaController);
+apiRouter.use(personalitiesController);
 
 export default apiRouter;

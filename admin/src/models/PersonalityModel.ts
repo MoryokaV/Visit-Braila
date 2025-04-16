@@ -1,7 +1,5 @@
-import { ObjectId } from "mongodb";
-
 export type Personality = {
-  _id?: ObjectId;
+  _id: string;
   name: string;
   description: string;
   images: Array<string>;

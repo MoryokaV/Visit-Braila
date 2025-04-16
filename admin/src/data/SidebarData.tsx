@@ -54,7 +54,7 @@ export const SidebarData: Array<SidebarItem> = [
     icon: <IoBedOutline />,
   },
   {
-    name: "Fabrica în Brăila",
+    name: "Fabricat în Brăila",
     path: "/madeinbraila",
     icon: <IoHammer />,
   },

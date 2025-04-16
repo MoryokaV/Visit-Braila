@@ -22,6 +22,7 @@ import UsersPage from "./pages/Users.tsx";
 import ParkPage from "./pages/Park.tsx";
 import FitnessPage from "./pages/Fitness.tsx";
 import MadeInBrailaPage from "./pages/MadeInBraila.tsx";
+import PersonalityPage from "./pages/Personality.tsx";
 
 window.bootstrap = bootstrap;
 
@@ -69,7 +70,7 @@ const router = createBrowserRouter(
             },
             {
               path: "personalities",
-              element: <MadeInBrailaPage />,
+              element: <PersonalityPage />,
             },
             {
               path: "fitness",
