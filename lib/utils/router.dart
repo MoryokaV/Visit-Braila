@@ -13,6 +13,7 @@ import 'package:visit_braila/views/all_fitness_view.dart';
 import 'package:visit_braila/views/all_hotels_view.dart';
 import 'package:visit_braila/views/all_madeinbraila_view.dart';
 import 'package:visit_braila/views/all_parks_view.dart';
+import 'package:visit_braila/views/all_personalities_view.dart';
 import 'package:visit_braila/views/all_restaurants_view.dart';
 import 'package:visit_braila/views/all_sights_view.dart';
 import 'package:visit_braila/views/all_tours_view.dart';
@@ -23,6 +24,7 @@ import 'package:visit_braila/views/hotel_view.dart';
 import 'package:visit_braila/views/madeinbraila_view.dart';
 import 'package:visit_braila/views/nointernet_view.dart';
 import 'package:visit_braila/views/notfound_view.dart';
+import 'package:visit_braila/views/personality_view.dart';
 import 'package:visit_braila/views/restaurant_view.dart';
 import 'package:visit_braila/views/sight_view.dart';
 import 'package:visit_braila/views/tour_view.dart';
@@ -60,6 +62,16 @@ class PageRouter {
         final hotel = settings.arguments as Hotel;
 
         return createFadeInRouteTransition((animation) => HotelView(hotel: hotel, routeAnimation: animation));
+      case '/personality':
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return createFadeInRouteTransition(
+          (animation) => PersonalityView(
+            personality: args['personality'],
+            sightName: args['sightName'],
+            routeAnimation: animation,
+          ),
+        );
       case '/restaurant':
         final restaurant = settings.arguments as Restaurant;
 
@@ -82,6 +94,8 @@ class PageRouter {
         return adaptivePageRoute(builder: (context) => const AllToursView());
       case '/allsights':
         return adaptivePageRoute(builder: (context) => const AllSightsView());
+      case '/allpersonalities':
+        return adaptivePageRoute(builder: (context) => const AllPersonalitiesView());
       case '/allhotels':
         return adaptivePageRoute(builder: (context) => const AllHotelsView());
       case '/allrestaurants':

@@ -338,6 +338,52 @@ class HomeView extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 14),
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: CachedAssetImage(
+                                      "assets/images/personalitati.jpg",
+                                      height: Responsive.safeBlockVertical * 30,
+                                      width: double.infinity,
+                                      cacheHeight: Responsive.safeBlockVertical * 30,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(24),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Perosonalități brăilene",
+                                          style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                color: Colors.white,
+                                              ),
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () => Navigator.pushNamed(context, "/allpersonalities"),
+                                          style: ElevatedButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 10,
+                                            ),
+                                            backgroundColor: Colors.white,
+                                            foregroundColor: Colors.black,
+                                            textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                          ),
+                                          child: const Text("Figuri marcante"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
                               child: Row(
                                 children: [
                                   Stack(

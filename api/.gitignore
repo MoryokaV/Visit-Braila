@@ -11,3 +11,4 @@ static/media/*/
 !static/media/assets/
 !static/media/assets/**
 
+static/pdf
