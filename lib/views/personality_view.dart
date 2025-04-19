@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
@@ -60,7 +61,6 @@ class _PersonalityViewState extends State<PersonalityView> {
     return Scaffold(
       bottomNavigationBar: ActionsBar(
         id: widget.personality.id,
-        // collection: "tours",
         text: "Află mai multe",
         link: widget.personality.pdf,
       ),
@@ -188,28 +188,37 @@ class _PersonalityViewState extends State<PersonalityView> {
                               height: 10,
                             ),
                             if (widget.sightName != null)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Vezi și ${widget.sightName}",
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: kPrimaryColor,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: kPrimaryColor,
+                              RichText(
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Vezi și ${widget.sightName}",
+                                      recognizer: (TapGestureRecognizer()
+                                        ..onTap = () => openSightLink(widget.personality.sightLink!)),
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        height: 1.4,
+                                        color: kPrimaryColor,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: kPrimaryColor,
+                                        fontFamily: labelFont,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  SvgPicture.asset(
-                                    "assets/icons/open-window.svg",
-                                    width: 18,
-                                    colorFilter: const ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
-                                  ),
-                                ],
+                                    WidgetSpan(
+                                      alignment: PlaceholderAlignment.bottom,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8),
+                                        child: SvgPicture.asset(
+                                          "assets/icons/open-window.svg",
+                                          width: 16,
+                                          colorFilter: const ColorFilter.mode(kPrimaryColor, BlendMode.srcIn),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             const SizedBox(
                               height: 20,

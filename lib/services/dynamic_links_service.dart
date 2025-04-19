@@ -237,7 +237,19 @@ class DynamicLinksService {
           return;
         }
 
-        redirect('/personality', personality); // TODO
+        String? sightName;
+        if (personality.sightLink != null) {
+          Sight? sight = await SightController().findSight(personality.sightLink!);
+
+          if (sight != null) {
+            sightName = sight.name;
+          }
+        }
+
+        redirect('/personality', {
+          "personality": personality,
+          "sightName": sightName,
+        });
         break;
       default:
         handleError(null);
