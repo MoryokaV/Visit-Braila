@@ -73,7 +73,7 @@ export const EditPersonalityForm: React.FC<Props> = ({
     createImagesFormData(imagesFormData, files);
 
     if (files.length !== 0) {
-      await fetch("/api/uploadImages/sights", {
+      await fetch("/api/uploadImages/personalities", {
         method: "POST",
         body: imagesFormData,
       }).then(response => {
