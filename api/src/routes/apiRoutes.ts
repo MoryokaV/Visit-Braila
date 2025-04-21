@@ -16,6 +16,7 @@ import fitnessController from "../controllers/fitnessController";
 import madeInBrailaController from "../controllers/madeInBrailaController";
 import personalitiesController from "../controllers/personalitiesController";
 import { uploadPDF } from "../utils/pdf";
+import path from "path";
 
 const apiRouter: Router = Router();
 
@@ -23,16 +24,17 @@ const imageStorage = multer.memoryStorage();
 const imageUpload = multer({ storage: imageStorage });
 
 const pdfStorage = multer.diskStorage({
-  destination: "static/pdf/",
+  destination: path.join(__dirname, "..", "..", "static/pdf"),
   filename: function (_, file, cb) {
     cb(null, file.originalname);
   },
 });
 const pdfUpload = multer({ storage: pdfStorage });
 
-apiRouter.get("/serverStorage", async (_, res: Response) =>
-  res.status(200).send(await getServerStorage()),
-);
+apiRouter.get("/serverStorage", async (_, res: Response) => {
+  console.log(__dirname);
+  res.status(200).send(await getServerStorage());
+});
 apiRouter.post("/uploadImages/:folder", imageUpload.array("files[]"), uploadImages);
 apiRouter.post("/uploadPDF", pdfUpload.single("pdfFile"), uploadPDF);
 
