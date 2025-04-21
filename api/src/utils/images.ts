@@ -111,7 +111,7 @@ export const getBlurhashString = async (filePath: string): Promise<string> => {
 
 export const deleteImages = (images: Array<string>, collection: string): void => {
   images.forEach(async image => {
-    const fullPath = "." + image;
+    const fullPath = path.join(__dirname, "..", "..", image);
     let occurrences = 1;
 
     if (collection === "sights") {
