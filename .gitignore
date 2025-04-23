@@ -22,6 +22,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/android/app/.cxx/
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 ios/firebase_app_id_file.json
