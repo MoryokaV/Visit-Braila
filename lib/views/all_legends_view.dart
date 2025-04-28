@@ -13,17 +13,17 @@ import 'package:visit_braila/widgets/error_dialog.dart';
 import 'package:visit_braila/widgets/loading_spinner.dart';
 import 'package:visit_braila/widgets/search_list_field.dart';
 
-class AllPersonalitiesView extends StatefulWidget {
-  const AllPersonalitiesView({super.key});
+class AllLegendsView extends StatefulWidget {
+  const AllLegendsView({super.key});
 
   @override
-  State<AllPersonalitiesView> createState() => _AllPersonalitiesViewState();
+  State<AllLegendsView> createState() => _AllLegendsViewState();
 }
 
-class _AllPersonalitiesViewState extends State<AllPersonalitiesView> {
+class _AllLegendsViewState extends State<AllLegendsView> {
   final PersonalityController personalityController = PersonalityController();
   bool isLoading = true;
-  List<Personality> personalities = [];
+  List<Personality> legends = [];
   List<String?> sightNames = [];
   List<Personality> filteredData = [];
 
@@ -36,12 +36,12 @@ class _AllPersonalitiesViewState extends State<AllPersonalitiesView> {
 
   void fetchData() async {
     try {
-      personalities = await personalityController.fetchPersonalities("personalitate");
-      filteredData = personalities;
+      legends = await personalityController.fetchPersonalities("legenda");
+      filteredData = legends;
 
-      for (Personality personality in personalities) {
-        if (personality.sightLink != null) {
-          Sight? sight = await SightController().findSight(personality.sightLink!);
+      for (Personality legend in legends) {
+        if (legend.sightLink != null) {
+          Sight? sight = await SightController().findSight(legend.sightLink!);
 
           if (sight != null) {
             sightNames.add(sight.name);
@@ -74,26 +74,26 @@ class _AllPersonalitiesViewState extends State<AllPersonalitiesView> {
       }
 
       filteredData.addAll(
-        personalities.where(
-          (personality) =>
-              (personality.name
+        legends.where(
+          (legend) =>
+              (legend.name
                       .toString()
                       .toLowerCase()
                       .replaceAllMapped(RegExp('[ĂăÂâÎîȘșȚț]'), (m) => diacriticsMapping[m.group(0)] ?? '')
                       .split(" ")
                       .any((entryWord) => entryWord.startsWith(word)) ||
-                  personality.name
+                  legend.name
                       .toString()
                       .toLowerCase()
                       .split(" ")
                       .any((entryWord) => entryWord.startsWith(word))) &&
-              !filteredData.contains(personality),
+              !filteredData.contains(legend),
         ),
       );
     });
 
     if (query.trim().isEmpty) {
-      filteredData.addAll(personalities);
+      filteredData.addAll(legends);
     }
 
     setState(() {});
@@ -167,7 +167,7 @@ class _AllPersonalitiesViewState extends State<AllPersonalitiesView> {
                       crossAxisSpacing: 8,
                       itemBuilder: (context, index) {
                         return PersonalityCard(
-                          personality: filteredData[index],
+                          legend: filteredData[index],
                           sightName: sightNames[index],
                         );
                       },
@@ -181,24 +181,24 @@ class _AllPersonalitiesViewState extends State<AllPersonalitiesView> {
 }
 
 class PersonalityCard extends StatelessWidget {
-  final Personality personality;
+  final Personality legend;
   final String? sightName;
 
   const PersonalityCard({
     super.key,
-    required this.personality,
+    required this.legend,
     this.sightName,
   });
 
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: personality.id,
+      tag: legend.id,
       child: Material(
         type: MaterialType.transparency,
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(context, "/personality", arguments: {
-            "personality": personality,
+            "personality": legend,
             "sightName": sightName,
           }),
           child: ClipRRect(
@@ -206,7 +206,7 @@ class PersonalityCard extends StatelessWidget {
             child: Stack(
               children: [
                 CachedApiImage(
-                  imageUrl: personality.images[personality.primaryImage - 1],
+                  imageUrl: legend.images[legend.primaryImage - 1],
                   cacheWidth: Responsive.screenWidth / 2,
                 ),
                 Positioned.fill(
@@ -217,7 +217,7 @@ class PersonalityCard extends StatelessWidget {
                       color: Colors.black.withValues(alpha: 0.25),
                     ),
                     child: Text(
-                      personality.name,
+                      legend.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

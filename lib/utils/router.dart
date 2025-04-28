@@ -11,6 +11,7 @@ import 'package:visit_braila/models/tour_model.dart';
 import 'package:visit_braila/services/connection_service.dart';
 import 'package:visit_braila/views/all_fitness_view.dart';
 import 'package:visit_braila/views/all_hotels_view.dart';
+import 'package:visit_braila/views/all_legends_view.dart';
 import 'package:visit_braila/views/all_madeinbraila_view.dart';
 import 'package:visit_braila/views/all_parks_view.dart';
 import 'package:visit_braila/views/all_personalities_view.dart';
@@ -96,6 +97,8 @@ class PageRouter {
         return adaptivePageRoute(builder: (context) => const AllSightsView());
       case '/allpersonalities':
         return adaptivePageRoute(builder: (context) => const AllPersonalitiesView());
+      case '/alllegends':
+        return adaptivePageRoute(builder: (context) => const AllLegendsView());
       case '/allhotels':
         return adaptivePageRoute(builder: (context) => const AllHotelsView());
       case '/allrestaurants':

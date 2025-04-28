@@ -54,6 +54,7 @@ class CachedAssetImage extends StatelessWidget {
   final double? height;
   final double? cacheWidth;
   final double? cacheHeight;
+  final Alignment? alignment;
 
   const CachedAssetImage(
     this.imageUrl, {
@@ -62,6 +63,7 @@ class CachedAssetImage extends StatelessWidget {
     this.cacheHeight,
     this.width,
     this.height,
+    this.alignment,
   });
 
   @override
@@ -73,6 +75,7 @@ class CachedAssetImage extends StatelessWidget {
       cacheWidth: cacheWidth == null ? null : (cacheWidth! * Responsive.pixelRatio).round(),
       cacheHeight: cacheHeight == null ? null : (cacheHeight! * Responsive.pixelRatio).round(),
       fit: BoxFit.cover,
+      alignment: alignment ?? Alignment.center,
     );
   }
 }

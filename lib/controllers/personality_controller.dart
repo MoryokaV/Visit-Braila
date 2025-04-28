@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:visit_braila/utils/url_constants.dart';
 
 class PersonalityController {
-  Future<List<Personality>> fetchPersonalities() async {
+  Future<List<Personality>> fetchPersonalities(String type) async {
     try {
-      final response = await http.get(Uri.parse("$apiUrl/fetchPersonalities"));
+      final response = await http.get(Uri.parse("$apiUrl/fetchPersonalities?type=$type"));
 
       if (response.statusCode == 200) {
         List data = jsonDecode(response.body);

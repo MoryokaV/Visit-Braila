@@ -1,5 +1,5 @@
 import { requiresAuth } from "../middleware/auth";
-import { Personality } from "../models/personalityModel";
+import { Personality, PersonalityType } from "../models/personalityModel";
 import { ObjectId } from "mongodb";
 import { Response, Router, Request } from "express";
 import { personalitiesCollection } from "../db";
@@ -8,8 +8,19 @@ import { deletePDF } from "../utils/pdf";
 
 const router: Router = Router();
 
-router.get("/fetchPersonalities", async (_, res: Response) => {
-  const personalities = await personalitiesCollection.find().sort("index", 1).toArray();
+router.get("/fetchPersonalities", async (req: Request, res: Response) => {
+  const { type } = req.query as { type: PersonalityType };
+
+  let personalities = [];
+
+  if (type == null) {
+    personalities = await personalitiesCollection.find().sort("index", 1).toArray();
+  } else {
+    personalities = await personalitiesCollection
+      .find({ type })
+      .sort("index", 1)
+      .toArray();
+  }
 
   return res.status(200).send(personalities);
 });

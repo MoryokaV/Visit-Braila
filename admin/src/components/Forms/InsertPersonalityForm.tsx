@@ -129,6 +129,33 @@ export const InsertPersonalityForm: React.FC<Props> = ({
           Dacă nu există se poate lăsa liber câmpul
         </div>
       </section>
+      <section className="col-12 d-flex gap-3 align-items-center flex-wrap">
+        <span>Type </span>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="personalitate"
+            id="type-personalitate"
+            {...register("type")}
+            defaultChecked
+          />
+          <label className="form-check-label" htmlFor="type-personalitate"></label>
+          personalitate
+        </div>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="legenda"
+            id="type-legenda"
+            {...register("type")}
+          />
+          <label className="form-check-label" htmlFor="type-legenda">
+            legendă
+          </label>
+        </div>
+      </section>
       <section className="col-12">
         <button
           type="submit"

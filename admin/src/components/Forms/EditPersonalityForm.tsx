@@ -5,7 +5,7 @@ import { createImagesFormData, getImagesToDelete } from "../../utils/images";
 import { DescriptionField } from "./Fields/DescriptionField";
 import { ImagesField } from "./Fields/ImagesField";
 import { PrimaryImageField } from "./Fields/PrimaryImageField";
-import { Personality } from "../../models/PersonalityModel";
+import { Personality, PersonalityType } from "../../models/PersonalityModel";
 import { PdfField } from "./Fields/PdfField";
 
 interface Props {
@@ -158,6 +158,34 @@ export const EditPersonalityForm: React.FC<Props> = ({
           ID-ul casei memoriale corespunzătoare personalității
           <br />
           Dacă nu există se poate lăsa liber câmpul
+        </div>
+      </section>
+      <section className="col-12 d-flex gap-3 align-items-center flex-wrap">
+        <span>Type </span>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="personalitate"
+            id="type-personalitate"
+            {...register("type")}
+            defaultChecked={personality.type == PersonalityType.personalitate}
+          />
+          <label className="form-check-label" htmlFor="type-personalitate"></label>
+          personalitate
+        </div>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            value="legenda"
+            id="type-legenda"
+            {...register("type")}
+            defaultChecked={personality.type.normalize("NFC") == PersonalityType.legenda}
+          />
+          <label className="form-check-label" htmlFor="type-legenda">
+            legendă
+          </label>
         </div>
       </section>
       <section className="col-12">

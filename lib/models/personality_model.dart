@@ -8,6 +8,7 @@ class Personality {
   final int primaryImage;
   final String primaryImageBlurhash;
   final String? sightLink;
+  final PersonalityType type;
   final String pdf;
 
   Personality({
@@ -18,6 +19,7 @@ class Personality {
     required this.primaryImage,
     required this.primaryImageBlurhash,
     required this.sightLink,
+    required this.type,
     required this.pdf,
   });
 
@@ -30,7 +32,13 @@ class Personality {
       primaryImage: json['primary_image'],
       primaryImageBlurhash: json['primary_image_blurhash'],
       sightLink: json['sight_link'],
+      type: PersonalityType.values.byName(json['type']),
       pdf: "$baseUrl${json['pdf']}",
     );
   }
+}
+
+enum PersonalityType {
+  personalitate,
+  legenda,
 }

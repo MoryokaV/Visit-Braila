@@ -3,7 +3,7 @@ import TableCard from "../TableCard";
 import { IoCreateOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { LoadingSpinner } from "../LoadingSpinner";
 import Sortable from "sortablejs";
-import { Personality } from "../../models/PersonalityModel";
+import { Personality, PersonalityType } from "../../models/PersonalityModel";
 import { EditPersonalityForm } from "../Forms/EditPersonalityForm";
 
 interface Props {
@@ -78,6 +78,7 @@ export const PersonalitiesTable: React.FC<Props> = ({ setModalContent, closeModa
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Type</th>
             <th>PDF</th>
             <th>Sight link</th>
             <th>Actions</th>
@@ -93,10 +94,13 @@ export const PersonalitiesTable: React.FC<Props> = ({ setModalContent, closeModa
           ) : (
             <>
               {personalities.map((personality, index) => {
+                const tip =
+                  PersonalityType[personality.type as keyof typeof PersonalityType];
                 return (
                   <tr id={personality._id} key={index}>
                     <td>{personality._id}</td>
                     <td>{personality.name}</td>
+                    <td>{tip.charAt(0).toUpperCase() + tip.slice(1)}</td>
                     <td>
                       <a href={personality.pdf} target="_blank">
                         {window.location.origin + personality.pdf}

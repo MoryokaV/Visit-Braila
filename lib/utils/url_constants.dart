@@ -2,8 +2,12 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const baseUrl = "https://visit.bjbraila.ro";
-const apiUrl = "https://visit.bjbraila.ro/api";
+// const baseUrl = "https://visit.bjbraila.ro";
+// const apiUrl = "https://visit.bjbraila.ro/api";
+
+const baseUrl = "http://localhost:3000";
+const apiUrl = "http://localhost:3000/api";
+
 const privacyPolicyUrl = "https://visit.bjbraila.ro/privacy";
 const obiectivUrl = "https://obiectivbr.ro";
 const authorFacebookUrl = "https://www.facebook.com/mario.vlaviano.75";

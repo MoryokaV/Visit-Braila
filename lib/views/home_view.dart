@@ -244,52 +244,7 @@ class HomeView extends StatelessWidget {
                                 style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 14),
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(6),
-                                    child: CachedAssetImage(
-                                      "assets/images/plimbare_republicii.jpeg",
-                                      width: double.infinity,
-                                      height: Responsive.safeBlockVertical * 30,
-                                      cacheHeight: Responsive.safeBlockVertical * 30,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(24),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Fă o plimbare",
-                                          style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                                                color: Colors.white,
-                                              ),
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () => Navigator.pushNamed(context, "/alltours"),
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                              vertical: 10,
-                                            ),
-                                            backgroundColor: Colors.white,
-                                            foregroundColor: Colors.black,
-                                            textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
-                                          ),
-                                          child: const Text("Tururi"),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+
                             Padding(
                               padding: const EdgeInsets.only(bottom: 14),
                               child: Stack(
@@ -343,9 +298,9 @@ class HomeView extends StatelessWidget {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
                                     child: CachedAssetImage(
-                                      "assets/images/personalitati.jpg",
-                                      height: Responsive.safeBlockVertical * 30,
+                                      "assets/images/plimbare_republicii.jpeg",
                                       width: double.infinity,
+                                      height: Responsive.safeBlockVertical * 30,
                                       cacheHeight: Responsive.safeBlockVertical * 30,
                                     ),
                                   ),
@@ -355,7 +310,7 @@ class HomeView extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Perosonalități brăilene",
+                                          "Fă o plimbare",
                                           style: Theme.of(context).textTheme.displaySmall!.copyWith(
                                                 color: Colors.white,
                                               ),
@@ -364,7 +319,7 @@ class HomeView extends StatelessWidget {
                                           height: 15,
                                         ),
                                         ElevatedButton(
-                                          onPressed: () => Navigator.pushNamed(context, "/allpersonalities"),
+                                          onPressed: () => Navigator.pushNamed(context, "/alltours"),
                                           style: ElevatedButton.styleFrom(
                                             padding: const EdgeInsets.symmetric(
                                               horizontal: 20,
@@ -374,7 +329,7 @@ class HomeView extends StatelessWidget {
                                             foregroundColor: Colors.black,
                                             textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
                                           ),
-                                          child: const Text("Figuri marcante"),
+                                          child: const Text("Tururi"),
                                         ),
                                       ],
                                     ),
@@ -382,6 +337,7 @@ class HomeView extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            
                             Padding(
                               padding: const EdgeInsets.only(bottom: 14),
                               child: Row(
@@ -482,6 +438,118 @@ class HomeView extends StatelessWidget {
                                                       Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
                                                 ),
                                                 child: const Text("Cazare"),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: Row(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(6),
+                                          bottomLeft: Radius.circular(6),
+                                        ),
+                                        child: CachedAssetImage(
+                                          "assets/images/personalitati.jpg",
+                                          height: Responsive.safeBlockVertical * 30,
+                                          width: (Responsive.screenWidth - 36) / 2,
+                                          alignment: Alignment.centerLeft,
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  "Figuri marcante",
+                                                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      ),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 6),
+                                              ElevatedButton(
+                                                onPressed: () => Navigator.pushNamed(context, "/allpersonalities"),
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 20,
+                                                    vertical: 10,
+                                                  ),
+                                                  backgroundColor: Colors.white,
+                                                  foregroundColor: Colors.black,
+                                                  textStyle:
+                                                      Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                                ),
+                                                child: const Text("Personaliăți"),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(6),
+                                          bottomRight: Radius.circular(6),
+                                        ),
+                                        child: CachedAssetImage(
+                                          "assets/images/personalitati.jpg",
+                                          height: Responsive.safeBlockVertical * 30,
+                                          width: (Responsive.screenWidth - 36) / 2,
+                                          alignment: Alignment.centerRight,
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  "Mituri și povești",
+                                                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      ),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 6),
+                                              ElevatedButton(
+                                                onPressed: () => Navigator.pushNamed(context, "/alllegends"),
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 20,
+                                                    vertical: 10,
+                                                  ),
+                                                  backgroundColor: Colors.white,
+                                                  foregroundColor: Colors.black,
+                                                  textStyle:
+                                                      Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 14),
+                                                ),
+                                                child: const Text("Legende"),
                                               ),
                                             ],
                                           ),

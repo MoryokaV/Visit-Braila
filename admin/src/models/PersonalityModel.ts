@@ -7,5 +7,11 @@ export type Personality = {
   primary_image_blurhash: string;
   sight_link?: string;
   pdf: string;
+  type: PersonalityType;
   index: number;
 };
+
+export enum PersonalityType {
+  personalitate = "personalitate",
+  legenda = "legenda",
+}
