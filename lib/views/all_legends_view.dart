@@ -111,7 +111,7 @@ class _AllLegendsViewState extends State<AllLegendsView> {
           text: TextSpan(
             children: [
               const TextSpan(
-                text: "Personalități ",
+                text: "Legende ",
               ),
               TextSpan(
                 text: "brăilene",
